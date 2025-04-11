@@ -1525,7 +1525,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         /**
          * @return The maxmimum number of entities the projectile can pierce with the collateral enchantment.
          * If this is less than maxPierceCount, then maxPierceCount is returned instead.
-         * If either is -1, then -1 is returned to indicate infinite piercing.
+         * -1 for either enables infinite piercing.
          */
         public int getCollateralMaxPierce()
         {
