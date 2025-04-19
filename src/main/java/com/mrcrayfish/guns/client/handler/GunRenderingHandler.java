@@ -1103,12 +1103,12 @@ public class GunRenderingHandler
         poseStack.mulPose(Vector3f.XP.rotationDegrees(flip ? 180F : 0F));
 
         Vec3 flashScale = PropertyHelper.getMuzzleFlashScale(weapon, modifiedGun);
-        float adjustedPartialTicks = Math.max(partialTicks-0.5F,0)/2;
+        float adjustedPartialTicks = Math.max(partialTicks-0.5F,0);
         //float scaleX = ((float) flashScale.x / 2F) - ((float) flashScale.x / 2F) * (1.0F - partialTicks);
         //float scaleY = ((float) flashScale.y / 2F) - ((float) flashScale.y / 2F) * (1.0F - partialTicks);
         float scaleX = ((float) flashScale.x / 2F) - ((float) flashScale.x / 2F) * (adjustedPartialTicks);
         float scaleY = ((float) flashScale.y / 2F) - ((float) flashScale.y / 2F) * (adjustedPartialTicks);
-        poseStack.scale(scaleX*1.2F, scaleY*1.2F, 1.0F);
+        poseStack.scale(scaleX*1.1F, scaleY*1.1F, 1.0F);
 
         float scaleModifier = (float) GunModifierHelper.getMuzzleFlashScale(weapon, 1.0);
         poseStack.scale(scaleModifier, scaleModifier, 1.0F);
