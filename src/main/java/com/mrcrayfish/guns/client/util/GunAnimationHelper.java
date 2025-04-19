@@ -496,8 +496,14 @@ public final class GunAnimationHelper
 	public static Vec3 getAnimationArrayPublic(String animationType, ResourceLocation weapKey, String component, String transform) {
 		return getAnimationArray(animationType, weapKey, component, transform);
 	}
+	public static Vec3 getAnimationArrayPublic(String animationType, ResourceLocation weapKey, String component, int frame, String transform) {
+		return getAnimationArray(animationType, weapKey, component, frame, transform);
+	}
 	public static double getAnimationValuePublic(String animationType, ResourceLocation weapKey, String transform) {
 		return getAnimationValue(animationType, weapKey, transform);
+	}
+	public static double getAnimationValuePublic(String animationType, ResourceLocation weapKey, String component, int frame, String transform) {
+		return getAnimationValue(animationType, weapKey, component, frame, transform);
 	}
 	
 	
