@@ -939,6 +939,23 @@ public class GunRenderingHandler
 
             RenderUtil.applyTransformType(stack, poseStack, transformType, entity);
 
+            //Gun model animations
+            //boolean correctContext = (transformType.firstPerson() || transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND || transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
+            boolean correctContext = (transformType.firstPerson());
+            if (entity != null && entity.equals(Minecraft.getInstance().player) && correctContext)
+            {
+	            Player player = (Player) entity;
+	            GunItem gunStack = (GunItem) stack.getItem();
+	            Gun modifiedGun = gunStack.getModifiedGun(stack);
+	            
+	        	double zoomFactor = (1-Gun.getFovModifier(stack, modifiedGun)) * AimingHandler.get().getNormalisedAdsProgress();
+	        	Vec3 translations = (GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "gunModel").scale(1-zoomFactor));
+	            Vec3 rotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "gunModel").scale(1-zoomFactor);
+	            Vec3 offsets = GunAnimationHelper.getSmartAnimationRotOffset(stack, player, partialTicks, "gunModel").add(5.25, 4.0, 4.0);
+	            poseStack.translate(translations.x * 0.0625, translations.y * 0.0625, translations.z * 0.0625);
+	            GunAnimationHelper.rotateAroundOffset(poseStack, rotations, offsets);
+        	}
+
             this.renderingWeapon = stack;
             this.renderGun(entity, transformType, model.isEmpty() ? stack : model, poseStack, renderTypeBuffer, light, partialTicks);
             this.renderAttachments(entity, transformType, stack, poseStack, renderTypeBuffer, light, partialTicks);

@@ -96,9 +96,9 @@ public class DynamicCrosshair extends Crosshair
             	spread = Math.max(Mth.lerp(spreadModifier,minSpread,baseSpread)*(aimingSpreadMultiplier),0F);
             	
             	DotRenderMode dotRenderMode = Config.CLIENT.display.dynamicCrosshairDotMode.get();
-            	renderDot = (dotRenderMode == DotRenderMode.ALWAYS)
+            	renderDot = ((dotRenderMode == DotRenderMode.ALWAYS)
             	|| (dotRenderMode == DotRenderMode.AT_MIN_SPREAD && (SpreadTracker.get(mc.player).getNextSpread(gun,aiming)*spreadModifier <= 0 && spread<=Config.CLIENT.display.dynamicCrosshairDotThreshold.get()))
-    			|| (dotRenderMode == DotRenderMode.THRESHOLD && spread <= Config.CLIENT.display.dynamicCrosshairDotThreshold.get())
+    			|| (dotRenderMode == DotRenderMode.THRESHOLD && spread <= Config.CLIENT.display.dynamicCrosshairDotThreshold.get()))
     			&& (!Config.CLIENT.display.onlyRenderDotWhileAiming.get() || aiming > 0.9F);
             }
         }
@@ -212,7 +212,7 @@ public class DynamicCrosshair extends Crosshair
         }
         stack.popPose();
         
-        // Center Dot (will be configurable)
+        // Center Dot (Configurable)
         if (renderDot)
         {
         stack.pushPose();
