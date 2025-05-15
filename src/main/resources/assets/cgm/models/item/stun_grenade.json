@@ -5,6 +5,14 @@
 		"1": "cgm:items/stun_grenade",
 		"particle": "cgm:items/stun_grenade"
 	},
+    "overrides": [
+        {
+            "predicate": {
+                "throwing": 1
+            },
+            "model": "cgm:item/stun_grenade_throwing"
+        }
+    ],
 	"elements": [
 		{
 			"name": "Base Top",

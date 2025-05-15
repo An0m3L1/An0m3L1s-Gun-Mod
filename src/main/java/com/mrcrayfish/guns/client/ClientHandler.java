@@ -28,7 +28,9 @@ import net.minecraft.client.gui.screens.MouseSettingsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -71,6 +73,7 @@ public class ClientHandler
             GunButtonBindings.register();
         }
 
+        registerItemProperties();
         setupRenderLayers();
         registerColors();
         registerModelOverrides();
@@ -124,6 +127,20 @@ public class ClientHandler
                 Minecraft.getInstance().getItemColors().register(color, item);
             }
         });
+    }
+
+    private static void registerItemProperties()
+    {
+    	ItemProperties.register(ModItems.GRENADE.get(), 
+    		new ResourceLocation("throwing"), (stack, level, living, id) -> {
+    			return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
+    		}
+    	);
+    	ItemProperties.register(ModItems.STUN_GRENADE.get(), 
+        	new ResourceLocation("throwing"), (stack, level, living, id) -> {
+                return living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F;
+        	}
+        );
     }
 
     private static void registerModelOverrides()
