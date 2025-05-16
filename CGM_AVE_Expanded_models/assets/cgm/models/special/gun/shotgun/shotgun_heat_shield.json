@@ -1,0 +1,62 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"2": "cgm:items/shotgun2",
+		"particle": "cgm:items/shotgun"
+	},
+	"elements": [
+		{
+			"from": [7.70176, 3.3665, 1.101],
+			"to": [8.29824, 4.8065, 10.199],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 4.0865, 2.5]},
+			"faces": {
+				"north": {"uv": [4, 11, 4.5, 11.5], "texture": "#2", "tintindex": 0},
+				"south": {"uv": [10, 11, 10.5, 11.5], "texture": "#2", "tintindex": 0},
+				"up": {"uv": [4, 11, 10.5, 11.5], "rotation": 90, "texture": "#2", "tintindex": 0},
+				"down": {"uv": [10.5, 12.5, 4, 13], "rotation": 90, "texture": "#2", "tintindex": 0}
+			}
+		},
+		{
+			"from": [7.70176, 3.3665, 1.1],
+			"to": [8.29824, 4.8065, 10.2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4.0865, 2.5]},
+			"faces": {
+				"north": {"uv": [4, 10.5, 4.5, 11], "texture": "#2", "tintindex": 0},
+				"south": {"uv": [10, 10.5, 10.5, 11], "texture": "#2", "tintindex": 0},
+				"up": {"uv": [4, 10.5, 10.5, 11], "rotation": 90, "texture": "#2", "tintindex": 0},
+				"down": {"uv": [4, 12.5, 10.5, 13], "rotation": 90, "texture": "#2", "tintindex": 0}
+			}
+		},
+		{
+			"from": [7.28, 3.78826, 1.101],
+			"to": [8.72, 4.38474, 10.199],
+			"rotation": {"angle": 45, "axis": "z", "origin": [8, 4.0865, 2.5]},
+			"faces": {
+				"north": {"uv": [4, 12, 4.5, 12.5], "texture": "#2", "tintindex": 0},
+				"east": {"uv": [10.5, 11, 4, 11.5], "texture": "#2", "tintindex": 0},
+				"south": {"uv": [10, 11, 10.5, 11.5], "texture": "#2", "tintindex": 0},
+				"west": {"uv": [4, 12.5, 10.5, 13], "texture": "#2", "tintindex": 0}
+			}
+		},
+		{
+			"from": [7.28, 3.78826, 1.1],
+			"to": [8.72, 4.38474, 10.201],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4.0865, 2.5]},
+			"faces": {
+				"north": {"uv": [4, 11.5, 4.5, 12], "texture": "#2", "tintindex": 0},
+				"east": {"uv": [10.5, 11.5, 4, 12.25], "texture": "#2", "tintindex": 0},
+				"south": {"uv": [10, 11.5, 10.5, 12], "texture": "#2", "tintindex": 0},
+				"west": {"uv": [4, 11.5, 10.5, 12.25], "texture": "#2", "tintindex": 0}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "heat_shield",
+			"origin": [8, 7.9365, -0.3],
+			"color": 0,
+			"children": [0, 1, 2, 3]
+		}
+	]
+}

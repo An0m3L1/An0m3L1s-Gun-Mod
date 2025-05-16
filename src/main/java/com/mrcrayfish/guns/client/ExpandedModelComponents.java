@@ -16,33 +16,40 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public enum ExpandedModelComponents
 {
-    PISTOL_BASE("pistol_base"),
-    PISTOL_SLIDE("pistol_slide"),
-    PISTOL_SIGHTMOUNT("pistol_sightmount"),
-    PISTOL_MAGAZINE("pistol_magazine"),
-    PISTOL_EXTENDED_MAG("pistol_extended_mag"),
+    PISTOL_BASE("gun/pistol/pistol_base"),
+    PISTOL_SLIDE("gun/pistol/pistol_slide"),
+    PISTOL_SIGHTMOUNT("gun/pistol/pistol_sightmount"),
+    PISTOL_MAGAZINE("gun/pistol/pistol_magazine"),
+    PISTOL_EXTENDED_MAG("gun/pistol/pistol_extended_mag"),
     
-    ASSAULT_RIFLE_BASE("assault_rifle_base"),
-    ASSAULT_RIFLE_SIGHTS("assault_rifle_sights"),
-    ASSAULT_RIFLE_BOLT_HANDLE("assault_rifle_bolt_handle"),
-    ASSAULT_RIFLE_MAGAZINE("assault_rifle_magazine"),
-    ASSAULT_RIFLE_LIGHT_MAG("assault_rifle_light_mag"),
-    ASSAULT_RIFLE_EXTENDED_MAG("assault_rifle_extended_mag"),
+    SHOTGUN_BASE("gun/shotgun/shotgun_base"),
+    SHOTGUN_BASE_1("gun/shotgun/shotgun_base_1"),
+    SHOTGUN_HEAT_SHIELD("gun/shotgun/shotgun_heat_shield"),
+    SHOTGUN_HEAT_SHIELD_1("gun/shotgun/shotgun_heat_shield_1"),
+    SHOTGUN_BOLT("gun/shotgun/shotgun_bolt"),
+    SHOTGUN_SHELL("gun/shotgun/shotgun_shell"),
     
-    RIFLE_BASE("rifle_base"),
-    RIFLE_BASE_1("rifle_base_1"),
-    RIFLE_SIGHTS("rifle_rear_sight"),
-    RIFLE_BOLT("rifle_bolt"),
-    RIFLE_MAGAZINE("rifle_magazine"),
-    RIFLE_LIGHT_MAG("rifle_light_mag"),
-    RIFLE_EXTENDED_MAG("rifle_extended_mag"),
+    ASSAULT_RIFLE_BASE("gun/assault_rifle/assault_rifle_base"),
+    ASSAULT_RIFLE_SIGHTS("gun/assault_rifle/assault_rifle_sights"),
+    ASSAULT_RIFLE_BOLT_HANDLE("gun/assault_rifle/assault_rifle_bolt_handle"),
+    ASSAULT_RIFLE_MAGAZINE("gun/assault_rifle/assault_rifle_magazine"),
+    ASSAULT_RIFLE_LIGHT_MAG("gun/assault_rifle/assault_rifle_light_mag"),
+    ASSAULT_RIFLE_EXTENDED_MAG("gun/assault_rifle/assault_rifle_extended_mag"),
     
-    MACHINE_PISTOL_BASE("machine_pistol_base"),
-    MACHINE_PISTOL_SIGHTS("machine_pistol_rear_sight"),
-    MACHINE_PISTOL_BOLT("machine_pistol_bolt_handle"),
-    MACHINE_PISTOL_MAGAZINE("machine_pistol_magazine"),
-    MACHINE_PISTOL_LIGHT_MAG("machine_pistol_light_mag"),
-    MACHINE_PISTOL_EXTENDED_MAG("machine_pistol_extended_mag");
+    RIFLE_BASE("gun/rifle/rifle_base"),
+    RIFLE_BASE_1("gun/rifle/rifle_base_1"),
+    RIFLE_SIGHTS("gun/rifle/rifle_rear_sight"),
+    RIFLE_BOLT("gun/rifle/rifle_bolt"),
+    RIFLE_MAGAZINE("gun/rifle/rifle_magazine"),
+    RIFLE_LIGHT_MAG("gun/rifle/rifle_light_mag"),
+    RIFLE_EXTENDED_MAG("gun/rifle/rifle_extended_mag"),
+    
+    MACHINE_PISTOL_BASE("gun/machine_pistol/machine_pistol_base"),
+    MACHINE_PISTOL_SIGHTS("gun/machine_pistol/machine_pistol_rear_sight"),
+    MACHINE_PISTOL_BOLT("gun/machine_pistol/machine_pistol_bolt_handle"),
+    MACHINE_PISTOL_MAGAZINE("gun/machine_pistol/machine_pistol_magazine"),
+    MACHINE_PISTOL_LIGHT_MAG("gun/machine_pistol/machine_pistol_light_mag"),
+    MACHINE_PISTOL_EXTENDED_MAG("gun/machine_pistol/machine_pistol_extended_mag");
 
     /**
      * The location of an item model in the [MOD_ID]/models/special/[NAME] folder
