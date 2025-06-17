@@ -31,18 +31,21 @@ public class GrenadeEntity extends ProjectileEntity
     @Override
     protected void onHitEntity(Entity entity, Vec3 hitVec, Vec3 startVec, Vec3 endVec, boolean headshot)
     {
-        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+    	double explosionDamage = (Config.COMMON.grenades.grenadeDamage.get());
+        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true, (float) (explosionDamage));
     }
 
     @Override
     protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
     {
-        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+    	double explosionDamage = (Config.COMMON.grenades.grenadeDamage.get());
+        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true, (float) (explosionDamage));
     }
 
     @Override
     public void onExpired()
     {
-        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true);
+    	double explosionDamage = (Config.COMMON.grenades.grenadeDamage.get());
+        createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true, (float) (explosionDamage));
     }
 }

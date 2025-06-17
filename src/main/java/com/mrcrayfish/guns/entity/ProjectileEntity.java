@@ -102,6 +102,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     protected EntityDimensions entitySize;
     protected double modifiedGravity;
     protected int life;
+    protected float explosionDamage = 20F;
     protected boolean deadProjectile = false;
 
     public ProjectileEntity(EntityType<? extends Entity> entityType, Level worldIn)
@@ -242,6 +243,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     public double getModifiedGravity()
     {
         return this.modifiedGravity;
+    }
+
+    public void setExplosionDamage(Float explosionDamage)
+    {
+        this.explosionDamage = explosionDamage;
     }
 
     @Override
@@ -906,18 +912,18 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
      * @param entity The entity to explode
      * @param radius The size of the explosion caused by this entity
      * @param forceNone If true, forces the explosion mode to be NONE instead of config value
+     * @param explosionDamage The damage dealt (at maximum) by explosions, if the projectile doesn't have a saved Gun instance.
      */
-    public static void createExplosion(Entity entity, float radius, boolean forceNone)
+    public static void createExplosion(Entity entity, float radius, boolean forceNone, float explosionDamage)
     {
         Level world = entity.level;
         if(world.isClientSide())
             return;
 
         boolean isProjectile = entity instanceof ProjectileEntity projectile ? true : false;
-        boolean isGrenade = entity instanceof ThrowableGrenadeEntity projectile ? true : false;
         DamageSource source = isProjectile ? DamageSource.explosion(((ProjectileEntity) entity).getShooter()) : null;
         boolean hasGunProjectile = isProjectile ? (((ProjectileEntity) entity).getProjectile()!=null) : false;
-        float projectileDamage = (float) (hasGunProjectile ? ((ProjectileEntity) entity).getDamage() : (isGrenade ? Config.COMMON.grenades.grenadeDamage.get() : 20F) );
+        float projectileDamage = (float) (hasGunProjectile ? ((ProjectileEntity) entity).getDamage() : explosionDamage );
         Explosion.BlockInteraction mode = Config.COMMON.gameplay.griefing.enableBlockRemovalOnExplosions.get() && !forceNone ? Explosion.BlockInteraction.BREAK : Explosion.BlockInteraction.NONE;
         Explosion explosion = new ProjectileExplosion(world, entity, source, null, entity.getX(), entity.getY(), entity.getZ(), radius, false, mode, projectileDamage);
 
@@ -950,6 +956,18 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                 player.connection.send(new ClientboundExplodePacket(entity.getX(), entity.getY(), entity.getZ(), radius, explosion.getToBlow(), explosion.getHitPlayers().get(player)));
             }
         }
+    }
+
+    /**
+     * Creates a projectile explosion for the specified entity. COMPAT VERSION - Links into the above method.
+     *
+     * @param entity The entity to explode
+     * @param radius The size of the explosion caused by this entity
+     * @param forceNone If true, forces the explosion mode to be NONE instead of config value
+     */
+    public static void createExplosion(Entity entity, float radius, boolean forceNone)
+    {
+    	createExplosion(entity, radius, forceNone, 20f);
     }
 
     /**
