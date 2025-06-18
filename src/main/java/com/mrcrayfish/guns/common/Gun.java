@@ -182,9 +182,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private boolean magReloadWhenEmpty = false;
         @Optional
-        private boolean magReloadWithLightMag = false;
-        @Optional
-        private boolean magReloadWithExtendedMag = false;
+        private boolean magReloadWithMagAttach = false;
         @Optional
         private boolean noMagReloadWithScope = false;
         @Optional
@@ -254,6 +252,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putInt("ReloadEmptyInterruptDelay", this.reloadEmptyInterruptDelay);
             tag.putInt("ReloadEmptyEndDelay", this.reloadEmptyEndDelay);
             tag.putBoolean("UseMagReload", this.useMagReload);
+            tag.putBoolean("MagReloadWithMagAttach", this.magReloadWithMagAttach);
             tag.putBoolean("MagReloadWhenEmpty", this.magReloadWhenEmpty);
             tag.putBoolean("NoMagReloadWithScope", this.noMagReloadWithScope);
             tag.putInt("MagReloadTime", this.magReloadTime);
@@ -376,6 +375,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("UseMagReload", Tag.TAG_ANY_NUMERIC))
             {
                 this.useMagReload = tag.getBoolean("UseMagReload");
+            }
+            if(tag.contains("MagReloadWithMagAttach", Tag.TAG_ANY_NUMERIC))
+            {
+                this.magReloadWithMagAttach = tag.getBoolean("MagReloadWithMagAttach");
             }
             if(tag.contains("MagReloadWhenEmpty", Tag.TAG_ANY_NUMERIC))
             {
@@ -522,6 +525,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.reloadEmptyInterruptDelay != -1) object.addProperty("reloadEmptyInterruptDelay", this.reloadEmptyInterruptDelay);
             if(this.reloadEmptyEndDelay != -1) object.addProperty("reloadEmptyEndDelay", this.reloadEmptyEndDelay);
             if(this.useMagReload != false) object.addProperty("useMagReload", this.useMagReload);
+            if(this.magReloadWithMagAttach != false) object.addProperty("magReloadWithMagAttach", this.magReloadWithMagAttach);
             if(this.magReloadWhenEmpty != false) object.addProperty("magReloadWhenEmpty", this.magReloadWhenEmpty);
             if(this.noMagReloadWithScope != false) object.addProperty("noMagReloadWithScope", this.noMagReloadWithScope);
             if(this.magReloadTime != 0) object.addProperty("magReloadTime", this.magReloadTime);
@@ -574,6 +578,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.reloadEmptyInterruptDelay = this.reloadEmptyInterruptDelay;
             general.reloadEmptyEndDelay = this.reloadEmptyEndDelay;
             general.useMagReload = this.useMagReload;
+            general.magReloadWithMagAttach = this.magReloadWithMagAttach;
             general.magReloadWhenEmpty = this.magReloadWhenEmpty;
             general.noMagReloadWithScope = this.noMagReloadWithScope;
             general.magReloadTime = this.magReloadTime;
@@ -831,6 +836,15 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         {
             return this.useMagReload;
         }
+
+        /**
+         * @return If true, mag-style reloads are used when a magazine attachment is equipped.
+         */
+        public boolean hasMagReloadWithMagAttach()
+        {
+            return this.magReloadWithMagAttach;
+        }
+
 
         /**
          * @return Whether to use mag-style reloads when the gun is empty. Good for clip-fed rifles.
@@ -4031,7 +4045,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
     public static boolean usesMagReloads(ItemStack gunStack)
     {
         Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-        return (modifiedGun.getGeneral().usesMagReload() || (modifiedGun.getGeneral().hasMagReloadWhenEmpty() && !Gun.hasAmmo(gunStack))) && (!modifiedGun.getGeneral().hasNoMagReloadWithScope() || Gun.getAttachment(IAttachment.Type.SCOPE, gunStack).isEmpty());
+        return (modifiedGun.getGeneral().usesMagReload()
+            || (modifiedGun.getGeneral().hasMagReloadWithMagAttach() && !Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), gunStack).isEmpty())
+        	|| (modifiedGun.getGeneral().hasMagReloadWhenEmpty() && !Gun.hasAmmo(gunStack))) && (!modifiedGun.getGeneral().hasNoMagReloadWithScope() || Gun.getAttachment(IAttachment.Type.SCOPE, gunStack).isEmpty());
     }
     
     public static int getDefaultFireMode(ItemStack gunStack)
