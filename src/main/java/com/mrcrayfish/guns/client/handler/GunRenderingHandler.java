@@ -516,8 +516,10 @@ public class GunRenderingHandler
 
         /* Applies equip progress animation translations */
         float equipProgress = this.getEquipProgress(event.getPartialTick());
-        //poseStack.translate(0, equipProgress * -0.6F, 0);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(equipProgress * -50F));
+        if (GunAnimationHelper.getSmartAnimationType(heldItem, player, event.getPartialTick()) == "draw")
+        poseStack.translate(0, equipProgress * 0.04F, 0);
+        else
+	    poseStack.mulPose(Vector3f.XP.rotationDegrees(equipProgress * -50F));
 
         /* Update the current reload progress, when applicable */
         this.updateReloadProgress(heldItem);

@@ -158,6 +158,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private boolean infiniteAmmo = false;
         @Optional
+        private int drawTime = 4;
+        @Optional
         private int reloadAmount = 1;
         @Optional
         private int ammoPerShot = 1;
@@ -241,6 +243,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putInt("ExtendedMagAmmo", this.extendedMagAmmo);
             tag.putInt("OverCapacityAmmo", this.overCapacityAmmo);
             tag.putBoolean("InfiniteAmmo", this.infiniteAmmo);
+            tag.putInt("DrawTime", this.drawTime);
             tag.putInt("ReloadAmount", this.reloadAmount);
             tag.putInt("AmmoPerShot", this.ammoPerShot);
             tag.putInt("AmmoPerItem", this.ammoPerItem);
@@ -324,6 +327,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("InfiniteAmmo", Tag.TAG_ANY_NUMERIC))
             {
                 this.infiniteAmmo = tag.getBoolean("InfiniteAmmo");
+            }
+            if(tag.contains("DrawTime", Tag.TAG_ANY_NUMERIC))
+            {
+                this.drawTime = tag.getInt("DrawTime");
             }
             
             if(tag.contains("ReloadAmount", Tag.TAG_ANY_NUMERIC))
@@ -481,6 +488,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             Preconditions.checkArgument(this.burstCount != 1, "Burst count must be greater than one, or equal to zero; set to zero to disable bursts");
             Preconditions.checkArgument(this.burstCooldown >= 0, "Burst cooldown cannot be negative; set to zero to disable the cooldown");
             Preconditions.checkArgument(this.overCapacityAmmo > 0, "Over Capacity bonus ammo must be more than zero");
+            Preconditions.checkArgument(this.drawTime >= 1, "Draw time must be more than or equal to one");
             Preconditions.checkArgument(this.reloadAmount >= 1, "Reload amount must be more than or equal to one");
             Preconditions.checkArgument(this.ammoPerShot >= 1, "Ammo Consumed Per Shot must be more than or equal to one");
             Preconditions.checkArgument(this.ammoPerItem >= 1, "Ammo Loaded Per Item must be more than or equal to one");
@@ -569,6 +577,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.reloadAmount = this.reloadAmount;
             general.ammoPerShot = this.ammoPerShot;
             general.ammoPerItem = this.ammoPerItem;
+            general.drawTime = this.drawTime;
             general.reloadAmount = this.reloadAmount;
             general.reloadRate = this.reloadRate;
             general.reloadStartDelay = this.reloadStartDelay;
@@ -713,6 +722,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
 
 
+        /**
+         * @return The delay on switching to a weapon before it can be fired
+         */
+        public int getDrawTime()
+        {
+            return this.drawTime;
+        }
+        
         /**
          * @return The amount of ammo to add to the weapon each reload cycle
          */
@@ -1739,9 +1756,6 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         private int cycleDelay = -1;
         @Optional
         @Nullable
-        private ResourceLocation drawGun;
-        @Optional
-        @Nullable
         private ResourceLocation silencedFire;
         @Optional
         @Nullable
@@ -1755,6 +1769,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         @Nullable
         private ResourceLocation weaponSelect;
+        @Optional
+        private int weaponSelectDelay = -1;
         @Optional
         @Nullable
         private ResourceLocation emptyClick;
@@ -1855,6 +1871,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 tag.putString("WeaponSelect", this.weaponSelect.toString());
             }
+            tag.putFloat("WeaponSelectDelay", this.weaponSelectDelay);
+            
             if(this.emptyClick != null)
             {
                 tag.putString("EmptyClick", this.emptyClick.toString());
@@ -1979,6 +1997,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.weaponSelect = this.createSound(tag, "WeaponSelect");
             }
+            if(tag.contains("WeaponSelectDelay", Tag.TAG_ANY_NUMERIC))
+            {
+                this.weaponSelectDelay = tag.getInt("WeaponSelectDelay");
+            }
             if(tag.contains("EmptyClick", Tag.TAG_STRING))
             {
                 this.emptyClick = this.createSound(tag, "EmptyClick");
@@ -2081,6 +2103,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 object.addProperty("weaponSelect", this.weaponSelect.toString());
             }
+            if(this.weaponSelectDelay >= 0) object.addProperty("weaponSelectDelay", this.weaponSelectDelay);
+            
             if(this.emptyClick != null)
             {
                 object.addProperty("emptyClick", this.emptyClick.toString());
@@ -2122,6 +2146,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             sounds.enchantedFire = this.enchantedFire;
             sounds.enchantedFireEx = this.enchantedFireEx;
             sounds.weaponSelect = this.weaponSelect;
+            sounds.weaponSelectDelay = this.weaponSelectDelay;
             sounds.emptyClick = this.emptyClick;
             sounds.fireSwitch = this.fireSwitch;
             return sounds;
@@ -2403,6 +2428,16 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public ResourceLocation getWeaponSelect()
         {
         	return this.weaponSelect;
+        }
+        /**
+         * @return The delay after switching to a weapon before the draw sound plays.
+         * Setting this to zero will play the sound immediately.
+         * Setting this to less than zero disables it.
+         */
+        @Nullable
+        public int getWeaponSelectDelay()
+        {
+            return this.weaponSelectDelay;
         }
 
         /**

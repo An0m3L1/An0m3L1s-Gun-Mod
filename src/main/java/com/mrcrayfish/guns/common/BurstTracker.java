@@ -96,7 +96,7 @@ public class BurstTracker
             BurstTracker tracker = BURST_TRACKER_MAP.get(player);
            	boolean resetBurst = false;
             
-          	if(player.getInventory().getSelected().getItem() instanceof GunItem)
+          	if(tracker.stack.getItem() instanceof GunItem)
             {
             	GunItem gunItem = (GunItem) tracker.stack.getItem();
             	if (ModSyncedDataKeys.SHOOTING.getValue(player) && Gun.hasBurstFire(tracker.stack))

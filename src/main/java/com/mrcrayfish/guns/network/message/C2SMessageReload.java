@@ -50,7 +50,8 @@ public class C2SMessageReload extends PlayMessage<C2SMessageReload>
                 ModSyncedDataKeys.RELOADING.setValue(player, message.reload); // This has to be set in order to verify the packet is sent if the event is cancelled
                 if(!message.reload)
                 {
-                    ModSyncedDataKeys.SWITCHTIME.setValue(player, 6);
+                	if (ModSyncedDataKeys.SWITCHTIME.getValue(player)<=0)
+                    ModSyncedDataKeys.SWITCHTIME.setValue(player, 1);
                     return;
                 }
                 else
