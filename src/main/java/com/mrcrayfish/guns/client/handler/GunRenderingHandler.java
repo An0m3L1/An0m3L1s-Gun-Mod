@@ -204,7 +204,7 @@ public class GunRenderingHandler
     	this.prevSprintTransition = this.sprintTransition;
 
         Minecraft mc = Minecraft.getInstance();
-        if(mc.player != null && mc.player.isSprinting() && !ModSyncedDataKeys.SHOOTING.getValue(mc.player) && (!ModSyncedDataKeys.RELOADING.getValue(mc.player) && ReloadHandler.get().getReloadTimer()==0) && !AimingHandler.get().isAiming() && this.sprintCooldown == 0)
+        if(mc.player != null && mc.player.isSprinting() && ModSyncedDataKeys.SWITCHTIME.getValue(mc.player)<=0 && !ModSyncedDataKeys.SHOOTING.getValue(mc.player) && (!ModSyncedDataKeys.RELOADING.getValue(mc.player) && ReloadHandler.get().getReloadTimer()==0) && !AimingHandler.get().isAiming() && this.sprintCooldown == 0)
         {
             if(this.sprintTransition < 5)
             {
@@ -441,6 +441,9 @@ public class GunRenderingHandler
         float translateX = model.getTransforms().firstPersonRightHand.translation.x();
         float translateY = model.getTransforms().firstPersonRightHand.translation.y();
         float translateZ = model.getTransforms().firstPersonRightHand.translation.z();
+        
+        //if (GunAnimationHelper.getSmartAnimationType(heldItem, player, event.getPartialTick()) == "draw")
+        //	this.sprintCooldown = 1;
 
         poseStack.pushPose();
 
