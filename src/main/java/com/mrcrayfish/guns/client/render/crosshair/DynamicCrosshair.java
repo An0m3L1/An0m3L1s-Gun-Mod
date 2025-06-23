@@ -93,7 +93,7 @@ public class DynamicCrosshair extends Crosshair
             	float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
             	minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0F ? minSpread : (modifiedGun.getGeneral().isAlwaysSpread() ? baseSpread : 0));
             	float aimingSpreadMultiplier = (float) (Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction()));
-            	spread = Math.max(Mth.lerp(spreadModifier,minSpread,baseSpread)*(aimingSpreadMultiplier),0F);
+            	spread = Mth.clamp(Mth.lerp(spreadModifier,minSpread,baseSpread)*(aimingSpreadMultiplier),0F,32F);
             	
             	DotRenderMode dotRenderMode = Config.CLIENT.display.dynamicCrosshairDotMode.get();
             	renderDot = ((dotRenderMode == DotRenderMode.ALWAYS)
