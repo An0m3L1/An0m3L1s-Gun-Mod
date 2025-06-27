@@ -517,11 +517,9 @@ public class GunRenderingHandler
         /* Applies custom bobbing animations */
         this.applyBobbingTransforms(poseStack, event.getPartialTick());
 
-        /* Applies equip progress animation translations */
+        /* Applies equip progress animations */
         float equipProgress = this.getEquipProgress(event.getPartialTick());
-        if (GunAnimationHelper.getSmartAnimationType(heldItem, player, event.getPartialTick()) == "draw")
-        poseStack.translate(0, equipProgress * 0.04F, 0);
-        else
+        if (GunAnimationHelper.getSmartAnimationType(heldItem, player, event.getPartialTick()) != "draw")
 	    poseStack.mulPose(Vector3f.XP.rotationDegrees(equipProgress * -50F));
 
         /* Update the current reload progress, when applicable */
