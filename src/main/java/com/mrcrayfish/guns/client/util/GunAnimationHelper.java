@@ -85,7 +85,7 @@ public final class GunAnimationHelper
     		float drawProgress = ((player.tickCount-weaponSwitchTick)+partialTicks)*animationSpeed;
     		int totalFrames = Math.max(getAnimationFrames("draw", weapKey),1);
         	
-    		if (drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+10)
+    		if ((drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+10) && player.getMainHandItem() == weapon)
         	return "draw";
         }
         

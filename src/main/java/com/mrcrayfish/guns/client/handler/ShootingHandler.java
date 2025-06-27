@@ -196,10 +196,12 @@ public class ShootingHandler
             // Weapon switch detection
             if (!isSameWeapon(player))
             {
+            	// Handle weapon switching
                 lastItem = heldItem.getItem();
                 if (!isSameSlot(player))
                 	ModSyncedDataKeys.SWITCHTIME.setValue(player, 1);
             	ModSyncedDataKeys.BURSTCOUNT.setValue(player, 0);
+            	ModSyncedDataKeys.AIMING.setValue(player, false);
             	weaponSwitchTick = player.tickCount;
                 if(heldItem.getItem() instanceof GunItem)
                 {

@@ -3,6 +3,7 @@ package com.mrcrayfish.guns.client.handler;
 import com.mrcrayfish.guns.Config;
 import com.mrcrayfish.guns.GunMod;
 import com.mrcrayfish.guns.client.KeyBinds;
+import com.mrcrayfish.guns.client.util.GunAnimationHelper;
 import com.mrcrayfish.guns.client.util.PropertyHelper;
 import com.mrcrayfish.guns.common.GripType;
 import com.mrcrayfish.guns.common.Gun;
@@ -62,7 +63,9 @@ public class AimingHandler
     private final AimTracker localTracker = new AimTracker();
     private final Map<Player, AimTracker> aimingMap = new WeakHashMap<>();
     private double normalisedAdsProgress;
+    private float lastZoomModifier = 1F;
     private boolean aiming = false;
+    private boolean setNewZoomModifier = true;
     private boolean doTempFirstPerson = false;
     private boolean skipThirdPersonSwitch = false;
 
@@ -207,7 +210,10 @@ public class AimingHandler
             return;
 
         if(AimingHandler.get().getNormalisedAdsProgress() == 0)
-            return;
+        {
+        	this.setNewZoomModifier = true;
+        	return;
+    	}
 
         if(ModSyncedDataKeys.RELOADING.getValue(mc.player))
             return;
@@ -218,7 +224,14 @@ public class AimingHandler
 
         double time = PropertyHelper.getSightAnimations(heldItem, modifiedGun).getFovCurve().apply(this.normalisedAdsProgress);
         boolean isFirstPerson = (mc.options.getCameraType() == CameraType.FIRST_PERSON);
-        float modifier = Gun.getFovModifier(heldItem, modifiedGun);
+        float modifier = this.lastZoomModifier;
+        float newModifier = Gun.getFovModifier(heldItem, modifiedGun);
+        if(this.isZooming() && this.setNewZoomModifier)
+        {
+        	this.lastZoomModifier = newModifier;
+        	this.setNewZoomModifier = false;
+        }
+        
         modifier = Math.max((modifier * (isFirstPerson ? 1 : 0.3F)) + (isFirstPerson ? 0 : 0.4F),modifier);
         modifier = (1.0F - modifier) * (float) time;
         event.setFOV(event.getFOV() - event.getFOV() * modifier);
@@ -285,6 +298,9 @@ public class AimingHandler
         if(ModSyncedDataKeys.RELOADING.getValue(mc.player) || ReloadHandler.get().getReloadTimer()!=0)
             return false;
 
+        if(mc.player.tickCount<ShootingHandler.get().getWeaponSwitchTick()+3 || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick()) == "draw" && ModSyncedDataKeys.SWITCHTIME.getValue(mc.player) > 0))
+            return false;
+
         boolean zooming = KeyBinds.getAimMapping().isDown();
         if(GunMod.controllableLoaded)
         {
@@ -326,7 +342,13 @@ public class AimingHandler
 
         private void handleAiming(Player player, ItemStack heldItem)
         {
+            if(player.tickCount<ShootingHandler.get().getWeaponSwitchTick()+4)
+            {
+            	this.previousAim = this.currentAim = 0;
+            	return;
+            }
             this.previousAim = this.currentAim;
+            
             if(ModSyncedDataKeys.AIMING.getValue(player) || (player.isLocalPlayer() && AimingHandler.this.isAiming()))
             {
                 if(this.currentAim < MAX_AIM_PROGRESS)

@@ -106,6 +106,9 @@ public class GunRenderingHandler
     private final Set<Integer> entityIdForMuzzleFlash = new HashSet<>();
     private final Set<Integer> entityIdForDrawnMuzzleFlash = new HashSet<>();
     private final Map<Integer, Float> entityIdToRandomValue = new HashMap<>();
+    
+    private double lastViewportFOV;
+    private boolean setNewViewportFOV = true;
 
     private int sprintTransition;
     private int prevSprintTransition;
@@ -369,7 +372,10 @@ public class GunRenderingHandler
 
         // Change the FOV of the first person viewport based on the scope and aim progress
         if(AimingHandler.get().getNormalisedAdsProgress() <= 0)
-            return;
+        {
+        	this.setNewViewportFOV = true;
+        	return;
+    	}
 
         // Calculate the time curve
         double time = AimingHandler.get().getNormalisedAdsProgress();
@@ -377,7 +383,17 @@ public class GunRenderingHandler
         time = sightAnimation.getViewportCurve().apply(time);
 
         // Apply the new FOV
-        double viewportFov = PropertyHelper.getViewportFov(heldItem, modifiedGun);
+        double newViewportFov = PropertyHelper.getViewportFov(heldItem, modifiedGun);
+        if (this.lastViewportFOV == 0)
+        	lastViewportFOV = newViewportFov;
+        	
+        double viewportFov = lastViewportFOV;
+        if(AimingHandler.get().isZooming() && this.setNewViewportFOV)
+        {
+        	this.lastViewportFOV = newViewportFov;
+        	this.setNewViewportFOV = false;
+        }
+        
         double newFov = viewportFov > 0 ? viewportFov : event.getFOV(); // Backwards compatibility
         event.setFOV(Mth.lerp(time, event.getFOV(), newFov));
     }
