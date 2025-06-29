@@ -323,7 +323,7 @@ public class Config
         {
             builder.comment("Properties relating to missiles").push("missiles");
             {
-                this.explosionRadius = builder.comment("The max distance which the explosion is effective to").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
+                this.explosionRadius = builder.comment("The explosion radius of Missile explosions. This determines the power of the explosion on blocks, and the maximum range at which damage can be dealt.").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
             }
             builder.pop();
         }
@@ -341,7 +341,7 @@ public class Config
         {
             builder.comment("Properties relating to grenades").push("grenades");
             {
-            	this.explosionRadius = builder.comment("The max distance which the explosion is effective to").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
+            	this.explosionRadius = builder.comment("The explosion radius of Grenade explosions. This determines the power of the explosion on blocks, and the maximum range at which damage can be dealt.").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
                 this.grenadeDamage = builder.comment("The maximum damage dealt by thrown grenades").defineInRange("grenadeDamage", 20.0, 0.0, Double.MAX_VALUE);
             }
             builder.pop();

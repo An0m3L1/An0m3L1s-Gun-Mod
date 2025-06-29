@@ -154,4 +154,9 @@ public class GunMod
     {
         return false;//!FMLEnvironment.production;
     }
+
+    public static boolean hasCGMExpanded()
+    {
+        return true; //Call this function in a "Try...Catch" block to check if CGM Expanded is installed; be sure to catch any exceptions to avoid crashes!
+    }
 }
