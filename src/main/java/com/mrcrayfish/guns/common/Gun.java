@@ -4028,8 +4028,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
         if(GunMod.backpackedLoaded)
         {
-            AmmoContext context = BackpackHelper.findAmmo(player, id);;
-        	ammoCount += context.stack().getCount();
+        	ammoCount += BackpackHelper.getReserveAmmoCount(player, id);
         }
         return ammoCount;
     }
