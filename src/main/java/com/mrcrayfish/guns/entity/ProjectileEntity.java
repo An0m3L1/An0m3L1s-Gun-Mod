@@ -600,7 +600,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         boolean critical = damage != newDamage;
         damage = newDamage;
 
-        if(headshot)
+        if(headshot && modifiedGun!=null)
         {
             if (this.modifiedGun.getProjectile().getHeadshotMultiplierOverride()!=0)
             	damage *= this.modifiedGun.getProjectile().getHeadshotMultiplierOverride();
