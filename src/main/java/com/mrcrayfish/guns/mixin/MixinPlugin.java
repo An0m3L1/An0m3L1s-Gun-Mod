@@ -4,6 +4,10 @@ import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
+import com.mrcrayfish.guns.GunMod;
+
+import net.minecraftforge.fml.loading.LoadingModList;
+
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +30,10 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
+    	if (mixinClassName.equals("com.mrcrayfish.guns.mixin.common.ExplosionMixin"))
+    		return (LoadingModList.get().getModFileById("explosiveenhancement")) != null && isFrameworkInstalled;
+    		//return GunMod.ExplosiveEnhancementLoaded && isFrameworkInstalled;
+    	else
         return isFrameworkInstalled; // this makes sure that forge's helpful mods not found screen shows up
     }
 

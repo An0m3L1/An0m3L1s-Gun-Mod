@@ -55,6 +55,7 @@ public class GunMod
     public static boolean backpackedLoaded = false;
     public static boolean playerReviveLoaded = false;
     public static boolean shoulderSurfingLoaded = false;
+    public static boolean ExplosiveEnhancementLoaded = false;
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
     public static final CreativeModeTab GROUP = new CreativeModeTab(Reference.MOD_ID)
     {
@@ -106,6 +107,7 @@ public class GunMod
         backpackedLoaded = ModList.get().isLoaded("backpacked");
         playerReviveLoaded = ModList.get().isLoaded("playerrevive");
         shoulderSurfingLoaded = ModList.get().isLoaded("shouldersurfing");
+        ExplosiveEnhancementLoaded = ModList.get().isLoaded("explosiveenhancement");
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event)

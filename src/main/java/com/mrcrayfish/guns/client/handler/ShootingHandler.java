@@ -300,8 +300,14 @@ public class ShootingHandler
         	}
         	return false;
         }
+
+        //*NEW* Also disallow reloading during the reload transition time.
+        if(ReloadHandler.get().getReloadProgress(Minecraft.getInstance().getPartialTick()) > 0F) 
+        {
+        	return false;
+        }
         
-        if(ModSyncedDataKeys.SWITCHTIME.getValue(player) > 0) //*NEW* Disallow firing during the weapon switch/reload time.
+        if(ModSyncedDataKeys.SWITCHTIME.getValue(player) > 0) //*NEW* Disallow firing during the weapon switch time.
         {
         	return false;
         }
