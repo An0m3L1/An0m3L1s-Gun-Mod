@@ -25,6 +25,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
@@ -372,6 +374,16 @@ public final class GunAnimationHelper
 		double easeFactor = getEaseFactor(easing, frameProgress/frameDiv);
 		blendedTransforms = priorTransforms.lerp(nextTransforms, Mth.clamp(easeFactor, 0F,1F));
 		
+		//Left handed compat
+		if (component.equals("viewModel") /*|| component.equals("gunModel")*/)
+		{
+			Minecraft mc = Minecraft.getInstance();
+			boolean rightHand = mc.options.mainHand().get().equals(HumanoidArm.RIGHT);
+			
+			if (!rightHand)
+			blendedTransforms.multiply(-1, 1, 1);
+		}
+		
 		return blendedTransforms;
 	}
     
@@ -434,6 +446,16 @@ public final class GunAnimationHelper
 		Easings easing = getAnimEasing(nextAnimType, weapKey, component, findPriorFrame(nextAnimType, weapKey, component, nextFrame, "rotation"), true);
 		double easeFactor = getEaseFactor(easing, frameProgress/frameDiv);
 		blendedTransforms = priorTransforms.lerp(nextTransforms, Mth.clamp(easeFactor, 0F,1F));
+		
+		//Left handed compat
+		if (component.equals("viewModel") /*|| component.equals("gunModel")*/)
+		{
+			Minecraft mc = Minecraft.getInstance();
+			boolean rightHand = mc.options.mainHand().get().equals(HumanoidArm.RIGHT);
+			
+			if (!rightHand)
+			blendedTransforms.multiply(1, -1, -1);
+		}
 		
 		return blendedTransforms;
 	}

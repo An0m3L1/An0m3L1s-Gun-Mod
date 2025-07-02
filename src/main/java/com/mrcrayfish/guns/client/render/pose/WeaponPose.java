@@ -54,7 +54,7 @@ public abstract class WeaponPose implements IHeldAnimation
     protected abstract AimPose getDownPose();
 
     /**
-     * Gets the pose of the player when looking directly down
+     * If true, the 3rd-person sprint animation will raise the player's arms instead of lower them.
      */
     public boolean doRaiseWhenSprint() {
 		return false;

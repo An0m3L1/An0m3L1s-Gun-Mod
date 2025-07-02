@@ -914,7 +914,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
      * @param forceNone If true, forces the explosion mode to be NONE instead of config value
      * @param explosionDamage The damage dealt (at maximum) by explosions, if the projectile doesn't have a saved Gun instance.
      */
-    public static void createExplosion(Entity entity, float radius, boolean forceNone, float explosionDamage)
+    public static void createExplosion(Entity entity, float radius, float explosionDamage, boolean destroysBlocks)
     {
         Level world = entity.level;
         if(world.isClientSide())
@@ -924,7 +924,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         DamageSource source = isProjectile ? DamageSource.explosion(((ProjectileEntity) entity).getShooter()) : null;
         boolean hasGunProjectile = isProjectile ? (((ProjectileEntity) entity).getProjectile()!=null) : false;
         float projectileDamage = (float) (hasGunProjectile ? ((ProjectileEntity) entity).getDamage() : explosionDamage );
-        Explosion.BlockInteraction mode = Config.COMMON.gameplay.griefing.enableBlockRemovalOnExplosions.get() && !forceNone ? Explosion.BlockInteraction.BREAK : Explosion.BlockInteraction.NONE;
+        Explosion.BlockInteraction mode = destroysBlocks ? Explosion.BlockInteraction.BREAK : Explosion.BlockInteraction.NONE;
         Explosion explosion = new ProjectileExplosion(world, entity, source, null, entity.getX(), entity.getY(), entity.getZ(), radius, false, mode, projectileDamage);
 
         if(net.minecraftforge.event.ForgeEventFactory.onExplosionStart(world, explosion))
@@ -967,7 +967,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
      */
     public static void createExplosion(Entity entity, float radius, boolean forceNone)
     {
-    	createExplosion(entity, radius, forceNone, 20f);
+    	boolean destroysBlocks = (Config.COMMON.gameplay.griefing.enableBlockRemovalOnExplosions.get() && !forceNone);
+    	createExplosion(entity, radius, 20f, destroysBlocks);
     }
 
     /**

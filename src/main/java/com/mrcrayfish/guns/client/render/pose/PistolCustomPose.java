@@ -25,6 +25,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -72,9 +73,10 @@ public class PistolCustomPose extends WeaponPose
     @OnlyIn(Dist.CLIENT)
     public void applyPlayerModelRotation(Player player, ModelPart rightArm, ModelPart leftArm, ModelPart head, InteractionHand hand, float aimProgress)
     {
+        Minecraft mc = Minecraft.getInstance();
     	if (!player.getOffhandItem().isEmpty())
         {
-    		boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+    		boolean right = mc.options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
             ModelPart arm = right ? rightArm : leftArm;
             IHeldAnimation.copyModelAngles(head, arm);
             arm.xRot += (float) Math.toRadians(-70F - (aimProgress*25));
@@ -84,9 +86,26 @@ public class PistolCustomPose extends WeaponPose
             {
                 arm.xRot = (float) Math.toRadians(-30F);
             }
-            if(player.isSprinting() || ModSyncedDataKeys.RELOADING.getValue(player))
+            else
+    	    if(ModSyncedDataKeys.RELOADING.getValue(player))
+    	    {
+    	        arm.xRot = (float) Math.toRadians(-40F);
+    	    }
+    	    else
+    	    if (mc.player.equals(player)) //Sprint animation for local player
             {
-                arm.xRot = (float) Math.toRadians(-105F);
+            	float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getPartialTick());
+            	if (sprintTransition>0)
+            	{
+            		arm.xRot = Mth.lerp(sprintTransition, arm.xRot, -105F);
+            		//arm.xRot = (float) Math.toRadians(-105F*sprintTransition);
+            	}
+            }
+    	    else
+    	    //Sprint animation for other players
+            if (player.isSprinting())
+            {
+            	arm.xRot = (float) Math.toRadians(-90F);
             }
         }
         else
@@ -114,10 +133,10 @@ public class PistolCustomPose extends WeaponPose
         {
     		if(hand == InteractionHand.MAIN_HAND)
             {
-            	boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+            	//boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
             	poseStack.translate(0, 0, 0.05);
                	//poseStack.mulPose(Vector3f.YP.rotationDegrees((-aimProgress*15) * (right ? 1F : -1F)));
-               	poseStack.mulPose(Vector3f.XP.rotationDegrees((-aimProgress*27) * (right ? 1F : -1F)));
+               	poseStack.mulPose(Vector3f.XP.rotationDegrees((-aimProgress*27)));
                	//poseStack.mulPose(Vector3f.ZP.rotationDegrees((aimProgress*1.5F) * (right ? 1F : -1F)));
             }
         }
@@ -150,7 +169,7 @@ public class PistolCustomPose extends WeaponPose
 
         // Off-hand arm
         poseStack.pushPose();
-        if (player.getOffhandItem().isEmpty())
+        if (player.getOffhandItem().isEmpty() || ModSyncedDataKeys.RELOADING.getValue(player))
         {
         	Vec3 posHand = PropertyHelper.getHandPosition(stack, gun, false);
         	
@@ -196,7 +215,7 @@ public class PistolCustomPose extends WeaponPose
         		translations = GunLegacyAnimationHelper.getHandTranslation(stack, true, cooldown);
         	}
             
-        	if (player.getOffhandItem().isEmpty())
+        	if (player.getOffhandItem().isEmpty() || ModSyncedDataKeys.RELOADING.getValue(player))
             {
             	poseStack.translate(0, 0.1, -0.675);
             	poseStack.scale(0.5F, 0.5F, 0.5F);
@@ -215,7 +234,7 @@ public class PistolCustomPose extends WeaponPose
             {
             	poseStack.translate(0, 0.1, -0.675);
             	poseStack.scale(0.5F, 0.5F, 0.5F);
-            	poseStack.translate((-4.0 + posHand.x) * 0.0625 * side, (0 + posHand.y) * 0.0625, (3.2 - posHand.z) * 0.0625);
+            	poseStack.translate((-4.0 + posHand.x) * 0.0625 * side, (0 + posHand.y) * 0.0625, (4.4 - posHand.z) * 0.0625);
             	//poseStack.translate((-4.0) * 0.0625 * side, (0) * 0.0625, (0) * 0.0625);
             	poseStack.translate(-(armWidth / 2.0) * 0.0625 * side, 0, 0);
             	poseStack.mulPose(Vector3f.XP.rotationDegrees(80F));

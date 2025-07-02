@@ -1,4 +1,4 @@
-package com.mrcrayfish.guns.mixin.common;
+package com.mrcrayfish.guns.mixin.client;
 
 import dev.xylonity.explosiveenhancement.ExplosiveEnhancement;
 import dev.xylonity.explosiveenhancement.api.ExplosiveConfig;
@@ -34,6 +34,23 @@ public abstract class ExplosionMixin {
        return this.blockInteraction != BlockInteraction.NONE;
     }
 
+    @Inject(
+       method = {"finalizeExplosion"},
+       at = {@At("HEAD")}
+    )
+    private void onFinalizeExplosion(boolean pSpawnParticles, CallbackInfo ci) {
+       if (ExplosiveValues.modEnabled) {
+          BlockPos pos = new BlockPos(this.x, this.y, this.z);
+          if (ExplosiveValues.underwaterExplosions && this.level.getFluidState(pos).is(FluidTags.WATER)) {
+             this.isUnderWater = true;
+             if (ExplosiveValues.debugLogs) {
+                ExplosiveEnhancement.LOGGER.info("particle is underwater!");
+             }
+          }
+       }
+
+    }
+
     @Redirect(
       method = {"finalizeExplosion"},
       at = @At(
@@ -45,7 +62,7 @@ public abstract class ExplosionMixin {
    
     	if (ExplosiveValues.modEnabled) {
          if (ExplosiveValues.debugLogs) {
-            ExplosiveEnhancement.LOGGER.info("finalizeExplosion has been called!");
+            ExplosiveEnhancement.LOGGER.info("finalizeExplosion redirectAddParticle has been called!");
          }
 
       ExplosiveConfig.spawnParticles(level, x, y, z, this.radius, this.isUnderWater, this.damagesBlocks());

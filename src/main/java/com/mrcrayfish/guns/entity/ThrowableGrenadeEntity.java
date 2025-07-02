@@ -65,6 +65,6 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     public void onDeath()
     {
     	double explosionDamage = (Config.COMMON.grenades.grenadeDamage.get());
-    	GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), true, (float) (explosionDamage));
+    	GrenadeEntity.createExplosion(this, Config.COMMON.grenades.explosionRadius.get().floatValue(), (float) (explosionDamage), false);
     }
 }

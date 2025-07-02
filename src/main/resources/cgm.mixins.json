@@ -8,10 +8,10 @@
     "mixins": [
         "common.EndPortalBlockMixin",
         "common.LivingEntityMixin",
-        "common.SittingPhaseMixin",
-        "common.ExplosionMixin"
+        "common.SittingPhaseMixin"
     ],
     "client": [
+        "client.ExplosionMixin",
         "client.GameRendererMixin",
         "client.LevelRendererMixin",
         "client.MinecraftMixin",
