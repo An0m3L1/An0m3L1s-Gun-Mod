@@ -92,16 +92,16 @@ public class PistolCustomPose extends WeaponPose
     	        arm.xRot = (float) Math.toRadians(-40F);
     	    }
     	    else
-    	    if (mc.player.equals(player)) //Sprint animation for local player
+    	    /*if (mc.player.equals(player)) //Sprint animation for local player
             {
             	float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getPartialTick());
             	if (sprintTransition>0)
             	{
-            		arm.xRot = Mth.lerp(sprintTransition, arm.xRot, -105F);
+            		arm.xRot = Mth.lerp(sprintTransition, arm.xRot, -105F+720);
             		//arm.xRot = (float) Math.toRadians(-105F*sprintTransition);
             	}
             }
-    	    else
+    	    else*/
     	    //Sprint animation for other players
             if (player.isSprinting())
             {
