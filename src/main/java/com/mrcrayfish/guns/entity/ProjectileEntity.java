@@ -911,8 +911,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
      *
      * @param entity The entity to explode
      * @param radius The size of the explosion caused by this entity
-     * @param forceNone If true, forces the explosion mode to be NONE instead of config value
      * @param explosionDamage The damage dealt (at maximum) by explosions, if the projectile doesn't have a saved Gun instance.
+     * @param destroysBlocks If true, the explosion will destroy blocks like TNT explosions.
      */
     public static void createExplosion(Entity entity, float radius, float explosionDamage, boolean destroysBlocks)
     {

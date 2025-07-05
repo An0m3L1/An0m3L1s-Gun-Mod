@@ -253,6 +253,7 @@ public class Config
     public static class Griefing
     {
         public final ForgeConfigSpec.BooleanValue enableBlockRemovalOnExplosions;
+        public final ForgeConfigSpec.BooleanValue missileAmmoGriefing;
         public final ForgeConfigSpec.BooleanValue enableGlassBreaking;
         public final ForgeConfigSpec.BooleanValue fragileBlockDrops;
         public final ForgeConfigSpec.DoubleValue fragileBaseBreakChance;
@@ -262,7 +263,8 @@ public class Config
         {
             builder.comment("Properties related to gun griefing").push("griefing");
             {
-                this.enableBlockRemovalOnExplosions = builder.comment("If enabled, allows block removal on explosions. This only affects missiles; grenades never break blocks.").define("enableBlockRemovalOnExplosions", true);
+                this.enableBlockRemovalOnExplosions = builder.comment("If enabled, allows block removal on explosions from missiles and projectiles from CGM addons. Frag Grenades never break blocks.").define("enableBlockRemovalOnExplosions", true);
+                this.missileAmmoGriefing = builder.comment("If false, missiles will not destroy blocks regardless of the block removal config value.").define("missileAmmoGriefing", true);
                 this.enableGlassBreaking = builder.comment("If enabled, allows guns to shoot out glass and other fragile objects").define("enableGlassBreaking", true);
                 this.fragileBlockDrops = builder.comment("If enabled, fragile blocks will drop their loot when broken").define("fragileBlockDrops", true);
                 this.fragileBaseBreakChance = builder.comment("The base chance that a fragile block is broken when impacted by a bullet. The hardness of a block will scale this value; the harder the block, the lower the final calculated chance will be.").defineInRange("fragileBlockBreakChance", 1.0, 0.0, 1.0);
@@ -341,7 +343,7 @@ public class Config
         {
             builder.comment("Properties relating to grenades").push("grenades");
             {
-            	this.explosionRadius = builder.comment("The explosion radius of Grenade explosions. This determines the power of the explosion on blocks, and the maximum range at which damage can be dealt.").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
+            	this.explosionRadius = builder.comment("The explosion radius of Grenade explosions. This determines the maximum range at which damage can be dealt.").defineInRange("explosionRadius", 5.0, 0.0, Double.MAX_VALUE);
                 this.grenadeDamage = builder.comment("The maximum damage dealt by thrown grenades").defineInRange("grenadeDamage", 20.0, 0.0, Double.MAX_VALUE);
             }
             builder.pop();
