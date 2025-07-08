@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level;
 public class GrenadeItem extends AmmoItem
 {
     protected int maxCookTime;
+    protected boolean playThrowSound = true;
 
     public GrenadeItem(Item.Properties properties, int maxCookTime)
     {
@@ -86,6 +87,8 @@ public class GrenadeItem extends AmmoItem
                 ThrowableGrenadeEntity grenade = this.create(worldIn, entityLiving, this.maxCookTime - duration);
                 grenade.shootFromRotation(entityLiving, entityLiving.getXRot(), entityLiving.getYRot(), 0.0F, Math.min(1.3F, (duration+10) / 30F), 1.0F);
                 worldIn.addFreshEntity(grenade);
+                if(playThrowSound)
+                	this.playThrowSound(worldIn, entityLiving);
                 this.onThrown(worldIn, grenade);
                 if(entityLiving instanceof Player)
                 {
@@ -103,6 +106,11 @@ public class GrenadeItem extends AmmoItem
     public boolean canCook()
     {
         return true;
+    }
+
+    protected void playThrowSound(Level worldIn, LivingEntity entityLiving)
+    {
+    	worldIn.playSound(null, entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), ModSounds.ITEM_GRENADE_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
     }
 
     protected void onThrown(Level world, ThrowableGrenadeEntity entity)

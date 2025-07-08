@@ -29,6 +29,7 @@
    "item.heavy_rifle.enchanted_fire":   { "subtitle": "subtitle.cgm.fire.enchanted", "sounds": [{ "name": "cgm:item/heavy_rifle/enchanted_fire" }]},
    "item.heavy_rifle.cock":             { "subtitle": "subtitle.cgm.cock",           "sounds": [{ "name": "cgm:item/heavy_rifle/cock" }]},
    "item.grenade.pin":                  { "subtitle": "subtitle.cgm.grenade.pin",    "sounds": [{ "name": "cgm:item/grenade/pin" }]},
+   "item.grenade.throw":                { "subtitle": "subtitle.cgm.grenade.throw",  "sounds": [{ "name": "cgm:item/grenade/throw" }]},
    "entity.stun_grenade.explosion":     { "subtitle": "subtitle.cgm.stun.explosion", "sounds": [{ "name": "cgm:entity/stun_grenade/explosion" }]},
    "entity.stun_grenade.ring":          { "subtitle": "subtitle.cgm.stun.ring",      "sounds": [{ "name": "cgm:entity/stun_grenade/ring", "stream": true }]},
    "item.empty_click":                  { "subtitle": "subtitle.cgm.empty",          "sounds": [{ "name": "cgm:item/empty_click" }]},

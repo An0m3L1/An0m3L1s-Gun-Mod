@@ -11,7 +11,6 @@
         "common.SittingPhaseMixin"
     ],
     "client": [
-        "client.ExplosionMixin",
         "client.GameRendererMixin",
         "client.LevelRendererMixin",
         "client.MinecraftMixin",
