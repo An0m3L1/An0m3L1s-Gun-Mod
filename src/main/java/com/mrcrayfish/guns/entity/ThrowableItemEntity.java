@@ -29,7 +29,7 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
     private boolean shouldBounce;
     private float gravityVelocity = 0.03F;
     protected SoundEvent bounceSound;
-    protected boolean forceDefaultBounceSounds;
+    protected boolean useCustomBounceSound = false;
 
     /* The max life of the entity. If -1, will stay alive forever and will need to be explicitly removed. */
     private int maxLife = 20 * 10;
@@ -105,7 +105,7 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
                     BlockPos resultPos = blockResult.getBlockPos();
                     BlockState state = this.level.getBlockState(resultPos);
                     SoundEvent event = state.getBlock().getSoundType(state, this.level, resultPos, this).getStepSound();
-                    if (bounceSound != null && !forceDefaultBounceSounds)
+                    if (bounceSound != null && !useCustomBounceSound)
                     	event = bounceSound;
                     double speed = this.getDeltaMovement().length();
                     if(speed > 0.1)
