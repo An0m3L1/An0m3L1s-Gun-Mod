@@ -1073,7 +1073,7 @@ public class GunRenderingHandler
                         /* Lastly, rotate the attachment */
                         if (type != IAttachment.Type.SCOPE)
                         {
-	                        Vec3 rotations = PropertyHelper.getAttachmentRotation(stack, modifiedGun, type).subtract(gunOrigin);
+	                        Vec3 rotations = PropertyHelper.getAttachmentRotation(stack, modifiedGun, type);
 	                    	GunAnimationHelper.rotateAroundOffset(poseStack, rotations, Vec3.ZERO);
                     	}
                         if (animateableContext)
