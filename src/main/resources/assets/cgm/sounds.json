@@ -36,7 +36,14 @@
    "ui.weapon.attach":                  { "subtitle": "subtitle.cgm.attach",         "sounds": [{ "name": "cgm:ui/weapon/attach" }]},
    
    
-
+	"entity.grenade.bounce": {
+		"sounds": [
+		  "cgm:entity/grenade/bounce1",
+		  "cgm:entity/grenade/bounce2",
+		  "cgm:entity/grenade/bounce3"
+		]
+	},
+	
 	"item.pistol.mag_out": {
 		"sounds": [{"name":"cgm:item/pistol/mag_out"}]
 	},

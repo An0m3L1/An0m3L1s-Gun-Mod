@@ -3,7 +3,10 @@ package com.mrcrayfish.guns.entity;
 import com.mrcrayfish.guns.Config;
 import com.mrcrayfish.guns.init.ModEntities;
 import com.mrcrayfish.guns.init.ModItems;
+import com.mrcrayfish.guns.init.ModSounds;
+
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +23,8 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     public ThrowableGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, Level worldIn)
     {
         super(entityType, worldIn);
+        bounceSound = ModSounds.ENTITY_GRENADE_BOUNCE.get();
+        useCustomBounceSound = true;
     }
 
     public ThrowableGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, Level world, LivingEntity entity)
@@ -29,6 +34,8 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
         this.setGravityVelocity(0.05F);
         this.setItem(new ItemStack(ModItems.GRENADE.get()));
         this.setMaxLife(20 * 3);
+        bounceSound = ModSounds.ENTITY_GRENADE_BOUNCE.get();
+        useCustomBounceSound = true;
     }
 
     public ThrowableGrenadeEntity(Level world, LivingEntity entity, int timeLeft)
@@ -38,6 +45,8 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
         this.setGravityVelocity(0.05F);
         this.setItem(new ItemStack(ModItems.GRENADE.get()));
         this.setMaxLife(timeLeft);
+        bounceSound = ModSounds.ENTITY_GRENADE_BOUNCE.get();
+        useCustomBounceSound = true;
     }
 
     @Override
