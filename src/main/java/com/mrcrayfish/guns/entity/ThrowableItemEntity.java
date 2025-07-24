@@ -108,9 +108,9 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
                     if (bounceSound != null && useCustomBounceSound)
                     	event = bounceSound;
                     double speed = this.getDeltaMovement().length();
-                    if(speed > 0.1)
+                    if(speed > 0.12)
                     {
-                        this.level.playSound(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, event, SoundSource.AMBIENT, (float) Math.min(speed*1.7F, 1), 1.0F);
+                        this.level.playSound(null, result.getLocation().x, result.getLocation().y, result.getLocation().z, event, SoundSource.AMBIENT, (float) Math.min(speed*1.6F, 1), 1.0F);
                     }
                     this.bounce(blockResult.getDirection());
                 }

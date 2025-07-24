@@ -8,6 +8,7 @@ import com.mrcrayfish.guns.common.DelayedTask;
 import com.mrcrayfish.guns.common.Gun;
 import com.mrcrayfish.guns.common.Gun.ReloadSoundsBase;
 import com.mrcrayfish.guns.common.ProjectileManager;
+import com.mrcrayfish.guns.common.RampUpTracker;
 import com.mrcrayfish.guns.common.ShootTracker;
 import com.mrcrayfish.guns.common.SpreadTracker;
 import com.mrcrayfish.guns.common.container.AttachmentContainer;
@@ -180,6 +181,13 @@ public class ServerPlayHandler
                     double posZ = player.getZ();
                     float volume = GunModifierHelper.getFireSoundVolume(heldItem);
                     float pitch = 0.9F + world.random.nextFloat() * 0.2F;
+                    if (Gun.hasRampUp(heldItem))
+                    {
+                    	float rampUpProgress = RampUpTracker.getRampUpProgress(player, modifiedGun);
+                    	float rampUpEased = 1 - (1 - rampUpProgress) * (1 - rampUpProgress);
+                    	pitch = 0.8F + (rampUpEased * 0.6F) + (rampUpProgress >= 1 ? world.random.nextFloat() * 0.2F : 0);
+                    }
+                    
                     double radius = GunModifierHelper.getModifiedFireSoundRadius(heldItem, Config.SERVER.gunShotMaxDistance.get());
                     boolean muzzle = modifiedGun.getDisplay().getFlash() != null;
                     S2CMessageGunSound messageSound = new S2CMessageGunSound(fireSound, SoundSource.PLAYERS, (float) posX, (float) posY, (float) posZ, volume, pitch, player.getId(), muzzle, false);

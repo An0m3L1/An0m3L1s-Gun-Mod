@@ -33,6 +33,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.DistExecutor;
@@ -4042,7 +4043,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
     public static boolean hasRampUp(ItemStack gunStack)
     {
         Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-        return modifiedGun.getGeneral().hasDoRampUp();
+        return modifiedGun.getGeneral().hasDoRampUp() || EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.RAMP_UP.get(), gunStack)>0;
     }
 
     public static boolean isAmmo(ItemStack stack, ResourceLocation id)

@@ -133,4 +133,9 @@ public class RampUpTracker
             server.execute(() -> RAMPUP_TRACKER_MAP.remove(event.getEntity()));
         }
     }
+
+    public static float getRampUpProgress(Player player, Gun gun)
+    {
+        return ((float) ModSyncedDataKeys.RAMPUPSHOT.getValue(player))/((float) GunEnchantmentHelper.getRampUpMaxShots(gun));
+    }
 }
