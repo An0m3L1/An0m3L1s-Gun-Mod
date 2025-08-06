@@ -447,8 +447,8 @@ public class Config
         {
             builder.comment("Properties relating to projectile spread").push("projectile_spread");
             {
-                this.spreadThreshold = builder.comment("The amount of time in milliseconds (1/50th of a tick) before projectile spread resets to its resting value. The value indicates a reasonable amount of time before a weapon is considered stable again.").defineInRange("spreadThreshold", 300, 0, 1000);
-                this.maxCount = builder.comment("The amount of times a player has to shoot within the spread threshold before the maximum amount of spread is applied. Setting the value higher means it will take longer for the spread to be applied.").defineInRange("maxCount", 10, 1, Integer.MAX_VALUE);
+                this.spreadThreshold = builder.comment("The default amount of time in milliseconds (1/50th of a tick) before projectile spread resets to its resting value. The value indicates a reasonable amount of time before a weapon is considered stable again.").defineInRange("spreadThreshold", 300, 0, 1000);
+                this.maxCount = builder.comment("The default amount of times a player has to shoot within the spread threshold before the maximum amount of spread is applied. Setting the value higher means it will take longer for the spread to be applied.").defineInRange("maxCount", 10, 1, Integer.MAX_VALUE);
                 this.doSpreadHipFirePenalty = builder.comment("When enabled, spread increases faster when not aiming.").define("doSpreadHipFirePenalty", true);
             }
             builder.pop();

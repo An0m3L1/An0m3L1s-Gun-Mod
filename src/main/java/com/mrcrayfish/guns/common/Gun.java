@@ -227,7 +227,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private boolean doRampUp = false;
         @Optional
-        private int rampUpShotsNeeded = 8;
+        private int rampUpShotsNeeded = 7;
 
         @Override
         public CompoundTag serializeNBT()
@@ -1039,7 +1039,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
 
         /**
-         * @return Whether the gun has the Ramp Up effect.
+         * @return How many shots a gun with the Ramp Up effect needs to max out its fire rate.
          */
         public int getRampUpShotsNeeded()
         {

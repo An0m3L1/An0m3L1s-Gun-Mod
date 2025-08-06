@@ -19,6 +19,7 @@ import java.util.Map;
 /**
  * Author: MrCrayfish
  */
+@SuppressWarnings("deprecation")
 public class GunEnchantmentHelper
 {
     public static ParticleOptions getParticle(ItemStack weapon)
@@ -35,8 +36,7 @@ public class GunEnchantmentHelper
         return new TrailData(weapon.isEnchanted());
     }
 
-
-    public static int getReloadInterval(ItemStack weapon, boolean reloadFromEmpty)
+	public static int getReloadInterval(ItemStack weapon, boolean reloadFromEmpty)
     {
         Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         int interval = modifiedGun.getGeneral().getReloadRate();
@@ -160,6 +160,12 @@ public class GunEnchantmentHelper
         return damage;
     }
 
+    public static float getPuncturingChance(ItemStack weapon)
+    {
+        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.PUNCTURING.get(), weapon);
+        return level * 0.05F;
+    }
+
     public static float getSplitShotProjectileCount(ItemStack weapon, float projectiles)
     {
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ACCELERATOR.get(), weapon);
@@ -170,24 +176,24 @@ public class GunEnchantmentHelper
         return projectiles;
     }
 
-    public static float getDeadeyeHeadshotMultiplier(ItemStack weapon, float multiplier)
-    {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ACCELERATOR.get(), weapon);
-        if(level > 0)
-        {
-            return multiplier + multiplier * ((1F/3F) * level);
-        }
-        return multiplier;
-    }
-
     public static float getSplitShotDamage(ItemStack weapon, float damage)
     {
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ACCELERATOR.get(), weapon);
         if(level > 0)
         {
-            return damage + damage * (0.05F * level);
+            return damage + damage * (0.1F * level);
         }
         return damage;
+    }
+
+    public static float getDeadeyeHeadshotMultiplier(ItemStack weapon, float multiplier)
+    {
+        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ACCELERATOR.get(), weapon);
+        if(level > 0)
+        {
+            return multiplier + ((1F/3F) * level);
+        }
+        return multiplier;
     }
 
     public static float getStabilizingRecoilModifier(ItemStack weapon)
@@ -198,11 +204,5 @@ public class GunEnchantmentHelper
             return Mth.clamp(1F - (0.2F * level),0F,1F);
         }
         return 1F;
-    }
-
-    public static float getPuncturingChance(ItemStack weapon)
-    {
-        int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.PUNCTURING.get(), weapon);
-        return level * 0.05F;
     }
 }
