@@ -6,6 +6,7 @@ import com.mrcrayfish.guns.client.CustomGunManager;
 import com.mrcrayfish.guns.client.audio.GunShotSound;
 import com.mrcrayfish.guns.client.handler.BulletTrailRenderingHandler;
 import com.mrcrayfish.guns.client.handler.GunRenderingHandler;
+import com.mrcrayfish.guns.client.util.GunAnimationHelper;
 import com.mrcrayfish.guns.common.NetworkGunManager;
 import com.mrcrayfish.guns.init.ModParticleTypes;
 import com.mrcrayfish.guns.network.message.S2CMessageBlood;
@@ -60,6 +61,13 @@ public class ClientPlayHandler
 
         if(message.getShooterId() == mc.player.getId())
         {
+        	ItemStack weapon = mc.player.getMainHandItem();
+        	if (weapon == null)
+        		return;
+        	
+        	String animType = GunAnimationHelper.getSmartAnimationType(mc.player.getMainHandItem(), mc.player, mc.getPartialTick());
+        	animType = GunAnimationHelper.addReloadAnimSuffix(animType, weapon);
+        	if (!message.isReload() || GunAnimationHelper.getAnimationSoundEventCount(animType, weapon)<=0)
             Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(message.getId(), SoundSource.PLAYERS, message.getVolume(), message.getPitch(), mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
         }
         else

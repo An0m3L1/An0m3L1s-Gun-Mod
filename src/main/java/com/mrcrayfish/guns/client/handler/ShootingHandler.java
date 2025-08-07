@@ -60,6 +60,7 @@ public class ShootingHandler
     private boolean shooting;
     private int lastShotTick=-1;
     private int weaponSwitchTick=-1;
+    private int weaponInspectTick=-1;
     private boolean doEmptyClick;
 
     private int slot = -1;
