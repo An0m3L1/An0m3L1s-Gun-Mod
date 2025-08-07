@@ -174,7 +174,7 @@ public final class GunAnimationHelper
     	}
     	if (animType.equals("reloadEnd"))
     	{
-    		return getAnimationRot("reloadEnd", weapon, 1-progress, component);
+    		return getAnimationRot("reloadEnd", weapon, progress, component);
     	}
     	if (animType.equals("reload") && hasAnimation("reload", weapon))
     	{
@@ -581,6 +581,10 @@ public final class GunAnimationHelper
 		
 		return 1;
 	}
+	public static int getAnimationFrames(String animationType, ItemStack weapon) {
+		ResourceLocation weapKey = lookForParentAnimation(animationType, getItemLocationKey(weapon));
+		return getAnimationFrames(animationType, weapKey);
+	}
 	
 	
 	// Rotation offset points
@@ -704,7 +708,7 @@ public final class GunAnimationHelper
 			DataNumber transformData = transformObject.getDataNumber(transform);
 			if (transformData!=null)
 			{
-	        	//GunMod.LOGGER.info("Animation System: Found" + transform + " number data of " + weapKey);
+	        	//GunMod.LOGGER.info("Animation System: Found " + transform + " number data of " + weapKey);
 				return transformData.asDouble();
 			}
         	//GunMod.LOGGER.info("Animation System: Found animation object of " + weapKey + " but did not find " + transform + " number data");
