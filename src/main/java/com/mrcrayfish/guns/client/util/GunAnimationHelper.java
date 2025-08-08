@@ -54,6 +54,9 @@ public final class GunAnimationHelper
 	/* Smart animation methods for selecting animations based on given parameters */
     public static String getSmartAnimationType(ItemStack weapon, Player player, float partialTicks)
     {
+    	if (!(weapon.getItem() instanceof GunItem))
+    	return "none";
+    	
     	double reloadTransitionProgress = ReloadHandler.get().getReloadProgress(partialTicks);
     	int weaponSwitchTick = ShootingHandler.get().getWeaponSwitchTick();
     	if (reloadTransitionProgress>0.0 && hasAnimation("reload", weapon))
@@ -89,12 +92,20 @@ public final class GunAnimationHelper
     		float drawProgress = ((player.tickCount-weaponSwitchTick)+partialTicks)*animationSpeed;
     		int totalFrames = Math.max(getAnimationFrames("draw", weapKey),1);
         	
-    		if ((drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+10) && player.getMainHandItem() == weapon)
+    		if ((drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+5) && player.getMainHandItem() == weapon)
         	return "draw";
         }
-        
-        if(hasAnimation("inspect", weapon) && true==false)
-        return "inspect";
+    	int weaponInspectTick = ShootingHandler.get().getWeaponInspectTick();
+        if(hasAnimation("inspect", weapon) && weaponInspectTick!=-1 && player.tickCount>weaponInspectTick && reloadTransitionProgress<=0.0)
+        {
+        	ResourceLocation weapKey = lookForParentAnimation("inspect", getItemLocationKey(weapon));
+        	float animationSpeed = (float) getAnimationValue("inspect", weapKey, "animationSpeed");
+    		float inspectProgress = ((player.tickCount-weaponInspectTick)+partialTicks)*animationSpeed;
+    		int totalFrames = Math.max(getAnimationFrames("inspect", weapKey),1);
+        	
+    		if ((inspectProgress<totalFrames+1 || player.tickCount<weaponInspectTick+5) && player.getMainHandItem() == weapon)
+        	return "inspect";
+        }
     	
     	return "none";
     }
@@ -126,6 +137,10 @@ public final class GunAnimationHelper
     {
     	ResourceLocation weapKey = lookForParentAnimation(animType, getItemLocationKey(weapon));
     	float progress = getSpecificAnimationProgress(animType, weapon, player, partialTicks);
+    	if (animType.equals("inspect"))
+    	{
+    		return getAnimationTrans("inspect", weapon, progress, component);
+    	}
     	if (animType.equals("draw"))
     	{
     		return getAnimationTrans("draw", weapon, progress, component);
@@ -167,6 +182,10 @@ public final class GunAnimationHelper
     	if (animType.equals("draw"))
     	{
     		return getAnimationRot("draw", weapon, progress, component);
+    	}
+    	if (animType.equals("inspect"))
+    	{
+    		return getAnimationRot("inspect", weapon, progress, component);
     	}
     	if (animType.equals("reloadStart"))
     	{
@@ -212,6 +231,14 @@ public final class GunAnimationHelper
     		float drawProgress = ((player.tickCount-weaponSwitchTick)+partialTicks)*animationSpeed;
     		int totalFrames = Math.max(getAnimationFrames(animType, weapKey),1);
     		return drawProgress/totalFrames;
+    	}
+    	if (animType.equals("inspect"))
+    	{
+    		float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
+        	int weaponInspectTick = ShootingHandler.get().getWeaponInspectTick();
+    		float inspectProgress = ((player.tickCount-weaponInspectTick)+partialTicks)*animationSpeed;
+    		int totalFrames = Math.max(getAnimationFrames(animType, weapKey),1);
+    		return inspectProgress/totalFrames;
     	}
     	if (animType.equals("reloadStart"))
     	{
@@ -830,18 +857,21 @@ public final class GunAnimationHelper
 		}
 		return null;
 	}
-	public static float getAnimationSoundThreshold(String animationType, ItemStack weapon, int soundIntID) {
+	public static float getAnimationSoundParamFloat(String animationType, ItemStack weapon, int soundIntID, String parameter, float defaultValue) {
 		ResourceLocation weapKey = lookForParentAnimation(animationType, getItemLocationKey(weapon));
 		DataObject audioObject = getObjectByPath(weapKey, ANIMATION_KEY, animationType, "sounds", String.valueOf(soundIntID));
-		if (audioObject.has("playAt", DataType.NUMBER))
+		if (audioObject.has(parameter, DataType.NUMBER))
 		{
-			DataNumber audioThresoldData = audioObject.getDataNumber("playAt");
+			DataNumber audioThresoldData = audioObject.getDataNumber(parameter);
 			if (audioThresoldData!=null)
 			{
 				return audioThresoldData.asFloat();
 			}
 		}
-		return -1;
+		return defaultValue;
+	}
+	public static float getAnimationSoundParamFloat(String animationType, ItemStack weapon, int soundIntID, String parameter) {
+		return getAnimationSoundParamFloat(animationType, weapon, soundIntID, parameter, -1);
 	}
 	
 	

@@ -6,6 +6,7 @@ import com.mrcrayfish.guns.Config;
 import com.mrcrayfish.guns.GunMod;
 import com.mrcrayfish.guns.Reference;
 import com.mrcrayfish.guns.client.KeyBinds;
+import com.mrcrayfish.guns.client.util.GunAnimationHelper;
 import com.mrcrayfish.guns.common.GripType;
 import com.mrcrayfish.guns.common.Gun;
 import com.mrcrayfish.guns.compat.PlayerReviveHelper;
@@ -43,6 +44,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Author: MrCrayfish
+ * Modified by NineZero for CGM Expanded
+ * 
+ * This class also handles client-sided weapon switching detection
+ * and weapon inspection.
  */
 public class ShootingHandler
 {
@@ -193,7 +198,10 @@ public class ShootingHandler
         Player player = mc.player;
         if(player != null)
         {
-            ItemStack heldItem = player.getMainHandItem();
+            if(!isInGame())
+                return;
+        	
+        	ItemStack heldItem = player.getMainHandItem();
             // Weapon switch detection
             if (!isSameWeapon(player))
             {
@@ -204,21 +212,39 @@ public class ShootingHandler
             	ModSyncedDataKeys.BURSTCOUNT.setValue(player, 0);
             	ModSyncedDataKeys.AIMING.setValue(player, false);
             	weaponSwitchTick = player.tickCount;
+            	weaponInspectTick = -1;
                 if(heldItem.getItem() instanceof GunItem)
                 {
                 	GunRenderingHandler.get().updateReserveAmmo(player);
                 }
                 ReloadHandler.get().weaponSwitched();
             }
+            
+            // Weapon inspect trigger
+            CompoundTag tag = heldItem.getTag();
+        	boolean gunIsFull = (tag.getInt("AmmoCount") == GunCompositeStatHelper.getAmmoCapacity(heldItem));
+            if ((KeyBinds.KEY_INSPECT.consumeClick() || (KeyBinds.KEY_RELOAD.isDown() && gunIsFull))
+            && GunAnimationHelper.getSmartAnimationType(heldItem, player, mc.getPartialTick()).equals("none") && !AimingHandler.get().isAiming())
+            {
+            	weaponInspectTick = player.tickCount;
+            	KeyBinds.KEY_RELOAD.setDown(false);
+            }
+            
+            // Cancel weapon switch/inspect when reloading.
             if (ModSyncedDataKeys.RELOADING.getValue(player) == true)
+            {
             	weaponSwitchTick = -1;
+            	weaponInspectTick = -1;
+            }
+            // Cancel weapon inspect when aiming.
+            if (weaponInspectTick != -1 && AimingHandler.get().isAiming())
+            {
+            	weaponInspectTick = -1;
+            }
             
             // Update item and slot variables
             lastItem = player.getInventory().getSelected().getItem();
             slot = player.getInventory().selected;
-
-            if(!isInGame())
-                return;
             
             if(PlayerReviveHelper.isBleeding(player))
                 return;
@@ -242,8 +268,6 @@ public class ShootingHandler
                 	Gun modifiedGun = gunItem.getModifiedGun(heldItem);
                 	if (modifiedGun.getFireModes().usesFireModes() && (!ModSyncedDataKeys.SHOOTING.getValue(player) && !ModSyncedDataKeys.RELOADING.getValue(player) && ModSyncedDataKeys.BURSTCOUNT.getValue(player)<=0))
                 	{
-                    	CompoundTag tag = heldItem.getOrCreateTag();
-                        //Gun.FireModes fireModes = modifiedGun.getFireModes();
                         Boolean changedFireMode = false;
                         int newFireMode = 0;
                         
@@ -275,7 +299,7 @@ public class ShootingHandler
                         {
                         	PacketHandler.getPlayChannel().sendToServer(new C2SMessageFireSwitch(newFireMode));
                         	//tag.putInt("FireMode", newFireMode);
-                        	Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(gunItem.getModifiedGun(heldItem).getSounds().getFireSwitch(), SoundSource.PLAYERS, 0.8F, 1.0F, Minecraft.getInstance().level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
+                        	Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(gunItem.getModifiedGun(heldItem).getSounds().getFireSwitch(), SoundSource.PLAYERS, 0.8F, 1.0F, mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
                         }
                 	}
                 }
@@ -439,6 +463,7 @@ public class ShootingHandler
             
             lastShotTick = player.tickCount;
             weaponSwitchTick = -1;
+            weaponInspectTick = -1;
             MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
         }
     }
@@ -467,8 +492,18 @@ public class ShootingHandler
     	return weaponSwitchTick;
     }
     
+    public int getWeaponInspectTick()
+    {
+    	return weaponInspectTick;
+    }
+    
     public void clearWeaponSwitchTick()
     {
     	this.weaponSwitchTick = -1;
+    }
+    
+    public void clearWeaponInspectTick()
+    {
+    	this.weaponInspectTick = -1;
     }
 }

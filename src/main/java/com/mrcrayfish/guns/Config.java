@@ -162,6 +162,7 @@ public class Config
     {
         public final ForgeConfigSpec.DoubleValue aimDownSightSensitivity;
         public final ForgeConfigSpec.BooleanValue flipControls;
+        public final ForgeConfigSpec.BooleanValue inspectWhenReloadWhileFull;
 
         public Controls(ForgeConfigSpec.Builder builder)
         {
@@ -169,6 +170,7 @@ public class Config
             {
                 this.aimDownSightSensitivity = builder.comment("A value to multiple the mouse sensitivity by when aiming down weapon sights. Go to (Options > Controls > Mouse Settings > ADS Sensitivity) in game to change this!").defineInRange("aimDownSightSensitivity", 0.75, 0.0, 1.0);
                 this.flipControls = builder.comment("When enabled, switches the shoot and aim controls of weapons. Due to technical reasons, you won't be able to use offhand items if you enable this setting.").define("flipControls", false);
+                this.inspectWhenReloadWhileFull = builder.comment("When enabled, the Reload keybind will inspect the selected gun when it is fully loaded. The Inspect keybind can be used regardless of this setting.").define("inspectWhenReloadWhileFull", false);
             }
             builder.pop();
         }

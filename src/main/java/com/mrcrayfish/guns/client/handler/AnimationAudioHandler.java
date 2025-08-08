@@ -88,13 +88,15 @@ public class AnimationAudioHandler
 		    		String soundNumID = String.valueOf(i);
 		    		String soundString = GunAnimationHelper.getAnimationSoundEventID(animType, weapon, i);
 		    		ResourceLocation soundEvent = soundString.isEmpty() ? null : new ResourceLocation(soundString);
-		    		float soundThreshold = GunAnimationHelper.getAnimationSoundThreshold(animType, weapon, i);
+		    		float soundThreshold = GunAnimationHelper.getAnimationSoundParamFloat(animType, weapon, i, "playAt");
 		    		//GunMod.LOGGER.info("Animation Audio Handler: Found sound with numerical ID of " + soundNumID + ", event ID of " + soundString + ". Sound plays at frame " + soundThreshold);
 		    		if (scaledProgress>=soundThreshold && readySounds.contains(soundNumID))
 				    {
 		    			if (!playedSounds.contains(soundNumID))
 		    			{
-			    			Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(soundEvent, SoundSource.PLAYERS, 1.0F, 1.0F, mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
+		    				float pitch = GunAnimationHelper.getAnimationSoundParamFloat(animType, weapon, i, "pitch", 1.0F);
+		    				float volume = GunAnimationHelper.getAnimationSoundParamFloat(animType, weapon, i, "volume", 1.0F);
+			    			Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(soundEvent, SoundSource.PLAYERS, volume, pitch, mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
 			    			readySounds.remove(soundNumID);
 			    			playedSounds.add(soundNumID);
 		    			}

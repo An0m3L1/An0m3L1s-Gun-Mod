@@ -112,13 +112,14 @@ public class ReloadHandler
                     CompoundTag tag = stack.getTag();
                     if(tag != null && !tag.contains("IgnoreAmmo", Tag.TAG_BYTE))
                     {
-                    	Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-                    	if(tag.getInt("AmmoCount") < GunCompositeStatHelper.getAmmoCapacity(stack, gun))
-                    	this.setReloading(!ModSyncedDataKeys.RELOADING.getValue(player), true);
+                    	if(tag.getInt("AmmoCount") < GunCompositeStatHelper.getAmmoCapacity(stack))
+                    	{
+                    		this.setReloading(!ModSyncedDataKeys.RELOADING.getValue(player), true);
+                    		KeyBinds.KEY_RELOAD.setDown(false);
+                    	}
                     }
                 }
         	}
-            KeyBinds.KEY_RELOAD.setDown(false);
             if(player.getMainHandItem().getItem() instanceof GunItem)
             GunRenderingHandler.get().updateReserveAmmo(player);
         }
