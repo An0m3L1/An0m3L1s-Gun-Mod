@@ -198,9 +198,6 @@ public class ShootingHandler
         Player player = mc.player;
         if(player != null)
         {
-            if(!isInGame())
-                return;
-        	
         	ItemStack heldItem = player.getMainHandItem();
             // Weapon switch detection
             if (!isSameWeapon(player))
@@ -221,14 +218,17 @@ public class ShootingHandler
             }
             
             // Weapon inspect trigger
-            CompoundTag tag = heldItem.getTag();
-        	boolean gunIsFull = (tag.getInt("AmmoCount") == GunCompositeStatHelper.getAmmoCapacity(heldItem));
-            if ((KeyBinds.KEY_INSPECT.consumeClick() || (KeyBinds.KEY_RELOAD.isDown() && gunIsFull))
-            && GunAnimationHelper.getSmartAnimationType(heldItem, player, mc.getPartialTick()).equals("none") && !AimingHandler.get().isAiming())
+            if (heldItem != null && heldItem.getItem() instanceof GunItem)
             {
-            	weaponInspectTick = player.tickCount;
-            	KeyBinds.KEY_RELOAD.setDown(false);
-            }
+	            CompoundTag tag = heldItem.getTag();
+	        	boolean gunIsFull = (tag.getInt("AmmoCount") == GunCompositeStatHelper.getAmmoCapacity(heldItem));
+	            if (isInGame() && (KeyBinds.KEY_INSPECT.consumeClick() || (KeyBinds.KEY_RELOAD.isDown() && gunIsFull && Config.CLIENT.controls.inspectWhenReloadWhileFull.get()))
+	            && GunAnimationHelper.getSmartAnimationType(heldItem, player, mc.getPartialTick()).equals("none") && !AimingHandler.get().isAiming())
+	            {
+	            	weaponInspectTick = player.tickCount;
+	            	KeyBinds.KEY_RELOAD.setDown(false);
+	            }
+        	}
             
             // Cancel weapon switch/inspect when reloading.
             if (ModSyncedDataKeys.RELOADING.getValue(player) == true)
@@ -245,6 +245,9 @@ public class ShootingHandler
             // Update item and slot variables
             lastItem = player.getInventory().getSelected().getItem();
             slot = player.getInventory().selected;
+            
+            if(!isInGame())
+                return;
             
             if(PlayerReviveHelper.isBleeding(player))
                 return;
@@ -473,10 +476,10 @@ public class ShootingHandler
         if (slot==-1)
         	return true;
         
-        boolean sameItem = (player.getInventory().getSelected().getItem() == lastItem);
+        Item currentItem = player.getInventory().getSelected().getItem();
+        boolean sameItem = (Item.getId(currentItem) == Item.getId(lastItem));
         
     	return (isSameSlot(player) && sameItem);
-    	//return (player.getInventory().selected == slot);
     }
     
     private boolean isSameSlot(Player player)

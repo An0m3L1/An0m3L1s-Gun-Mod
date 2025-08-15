@@ -40,16 +40,18 @@ public class RecoilHandler
     private float gunRecoilRandom;
     private float cameraRecoil;
     private float progressCameraRecoil;
-    private float actualRecoil;
+    private float currentCameraVRecoil;
+    private float prevCameraVRecoil;
+    private float lastShotVRecoil;
+    private float currentCameraHRecoil;
+    private float prevCameraHRecoil;
+    private float lastShotHRecoil;
     private int lastFireTick = -1;
-    private int shotsFired = 0;
-    private float recoilUpwardTime = 2;
-    private float recoilDownwardTime = 8;
 
     private RecoilHandler() {}
 
     @SubscribeEvent
-    public void onGunFire(GunFireEvent.Post event)
+    public void onGunFire(GunFireEvent.Pre event)
     {
         if(!event.isClient())
             return;
@@ -67,15 +69,13 @@ public class RecoilHandler
         float recoilModifier = 1.0F - GunModifierHelper.getRecoilModifier(heldItem);
         recoilModifier *= this.getAdsRecoilReduction(modifiedGun);
         this.cameraRecoil = modifiedGun.getGeneral().getRecoilAngle() * recoilModifier;
-        this.progressCameraRecoil = 0F;
-        this.gunRecoilRandom = random.nextFloat();
-        if (mc.player.tickCount - 5 <= this.lastFireTick || this.shotsFired == 0)
-        this.shotsFired++;
-        else
-        this.shotsFired = 1;
-
         this.lastFireTick = mc.player.tickCount;
-        this.actualRecoil = 0F;
+        this.gunRecoilRandom = random.nextFloat();
+        
+        this.lastShotVRecoil = currentCameraVRecoil;
+        this.lastShotHRecoil = currentCameraHRecoil;
+        
+        this.progressCameraRecoil = 0F;
     }
 
     @SubscribeEvent
@@ -93,33 +93,58 @@ public class RecoilHandler
         if(!Config.SERVER.enableCameraRecoil.get())
             return;
         
-        float cameraAngleChange = 0;
+        float cameraVAngleChange = 0;
+        float cameraHAngleChange = 0;
 
-        //New camera recoil
         if(!Config.CLIENT.display.useOldCameraRecoil.get())
         {
-        	int currentRecoilTick = mc.player.tickCount - this.lastFireTick;
-        	float recoilTime = ((float) currentRecoilTick) + mc.getFrameTime();
-        	float targetRecoil = 0;
+            //New camera recoil method.
+    		if (lastFireTick != -1)
+    		{
+	            int currentRecoilTick = mc.player.tickCount - this.lastFireTick;
+	        	
+	            float prevVRecoil = lastShotVRecoil-Math.min(lastShotVRecoil*0.4F,0.2F);
+	            float stackedVRecoil = cameraRecoil + lastShotVRecoil;
+	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/26),0,cameraRecoil*16) : cameraRecoil;
+	            //float targetVRecoil = cameraRecoil != 0 ? cameraRecoil + Mth.lerp(Easings.EASE_OUT_QUAD.apply((lastShotVRecoil/cameraRecoil)/4),0,cameraRecoil*2) : cameraRecoil;
+
+	            float excessRecoil = cameraRecoil != 0 ? Math.max((targetVRecoil-cameraRecoil)/2, targetVRecoil/cameraRecoil) : 0;
+	            float scaledExcessRecoil = excessRecoil * 0.07F;
+	            //float targetHRecoil = ((prevVRecoil1 * Mth.clamp(2F-(gunRecoilRandom*4F),-1,1)))/2;
+	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (scaledExcessRecoil * Mth.clamp(1.5F-(gunRecoilRandom*3.0F),-1,1)) , -targetVRecoil*0.75F,targetVRecoil*0.75F);
+	            
+	            double recoilUpwardTime = ((targetVRecoil-prevVRecoil)/7)+2;
+	            double recoilDownwardTime = ((targetVRecoil/4)+9);
+	            
+	        	float recoilTime = (float) Math.min(((float) currentRecoilTick) + mc.getPartialTick(), recoilUpwardTime+recoilDownwardTime);
+	
+	        	if (recoilTime <= recoilUpwardTime)
+	        	{
+	        		currentCameraVRecoil = (float) Mth.lerp(Easings.EASE_OUT_QUAD.apply(recoilTime/recoilUpwardTime), prevVRecoil, targetVRecoil);
+	        		currentCameraHRecoil = (float) Mth.lerp(Easings.EASE_OUT_QUAD.apply(recoilTime/recoilUpwardTime), lastShotHRecoil, targetHRecoil);
+	        		
+	        	}
+	        	else
+	        	{
+	        		currentCameraVRecoil = (float) Mth.lerp(Easings.EASE_IN_OUT_SIN.apply((recoilTime-recoilUpwardTime)/recoilDownwardTime), targetVRecoil, 0);
+	        		currentCameraHRecoil = (float) Mth.lerp(Easings.EASE_IN_OUT_SIN.apply((recoilTime-recoilUpwardTime)/recoilDownwardTime), targetHRecoil, 0);
+    			}
+	
+	        	cameraVAngleChange = prevCameraVRecoil-currentCameraVRecoil;
+	        	cameraHAngleChange = prevCameraHRecoil-currentCameraHRecoil;
+	    		
+	        	prevCameraVRecoil = currentCameraVRecoil;
+	        	prevCameraHRecoil = currentCameraHRecoil;
         	
-        	if (recoilTime <= recoilUpwardTime)
-        		targetRecoil = (Easings.EASE_OUT_QUAD.apply(recoilTime/recoilUpwardTime) * -this.cameraRecoil);
-        	else
-        		targetRecoil = (Easings.EASE_IN_OUT_QUAD.apply((-recoilTime+(recoilUpwardTime+recoilDownwardTime))/recoilDownwardTime) * -this.cameraRecoil);
-        	
-        	if (lastFireTick != -1)
-        		cameraAngleChange = (targetRecoil-actualRecoil) * (recoilTime <= recoilUpwardTime ? 1 : Math.min(this.shotsFired * 0.5F + 0.5F,2F));
-        	actualRecoil = targetRecoil;
-        	
-        	if (recoilTime >= recoilUpwardTime+recoilDownwardTime)
-        	{
-	            this.cameraRecoil = 0;
-	            this.shotsFired = 0;
+	        	if (recoilTime > recoilUpwardTime+recoilDownwardTime)
+	        	{
+		            this.lastFireTick = -1;
+	        	}
         	}
         }
         else
-        //Old camera recoil
         {
+            // Old camera recoil method.
 	        float recoilAmount = this.cameraRecoil * mc.getDeltaFrameTime() * 0.15F;
 	        float startProgress = this.progressCameraRecoil / this.cameraRecoil;
 	        float endProgress = (this.progressCameraRecoil + recoilAmount) / this.cameraRecoil;
@@ -127,11 +152,11 @@ public class RecoilHandler
 	        
 	        if(startProgress < 0.2F)
 	        {
-	        	cameraAngleChange = ((endProgress - startProgress) / 0.2F) * -this.cameraRecoil;
+	        	cameraVAngleChange = ((endProgress - startProgress) / 0.2F) * -this.cameraRecoil;
 	        }
 	        else
 	        {
-	        	cameraAngleChange = ((endProgress - startProgress) / 0.8F) * this.cameraRecoil;
+	        	cameraVAngleChange = ((endProgress - startProgress) / 0.8F) * this.cameraRecoil;
 	        }
 	        /*float pitch = mc.player.getXRot();
 	        if(startProgress < 0.2F)
@@ -153,7 +178,9 @@ public class RecoilHandler
     	}
         
         float pitch = mc.player.getXRot();
-        mc.player.setXRot(pitch + cameraAngleChange);
+        mc.player.setXRot(pitch + cameraVAngleChange);
+        float yaw = mc.player.getYRot();
+        mc.player.setYRot(yaw + cameraHAngleChange);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -9,6 +9,7 @@ import com.mrcrayfish.guns.client.render.crosshair.DynamicCrosshair;
 import com.mrcrayfish.guns.client.render.crosshair.SpecialHitMarker;
 import com.mrcrayfish.guns.client.render.crosshair.TechCrosshair;
 import com.mrcrayfish.guns.client.render.crosshair.TexturedCrosshair;
+import com.mrcrayfish.guns.client.util.GunAnimationHelper;
 import com.mrcrayfish.guns.compat.ShoulderSurfingHelper;
 import com.mrcrayfish.guns.event.GunFireEvent;
 import com.mrcrayfish.guns.item.GunItem;
@@ -140,7 +141,8 @@ public class CrosshairHandler
     	}
         
         Crosshair crosshair = this.getCurrentCrosshair();
-        if(AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
+        if((AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
+        || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick()).equals("inspect")))
         {
             event.setCanceled(true);
             return;

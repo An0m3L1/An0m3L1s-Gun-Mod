@@ -92,7 +92,7 @@ public final class GunAnimationHelper
     		float drawProgress = ((player.tickCount-weaponSwitchTick)+partialTicks)*animationSpeed;
     		int totalFrames = Math.max(getAnimationFrames("draw", weapKey),1);
         	
-    		if ((drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+5) && player.getMainHandItem() == weapon)
+    		if ((drawProgress<totalFrames+1 || player.tickCount<weaponSwitchTick+7) && player.getMainHandItem() == weapon)
         	return "draw";
         }
     	int weaponInspectTick = ShootingHandler.get().getWeaponInspectTick();
@@ -103,7 +103,7 @@ public final class GunAnimationHelper
     		float inspectProgress = ((player.tickCount-weaponInspectTick)+partialTicks)*animationSpeed;
     		int totalFrames = Math.max(getAnimationFrames("inspect", weapKey),1);
         	
-    		if ((inspectProgress<totalFrames+1 || player.tickCount<weaponInspectTick+5) && player.getMainHandItem() == weapon)
+    		if (inspectProgress<totalFrames+1 && player.getMainHandItem() == weapon)
         	return "inspect";
         }
     	

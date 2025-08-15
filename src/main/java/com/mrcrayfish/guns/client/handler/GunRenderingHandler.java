@@ -605,10 +605,11 @@ public class GunRenderingHandler
 
     private void applyIdleTransforms(PoseStack poseStack, ItemStack heldItem, Gun modifiedGun, int offset)
     {
-        float aiming = (float) Math.sin(Math.toRadians(AimingHandler.get().getNormalisedAdsProgress() * 180F));
-        aiming = PropertyHelper.getSightAnimations(heldItem, modifiedGun).getAimTransformCurve().apply(aiming);
-        Vec3 idleTranslations = PropertyHelper.getViewmodelPosition(heldItem, modifiedGun);
-        poseStack.translate(idleTranslations.x * offset,idleTranslations.y,idleTranslations.z);
+        float aiming = (float) (AimingHandler.get().getNormalisedAdsProgress());
+        aiming = PropertyHelper.getSightAnimations(heldItem, modifiedGun).getSightCurve().apply(aiming);
+        aiming = Math.max(1-(aiming*1.05F), 0);
+        Vec3 idleTranslations = PropertyHelper.getViewmodelPosition(heldItem, modifiedGun).multiply(0.125F, 0.125F, 0.125F);
+        poseStack.translate(idleTranslations.x * offset * aiming ,idleTranslations.y * aiming ,idleTranslations.z * aiming);
     }
 
     private void applyAimingTransforms(PoseStack poseStack, ItemStack heldItem, Gun modifiedGun, float x, float y, float z, int offset)
