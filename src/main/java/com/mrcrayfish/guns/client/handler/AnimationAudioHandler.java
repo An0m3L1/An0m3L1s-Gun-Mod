@@ -104,13 +104,6 @@ public class AnimationAudioHandler
 		    		//GunMod.LOGGER.info("Animation Audio Handler: Found sound with numerical ID of " + soundNumID + ", event ID of " + soundString + ". Sound plays at frame " + soundThreshold);
 		    		if (soundThreshold>=0)
 		    		{
-		    			if (!playedSounds.contains(soundNumID) && !readySounds.contains(soundNumID)
-						&& scaledProgress<soundThreshold+2)
-						readySounds.add(soundNumID);
-					    else
-					    if (playedSounds.contains(soundNumID)&& scaledProgress<soundThreshold)
-					    playedSounds.remove(soundNumID);
-		    			
 		    			if (scaledProgress>=soundThreshold && readySounds.contains(soundNumID) && !playedSounds.contains(soundNumID))
 					    {
 			    			float pitch = GunAnimationHelper.getAnimationSoundParamFloat(animType, weapon, i, "pitch", 1.0F);
@@ -119,6 +112,13 @@ public class AnimationAudioHandler
 				    		readySounds.remove(soundNumID);
 				    		playedSounds.add(soundNumID);
 				    	}
+		    			
+		    			if (!playedSounds.contains(soundNumID) && !readySounds.contains(soundNumID)
+						&& scaledProgress<soundThreshold+(soundThreshold==0 ? 3 : 2))
+						readySounds.add(soundNumID);
+						else
+						if (playedSounds.contains(soundNumID)&& scaledProgress<soundThreshold)
+						playedSounds.remove(soundNumID);
 		    		}
 		    	}
 	    	}

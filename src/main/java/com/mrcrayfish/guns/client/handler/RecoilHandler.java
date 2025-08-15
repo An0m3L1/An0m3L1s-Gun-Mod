@@ -69,11 +69,12 @@ public class RecoilHandler
         float recoilModifier = 1.0F - GunModifierHelper.getRecoilModifier(heldItem);
         recoilModifier *= this.getAdsRecoilReduction(modifiedGun);
         this.cameraRecoil = modifiedGun.getGeneral().getRecoilAngle() * recoilModifier;
-        this.lastFireTick = mc.player.tickCount;
         this.gunRecoilRandom = random.nextFloat();
         
         this.lastShotVRecoil = currentCameraVRecoil;
         this.lastShotHRecoil = currentCameraHRecoil;
+        
+        this.lastFireTick = mc.player.tickCount;
         
         this.progressCameraRecoil = 0F;
     }
@@ -108,13 +109,13 @@ public class RecoilHandler
 	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/26),0,cameraRecoil*16) : cameraRecoil;
 	            //float targetVRecoil = cameraRecoil != 0 ? cameraRecoil + Mth.lerp(Easings.EASE_OUT_QUAD.apply((lastShotVRecoil/cameraRecoil)/4),0,cameraRecoil*2) : cameraRecoil;
 
-	            float excessRecoil = cameraRecoil != 0 ? Math.max((targetVRecoil-cameraRecoil)/2, targetVRecoil/cameraRecoil) : 0;
-	            float scaledExcessRecoil = excessRecoil * 0.07F;
+	            float excessRecoilRatio = cameraRecoil != 0 ? (stackedVRecoil/cameraRecoil) : 0;
+	            float hRecoilPushForce = Math.min(cameraRecoil * ((excessRecoilRatio-1)*0.2F),cameraRecoil/8F);
 	            //float targetHRecoil = ((prevVRecoil1 * Mth.clamp(2F-(gunRecoilRandom*4F),-1,1)))/2;
-	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (scaledExcessRecoil * Mth.clamp(1.5F-(gunRecoilRandom*3.0F),-1,1)) , -targetVRecoil*0.75F,targetVRecoil*0.75F);
+	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(1.5F-(gunRecoilRandom*3.0F),-1,1)) , -targetVRecoil*0.75F,targetVRecoil*0.75F);
 	            
 	            double recoilUpwardTime = ((targetVRecoil-prevVRecoil)/7)+2;
-	            double recoilDownwardTime = ((targetVRecoil/4)+9);
+	            double recoilDownwardTime = ((targetVRecoil/4.5)+8);
 	            
 	        	float recoilTime = (float) Math.min(((float) currentRecoilTick) + mc.getPartialTick(), recoilUpwardTime+recoilDownwardTime);
 	
