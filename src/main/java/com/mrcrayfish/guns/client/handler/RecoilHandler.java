@@ -106,16 +106,16 @@ public class RecoilHandler
 	        	
 	            float prevVRecoil = lastShotVRecoil-Math.min(lastShotVRecoil*0.4F,0.2F);
 	            float stackedVRecoil = cameraRecoil + lastShotVRecoil;
-	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/26),0,cameraRecoil*16) : cameraRecoil;
+	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/19),0,cameraRecoil*10) : cameraRecoil;
 	            //float targetVRecoil = cameraRecoil != 0 ? cameraRecoil + Mth.lerp(Easings.EASE_OUT_QUAD.apply((lastShotVRecoil/cameraRecoil)/4),0,cameraRecoil*2) : cameraRecoil;
 
-	            float excessRecoilRatio = cameraRecoil != 0 ? (stackedVRecoil/cameraRecoil) : 0;
-	            float hRecoilPushForce = Math.min(cameraRecoil * ((excessRecoilRatio-1)*0.2F),cameraRecoil/8F);
+	            float excessRecoilRatio = cameraRecoil != 0 ? (targetVRecoil/cameraRecoil) : 0;
+	            float hRecoilPushForce = Math.min(cameraRecoil * (Easings.EASE_IN_SIN.apply(excessRecoilRatio-1)*0.5F),cameraRecoil/2F);
 	            //float targetHRecoil = ((prevVRecoil1 * Mth.clamp(2F-(gunRecoilRandom*4F),-1,1)))/2;
-	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(1.5F-(gunRecoilRandom*3.0F),-1,1)) , -targetVRecoil*0.75F,targetVRecoil*0.75F);
+	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(2F-(gunRecoilRandom*4.0F),-1,1)) , -targetVRecoil*0.8F,targetVRecoil*0.8F);
 	            
 	            double recoilUpwardTime = ((targetVRecoil-prevVRecoil)/7)+2;
-	            double recoilDownwardTime = ((targetVRecoil/4.5)+8);
+	            double recoilDownwardTime = ((targetVRecoil/4.4)+8);
 	            
 	        	float recoilTime = (float) Math.min(((float) currentRecoilTick) + mc.getPartialTick(), recoilUpwardTime+recoilDownwardTime);
 	
@@ -128,7 +128,7 @@ public class RecoilHandler
 	        	else
 	        	{
 	        		currentCameraVRecoil = (float) Mth.lerp(Easings.EASE_IN_OUT_SIN.apply((recoilTime-recoilUpwardTime)/recoilDownwardTime), targetVRecoil, 0);
-	        		currentCameraHRecoil = (float) Mth.lerp(Easings.EASE_IN_OUT_SIN.apply((recoilTime-recoilUpwardTime)/recoilDownwardTime), targetHRecoil, 0);
+	        		currentCameraHRecoil = (float) Mth.lerp(Easings.EASE_IN_OUT_QUAD.apply((recoilTime-recoilUpwardTime)/recoilDownwardTime), targetHRecoil, 0);
     			}
 	
 	        	cameraVAngleChange = prevCameraVRecoil-currentCameraVRecoil;

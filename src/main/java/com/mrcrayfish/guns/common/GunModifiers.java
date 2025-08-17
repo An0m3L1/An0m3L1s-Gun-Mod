@@ -124,7 +124,7 @@ public class GunModifiers
         @Override
         public float recoilModifier()
         {
-            return 0.18F;
+            return 0.25F;
         }
 
         @Override

@@ -111,6 +111,7 @@ public class GunRenderingHandler
     private boolean setNewViewportFOV = true;
     
     private int lastFireTick = -1;
+    private int csRecoilTime = 14;
     private double shotCountScaled = 0;
 
     private int sprintTransition;
@@ -336,10 +337,10 @@ public class GunRenderingHandler
         if (lastFireTick!=-1)
         {
         	float timeSinceLastShot = event.getEntity().tickCount + mc.getPartialTick() - lastFireTick;
-        	if (timeSinceLastShot<=15)
+        	if (timeSinceLastShot<=csRecoilTime)
         	{
-        		if (shotCountScaled>0)
-        		shotCountScaled = Math.max(Mth.lerp(Easings.EASE_IN_OUT_CUBIC.apply((timeSinceLastShot)/15), shotCountScaled, 0), 0);
+        		if (shotCountScaled>0 && timeSinceLastShot>5)
+        		shotCountScaled = Math.max(Mth.lerp(Easings.EASE_IN_OUT_CUBIC.apply((timeSinceLastShot)/csRecoilTime), shotCountScaled, 0), 0);
         		shotCountScaled++;
         	}
         	else
@@ -579,7 +580,7 @@ public class GunRenderingHandler
         this.applySwayTransforms(poseStack, modifiedGun, player, translateX, translateY, translateZ, event.getPartialTick());
         this.applySprintingTransforms(modifiedGun, hand, poseStack, event.getPartialTick());
         this.applyAnimationTransforms(poseStack, player, heldItem, modifiedGun, event.getPartialTick());
-        this.applyRecoilTransforms(poseStack, heldItem, modifiedGun);
+        this.applyRecoilTransforms(poseStack, player, heldItem, modifiedGun, event.getPartialTick());
         this.applyReloadTransforms(poseStack, heldItem, modifiedGun, event.getPartialTick());
         this.applyShieldTransforms(poseStack, player, modifiedGun, event.getPartialTick());
 
@@ -735,38 +736,61 @@ public class GunRenderingHandler
     	}
     }
 
-    private void applyRecoilTransforms(PoseStack poseStack, ItemStack item, Gun gun)
+    private void applyRecoilTransforms(PoseStack poseStack, LocalPlayer player, ItemStack item, Gun modifiedGun, float partialTicks)
     {
-        Minecraft mc = Minecraft.getInstance();
-        double recoilNormal = RecoilHandler.get().getGunRecoilNormal();
-        if(Gun.hasAttachmentEquipped(item, gun, IAttachment.Type.SCOPE))
+        //Minecraft mc = Minecraft.getInstance();
+        
+        // Custom recoil animations
+        if (GunAnimationHelper.hasAnimation("recoil", item))
         {
-            recoilNormal -= recoilNormal * (0.5 * AimingHandler.get().getNormalisedAdsProgress());
+	        float aiming = getAimProgress(item);
+	        aiming = Math.max(1-(aiming*0.5F), 0);
+        	double zoomFactor = (1-Gun.getFovModifier(item, modifiedGun)) * AimingHandler.get().getNormalisedAdsProgress();
+        	float baseRecoil = modifiedGun.getGeneral().getRecoilAngle();
+            float recoilModifier = (float) Math.min((1.0F - GunModifierHelper.getRecoilModifier(item)) * RecoilHandler.get().getAdsRecoilReduction(modifiedGun),1);
+            float scaledRecoil = modifiedGun.getGeneral().getRecoilAngle() * Mth.lerp(0.3F,recoilModifier,1);
+            float recoilRatio = baseRecoil>0 ? Mth.lerp(0.2F,scaledRecoil/baseRecoil,1) : 1;
+        	
+        	Vec3 translations = GunAnimationHelper.getSpecificAnimationTrans("recoil", item, player, partialTicks, "viewModel").scale(recoilRatio).scale(1-zoomFactor);
+            Vec3 rotations = GunAnimationHelper.getSpecificAnimationRot("recoil", item, player, partialTicks, "viewModel").scale(recoilRatio).scale(1-zoomFactor);
+            Vec3 offsets = GunAnimationHelper.getSpecificAnimationRotOffset("recoil", item, "viewModel").add(5.25, 4.0, 4.0);
+            
+            poseStack.translate(translations.x * 0.0625 * aiming, translations.y * aiming * 0.0625, translations.z * 0.0625);
+            GunAnimationHelper.rotateAroundOffset(poseStack, rotations.scale(aiming), offsets);
         }
-        float kickReduction = 1.0F - GunModifierHelper.getKickReduction(item);
-        float recoilReduction = 1.0F - GunModifierHelper.getRecoilModifier(item);
-        double kick = gun.getGeneral().getRecoilKick() * 0.0625 * (recoilNormal) * RecoilHandler.get().getAdsRecoilReduction(gun);
-        float recoilLift = (float) (gun.getGeneral().getRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun);
-        float recoilSwayAmount = (float) (2F + 1F * (1.0 - AimingHandler.get().getNormalisedAdsProgress()));
-        float recoilSway = (float) ((RecoilHandler.get().getGunRecoilRandom() * recoilSwayAmount - recoilSwayAmount / 2F) * recoilNormal);
-        poseStack.translate(0, 0, kick * kickReduction);
-        poseStack.translate(0, 0, 0.15);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(recoilSway * recoilReduction));
-        poseStack.mulPose(Vector3f.ZP.rotationDegrees(recoilSway * recoilReduction));
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(recoilLift * recoilReduction));
-        poseStack.translate(0, 0, -0.15);
+        else
+        // Default recoil animation
+        {
+	        double recoilNormal = RecoilHandler.get().getGunRecoilNormal();
+	        if(Gun.hasAttachmentEquipped(item, modifiedGun, IAttachment.Type.SCOPE))
+	        {
+	            recoilNormal -= recoilNormal * (0.5 * AimingHandler.get().getNormalisedAdsProgress());
+	        }
+	        float kickReduction = 1.0F - GunModifierHelper.getKickReduction(item);
+	        float recoilReduction = 1.0F - GunModifierHelper.getRecoilModifier(item);
+	        double kick = modifiedGun.getGeneral().getRecoilKick() * 0.0625 * (recoilNormal) * RecoilHandler.get().getAdsRecoilReduction(modifiedGun);
+	        float recoilLift = (float) (modifiedGun.getGeneral().getRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(modifiedGun);
+	        float recoilSwayAmount = (float) (2F + 1F * (1.0 - AimingHandler.get().getNormalisedAdsProgress()));
+	        float recoilSway = (float) ((RecoilHandler.get().getGunRecoilRandom() * recoilSwayAmount - recoilSwayAmount / 2F) * recoilNormal);
+	        poseStack.translate(0, 0, kick * kickReduction);
+	        poseStack.translate(0, 0, 0.15);
+	        poseStack.mulPose(Vector3f.YP.rotationDegrees(recoilSway * recoilReduction));
+	        poseStack.mulPose(Vector3f.ZP.rotationDegrees(recoilSway * recoilReduction));
+	        poseStack.mulPose(Vector3f.XP.rotationDegrees(recoilLift * recoilReduction));
+	        poseStack.translate(0, 0, -0.15);
+    	}
         
         // CS-style viewmodel recoil accumulation.
         if (lastFireTick!=-1)
         {
 	        float aiming = getAimProgress(item);
 	        aiming = Math.max(1-(aiming*1.05F), 0);
-	        float recoilTime = (mc.player.tickCount+mc.getPartialTick())-((float) lastFireTick);
+	        float recoilTime = (player.tickCount+partialTicks)-((float) lastFireTick);
 	        
-	        if (recoilTime/15<1)
+	        if (recoilTime/csRecoilTime<1)
 	        {
-	        	Vec3 recoilRotations = new Vec3(Math.max((float)shotCountScaled, 0)/3.5F,0,0).scale(Easings.EASE_IN_OUT_CUBIC.apply(1-(recoilTime/15))).scale(aiming);
-	        	GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations, new Vec3(0,0,16.0));
+	        	Vec3 recoilRotations = new Vec3(Math.max((float)shotCountScaled, 0)/4F,0,0).scale(Easings.EASE_IN_OUT_CUBIC.apply(1-(recoilTime/csRecoilTime))).scale(aiming);
+	        	GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations, new Vec3(0,0,18.0));
 	    	}
     	}
     }
@@ -1007,11 +1031,31 @@ public class GunRenderingHandler
 	            Gun modifiedGun = gunStack.getModifiedGun(stack);
 	            
 	        	double zoomFactor = (1-Gun.getFovModifier(stack, modifiedGun)) * AimingHandler.get().getNormalisedAdsProgress();
+	        	
+	        	// General animations
 	        	Vec3 translations = (GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "gunModel").scale(1-zoomFactor));
 	            Vec3 rotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "gunModel").scale(1-zoomFactor);
 	            Vec3 offsets = GunAnimationHelper.getSmartAnimationRotOffset(stack, player, partialTicks, "gunModel").add(5.25, 4.0, 4.0);
 	            poseStack.translate(translations.x * 0.0625, translations.y * 0.0625, translations.z * 0.0625);
 	            GunAnimationHelper.rotateAroundOffset(poseStack, rotations, offsets);
+	        	
+	        	// Recoil animations
+	            if (GunAnimationHelper.hasAnimation("recoil", stack))
+	            {
+	            	float aiming = getAimProgress(stack);
+	    	        aiming = Math.max(1-(aiming*0.25F), 0);
+	            	float baseRecoil = modifiedGun.getGeneral().getRecoilAngle();
+	                float recoilModifier = (float) Math.min((1.0F - GunModifierHelper.getRecoilModifier(stack)) * RecoilHandler.get().getAdsRecoilReduction(modifiedGun),1);
+	                float scaledRecoil = modifiedGun.getGeneral().getRecoilAngle() * Mth.lerp(0.4F,recoilModifier,1);
+	                float recoilRatio = baseRecoil>0 ? Mth.lerp(0.2F,scaledRecoil/baseRecoil,1) : 1;
+	            	
+	            	Vec3 recoilTranslations = GunAnimationHelper.getSpecificAnimationTrans("recoil", stack, player, partialTicks, "gunModel").scale(recoilRatio).scale(aiming).scale(1-zoomFactor);
+	                Vec3 recoilRotations = GunAnimationHelper.getSpecificAnimationRot("recoil", stack, player, partialTicks, "gunModel").scale(recoilRatio).scale(aiming).scale(1-zoomFactor);
+	                Vec3 recoilOffsets = GunAnimationHelper.getSpecificAnimationRotOffset("recoil", stack, "gunModel").add(5.25, 4.0, 4.0);
+	                
+	                poseStack.translate(recoilTranslations.x * 0.0625, recoilTranslations.y * 0.0625, recoilTranslations.z * 0.0625);
+	                GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations.scale(aiming), recoilOffsets);
+	            }
         	}
 
             this.renderingWeapon = stack;
@@ -1437,6 +1481,11 @@ public class GunRenderingHandler
     	
     	float aiming = (float) (AimingHandler.get().getNormalisedAdsProgress());
     	return PropertyHelper.getSightAnimations(heldItem, modifiedGun).getSightCurve().apply(aiming);
+    }
+    
+    public int getLastFireTick()
+    {
+    	return lastFireTick;
     }
 
     private void updateImmersiveCamera()

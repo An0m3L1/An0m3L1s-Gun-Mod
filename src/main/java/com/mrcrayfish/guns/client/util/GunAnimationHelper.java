@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.mrcrayfish.framework.api.client.FrameworkClientAPI;
 import com.mrcrayfish.framework.api.serialize.DataArray;
+import com.mrcrayfish.framework.api.serialize.DataBoolean;
 import com.mrcrayfish.framework.api.serialize.DataNumber;
 import com.mrcrayfish.framework.api.serialize.DataObject;
 import com.mrcrayfish.framework.api.serialize.DataString;
@@ -20,6 +21,7 @@ import com.mrcrayfish.guns.item.GunItem;
 import com.mrcrayfish.guns.item.IMeta;
 import com.mrcrayfish.guns.item.attachment.IAttachment;
 import com.mrcrayfish.guns.item.attachment.IAttachment.Type;
+import com.mrcrayfish.guns.util.GunCompositeStatHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -172,6 +174,10 @@ public final class GunAnimationHelper
     		if (progress>0)
             return getAnimationTrans("fire", weapon, progress, component);
     	}
+    	if (animType.equals("recoil") && hasAnimation("recoil", weapon))
+    	{
+            return getAnimationTrans("recoil", weapon, progress, component);
+    	}
     	
     	return Vec3.ZERO;
     }
@@ -213,6 +219,10 @@ public final class GunAnimationHelper
     	{
             if (progress>0)
             return getAnimationRot("fire", weapon, progress, component);
+    	}
+    	if (animType.equals("recoil") && hasAnimation("recoil", weapon))
+    	{
+            return getAnimationRot("recoil", weapon, progress, component);
     	}
     	
     	return Vec3.ZERO;
@@ -256,10 +266,38 @@ public final class GunAnimationHelper
     	}
     	if (animType.equals("fire") && hasAnimation("fire", weapon))
     	{
-    		ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
+    		ItemCooldowns tracker = player.getCooldowns();
             float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
+            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
+            float maxRate = 0;
+            if (maxRate>1)
+            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
+            
             if (cooldown>0)
             return 1-cooldown;
+    	}
+    	if (animType.equals("recoil") && hasAnimation("recoil", weapon))
+    	{
+    		if (!getAnimationBoolean(animType, weapKey, "syncToCooldown"))
+    		{
+    			float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
+            	int lastFiretick = GunRenderingHandler.get().getLastFireTick();
+        		float recoilProgress = ((player.tickCount-lastFiretick)+partialTicks)*animationSpeed;
+        		int totalFrames = Math.max(getAnimationFrames(animType, weapKey),1);
+        		return recoilProgress/totalFrames;
+    		}
+    		else
+    		{
+	    		ItemCooldowns tracker = player.getCooldowns();
+	            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
+	            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
+	            float maxRate = 0;
+	            if (maxRate>1)
+	            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
+	            
+	            if (cooldown>0)
+	            return 1-cooldown;
+    		}
     	}
     	
     	return 0;
@@ -726,6 +764,23 @@ public final class GunAnimationHelper
 		}
 		
 		return Vec3.ZERO;
+	}
+	
+	static boolean getAnimationBoolean(String animationType, ResourceLocation weapKey, String transform) {
+		DataObject transformObject = getObjectByPath(weapKey, ANIMATION_KEY, animationType);
+		if (transformObject.has(transform, DataType.BOOLEAN))
+		{
+			DataBoolean transformData = transformObject.getDataBoolean(transform);
+			if (transformData!=null)
+			{
+	        	//GunMod.LOGGER.info("Animation System: Found " + transform + " number data of " + weapKey);
+				return transformData.asBoolean();
+			}
+        	//GunMod.LOGGER.info("Animation System: Found animation object of " + weapKey + " but did not find " + transform + " number data");
+			
+		}
+		
+		return false;
 	}
 	
 	static double getAnimationValue(String animationType, ResourceLocation weapKey, String transform) {

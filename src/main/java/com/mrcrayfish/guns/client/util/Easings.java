@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public enum Easings implements StringRepresentable
 {
     LINEAR("linear", t -> t),
-    EASE_IN_SIN("ease_in_sin", t -> 1.0F - (float)(Math.cos((t * Math.PI)) / 2F)),
+    EASE_IN_SIN("ease_in_sin", t -> 1.0F - (float)(Math.cos((t * Math.PI) / 2F))),
     EASE_IN_QUAD("ease_in_quad", Mth::square),
     EASE_IN_CUBIC("ease_in_cubic", Mth::cube),
     EASE_IN_CIRC("ease_in_circ", t -> 1.0F - Mth.sqrt(1.0F - Mth.square(t))),

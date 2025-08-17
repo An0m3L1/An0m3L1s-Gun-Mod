@@ -209,22 +209,46 @@ public class GunItem extends Item implements IColored, IMeta
     @Override
     public boolean isBarVisible(ItemStack stack)
     {
+        return displayAmmoBar(stack) || displayEnergyBar(stack);
+    }
+    
+    public boolean displayAmmoBar(ItemStack stack)
+    {
         CompoundTag tagCompound = stack.getOrCreateTag();
         Gun modifiedGun = this.getModifiedGun(stack);
         return !tagCompound.getBoolean("IgnoreAmmo") && tagCompound.getInt("AmmoCount") < GunCompositeStatHelper.getAmmoCapacity(stack, modifiedGun);
+    }
+    
+    public boolean displayEnergyBar(ItemStack stack)
+    {
+        Gun modifiedGun = this.getModifiedGun(stack);
+        return modifiedGun.getGeneral().getEnergyCapacity() > 0 && modifiedGun.getGeneral().getEnergyPerShot() > 0;
     }
 
     @Override
     public int getBarWidth(ItemStack stack)
     {
-        CompoundTag tagCompound = stack.getOrCreateTag();
         Gun modifiedGun = this.getModifiedGun(stack);
-        return (int) (13.0 * (tagCompound.getInt("AmmoCount") / (double) GunCompositeStatHelper.getAmmoCapacity(stack, modifiedGun)));
+        if (displayAmmoBar(stack))
+        {
+    		CompoundTag tagCompound = stack.getOrCreateTag();
+        	return (int) (14 * (tagCompound.getInt("AmmoCount") / (double) GunCompositeStatHelper.getAmmoCapacity(stack, modifiedGun)));
+        }
+        else
+        if (displayEnergyBar(stack))
+        {
+        	CompoundTag tagCompound = stack.getOrCreateTag();
+            return (int) (13 * (tagCompound.getInt("Energy") / (double) modifiedGun.getGeneral().getEnergyCapacity()));
+        }
+        
+        return 0;
     }
 
     @Override
     public int getBarColor(ItemStack stack)
     {
+    	if (displayEnergyBar(stack) && !displayAmmoBar(stack))
+        	return Objects.requireNonNull(ChatFormatting.AQUA.getColor());
         return Objects.requireNonNull(ChatFormatting.YELLOW.getColor());
     }
 
