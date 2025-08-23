@@ -38,8 +38,9 @@ import net.minecraft.world.phys.Vec3;
  * Author: zaeonNineZero
  * 
  * Helper class for more complex gun animations, including attachment and hand movements.
- * These animations are built around a "Common Animation System", a keyframe-based animation
- * system built specifically for CGM Expanded.
+ * These animations are built around a custom keyframe-based animation system built
+ * specifically for CGM Expanded. This system could someday be expanded upon into a
+ * more comprehensive animation system.
  */
 public final class GunAnimationHelper
 {

@@ -111,7 +111,7 @@ public class GunRenderingHandler
     private boolean setNewViewportFOV = true;
     
     private int lastFireTick = -1;
-    private int csRecoilTime = 14;
+    private int csRecoilTime = 13;
     private double shotCountScaled = 0;
 
     private int sprintTransition;
@@ -191,6 +191,10 @@ public class GunRenderingHandler
     {
         if(event.phase != TickEvent.Phase.END)
             return;
+
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null || mc.player.isDeadOrDying())
+        	lastFireTick = -1;
 
         this.updateSprinting();
         this.updateHitMarker();
@@ -790,7 +794,7 @@ public class GunRenderingHandler
 	        if (recoilTime/csRecoilTime<1)
 	        {
 	        	Vec3 recoilRotations = new Vec3(Math.max((float)shotCountScaled, 0)/4F,0,0).scale(Easings.EASE_IN_OUT_CUBIC.apply(1-(recoilTime/csRecoilTime))).scale(aiming);
-	        	GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations, new Vec3(0,0,18.0));
+	        	GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations, new Vec3(0,0,16.0));
 	    	}
     	}
     }

@@ -22,12 +22,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
         } catch (Exception e) {
             isFrameworkInstalled = false;
         }
-        /*try {
-            Class.forName("dev.xylonity.explosiveenhancement.ExplosiveEnhancement", false, this.getClass().getClassLoader());
-            isExplosiveEnhancementInstalled = true;
-        } catch (Exception e) {
-        	isExplosiveEnhancementInstalled = false;
-        }*/
     }
 
     @Override
@@ -37,10 +31,6 @@ public class MixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-    	/*if (mixinClassName.equals("com.mrcrayfish.guns.mixin.client.ExplosionMixin"))
-    		return isExplosiveEnhancementInstalled && isFrameworkInstalled;
-    		//return GunMod.ExplosiveEnhancementLoaded && isFrameworkInstalled;
-    	else*/
         return isFrameworkInstalled; // this makes sure that forge's helpful mods not found screen shows up
     }
 

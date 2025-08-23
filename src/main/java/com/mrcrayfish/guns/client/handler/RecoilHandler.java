@@ -86,8 +86,12 @@ public class RecoilHandler
             return;
 
         Minecraft mc = Minecraft.getInstance();
-        if(mc.player == null)
-            return;
+        if(mc.player == null || mc.player.isDeadOrDying())
+        {
+        	lastFireTick = -1;
+        	cameraRecoil = 0;
+        	return;
+        }
         if(mc.isPaused())
             return;
 
@@ -140,6 +144,7 @@ public class RecoilHandler
 	        	if (recoilTime > recoilUpwardTime+recoilDownwardTime)
 	        	{
 		            this.lastFireTick = -1;
+		            this.cameraRecoil = 0;
 	        	}
         	}
         }

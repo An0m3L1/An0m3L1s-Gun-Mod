@@ -1,0 +1,81 @@
+{
+	"credit": "Made with Blockbench",
+	"loader": "framework:open_model",
+	"textures": {
+		"2": "cgm:items/heavy_rifle_2"
+	},
+	"components": [
+		{
+			"from": [8.34069, 3.67797, 10.216],
+			"to": [8.73069, 3.85597, 10.649],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.51069, 3.76697, 10.4335]},
+			"faces": {
+				"north": {"uv": [3.5, 8.875, 4, 9.125], "rotation": 90, "texture": "#2"},
+				"south": {"uv": [3.5, 8.875, 4, 9.125], "rotation": 270, "texture": "#2"},
+				"up": {"uv": [3.5, 8.5, 4, 9], "rotation": 270, "texture": "#2"}
+			}
+		},
+		{
+			"from": [8.57, 3.405, 10.215],
+			"to": [8.748, 3.765, 10.65],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.62, 2.97, 10.3]},
+			"faces": {
+				"north": {"uv": [3.5, 9.125, 4, 9.5], "texture": "#2"},
+				"east": {"uv": [3.5, 9, 4, 9.5], "texture": "#2"},
+				"south": {"uv": [3.5, 9.125, 4, 9.5], "texture": "#2"},
+				"down": {"uv": [3.5, 9, 4, 9.5], "texture": "#2"}
+			}
+		},
+		{
+			"from": [8.745, 3.43, 10.365],
+			"to": [8.965, 3.68, 10.55],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.945, 2.985, 10.3]},
+			"faces": {
+				"north": {"uv": [5, 9.5, 4.5, 10], "texture": "#2"},
+				"south": {"uv": [4.5, 9.5, 5, 10], "texture": "#2"},
+				"up": {"uv": [4.5, 9.5, 5, 10], "texture": "#2"},
+				"down": {"uv": [4.5, 9.5, 5, 10], "texture": "#2"}
+			}
+		},
+		{
+			"from": [8.84122, 3.46457, 10.366],
+			"to": [9.09122, 4.21457, 10.551],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [8.94122, 3.76457, 10.4575]},
+			"faces": {
+				"north": {"uv": [5, 8.5, 5.5, 10], "texture": "#2"},
+				"east": {"uv": [5, 8.5, 5.5, 10], "texture": "#2"},
+				"south": {"uv": [5, 8.5, 5.5, 10], "texture": "#2"},
+				"west": {"uv": [5, 8.5, 5.5, 10], "texture": "#2"}
+			}
+		},
+		{
+			"from": [9.02104, 3.71858, 10.367],
+			"to": [9.77104, 4.21858, 10.55],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9.12104, 3.76858, 10.4575]},
+			"faces": {
+				"north": {"uv": [7, 8.5, 5.5, 9.5], "texture": "#2"},
+				"east": {"uv": [7, 8.5, 6.5, 9.5], "texture": "#2"},
+				"south": {"uv": [5.5, 8.5, 7, 9.5], "texture": "#2"},
+				"up": {"uv": [5.5, 8.5, 7, 9], "texture": "#2"},
+				"down": {"uv": [5.5, 9, 7, 9.5], "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "charge_handle",
+			"origin": [8.61, 2.97, 10.3],
+			"color": 0,
+			"children": [
+				0,
+				1,
+				{
+					"name": "group",
+					"origin": [8.97, 2.985, 10.3],
+					"color": 0,
+					"children": [2, 3, 4]
+				}
+			]
+		}
+	]
+}

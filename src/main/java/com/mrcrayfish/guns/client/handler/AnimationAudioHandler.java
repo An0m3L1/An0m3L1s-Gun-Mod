@@ -99,7 +99,7 @@ public class AnimationAudioHandler
 		    	{
 		    		String soundNumID = String.valueOf(i);
 		    		String soundString = GunAnimationHelper.getAnimationSoundEventID(animType, weapon, i);
-		    		ResourceLocation soundEvent = soundString.isEmpty() ? null : new ResourceLocation(soundString);
+		    		ResourceLocation soundEvent = soundString == null ? null : new ResourceLocation(soundString);
 		    		float soundThreshold = GunAnimationHelper.getAnimationSoundParamFloat(animType, weapon, i, "playAt");
 		    		//GunMod.LOGGER.info("Animation Audio Handler: Found sound with numerical ID of " + soundNumID + ", event ID of " + soundString + ". Sound plays at frame " + soundThreshold);
 		    		if (soundThreshold>=0)
