@@ -93,8 +93,13 @@ public class ShootingHandler
 
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
-        if(player == null)
+        if(player == null || player.isDeadOrDying())
+        {
+        	lastShotTick = -1;
+            weaponSwitchTick=-1;
+            weaponInspectTick=-1;
             return;
+        }
 
         if(PlayerReviveHelper.isBleeding(player))
             return;
