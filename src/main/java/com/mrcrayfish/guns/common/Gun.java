@@ -221,6 +221,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Optional
         private float spreadAdsReduction = 0.5F;
         @Optional
+        private float adsMaxSpreadPenalty = 0.5F;
+        @Optional
         private boolean useShotgunSpread = false;
         @Optional
         private double adsSpeed = 1;
@@ -228,6 +230,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         private boolean doRampUp = false;
         @Optional
         private int rampUpShotsNeeded = 7;
+        @Optional
+        private int rampUpMinRate = 0;
 
         @Override
         public CompoundTag serializeNBT()
@@ -275,10 +279,12 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putFloat("Spread", this.spread);
             tag.putFloat("RestingSpread", this.restingSpread);
             tag.putFloat("SpreadAdsReduction", this.spreadAdsReduction);
+            tag.putFloat("AdsMaxSpreadPenalty", this.adsMaxSpreadPenalty);
             tag.putBoolean("UseShotgunSpread", this.useShotgunSpread);
             tag.putDouble("ADSSpeed", this.adsSpeed);
             tag.putBoolean("DoRampUp", this.doRampUp);
             tag.putInt("RampUpShotsNeeded", this.rampUpShotsNeeded);
+            tag.putInt("RampUpMinRate", this.rampUpMinRate);
             return tag;
         }
 
@@ -460,6 +466,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.spreadAdsReduction = tag.getFloat("SpreadAdsReduction");
             }
+            if(tag.contains("AdsMaxSpreadPenalty", Tag.TAG_ANY_NUMERIC))
+            {
+                this.adsMaxSpreadPenalty = tag.getFloat("AdsMaxSpreadPenalty");
+            }
             if(tag.contains("UseShotgunSpread", Tag.TAG_ANY_NUMERIC))
             {
                 this.useShotgunSpread = tag.getBoolean("UseShotgunSpread");
@@ -475,6 +485,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("RampUpShotsNeeded", Tag.TAG_ANY_NUMERIC))
             {
                 this.rampUpShotsNeeded = tag.getInt("RampUpShotsNeeded");
+            }
+            if(tag.contains("RampUpMinRate", Tag.TAG_ANY_NUMERIC))
+            {
+                this.rampUpMinRate = tag.getInt("RampUpMinRate");
             }
         }
 
@@ -509,8 +523,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             Preconditions.checkArgument(this.spread >= 0.0F, "Spread must be more than or equal to zero");
             Preconditions.checkArgument(this.restingSpread >= 0.0F, "Spread must be more than or equal to zero");
             Preconditions.checkArgument(this.spreadAdsReduction >= 0.0F && this.spreadAdsReduction <= 1.0F, "Spread ADS reduction must be between 0.0 and 1.0");
+            Preconditions.checkArgument(this.adsMaxSpreadPenalty >= 0.0F && this.adsMaxSpreadPenalty <= 1.0F, "Max Spread ADS reduction penalty must be between 0.0 and 1.0");
             Preconditions.checkArgument(this.adsSpeed > 0.0, "ADS Speed must be more than zero");
             Preconditions.checkArgument(this.rampUpShotsNeeded > 0.0, "Shots to Full Ramp Up must be more than zero");
+            Preconditions.checkArgument(this.rampUpMinRate >= 0.0, "Ramp Up minimum fire rate must be a positive integer; set to zero for default");
             JsonObject object = new JsonObject();
             if(this.auto) object.addProperty("auto", true);
             object.addProperty("rate", this.rate);
@@ -550,11 +566,13 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.alwaysSpread) object.addProperty("alwaysSpread", true);
             if(this.spread != 0.0F) object.addProperty("spread", this.spread);
             if(this.restingSpread != 0.0F) object.addProperty("restingSpread", this.restingSpread);
-            if(this.spreadAdsReduction != 0.5F) object.addProperty("spreadAdsReduction", this.spread);
+            if(this.spreadAdsReduction != 0.5F) object.addProperty("spreadAdsReduction", this.spreadAdsReduction);
+            if(this.adsMaxSpreadPenalty != 0.5F) object.addProperty("adsMaxSpreadPenalty", this.adsMaxSpreadPenalty);
             if(this.useShotgunSpread) object.addProperty("useShotgunSpread", true);
             if(this.adsSpeed != 1) object.addProperty("adsSpeed", this.adsSpeed);
             if(this.doRampUp) object.addProperty("doRampUp", false);
             if(this.rampUpShotsNeeded != 8) object.addProperty("rampUpShotsNeeded", this.rampUpShotsNeeded);
+            if(this.rampUpMinRate != 0) object.addProperty("rampUpMinRate", this.rampUpMinRate);
             return object;
         }
 
@@ -607,10 +625,12 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.spread = this.spread;
             general.restingSpread = this.restingSpread;
             general.spreadAdsReduction = this.spreadAdsReduction;
+            general.adsMaxSpreadPenalty = this.adsMaxSpreadPenalty;
             general.useShotgunSpread = this.useShotgunSpread;
             general.adsSpeed = this.adsSpeed;
             general.doRampUp = this.doRampUp;
             general.rampUpShotsNeeded = this.rampUpShotsNeeded;
+            general.rampUpMinRate = this.rampUpMinRate;
             return general;
         }
 
@@ -982,7 +1002,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
 
         /**
-         * @return If this weapon should always spread it's projectiles according to {@link #getSpread()}
+         * @return If this weapon should always apply projectile spread according to {@link #getSpread()}
+         * This parameter is ignored when restingSpread is above 0.
          */
         public boolean isAlwaysSpread()
         {
@@ -999,10 +1020,14 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
 
         /**
-         * @return The resting spread of the gun - using this overrides the alwaysSpread parameter.
+         * @return The resting spread of the gun.
+         * When set to any value above 0, alwaysSpread is ignored.
+         * By default, this is set to 0, and alwaysSpread is checked, matching base CGM behavior.
          */
         public float getRestingSpread()
         {
+        	if (restingSpread==0 && alwaysSpread)
+                return this.spread;
             return this.restingSpread;
         }
 
@@ -1012,6 +1037,18 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public float getSpreadAdsReduction()
         {
             return this.spreadAdsReduction;
+        }
+
+        /**
+         * @return The amount of spread reduction applied when aiming at maximum spread.
+         * Specifically, this is a reversed multiplier to how effective spreadAdsReduction
+         * is as the weapon's spread accumulates.
+         * The greater this number the less that spreadAdsReduction applies at maximum spread.
+         * Lower numbers improve the effectiveness of spreadAdsReduction at maximum spread.
+         */
+        public float getMaxSpreadAdsPenalty()
+        {
+            return this.adsMaxSpreadPenalty;
         }
 
         /**
@@ -1044,6 +1081,15 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public int getRampUpShotsNeeded()
         {
             return this.rampUpShotsNeeded;
+        }
+
+        /**
+         * @return The starting fire rate of a gun with the Ramp Up effect.
+         * By default this is 0, and starting fire rate is determined automatically.
+         */
+        public int getRampUpMinRate()
+        {
+            return this.rampUpMinRate;
         }
     }
 

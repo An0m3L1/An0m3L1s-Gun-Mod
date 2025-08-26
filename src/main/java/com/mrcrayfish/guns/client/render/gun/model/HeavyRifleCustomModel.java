@@ -137,7 +137,7 @@ public class HeavyRifleCustomModel implements IOverrideModel
     	}
 		// Render the transformed model.
         ExpandedModelComponents magModel = ExpandedModelComponents.HEAVY_RIFLE_MAGAZINE;
-        /*try {
+        try {
         	ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
             if(!magStack.isEmpty())
             {
@@ -148,7 +148,7 @@ public class HeavyRifleCustomModel implements IOverrideModel
 			    	magModel = ExpandedModelComponents.HEAVY_RIFLE_EXTENDED_MAG;
             }
 		}
-		catch(Error ignored) {} catch(Exception ignored) {}*/
+		catch(Error ignored) {} catch(Exception ignored) {}
         
         RenderUtil.renderModel(magModel.getModel(), transformType, null, stack, parent, poseStack, buffer, light, overlay);
 		// Pop pose to compile everything in the render matrix.

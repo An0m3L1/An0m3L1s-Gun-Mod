@@ -11,6 +11,7 @@ public class ModSounds
 {
 	public static final DeferredRegister<SoundEvent> REGISTER = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Reference.MOD_ID);
 
+	// Default sounds from CGM:
 	public static final RegistryObject<SoundEvent> ITEM_PISTOL_FIRE = register("item.pistol.fire");
 	public static final RegistryObject<SoundEvent> ITEM_PISTOL_SILENCED_FIRE = register("item.pistol.silenced_fire");
 	public static final RegistryObject<SoundEvent> ITEM_PISTOL_ENCHANTED_FIRE = register("item.pistol.enchanted_fire");
@@ -35,18 +36,44 @@ public class ModSounds
 	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_FIRE = register("item.machine_pistol.fire");
 	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_SILENCED_FIRE = register("item.machine_pistol.silenced_fire");
 	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_ENCHANTED_FIRE = register("item.machine_pistol.enchanted_fire");
-	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_COCK = register("item.machine_pistol.cock");
 	public static final RegistryObject<SoundEvent> ITEM_HEAVY_RIFLE_FIRE = register("item.heavy_rifle.fire");
 	public static final RegistryObject<SoundEvent> ITEM_HEAVY_RIFLE_SILENCED_FIRE = register("item.heavy_rifle.silenced_fire");
 	public static final RegistryObject<SoundEvent> ITEM_HEAVY_RIFLE_ENCHANTED_FIRE = register("item.heavy_rifle.enchanted_fire");
 	public static final RegistryObject<SoundEvent> ITEM_HEAVY_RIFLE_COCK = register("item.heavy_rifle.cock");
 	public static final RegistryObject<SoundEvent> ITEM_GRENADE_PIN = register("item.grenade.pin");
-	public static final RegistryObject<SoundEvent> ITEM_GRENADE_THROW = register("item.grenade.throw");
-	public static final RegistryObject<SoundEvent> ENTITY_GRENADE_BOUNCE = register("entity.grenade.bounce");
 	public static final RegistryObject<SoundEvent> ENTITY_STUN_GRENADE_EXPLOSION = register("entity.stun_grenade.explosion");
 	public static final RegistryObject<SoundEvent> ENTITY_STUN_GRENADE_RING = register("entity.stun_grenade.ring");
 	public static final RegistryObject<SoundEvent> UI_WEAPON_ATTACH = register("ui.weapon.attach");
+	
+	
+	// The following sounds were added in CGM Expanded:
 	public static final RegistryObject<SoundEvent> ITEM_EMPTY_CLICK = register("item.empty_click");
+
+	public static final RegistryObject<SoundEvent> ITEM_PISTOL1_DRAW = register("item.foley.pistol1_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SMG1_DRAW = register("item.foley.smg1_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SMG2_DRAW = register("item.foley.smg2_draw");
+	public static final RegistryObject<SoundEvent> ITEM_AR1_DRAW = register("item.foley.ar1_draw");
+	public static final RegistryObject<SoundEvent> ITEM_AR2_DRAW = register("item.foley.ar2_draw");
+	public static final RegistryObject<SoundEvent> ITEM_AR3_DRAW_START = register("item.foley.ar3_draw_start");
+	public static final RegistryObject<SoundEvent> ITEM_AR3_DRAW_END = register("item.foley.ar3_draw_end");
+	public static final RegistryObject<SoundEvent> ITEM_AR4_DRAW = register("item.foley.ar4_draw");
+	public static final RegistryObject<SoundEvent> ITEM_RIFLE1_DRAW = register("item.foley.rifle1_draw");
+	public static final RegistryObject<SoundEvent> ITEM_RIFLE2_DRAW = register("item.foley.rifle2_draw");
+	public static final RegistryObject<SoundEvent> ITEM_RIFLE3_DRAW = register("item.foley.rifle3_draw");
+	public static final RegistryObject<SoundEvent> ITEM_RIFLE4_DRAW = register("item.foley.rifle4_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SNIPER1_DRAW = register("item.foley.sniper1_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SNIPER2_DRAW = register("item.foley.sniper2_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SNIPER3_DRAW = register("item.foley.sniper3_draw");
+	public static final RegistryObject<SoundEvent> ITEM_SNIPER4_DRAW = register("item.foley.sniper4_draw");
+	
+	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_COCK = register("item.machine_pistol.cock");
+	
+	public static final RegistryObject<SoundEvent> ITEM_SHOTGUN_LOADSHELL = register("item.shotgun.load_shell");
+	
+	public static final RegistryObject<SoundEvent> ITEM_GRENADE_THROW = register("item.grenade.throw");
+	
+	public static final RegistryObject<SoundEvent> ENTITY_GRENADE_BOUNCE = register("entity.grenade.bounce");
+	
 
 	private static RegistryObject<SoundEvent> register(String key)
 	{

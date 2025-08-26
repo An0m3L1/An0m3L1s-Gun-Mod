@@ -217,6 +217,7 @@ public class ShootingHandler
             	weaponInspectTick = -1;
                 if(heldItem.getItem() instanceof GunItem)
                 {
+                	GunRenderingHandler.get().setSprintingTransition(0);
                 	GunRenderingHandler.get().updateReserveAmmo(player);
                 }
                 ReloadHandler.get().weaponSwitched();

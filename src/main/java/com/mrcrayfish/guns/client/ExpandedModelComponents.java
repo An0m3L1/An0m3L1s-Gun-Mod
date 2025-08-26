@@ -49,8 +49,8 @@ public enum ExpandedModelComponents
     HEAVY_RIFLE_BOLT("gun/heavy_rifle/heavy_rifle_charge_handle"),
     HEAVY_RIFLE_STOCK_0("gun/heavy_rifle/heavy_rifle_stock_0"),
     HEAVY_RIFLE_MAGAZINE("gun/heavy_rifle/heavy_rifle_magazine"),
-    //HEAVY_RIFLE_LIGHT_MAG("gun/heavy_rifle/heavy_rifle_light_mag"),
-    //HEAVY_RIFLE_EXTENDED_MAG("gun/heavy_rifle/heavy_rifle_extended_mag"),
+    HEAVY_RIFLE_LIGHT_MAG("gun/heavy_rifle/heavy_rifle_light_mag"),
+    HEAVY_RIFLE_EXTENDED_MAG("gun/heavy_rifle/heavy_rifle_extended_mag"),
     
     MACHINE_PISTOL_BASE("gun/machine_pistol/machine_pistol_base"),
     MACHINE_PISTOL_SIGHTS("gun/machine_pistol/machine_pistol_rear_sight"),

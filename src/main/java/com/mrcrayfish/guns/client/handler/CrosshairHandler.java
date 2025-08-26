@@ -141,8 +141,9 @@ public class CrosshairHandler
     	}
         
         Crosshair crosshair = this.getCurrentCrosshair();
-        if((AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
-        || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick()).equals("inspect")))
+        if(!Config.CLIENT.display.forceShowCrosshair.get()
+        && ((AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
+        || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick()).equals("inspect"))) )
         {
             event.setCanceled(true);
             return;

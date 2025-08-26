@@ -114,10 +114,10 @@ public class AnimationAudioHandler
 				    	}
 		    			
 		    			if (!playedSounds.contains(soundNumID) && !readySounds.contains(soundNumID)
-						&& scaledProgress<soundThreshold+(soundThreshold==0 ? 3 : 2))
+						&& scaledProgress<soundThreshold+(soundThreshold<=2 ? 3 : 1))
 						readySounds.add(soundNumID);
 						else
-						if (playedSounds.contains(soundNumID)&& scaledProgress<soundThreshold)
+						if (playedSounds.contains(soundNumID)&& scaledProgress<soundThreshold-(soundThreshold>2 ? 0.5 : 0))
 						playedSounds.remove(soundNumID);
 		    		}
 		    	}

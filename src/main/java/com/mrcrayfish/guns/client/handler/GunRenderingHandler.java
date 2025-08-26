@@ -113,6 +113,7 @@ public class GunRenderingHandler
     private int lastFireTick = -1;
     private int csRecoilTime = 13;
     private double shotCountScaled = 0;
+    private int csRecoilMaxShots = 15;
 
     private int sprintTransition;
     private int prevSprintTransition;
@@ -236,6 +237,11 @@ public class GunRenderingHandler
         }
     }
 
+    public void setSprintingTransition(int value)
+    {
+    	this.sprintTransition = value;
+    }
+
     private void updateHitMarker()
     {
     	this.prevHitMarkerTime = this.hitMarkerTime;
@@ -350,7 +356,7 @@ public class GunRenderingHandler
         	else
             shotCountScaled=0;
         	
-        	shotCountScaled = Math.min(shotCountScaled,12);
+        	shotCountScaled = Math.min(shotCountScaled,csRecoilMaxShots);
     	}
         else
         shotCountScaled=0;
@@ -793,7 +799,7 @@ public class GunRenderingHandler
 	        
 	        if (recoilTime/csRecoilTime<1)
 	        {
-	        	Vec3 recoilRotations = new Vec3(Math.max((float)shotCountScaled, 0)/4F,0,0).scale(Easings.EASE_IN_OUT_CUBIC.apply(1-(recoilTime/csRecoilTime))).scale(aiming);
+	        	Vec3 recoilRotations = new Vec3(Math.max(Easings.EASE_OUT_QUAD.apply((float)shotCountScaled/(float)csRecoilMaxShots), 0)*2.5F,0,0).scale(Easings.EASE_IN_OUT_CUBIC.apply(1-(recoilTime/csRecoilTime))).scale(aiming);
 	        	GunAnimationHelper.rotateAroundOffset(poseStack, recoilRotations, new Vec3(0,0,16.0));
 	    	}
     	}

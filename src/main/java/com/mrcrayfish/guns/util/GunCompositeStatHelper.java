@@ -1,10 +1,13 @@
 package com.mrcrayfish.guns.util;
 
 import com.mrcrayfish.guns.common.Gun;
+import com.mrcrayfish.guns.common.SpreadTracker;
 import com.mrcrayfish.guns.init.ModEnchantments;
 import com.mrcrayfish.guns.item.GunItem;
 import com.mrcrayfish.guns.item.attachment.IAttachment;
 
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -44,16 +47,40 @@ public class GunCompositeStatHelper
 	
 	public static float getCompositeSpread(ItemStack weapon, Gun modifiedGun)
     {
-        //float a = GunEnchantmentHelper.getSpread(weapon, modifiedGun);
-		//return GunModifierHelper.getModifiedSpread(weapon, a);
         return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral().getSpread());
     }
 	
 	public static float getCompositeMinSpread(ItemStack weapon, Gun modifiedGun)
     {
-        //float a = GunEnchantmentHelper.getMinSpread(weapon, modifiedGun);
-		//return GunModifierHelper.getModifiedSpread(weapon, a);
         return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral().getRestingSpread());
+    }
+	
+	public static float getCompositeAdsSpreadReduction(Player player, ItemStack weapon, Gun modifiedGun)
+    {
+    	float baseAdsSpreadReduction = modifiedGun.getGeneral().getSpreadAdsReduction();
+    	float maxSpreadAdsPenalty = modifiedGun.getGeneral().getMaxSpreadAdsPenalty();
+        return baseAdsSpreadReduction*(1-maxSpreadAdsPenalty);
+    }
+	
+	public static float getCompositeDynamicSpread(Player player, ItemStack weapon, Gun modifiedGun)
+    {
+        float minSpread = GunCompositeStatHelper.getCompositeMinSpread(weapon, modifiedGun);
+		float maxSpread = GunCompositeStatHelper.getCompositeSpread(weapon, modifiedGun);
+        return Mth.lerp(SpreadTracker.get(player).getSpread((GunItem) weapon.getItem()),minSpread,maxSpread);
+    }
+	
+	public static float getCompositeAdsSpread(Player player, ItemStack weapon, Gun modifiedGun)
+    {
+        float minSpread = GunCompositeStatHelper.getCompositeMinSpread(weapon, modifiedGun);
+		float maxSpread = GunCompositeStatHelper.getCompositeSpread(weapon, modifiedGun);
+        return getCompositeAdsSpread(player, weapon, modifiedGun, minSpread, maxSpread);
+    }
+	
+	public static float getCompositeAdsSpread(Player player, ItemStack weapon, Gun modifiedGun, float minSpread, float maxSpread)
+    {
+    	float minAdsSpread = minSpread * (1-(modifiedGun.getGeneral().getSpreadAdsReduction()));
+    	float maxAdsSpread = maxSpread * (1-(getCompositeAdsSpreadReduction(player, weapon, modifiedGun)));
+        return Mth.lerp(SpreadTracker.get(player).getSpread((GunItem) weapon.getItem()),minAdsSpread,maxAdsSpread);
     }
 
 

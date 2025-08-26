@@ -171,7 +171,6 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     private Vec3 getDirection(LivingEntity shooter, ItemStack weapon, GunItem item, Gun modifiedGun)
     {
         float gunSpread = GunCompositeStatHelper.getCompositeSpread(weapon, modifiedGun);
-        float minSpread = GunCompositeStatHelper.getCompositeMinSpread(weapon, modifiedGun);
 
         if(gunSpread == 0F)
         {
@@ -180,6 +179,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
         if(shooter instanceof Player)
         {
+        	Player player = (Player) shooter;
+            float minSpread = GunCompositeStatHelper.getCompositeMinSpread(weapon, modifiedGun);
             float initialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter).getSpread(item),minSpread,gunSpread);
             if(!modifiedGun.getGeneral().isAlwaysSpread() || minSpread > 0)
             {
@@ -188,8 +189,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
             if(ModSyncedDataKeys.AIMING.getValue((Player) shooter))
             {
-                float aimingGunSpread = gunSpread * (1-(modifiedGun.getGeneral().getSpreadAdsReduction()));
-                float aimPosition = (float) Mth.clamp(ServerAimTracker.getAimingTicks((Player) shooter)/(5/GunCompositeStatHelper.getCompositeAimDownSightSpeed(weapon)),0,1);
+                float aimingGunSpread = GunCompositeStatHelper.getCompositeAdsSpread(player, weapon, modifiedGun, minSpread, gunSpread);
+                float aimPosition = (float) Mth.clamp(ServerAimTracker.getAimingTicks(player)/(5/GunCompositeStatHelper.getCompositeAimDownSightSpeed(weapon)),0,1);
                 gunSpread = Mth.lerp(aimPosition,initialGunSpread,aimingGunSpread);
             }
         }

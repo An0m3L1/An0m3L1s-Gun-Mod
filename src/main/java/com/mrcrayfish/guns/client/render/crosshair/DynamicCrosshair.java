@@ -64,7 +64,7 @@ public class DynamicCrosshair extends Crosshair
     public void onGunFired()
     {
         this.prevScale = 0.0F;
-        this.scale = 0.6F;
+        this.scale = 0.5F;
         this.fireBloom = 3.0F;
     }
 
@@ -89,11 +89,13 @@ public class DynamicCrosshair extends Crosshair
                 float spreadCount = (SpreadTracker.get(mc.player).getNextSpread(gun,aiming));
             	float spreadModifier = ((spreadCount+(1F/Math.max(Config.COMMON.projectileSpread.maxCount.get(),1F)))*Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom),1F));
             	spreadModifier = (float) (Mth.lerp(sprintTransition*0.5, spreadModifier, 1.0F));
-            	float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
+            	float maxSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
             	float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
-            	minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0F ? minSpread : (modifiedGun.getGeneral().isAlwaysSpread() ? baseSpread : 0));
-            	float aimingSpreadMultiplier = (float) (Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction()));
-            	spread = Mth.clamp(Mth.lerp(spreadModifier,minSpread,baseSpread)*(aimingSpreadMultiplier),0F,32F);
+            	float minAdsSpread = minSpread * (1-(modifiedGun.getGeneral().getSpreadAdsReduction()));
+            	float maxAdsSpread = maxSpread * (1-(GunCompositeStatHelper.getCompositeAdsSpreadReduction(mc.player, heldItem, modifiedGun)));
+            	float hipSpread = Mth.lerp(spreadModifier,minSpread,maxSpread);
+            	float adsSpread = Mth.lerp(spreadModifier,minAdsSpread,maxAdsSpread);
+            	spread = Mth.clamp(Mth.lerp(aiming,hipSpread,adsSpread),0F,32F);
             	
             	DotRenderMode dotRenderMode = Config.CLIENT.display.dynamicCrosshairDotMode.get();
             	renderDot = ((dotRenderMode == DotRenderMode.ALWAYS)

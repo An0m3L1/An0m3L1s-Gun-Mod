@@ -79,6 +79,7 @@ public class Config
     {
         public final ForgeConfigSpec.BooleanValue oldAnimations;
         public final ForgeConfigSpec.ConfigValue<String> crosshair;
+        public final ForgeConfigSpec.BooleanValue forceShowCrosshair;
         public final ForgeConfigSpec.BooleanValue blendCrosshair;
         public final ForgeConfigSpec.DoubleValue dynamicCrosshairBaseSpread;
         public final ForgeConfigSpec.DoubleValue dynamicCrosshairSpreadMultiplier;
@@ -106,6 +107,7 @@ public class Config
             {
                 this.oldAnimations = builder.comment("If true, uses the old animation poses for weapons. This is only for nostalgic reasons and not recommended to switch back.").define("oldAnimations", false);
                 this.crosshair = builder.comment("The custom crosshair to use for weapons. Go to (Options > Controls > Mouse Settings > Crosshair) in game to change this!").define("crosshair", Crosshair.DEFAULT.getLocation().toString());
+                this.forceShowCrosshair = builder.comment("If enabled, forces the crosshair to show even when it should be hidden (i.e. when aiming).").define("forceShowCrosshair", false);
                 this.blendCrosshair = builder.comment("If enabled, blends all custom crosshairs to match the behavior of the default crosshair.").define("blendCrosshair", true);
                 this.dynamicCrosshairBaseSpread = builder.comment("The resting size of the Dynamic Crosshair when spread is zero.").defineInRange("dynamicCrosshairBaseSpread", 1.0, 0, 5);
                 this.dynamicCrosshairSpreadMultiplier = builder.comment("The bloom factor of the Dynamic Crosshair when spread increases.").defineInRange("dynamicCrosshairSpreadMultiplier", 1.0, 1.0, 1.5);

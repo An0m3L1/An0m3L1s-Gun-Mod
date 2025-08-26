@@ -61,14 +61,14 @@ public class GunEnchantmentHelper
         return rate;
     }
 
-    public static int getRampUpRate(Player player,ItemStack weapon, int baseRate)
+    public static int getRampUpRate(Player player, ItemStack weapon, int baseRate)
     {
         Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         if (EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.TRIGGER_FINGER.get(), weapon) > 0)
         	return baseRate;
 
         int maxRate = getRampUpMaxRate(weapon, baseRate);
-        int minRate = getRampUpMinRate(maxRate);
+        int minRate = getRampUpMinRate(modifiedGun, maxRate);
         int newRate = baseRate;
         int level = EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.RAMP_UP.get(), weapon);
         if(level > 0 || modifiedGun.getGeneral().hasDoRampUp())
@@ -86,12 +86,21 @@ public class GunEnchantmentHelper
     
     public static int getRampUpMaxShots(Gun gun)
     {
-    	 return gun.getGeneral().getRampUpShotsNeeded();
+    	return gun.getGeneral().getRampUpShotsNeeded();
     }
     
     public static int getRampUpMinRate(int rate)
     {
-    	 return rate+3;
+    	return rate+3;
+    }
+    
+    public static int getRampUpMinRate(Gun gun, int rate)
+    {
+   	 	int minRate = gun.getGeneral().getRampUpMinRate();
+   	 	if (minRate>0)
+   	 		return (minRate>rate ? minRate : rate);
+   	 	
+    	return rate+3;
     }
     
     public static int getRampUpMaxRate(ItemStack weapon, int rate)
