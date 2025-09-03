@@ -3376,55 +3376,55 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         {
             @Optional
             @Nullable
-            private ScaledPositioned scope;
+            private AttachmentsBase scope;
             @Optional
             @Nullable
-            private ScaledPositioned barrel;
+            private AttachmentsBase barrel;
             @Optional
             @Nullable
-            private ScaledPositioned stock;
+            private AttachmentsBase stock;
             @Optional
             @Nullable
-            private ScaledPositioned underBarrel;
+            private AttachmentsBase underBarrel;
             @Optional
             @Nullable
-            private ScaledPositioned tactical;
+            private AttachmentsBase tactical;
             @Optional
             @Nullable
-            private ScaledPositioned magazine;
+            private AttachmentsBase magazine;
 
             @Nullable
-            public ScaledPositioned getScope()
+            public AttachmentsBase getScope()
             {
                 return this.scope;
             }
 
             @Nullable
-            public ScaledPositioned getBarrel()
+            public AttachmentsBase getBarrel()
             {
                 return this.barrel;
             }
 
             @Nullable
-            public ScaledPositioned getStock()
+            public AttachmentsBase getStock()
             {
                 return this.stock;
             }
 
             @Nullable
-            public ScaledPositioned getUnderBarrel()
+            public AttachmentsBase getUnderBarrel()
             {
                 return this.underBarrel;
             }
 
             @Nullable
-            public ScaledPositioned getTactical()
+            public AttachmentsBase getTactical()
             {
                 return this.tactical;
             }
 
             @Nullable
-            public ScaledPositioned getMagazine()
+            public AttachmentsBase getMagazine()
             {
                 return this.magazine;
             }
@@ -3465,27 +3465,27 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 if(tag.contains("Scope", Tag.TAG_COMPOUND))
                 {
-                    this.scope = this.createScaledPositioned(tag, "Scope");
+                    this.scope = this.createAttachmentBase(tag, "Scope");
                 }
                 if(tag.contains("Barrel", Tag.TAG_COMPOUND))
                 {
-                    this.barrel = this.createScaledPositioned(tag, "Barrel");
+                    this.barrel = this.createAttachmentBase(tag, "Barrel");
                 }
                 if(tag.contains("Stock", Tag.TAG_COMPOUND))
                 {
-                    this.stock = this.createScaledPositioned(tag, "Stock");
+                    this.stock = this.createAttachmentBase(tag, "Stock");
                 }
                 if(tag.contains("UnderBarrel", Tag.TAG_COMPOUND))
                 {
-                    this.underBarrel = this.createScaledPositioned(tag, "UnderBarrel");
+                    this.underBarrel = this.createAttachmentBase(tag, "UnderBarrel");
                 }
                 if(tag.contains("Tactical", Tag.TAG_COMPOUND))
                 {
-                    this.tactical = this.createScaledPositioned(tag, "Tactical");
+                    this.tactical = this.createAttachmentBase(tag, "Tactical");
                 }
                 if(tag.contains("Magazine", Tag.TAG_COMPOUND))
                 {
-                    this.magazine = this.createScaledPositioned(tag, "Magazine");
+                    this.magazine = this.createAttachmentBase(tag, "Magazine");
                 }
             }
 
@@ -3550,10 +3550,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             }
 
             @Nullable
-            private ScaledPositioned createScaledPositioned(CompoundTag tag, String key)
+            private AttachmentsBase createAttachmentBase(CompoundTag tag, String key)
             {
                 CompoundTag attachment = tag.getCompound(key);
-                return attachment.isEmpty() ? null : new ScaledPositioned(attachment);
+                return attachment.isEmpty() ? null : new AttachmentsBase(attachment);
             }
         }
 
@@ -3793,6 +3793,135 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         }
     }
 
+    public static class AttachmentsBase extends ScaledPositioned
+    {
+        @Optional
+        protected double modifierScale = 1.0;
+        protected double spreadModScale = -1.0;
+        protected double recoilModScale = -1.0;
+        protected double adsModScale = -1.0;
+
+        public AttachmentsBase() {}
+
+        public AttachmentsBase(CompoundTag tag)
+        {
+            this.deserializeNBT(tag);
+        }
+
+        @Override
+        public CompoundTag serializeNBT()
+        {
+            CompoundTag tag = super.serializeNBT();
+            tag.putDouble("ModifierScale", this.modifierScale);
+            tag.putDouble("SpreadModScale", this.spreadModScale);
+            tag.putDouble("RecoilModScale", this.recoilModScale);
+            tag.putDouble("AdsModScale", this.adsModScale);
+            return tag;
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag tag)
+        {
+            super.deserializeNBT(tag);
+            if(tag.contains("ModifierScale", Tag.TAG_ANY_NUMERIC))
+            {
+                this.modifierScale = tag.getDouble("ModifierScale");
+            }
+            if(tag.contains("SpreadModScale", Tag.TAG_ANY_NUMERIC))
+            {
+                this.spreadModScale = tag.getDouble("SpreadModScale");
+            }
+            if(tag.contains("RecoilModScale", Tag.TAG_ANY_NUMERIC))
+            {
+                this.recoilModScale = tag.getDouble("RecoilModScale");
+            }
+            if(tag.contains("AdsModScale", Tag.TAG_ANY_NUMERIC))
+            {
+                this.adsModScale = tag.getDouble("AdsModScale");
+            }
+        }
+
+        @Override
+        public JsonObject toJsonObject()
+        {
+            JsonObject object = super.toJsonObject();
+            if(this.modifierScale != 1.0)
+            {
+                object.addProperty("modifierScale", this.modifierScale);
+            }
+            if(this.modifierScale != -1.0)
+            {
+                object.addProperty("spreadModScale", this.spreadModScale);
+            }
+            if(this.modifierScale != -1.0)
+            {
+                object.addProperty("recoilModScale", this.recoilModScale);
+            }
+            if(this.modifierScale != -1.0)
+            {
+                object.addProperty("adsModScale", this.adsModScale);
+            }
+            return object;
+        }
+
+        /**
+         * @return The scale of the modifiers of attachments in this slot.
+         * Can be overwritten by the individual modifier scalars.
+         */
+        public double getModifierScale()
+        {
+            return this.modifierScale;
+        }
+
+        /**
+         * @return The scale of the spread modifier of attachments in this slot.
+         * If negative (defaults to -1) then modifierScale is used instead.
+         */
+        public double getSpreadModifierScale()
+        {
+        	if (this.spreadModScale < 0)
+        		return this.getModifierScale();
+            return this.spreadModScale;
+        }
+
+        /**
+         * @return The scale of the recoil modifier of attachments in this slot.
+         * If negative (defaults to -1) then modifierScale is used instead.
+         */
+        public double getRecoilModifierScale()
+        {
+        	if (this.recoilModScale < 0)
+        		return this.getModifierScale();
+            return this.recoilModScale;
+        }
+
+        /**
+         * @return The scale of the ADS speed modifier of attachments in this slot.
+         * If negative (defaults to -1) then modifierScale is used instead.
+         */
+        public double getAdsSpeedModifierScale()
+        {
+        	if (this.adsModScale < 0)
+        		return this.getModifierScale();
+            return this.adsModScale;
+        }
+
+        @Override
+        public AttachmentsBase copy()
+        {
+        	AttachmentsBase positioned = new AttachmentsBase();
+            positioned.xOffset = this.xOffset;
+            positioned.yOffset = this.yOffset;
+            positioned.zOffset = this.zOffset;
+            positioned.scale = this.scale;
+            positioned.modifierScale = this.modifierScale;
+            positioned.spreadModScale = this.spreadModScale;
+            positioned.recoilModScale = this.recoilModScale;
+            positioned.adsModScale = this.adsModScale;
+            return positioned;
+        }
+    }
+
     @Override
     public CompoundTag serializeNBT()
     {
@@ -3918,6 +4047,30 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
     }
 
     @Nullable
+    public AttachmentsBase getAttachmentSlot(IAttachment.Type type)
+    {
+        if(this.modules.attachments != null)
+        {
+            switch(type)
+            {
+                case SCOPE:
+                    return this.modules.attachments.scope;
+                case BARREL:
+                    return this.modules.attachments.barrel;
+                case STOCK:
+                    return this.modules.attachments.stock;
+                case UNDER_BARREL:
+                    return this.modules.attachments.underBarrel;
+                case TACTICAL:
+                    return this.modules.attachments.tactical;
+                case MAGAZINE:
+                    return this.modules.attachments.magazine;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
     public ScaledPositioned getAttachmentPosition(IAttachment.Type type)
     {
         if(this.modules.attachments != null)
@@ -3932,6 +4085,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
                     return this.modules.attachments.stock;
                 case UNDER_BARREL:
                     return this.modules.attachments.underBarrel;
+                case TACTICAL:
+                    return this.modules.attachments.tactical;
+                case MAGAZINE:
+                    return this.modules.attachments.magazine;
             }
         }
         return null;
@@ -4896,7 +5053,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Deprecated(since = "1.3.0", forRemoval = true)
         public Builder setScope(float scale, double xOffset, double yOffset, double zOffset)
         {
-            ScaledPositioned positioned = new ScaledPositioned();
+        	AttachmentsBase positioned = new AttachmentsBase();
             positioned.scale = scale;
             positioned.xOffset = xOffset;
             positioned.yOffset = yOffset;
@@ -4908,7 +5065,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Deprecated(since = "1.3.0", forRemoval = true)
         public Builder setBarrel(float scale, double xOffset, double yOffset, double zOffset)
         {
-            ScaledPositioned positioned = new ScaledPositioned();
+            AttachmentsBase positioned = new AttachmentsBase();
             positioned.scale = scale;
             positioned.xOffset = xOffset;
             positioned.yOffset = yOffset;
@@ -4920,7 +5077,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Deprecated(since = "1.3.0", forRemoval = true)
         public Builder setStock(float scale, double xOffset, double yOffset, double zOffset)
         {
-            ScaledPositioned positioned = new ScaledPositioned();
+        	AttachmentsBase positioned = new AttachmentsBase();
             positioned.scale = scale;
             positioned.xOffset = xOffset;
             positioned.yOffset = yOffset;
@@ -4932,7 +5089,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Deprecated(since = "1.3.0", forRemoval = true)
         public Builder setUnderBarrel(float scale, double xOffset, double yOffset, double zOffset)
         {
-            ScaledPositioned positioned = new ScaledPositioned();
+        	AttachmentsBase positioned = new AttachmentsBase();
             positioned.scale = scale;
             positioned.xOffset = xOffset;
             positioned.yOffset = yOffset;

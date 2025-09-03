@@ -131,10 +131,11 @@ public interface IGunModifier
     /**
      * Changes the amount of recoil given when firing a weapon. This value is multiplied with the recoil
      * value of the weapon. Anything greater than one will result in the weapon having more recoil, while
-     * less than one but more than zero will result in less kick. Changing this does have an affect
-     * of the accuracy of a weapon if recoil is enabled in the server config.
+     * less than one but more than zero will result in less recoil. Changing this does not directly make the
+     * weapon more or less accurate, but it can affect the ability for the player to place their shots if
+     * camera recoil is enabled in the server config.
      *
-     * @return a value to multiply the weapon's kick
+     * @return a value to multiply the weapon's recoil
      */
     default float recoilModifier()
     {

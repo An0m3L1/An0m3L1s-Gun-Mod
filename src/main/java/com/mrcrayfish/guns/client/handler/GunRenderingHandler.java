@@ -242,6 +242,13 @@ public class GunRenderingHandler
     	this.sprintTransition = value;
     }
 
+    public void weaponSwitched(Player player)
+    {
+    	this.lastFireTick = -1;
+    	this.setSprintingTransition(0);
+    	this.updateReserveAmmo(player);
+    }
+
     private void updateHitMarker()
     {
     	this.prevHitMarkerTime = this.hitMarkerTime;

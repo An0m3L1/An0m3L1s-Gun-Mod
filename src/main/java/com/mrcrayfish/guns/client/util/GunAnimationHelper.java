@@ -267,15 +267,26 @@ public final class GunAnimationHelper
     	}
     	if (animType.equals("fire") && hasAnimation("fire", weapon))
     	{
-    		ItemCooldowns tracker = player.getCooldowns();
-            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
-            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
-            float maxRate = 0;
-            if (maxRate>1)
-            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
-            
-            if (cooldown>0)
-            return 1-cooldown;
+    		if (getAnimationBoolean(animType, weapKey, "syncToCooldown", true))
+    		{
+    			ItemCooldowns tracker = player.getCooldowns();
+	            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
+	            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
+	            float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
+	            if (maxRate>1)
+	            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
+	            
+	            if (cooldown>0)
+	            return 1-cooldown;
+    		}
+    		else
+    		{
+	            float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
+            	int lastFiretick = GunRenderingHandler.get().getLastFireTick();
+        		float recoilProgress = ((player.tickCount-lastFiretick)+partialTicks)*animationSpeed;
+        		int totalFrames = Math.max(getAnimationFrames(animType, weapKey),1);
+        		return recoilProgress/totalFrames;
+    		}
     	}
     	if (animType.equals("recoil") && hasAnimation("recoil", weapon))
     	{
@@ -292,7 +303,7 @@ public final class GunAnimationHelper
 	    		ItemCooldowns tracker = player.getCooldowns();
 	            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
 	            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
-	            float maxRate = 0;
+	            float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
 	            if (maxRate>1)
 	            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
 	            
@@ -768,6 +779,10 @@ public final class GunAnimationHelper
 	}
 	
 	static boolean getAnimationBoolean(String animationType, ResourceLocation weapKey, String transform) {
+		return getAnimationBoolean(animationType, weapKey, transform, false);
+	}
+	
+	static boolean getAnimationBoolean(String animationType, ResourceLocation weapKey, String transform, boolean defaultReturn) {
 		DataObject transformObject = getObjectByPath(weapKey, ANIMATION_KEY, animationType);
 		if (transformObject.has(transform, DataType.BOOLEAN))
 		{
@@ -781,7 +796,7 @@ public final class GunAnimationHelper
 			
 		}
 		
-		return false;
+		return defaultReturn;
 	}
 	
 	static double getAnimationValue(String animationType, ResourceLocation weapKey, String transform) {

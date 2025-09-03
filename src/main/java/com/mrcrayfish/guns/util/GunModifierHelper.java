@@ -67,14 +67,16 @@ public class GunModifierHelper
     	Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
     	for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
-            IGunModifier[] modifiers = getModifiers(weapon, IAttachment.Type.values()[i]);
             IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
+            IGunModifier[] modifiers = getModifiers(weapon, attachType);
             for(IGunModifier modifier : modifiers)
             {
-            	if (!modifiedGun.getGeneral().usesShotgunSpread())
+            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getSpreadModifierScale();
+            	spread = Mth.lerp(modifierScale,spread,modifier.modifyProjectileSpread(spread));
+            	/*if (!modifiedGun.getGeneral().usesShotgunSpread())
             	spread = modifier.modifyProjectileSpread(spread);
             	else
-            	spread = Mth.lerp((attachType == IAttachment.Type.BARREL ? 0.8F : 0.2F),spread,modifier.modifyProjectileSpread(spread));
+            	spread = Mth.lerp((attachType == IAttachment.Type.BARREL ? 0.8F : 0.2F),spread,modifier.modifyProjectileSpread(spread));*/
             }
         }
         return spread;
@@ -137,12 +139,15 @@ public class GunModifierHelper
     public static float getKickReduction(ItemStack weapon)
     {
         float kickReduction = 1.0F;
+    	Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
-            IGunModifier[] modifiers = getModifiers(weapon, IAttachment.Type.values()[i]);
+            IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
+            IGunModifier[] modifiers = getModifiers(weapon, attachType);
             for(IGunModifier modifier : modifiers)
             {
-                kickReduction *= Mth.clamp((modifier.kickModifier()*0.8F)+0.2F, 0.0F, 1.0F);
+            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+                kickReduction *= Mth.clamp((Mth.lerp(modifierScale,1,modifier.recoilModifier())*0.8F)+0.2F, 0.0F, 1.0F);
             }
         }
         return 1.0F - kickReduction;
@@ -151,12 +156,15 @@ public class GunModifierHelper
     public static float getRecoilModifier(ItemStack weapon)
     {
         float recoilReduction = 1.0F;
+    	Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
-            IGunModifier[] modifiers = getModifiers(weapon, IAttachment.Type.values()[i]);
+            IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
+            IGunModifier[] modifiers = getModifiers(weapon, attachType);
             for(IGunModifier modifier : modifiers)
             {
-                recoilReduction *= Math.max(modifier.recoilModifier(), 0.0F);
+            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+                recoilReduction *= Math.max(Mth.lerp(modifierScale,1,modifier.recoilModifier()), 0.0F);
             }
         }
         return 1.0F - recoilReduction;
@@ -248,12 +256,15 @@ public class GunModifierHelper
 
     public static double getModifiedAimDownSightSpeed(ItemStack weapon, double speed)
     {
+    	Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
             IGunModifier[] modifiers = getModifiers(weapon, IAttachment.Type.values()[i]);
+            IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
             for(IGunModifier modifier : modifiers)
             {
-                speed = modifier.modifyAimDownSightSpeed(speed);
+            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+                speed = Mth.lerp(modifierScale,speed,modifier.modifyAimDownSightSpeed(speed));
             }
         }
         return Mth.clamp(speed, 0.01, Double.MAX_VALUE);
