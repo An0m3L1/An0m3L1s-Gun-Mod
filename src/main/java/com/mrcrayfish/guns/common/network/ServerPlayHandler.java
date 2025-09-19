@@ -181,7 +181,7 @@ public class ServerPlayHandler
                     double posZ = player.getZ();
                     float volume = GunModifierHelper.getFireSoundVolume(heldItem);
                     float pitch = 0.9F + world.random.nextFloat() * 0.2F;
-                    if (Gun.hasRampUp(heldItem))
+                    if (Gun.hasRampUp(heldItem) && modifiedGun.getSounds().changePitchWithRampUp())
                     {
                     	float rampUpProgress = RampUpTracker.getRampUpProgress(player, modifiedGun);
                     	float rampUpEased = 1 - (1 - rampUpProgress) * (1 - rampUpProgress);

@@ -148,6 +148,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Ignored
         private GripType gripType = GripType.ONE_HANDED;
         @Optional
+        private boolean overrideClientGripType = false;
+        @Optional
         private int defaultColor = -1;
         private int maxAmmo;
         @Optional
@@ -242,6 +244,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             tag.putInt("BurstCount", this.burstCount);
             tag.putInt("BurstCooldown", this.burstCooldown);
             tag.putString("GripType", this.gripType.getId().toString());
+            tag.putBoolean("OverrideClientGripTyper", this.overrideClientGripType);
             tag.putInt("DefaultColor", this.defaultColor);
             tag.putInt("MaxAmmo", this.maxAmmo);
             tag.putInt("LightMagAmmo", this.lightMagAmmo);
@@ -310,6 +313,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("GripType", Tag.TAG_STRING))
             {
                 this.gripType = GripType.getType(ResourceLocation.tryParse(tag.getString("GripType")));
+            }
+            if(tag.contains("OverrideClientGripType", Tag.TAG_ANY_NUMERIC))
+            {
+                this.overrideClientGripType = tag.getBoolean("OverrideClientGripType");
             }
             if(tag.contains("DefaultColor", Tag.TAG_ANY_NUMERIC))
             {
@@ -533,6 +540,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(this.burstCount != 0) object.addProperty("burstCount", this.burstCount);
             if(this.burstCooldown != -1) object.addProperty("burstCooldown", this.burstCooldown);
             object.addProperty("gripType", this.gripType.getId().toString());
+            if(this.overrideClientGripType != false) object.addProperty("overrideClientGripType", this.overrideClientGripType);
             if(this.defaultColor != 1) object.addProperty("defaultColor", this.defaultColor);
             object.addProperty("maxAmmo", this.maxAmmo);
             if(this.lightMagAmmo != -1) object.addProperty("lightMagAmmo", this.lightMagAmmo);
@@ -587,6 +595,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             general.burstCount = this.burstCount;
             general.burstCooldown = this.burstCooldown;
             general.gripType = this.gripType;
+            general.overrideClientGripType = this.overrideClientGripType;
             general.defaultColor = this.defaultColor;
             general.maxAmmo = this.maxAmmo;
             general.lightMagAmmo = this.lightMagAmmo;
@@ -686,6 +695,15 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         public GripType getGripType()
         {
             return this.gripType;
+        }
+
+        /**
+         * @return If true, client-sided GripType parameters in the gun's cgmmeta
+         * file are ignored in favor of the GripType defined in the gun's data.
+         */
+        public boolean overrideClientGripType()
+        {
+            return this.overrideClientGripType;
         }
 
         /**
@@ -1751,6 +1769,8 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         @Nullable
         private ResourceLocation fireEx;
         @Optional
+        private boolean changePitchWithRampUp = true;
+        @Optional
         @Nullable
 		protected ResourceLocation reload;
 
@@ -1839,6 +1859,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 tag.putString("FireEx", this.fireEx.toString());
             }
+            
+            tag.putBoolean("ChangePitchWithRampUp", this.changePitchWithRampUp);
+            
             if(this.reload != null)
             {
                 tag.putString("Reload", this.reload.toString());
@@ -1942,6 +1965,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if(tag.contains("FireEx", Tag.TAG_STRING))
             {
                 this.fireEx = this.createSound(tag, "FireEx");
+            }
+            if(tag.contains("ChangePitchWithRampUp", Tag.TAG_ANY_NUMERIC))
+            {
+                this.changePitchWithRampUp = tag.getBoolean("ChangePitchWithRampUp");
             }
             if(tag.contains("Reload", Tag.TAG_STRING))
             {
@@ -2070,6 +2097,10 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 object.addProperty("fireEx", this.fireEx.toString());
             }
+            if(this.changePitchWithRampUp != true)
+            {
+                object.addProperty("changePitchWithRampUp", this.changePitchWithRampUp);
+            }
             if(this.reload != null)
             {
                 object.addProperty("reload", this.reload.toString());
@@ -2169,6 +2200,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             
             sounds.fire = this.fire;
             sounds.fireEx = this.fireEx;
+            sounds.changePitchWithRampUp = this.changePitchWithRampUp;
             sounds.reload = this.reload;
             sounds.reloadFrames = this.reloadFrames;
             sounds.reloadStart = this.reloadStart;
@@ -2227,6 +2259,16 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             if (this.fireEx==null)
             	return getFire();
             return this.fireEx;
+        }
+
+        /**
+         * @return Whether the pitch of the weapon's fire sound should scale according to its
+         * ramp-up progress. Defaults to true.
+         */
+        @Nullable
+        public boolean changePitchWithRampUp()
+        {
+            return this.changePitchWithRampUp;
         }
 
         /**

@@ -38,6 +38,7 @@ public class RecoilHandler
     private double gunRecoilNormal;
     private double gunRecoilAngle;
     private float gunRecoilRandom;
+    private float gunVRecoilRandom;
     private float cameraRecoil;
     private float progressCameraRecoil;
     private float currentCameraVRecoil;
@@ -46,6 +47,8 @@ public class RecoilHandler
     private float currentCameraHRecoil;
     private float prevCameraHRecoil;
     private float lastShotHRecoil;
+    private float hRecoilPushForce;
+    private float lastHRecoilPushForce;
     private int lastFireTick = -1;
 
     private RecoilHandler() {}
@@ -70,9 +73,11 @@ public class RecoilHandler
         recoilModifier *= this.getAdsRecoilReduction(modifiedGun);
         this.cameraRecoil = modifiedGun.getGeneral().getRecoilAngle() * recoilModifier;
         this.gunRecoilRandom = random.nextFloat();
+        this.gunVRecoilRandom = random.nextFloat();
         
         this.lastShotVRecoil = currentCameraVRecoil;
         this.lastShotHRecoil = currentCameraHRecoil;
+        this.hRecoilPushForce = lastHRecoilPushForce;
         
         this.lastFireTick = mc.player.tickCount;
         
@@ -110,13 +115,18 @@ public class RecoilHandler
 	        	
 	            float prevVRecoil = lastShotVRecoil-Math.min(lastShotVRecoil*0.4F,0.2F);
 	            float stackedVRecoil = cameraRecoil + lastShotVRecoil;
-	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/19),0,cameraRecoil*10) : cameraRecoil;
-	            //float targetVRecoil = cameraRecoil != 0 ? cameraRecoil + Mth.lerp(Easings.EASE_OUT_QUAD.apply((lastShotVRecoil/cameraRecoil)/4),0,cameraRecoil*2) : cameraRecoil;
-
+	            float targetVRecoil = cameraRecoil != 0 ? Mth.lerp(Easings.EASE_OUT_SIN.apply((stackedVRecoil/cameraRecoil)/14),0,cameraRecoil*6.5F) : cameraRecoil;
 	            float excessRecoilRatio = cameraRecoil != 0 ? (targetVRecoil/cameraRecoil) : 0;
-	            float hRecoilPushForce = Math.min(cameraRecoil * (Easings.EASE_IN_SIN.apply(excessRecoilRatio-1)*0.5F),cameraRecoil/2F);
-	            //float targetHRecoil = ((prevVRecoil1 * Mth.clamp(2F-(gunRecoilRandom*4F),-1,1)))/2;
-	            float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(2F-(gunRecoilRandom*4.0F),-1,1)) , -targetVRecoil*0.8F,targetVRecoil*0.8F);
+	            if (excessRecoilRatio>1)
+	            	targetVRecoil*=(gunVRecoilRandom*0.1F)+0.95F;
+	            
+	            float hRecoilRandom = Mth.clamp(1F-(gunRecoilRandom*2.0F),-1,1);
+	            hRecoilPushForce = Mth.clamp((lastHRecoilPushForce+(Math.min(Easings.EASE_IN_QUAD.apply(excessRecoilRatio-1),1)*hRecoilRandom)*0.4F),-cameraRecoil/1.5F,cameraRecoil/1.5F);
+	            float clampedLastShotHRecoil = Mth.clamp(lastShotHRecoil, -targetVRecoil*0.6F,targetVRecoil*0.6F);
+	            float targetHRecoil = Mth.clamp(clampedLastShotHRecoil + hRecoilPushForce, -targetVRecoil,targetVRecoil);
+
+	            //float hRecoilPushForce = Math.min(cameraRecoil * (Easings.EASE_IN_SIN.apply(excessRecoilRatio-1)*0.5F),cameraRecoil/2F);
+	            //float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(2F-(gunRecoilRandom*4.0F),-1,1)) , -targetVRecoil*0.8F,targetVRecoil*0.8F);
 	            
 	            double recoilUpwardTime = ((targetVRecoil-prevVRecoil)/7)+2;
 	            double recoilDownwardTime = ((targetVRecoil/4.4)+8);

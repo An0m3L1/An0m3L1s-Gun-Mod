@@ -446,9 +446,10 @@ public class GunRenderingHandler
     @SubscribeEvent
     public void onRenderOverlay(RenderHandEvent event)
     {
+    	Minecraft mc = Minecraft.getInstance();
         PoseStack poseStack = event.getPoseStack();
 
-        boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT ? event.getHand() == InteractionHand.MAIN_HAND : event.getHand() == InteractionHand.OFF_HAND;
+        boolean right = mc.options.mainHand().get() == HumanoidArm.RIGHT ? event.getHand() == InteractionHand.MAIN_HAND : event.getHand() == InteractionHand.OFF_HAND;
         HumanoidArm hand = right ? HumanoidArm.RIGHT : HumanoidArm.LEFT;
 
         ItemStack heldItem = event.getItemStack();
@@ -494,7 +495,7 @@ public class GunRenderingHandler
             }
         }
 
-        LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
+        LocalPlayer player = Objects.requireNonNull(mc.player);
         BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(overrideModel.isEmpty() ? heldItem : overrideModel, player.level, player, 0);
         float scaleX = model.getTransforms().firstPersonRightHand.scale.x();
         float scaleY = model.getTransforms().firstPersonRightHand.scale.y();
@@ -595,7 +596,7 @@ public class GunRenderingHandler
         this.applyIdleTransforms(poseStack, heldItem, modifiedGun, offset);
         this.applyAimingTransforms(poseStack, heldItem, modifiedGun, translateX, translateY, translateZ, offset);
         this.applySwayTransforms(poseStack, modifiedGun, player, translateX, translateY, translateZ, event.getPartialTick());
-        this.applySprintingTransforms(modifiedGun, hand, poseStack, event.getPartialTick());
+        this.applySprintingTransforms(modifiedGun, heldItem, hand, poseStack, event.getPartialTick());
         this.applyAnimationTransforms(poseStack, player, heldItem, modifiedGun, event.getPartialTick());
         this.applyRecoilTransforms(poseStack, player, heldItem, modifiedGun, event.getPartialTick());
         this.applyReloadTransforms(poseStack, heldItem, modifiedGun, event.getPartialTick());
@@ -609,12 +610,13 @@ public class GunRenderingHandler
 
         /* Renders the first persons arms from the grip type of the weapon */
         poseStack.pushPose();
-        modifiedGun.getGeneral().getGripType().getHeldAnimation().renderFirstPersonArms(Minecraft.getInstance().player, hand, heldItem, poseStack, event.getMultiBufferSource(), packedLight, event.getPartialTick());
+        PropertyHelper.getGripType(heldItem, modifiedGun).getHeldAnimation().renderFirstPersonArms(mc.player, hand, heldItem, poseStack, event.getMultiBufferSource(), packedLight, event.getPartialTick());
+        //modifiedGun.getGeneral().getGripType().getHeldAnimation().renderFirstPersonArms(mc.player, hand, heldItem, poseStack, event.getMultiBufferSource(), packedLight, event.getPartialTick());
         poseStack.popPose();
 
         /* Renders the weapon */
         ItemTransforms.TransformType transformType = right ? ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND : ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND;
-        this.renderWeapon(Minecraft.getInstance().player, heldItem, transformType, event.getPoseStack(), event.getMultiBufferSource(), packedLight, event.getPartialTick());
+        this.renderWeapon(mc.player, heldItem, transformType, event.getPoseStack(), event.getMultiBufferSource(), packedLight, event.getPartialTick());
 
         poseStack.popPose();
     }
@@ -696,11 +698,12 @@ public class GunRenderingHandler
         }
     }
 
-    private void applySprintingTransforms(Gun modifiedGun, HumanoidArm hand, PoseStack poseStack, float partialTicks)
+    private void applySprintingTransforms(Gun modifiedGun, ItemStack item, HumanoidArm hand, PoseStack poseStack, float partialTicks)
     {
         if(Config.CLIENT.display.sprintAnimation.get() && modifiedGun.getGeneral().getGripType().getHeldAnimation().canApplySprintingAnimation())
         {
-        	GripType pose = modifiedGun.getGeneral().getGripType();
+        	GripType pose = PropertyHelper.getGripType(item, modifiedGun);
+        	//GripType pose = modifiedGun.getGeneral().getGripType();
         	if(pose == GripType.ONE_HANDED || pose == GripType.PISTOL_CUSTOM)
         	{
             	float transition = (this.prevSprintTransition + (this.sprintTransition - this.prevSprintTransition) * partialTicks) / 5F;
