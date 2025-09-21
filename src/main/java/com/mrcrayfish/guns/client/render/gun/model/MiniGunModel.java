@@ -45,38 +45,45 @@ public class MiniGunModel implements IOverrideModel
         
         ItemStack heldItem = player.getMainHandItem();
         int fireRate = GunCompositeStatHelper.getCompositeRate(heldItem, player);
-        double barrelCount = PropertyHelper.getMinigunBarrels(heldItem);
+        double barrelCount = Math.max(PropertyHelper.getMinigunBarrels(heldItem),1);
         float firingSpinRate = Math.min((360F/(float)barrelCount)*0.96F,(360F/(float)barrelCount)/(float)fireRate);
-        
-        boolean shooting = player.tickCount < lastFireTick+(fireRate+1) && lastFireTick!=-1;
+        float minSpinRate = Math.max(24F/(float)barrelCount,1F);
 
-        if(shooting)
+        if (player==Minecraft.getInstance().player)
         {
-        	rotationSpeed=firingSpinRate;
+	        boolean shooting = player.tickCount < lastFireTick+(fireRate+2) && lastFireTick!=-1;
+	
+	        if(shooting)
+	        {
+	        	rotationSpeed=Math.max(firingSpinRate,rotationSpeed);
+	        }
+	        else
+	        {
+	        	if (rotationSpeed>minSpinRate)
+	        	rotationSpeed=Math.max((rotationSpeed)*0.95F, minSpinRate);
+	        	else
+	        	if (rotationSpeed<minSpinRate)
+	        	rotationSpeed=minSpinRate;
+	        }
+	        
+	        if (rotationSpeed>0F)
+	        rotations.rotation += rotationSpeed;
+	        
+	        if (rotations.rotation > 360)
+	        {
+	        	rotations.rotation -= 360;
+	        	rotations.prevRotation -= 360;
+	        }
         }
         else
         {
-        	if (rotationSpeed>0F)
-        	rotationSpeed=Math.max(Math.max((rotationSpeed-2)*0.9F,(rotationSpeed-2)-(5F/(float)barrelCount))+2F, 2F);
-        }
-        
-        if (rotationSpeed>0F)
-        rotations.rotation += rotationSpeed;
-        
-        if (rotations.rotation > 360/barrelCount)
-        {
-        	rotations.rotation -= 360/barrelCount;
-        	rotations.prevRotation -= 360/barrelCount;
-        	if (!shooting)
-        	{
-        		if (rotationSpeed<Math.max(20F/(float)barrelCount,2.2F))
-        		{
-        			rotationSpeed=0;
-        			rotations.rotation = 0;
-        		}
-        		else
-        		rotationSpeed=Math.max(Mth.lerp(0.4F,rotationSpeed*0.9F,rotationSpeed-(1.5F/(float)barrelCount)), 2F);
-        	}
+	        boolean shooting = ModSyncedDataKeys.SHOOTING.getValue(player);
+	        if(shooting)
+	        {
+	        	rotationSpeed=firingSpinRate;
+	        }
+	        else
+	        rotationSpeed=minSpinRate;
         }
         
         
