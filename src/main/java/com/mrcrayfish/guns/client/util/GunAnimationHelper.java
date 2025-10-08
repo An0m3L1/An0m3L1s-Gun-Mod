@@ -81,11 +81,21 @@ public final class GunAnimationHelper
 		}
 		else
 		{
-			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
-            if (cooldown>0 && weaponSwitchTick==-1)
+			ItemCooldowns tracker = player.getCooldowns();
+			ResourceLocation weapKey = lookForParentAnimation("fire", getItemLocationKey(weapon));
+            if (getAnimationBoolean("fire", weapKey, "syncToCooldown", true))
             {
-            	return "fire";
+                float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
+            	if (cooldown>0 && weaponSwitchTick==-1)
+            		return "fire";
+			}
+            {
+            	float animationSpeed = (float) getAnimationValue("fire", weapKey, "animationSpeed");
+            	int lastFiretick = GunRenderingHandler.get().getLastFireTick();
+        		float fireProgress = ((player.tickCount-lastFiretick)+partialTicks)*animationSpeed;
+        		int totalFrames = Math.max(getAnimationFrames("fire", weapKey),1);
+                if (fireProgress<totalFrames && weaponSwitchTick==-1)
+                	return "fire";
             }
 		}
         if(hasAnimation("draw", weapon) && weaponSwitchTick!=-1 && player.tickCount>weaponSwitchTick && reloadTransitionProgress<=0.0)
@@ -271,10 +281,14 @@ public final class GunAnimationHelper
     		{
     			ItemCooldowns tracker = player.getCooldowns();
 	            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
-	            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
+	            float fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
 	            float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
 	            if (maxRate>1)
-	            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
+	            {
+	                float cooldownDivider = 1.0F*Math.max(fireRate/maxRate,1);
+	                float cooldownOffset = cooldownDivider - 1.0F;
+	            	cooldown = (cooldown*cooldownDivider)-cooldownOffset;
+    			}
 	            
 	            if (cooldown>0)
 	            return 1-cooldown;
@@ -283,9 +297,9 @@ public final class GunAnimationHelper
     		{
 	            float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
             	int lastFiretick = GunRenderingHandler.get().getLastFireTick();
-        		float recoilProgress = ((player.tickCount-lastFiretick)+partialTicks)*animationSpeed;
+        		float fireProgress = ((player.tickCount-lastFiretick)+partialTicks)*animationSpeed;
         		int totalFrames = Math.max(getAnimationFrames(animType, weapKey),1);
-        		return recoilProgress/totalFrames;
+        		return fireProgress/totalFrames;
     		}
     	}
     	if (animType.equals("recoil") && hasAnimation("recoil", weapon))
@@ -302,10 +316,14 @@ public final class GunAnimationHelper
     		{
 	    		ItemCooldowns tracker = player.getCooldowns();
 	            float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
-	            int fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
+	            float fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
 	            float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
 	            if (maxRate>1)
-	            cooldown = 1.0F*Math.max((float) fireRate/maxRate,1);
+	            {
+	                float cooldownDivider = 1.0F*Math.max(fireRate/maxRate,1);
+	                float cooldownOffset = cooldownDivider - 1.0F;
+	            	cooldown = (cooldown*cooldownDivider)-cooldownOffset;
+    			}
 	            
 	            if (cooldown>0)
 	            return 1-cooldown;
