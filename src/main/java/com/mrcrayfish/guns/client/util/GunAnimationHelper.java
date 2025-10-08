@@ -79,7 +79,7 @@ public final class GunAnimationHelper
     		}
     	    return "reload";
 		}
-		else
+		else if (reloadTransitionProgress<=0.0)
 		{
 			ItemCooldowns tracker = player.getCooldowns();
 			ResourceLocation weapKey = lookForParentAnimation("fire", getItemLocationKey(weapon));
