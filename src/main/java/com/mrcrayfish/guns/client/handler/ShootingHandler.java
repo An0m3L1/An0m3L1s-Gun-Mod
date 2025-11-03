@@ -219,6 +219,8 @@ public class ShootingHandler
                 {
                 	GunRenderingHandler.get().weaponSwitched(player);
                 }
+                else
+                weaponSwitchTick = -1;
                 ReloadHandler.get().weaponSwitched();
             }
             
