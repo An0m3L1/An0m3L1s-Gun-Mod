@@ -1,0 +1,268 @@
+{
+    "cgm:animations": {
+		"draw": {
+			"animationSpeed": 1.0,
+			"frames": 30,
+			"sounds": {
+				"count": 1,
+				"0": {
+					"id": "minecraft:item.armor.equip_iron",
+					"volume": 1.0,
+					"pitch": 0.5,
+					"playAt": 2.0
+				}
+			},
+			"viewModel": {
+				"rotOffset": [0, -1.9, 0.0],
+				"0": {
+					"translation": [-0.3, -5, -0.5]
+				},
+				"1": {
+					"rotation": [-25, 5, 0]
+				},
+				"12": {
+					"translation": [0, -1.0, 0.5],
+					"transEasing": "ease_out_sin",
+					"rotation": [11, -6, 2],
+					"rotEasing": "ease_in_out_quad"
+				},
+				"23": {
+					"translation": [0, 0, 0],
+					"transEasing": "ease_in_out_quad"
+				},
+				"24": {
+					"rotation": [0, 0, 0],
+					"rotEasing": "ease_in_out_cubic"
+				}
+			}
+		},
+		"inspect": {
+			"frames": 170,
+			"animationSpeed": 1.0,
+			"sounds": {
+				"count": 6,
+				"0": {
+					"id": "minecraft:item.armor.equip_gold",
+					"volume": 0.7,
+					"pitch": 0.5,
+					"playAt": 2.0
+				},
+				"1": {
+					"id": "minecraft:item.armor.equip_iron",
+					"volume": 1.0,
+					"pitch": 0.4,
+					"playAt": 62.0
+				},
+				"3": {
+					"id": "minecraft:item.armor.equip_iron",
+					"volume": 1.0,
+					"pitch": 0.4,
+					"playAt": 132.0
+				},
+				"4": {
+					"id": "minecraft:item.armor.equip_gold",
+					"volume": 0.7,
+					"pitch": 0.6,
+					"playAt": 152.0
+				}
+			},
+			"viewModel": {
+				"rotOffset": [-2, -1.9, 4.0],
+				"0": {
+					"translation": [0.0, 0.0, 0.0],
+					"rotation": [0, 0, 0]
+				},
+				"10": {
+					"translation": [-0.2, -1.0, -1.0],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"20": {
+					"translation": [-0.2, 0.5, -0.5],
+					"transEasing": "ease_in_out_sin",
+					"rotation": [12, 50.0, -6.0],
+					"rotEasing": "ease_in_out_cubic"
+				},
+				"40": {
+					"translation": [-0.2, 0.45, -0.49],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"60": {
+					"translation": [-0.2, 0.52, -0.46],
+					"transEasing": "ease_in_out_cubic",
+					"rotation": [11, 50.5, -9.1],
+					"rotEasing": "ease_in_out_cubic"
+				},
+				"75": {
+					"translation": [-0.45, -1.0, -1.0],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"90": {
+					"translation": [-0.9, -0.9, -1.5],
+					"transEasing": "ease_in_out_sin",
+					"rotation": [38, 4.0, 5.0],
+					"rotEasing": "ease_in_out_cubic"
+				},
+				"110": {
+					"translation": [-0.95, -0.97, -1.46],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"130": {
+					"translation": [-1.0, -1.0, -1.5],
+					"transEasing": "ease_in_out_cubic",
+					"rotation": [40, 0.0, 4.0],
+					"rotEasing": "ease_in_out_cubic"
+				},
+				"140": {
+					"translation": [-0.7, 0.0, -1.2],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"149": {
+					"translation": [-0.1, 0.1, -0.3],
+					"transEasing": "ease_in_out_sin"
+				},
+				"151": {
+					"rotation": [-12, 1.0, 2.0],
+					"rotEasing": "ease_in_out_quad"
+				},
+				"158": {
+					"translation": [-0.1, -0.2, -0.2],
+					"transEasing": "ease_in_out_quad"
+				},
+				"167": {
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "ease_in_out_cubic"
+				},
+				"169": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "ease_in_out_cubic"
+				}
+			}
+		},
+		"recoil": {
+			"frames": 30,
+			"animationSpeed": 2.0,
+			"viewModel": {
+				"rotOffset": [0, -2.2, 0.0],
+				"0": {
+					"translation": [0.0, 0.0, 0.5],
+					"rotation": [-1, 0, 0]
+				},
+				"2": {
+					"translation": [0.0, 0.1, 0.8],
+					"transEasing": "ease_out_quad"
+				},
+				"3": {
+					"rotation": [2, 0.0, 0.0],
+					"rotEasing": "ease_out_cubic"
+				},
+				"23": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "ease_in_out_quad"
+				},
+				"28": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "linear",
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "ease_in_out_quad"
+				}
+			}
+		},
+        "reload": {
+			"frames": 101,
+			"progressOffset": 0.0,
+			"sounds": {
+				"count": 6,
+				"0": {
+					"id": "minecraft:item.armor.equip_gold",
+					"volume": 0.9,
+					"pitch": 0.6,
+					"playAt": 0.5
+				},
+				"1": {
+					"id": "minecraft:item.armor.equip_iron",
+					"volume": 0.5,
+					"pitch": 0.5,
+					"playAt": 15.0
+				},
+				"2": {
+					"id": "minecraft:item.armor.equip_netherite",
+					"volume": 0.7,
+					"pitch": 0.7,
+					"playAt": 54.0
+				},
+				"3": {
+					"id": "minecraft:item.armor.equip_chain",
+					"volume": 0.5,
+					"pitch": 0.6,
+					"playAt": 61.0
+				},
+				"4": {
+					"id": "minecraft:item.armor.equip_iron",
+					"volume": 0.9,
+					"pitch": 0.5,
+					"playAt": 74.0
+				},
+				"5": {
+					"id": "minecraft:item.armor.equip_gold",
+					"volume": 0.4,
+					"pitch": 0.6,
+					"playAt": 86.0
+				}
+			},
+			"viewModel": {
+				"rotOffset": [-2, -1.9, 0.0],
+				"endEasing": "ease_out_quad",
+				"0": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "linear",
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "linear"
+				},
+				"12": {
+					"translation": [-0.4, -1.8, 0.0],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"13": {
+					"rotation": [15.0, 15.0, -2.0],
+					"rotEasing": "ease_in_out_quad"
+				},
+				"26": {
+					"rotation": [-1.0, 19.0, -10.0],
+					"rotEasing": "ease_in_sin"
+				},
+				"30": {
+					"translation": [-0.5, -3.4, 0.0],
+					"transEasing": "ease_in_sin"
+				},
+				"50": {
+					"translation": [-0.5, -3.8, 0.4],
+					"transEasing": "ease_out_quad",
+					"rotation": [-2.0, 20.0, -7.0],
+					"rotEasing": "ease_out_cubic"
+				},
+				"72": {
+					"rotation": [-2.0, 21.0, 4.0],
+					"rotEasing": "ease_in_sin"
+				},
+				"73": {
+					"translation": [-0.4, -3.8, 0.4],
+					"transEasing": "ease_in_out_cubic"
+				},
+				"88": {
+					"translation": [-0.4, -1.5, 0.2],
+					"transEasing": "ease_in_out_cubic",
+					"rotation": [25.0, 10.0, 0.0],
+					"rotEasing": "ease_in_out_quad"
+				},
+				"98": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "ease_in_out_quad"
+				},
+				"100": {
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "ease_in_out_quad"
+				}
+			}
+		}
+    }
+}

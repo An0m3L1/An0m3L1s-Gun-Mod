@@ -1,0 +1,83 @@
+{
+  "general": {
+    "rate": 9,
+    "gripType": "cgm:two_handed",
+	
+    "maxAmmo": 8,
+    "reloadAmount": 1,
+    "reloadRate": 11,
+    "reloadStartDelay": 6,
+    "reloadInterruptDelay": 9,
+    "reloadEndDelay": 9,
+	"reloadAllowedCooldown": 0.2,
+	
+    "recoilAngle": 12.0,
+    "recoilKick": 1.5,
+    "recoilDurationOffset": 0.0,
+    "recoilAdsReduction": 0.1,
+	
+    "projectileAmount": 8,
+    "alwaysSpread": true,
+    "spread": 6.0,
+    "useShotgunSpread": true,
+    "spreadAdsReduction": 0.2
+  },
+  "projectile": {
+    "item": "cgm:shell",
+    "damage": 15.0,
+    "size": 1.0,
+    "speed": 12.0,
+    "life": 10,
+    "gravity": true
+  },
+  "fireModes": {
+    "useFireModes": true
+  },
+  "sounds": {
+    "fire": "cgm:item.shotgun.fire",
+    "reload": "nzgmaddon:item.shotgun.reload",
+    "cock": "cgm:item.shotgun.cock",
+    "silencedFire": "cgm:item.shotgun.silenced_fire",
+    "enchantedFire": "cgm:item.shotgun.enchanted_fire"
+  },
+  "reloadSounds": {
+	"reloadClipIn": "nzgmaddon:item.shotgun.reload",
+	"reloadClipInThreshold": 0.9,
+    "reloadEnd": ""
+  },
+  "display": {
+    "flash": {
+      "yOffset": 3.6505,
+      "zOffset": -3.81
+    }
+  },
+  "modules": {
+    "zoom": {
+      "yOffset": 5.1,
+      "zOffset": 3.2,
+      "fovModifier": 0.8
+    },
+    "attachments": {
+      "scope": {
+        "yOffset": 4.4,
+        "zOffset": 4.0
+      },
+      "barrel": {
+        "yOffset": 3.6506,
+        "zOffset": -3.8,
+        "scale": 0.5,
+        "spreadScale": 0.8
+      },
+      "stock": {
+        "yOffset": 3.6506,
+        "zOffset": 8.4,
+        "spreadScale": 0.2
+      },
+      "underBarrel": {
+        "yOffset": 1.8,
+        "zOffset": -0.5,
+        "spreadScale": 0.2
+      }
+    }
+  }
+}

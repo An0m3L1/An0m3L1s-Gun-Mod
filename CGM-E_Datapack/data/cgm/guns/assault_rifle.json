@@ -1,0 +1,92 @@
+{
+  "general": {
+    "auto": true,
+    "rate": 2,
+    "gripType": "cgm:two_handed",
+    "maxAmmo": 40,
+    "lightMagAmmo": 25,
+    "extendedMagAmmo": 55,
+	
+    "reloadAmount": 10,
+	"useMagReload": true,
+	"magReloadTime": 51,
+	"magReloadFromEmptyTime": 59,
+    "reloadStartDelay": 0,
+    "reloadInterruptDelay": 8,
+    "reloadEndDelay": 1,
+	"reloadAllowedCooldown": 0.0,
+	
+    "recoilAngle": 4.0,
+    "recoilKick": 0.25,
+    "recoilAdsReduction": 0.4,
+    "spread": 9.0,
+    "restingSpread": 2.5,
+	"adsSpeed": 1.2
+  },
+  "projectile": {
+    "item": "cgm:basic_bullet",
+    "damage": 4.6,
+    "size": 0.2,
+    "speed": 25.0,
+    "life": 20,
+    "gravity": true
+  },
+  "fireModes": {
+    "useFireModes": true
+  },
+  "sounds": {
+    "fire": "cgm:item.assault_rifle.fire",
+    "reload": "nzgmaddon:item.assault_rifle.reload",
+    "reloadFrames": 38,
+    "reloadClipOut": "cgm:item.assault_rifle.mag_out",
+    "reloadClipOutThreshold": 5,
+    "reloadClipIn": "cgm:item.assault_rifle.mag_in",
+    "reloadClipInThreshold": 26.5,
+    "cock": "cgm:item.assault_rifle.cock",
+    "silencedFire": "cgm:item.assault_rifle.silenced_fire",
+    "enchantedFire": "cgm:item.assault_rifle.enchanted_fire"
+  },
+  "emptyReloadSounds": {
+    "reloadFrames": 48,
+    "reloadClipOut": "cgm:item.assault_rifle.mag_out",
+    "reloadClipOutThreshold": 5,
+    "reloadClipIn": "cgm:item.assault_rifle.mag_in",
+    "reloadClipInThreshold": 26.5,
+    "reloadLate": "cgm:item.assault_rifle.cock",
+    "reloadLateThreshold": 34.5
+  },
+  "display": {
+    "flash": {
+      "yOffset": 3.6,
+      "zOffset": -6.41
+    }
+  },
+  "modules": {
+    "zoom": {
+      "yOffset": 5.2,
+      "zOffset": 3.2,
+      "fovModifier": 0.7
+    },
+    "attachments": {
+      "scope": {
+        "yOffset": 4.4,
+        "zOffset": 4.0
+      },
+      "barrel": {
+        "yOffset": 3.6,
+        "zOffset": -5.9,
+        "scale": 0.5
+      },
+      "stock": {
+        "yOffset": 3.6,
+        "zOffset": 8.2
+      },
+      "underBarrel": {
+        "yOffset": 2.799,
+        "zOffset": -1.0
+      },
+      "magazine": {
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "general": {
+    "rate": 3,
+    "gripType": "cgm:pistol_custom",
+    "maxAmmo": 16,
+    "lightMagAmmo": 12,
+    "extendedMagAmmo": 20,
+	
+    "reloadAmount": 16,
+	"useMagReload": true,
+	"magReloadTime": 35,
+	"magReloadFromEmptyTime": 38,
+    "reloadStartDelay": 0,
+    "reloadInterruptDelay": 6,
+    "reloadEndDelay": 1,
+	"reloadAllowedCooldown": 0.0,
+	
+    "recoilAngle": 1.9,
+    "recoilKick": 0.5,
+    "recoilAdsReduction": 0.35,
+    "spread": 3.6,
+    "restingSpread": 1.6,
+	"adsSpeed": 1.7
+  },
+  "projectile": {
+    "item": "cgm:basic_bullet",
+    "damage": 6.7,
+    "size": 0.2,
+    "speed": 10.0,
+    "life": 10,
+    "gravity": true
+  },
+  "fireModes": {
+    "useFireModes": true,
+	"burstCount": 2
+  },
+  "sounds": {
+    "fire": "cgm:item.pistol.fire",
+    "reload": "cgm:item.pistol.reload",
+    "cock": "cgm:item.pistol.cock",
+    "silencedFire": "cgm:item.pistol.silenced_fire",
+    "enchantedFire": "cgm:item.pistol.enchanted_fire"
+  },
+  "magReloadSounds": {
+    "reloadFrames": 42,
+    "reloadClipOut": "cgm:item.pistol.mag_out",
+    "reloadClipOutThreshold": 7.0,
+    "reloadClipIn": "cgm:item.pistol.mag_in",
+    "reloadClipInThreshold": 24.0
+  },
+  "emptyReloadSounds": {
+    "reloadFrames": 45,
+    "reloadClipOut": "cgm:item.pistol.mag_out",
+    "reloadClipOutThreshold": 7.0,
+    "reloadClipIn": "cgm:item.pistol.mag_in",
+    "reloadClipInThreshold": 24.0,
+	"reloadLate": "cgm:item.pistol.slide_forward",
+    "reloadLateThreshold": 34.0
+  },
+  "display": {
+    "flash": {
+      "yOffset": 3.3,
+      "zOffset": 2.14
+    }
+  },
+  "modules": {
+    "zoom": {
+      "yOffset": 4.4,
+      "zOffset": 0.0,
+      "fovModifier": 0.8
+    },
+    "attachments": {
+      "scope": {
+        "yOffset": 3.7,
+        "zOffset": 6.0,
+        "scale": 0.75
+      },
+      "barrel": {
+        "yOffset": 3.3,
+        "zOffset": 2.15,
+        "scale": 0.5
+      },
+      "stock": {
+        "yOffset": 3.3,
+        "zOffset": 7.95,
+        "modifierScale": 0.5
+      },
+      "magazine": {
+      }
+    }
+  }
+}

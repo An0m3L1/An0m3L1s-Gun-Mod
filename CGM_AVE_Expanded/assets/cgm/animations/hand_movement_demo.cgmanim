@@ -1,0 +1,45 @@
+{
+    "cgm:animations": {
+        "reload": {
+			"frames": 16,
+			"viewModel": {
+				"rotOffset": [0.0, -2.0, 3.0],
+				"2": {
+					"rotation": [0.0, 20.0, 0.0],
+					"easing": "linear"
+				}
+			},
+			"forwardHand": {
+				"rotOffset": [-4.0, 6.0, 0.0],
+				"3": {
+					"rotation": [0, 0, 0],
+					"easing": "linear"
+				},
+				"5": {
+					"rotation": [-90, 0, 0],
+					"easing": "linear"
+				},
+				"7": {
+					"rotation": [0, 0, 0],
+					"easing": "linear"
+				},
+				"9": {
+					"rotation": [0, -90, 0],
+					"easing": "linear"
+				},
+				"11": {
+					"rotation": [0, 0, 0],
+					"easing": "linear"
+				},
+				"13": {
+					"rotation": [0, 0, 90],
+					"easing": "linear"
+				},
+				"15": {
+					"rotation": [0, 0, 0],
+					"easing": "linear"
+				}
+			}
+		}
+    }
+}

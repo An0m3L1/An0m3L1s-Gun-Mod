@@ -1,0 +1,43 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"1": "cgm:items/rifle"
+	},
+	"elements": [
+		{
+			"from": [8.75, 3.68, 10],
+			"to": [9.35, 4.085, 10.405],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9.15, 3.8825, 10.2025]},
+			"faces": {
+				"north": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"},
+				"east": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"},
+				"west": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [6.5, 8.5, 7, 8], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"from": [8.4, 3.735, 10.055],
+			"to": [8.8, 4.03, 10.35],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.6, 3.93, 10.155]},
+			"faces": {
+				"north": {"uv": [6.5, 9, 7, 8.5], "rotation": 90, "texture": "#1"},
+				"east": {"uv": [6.5, 9, 7, 8.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [6.5, 9, 7, 8.5], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [6.5, 9, 7, 8.5], "rotation": 90, "texture": "#1"},
+				"down": {"uv": [6.5, 9, 7, 8.5], "rotation": 90, "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "bolt",
+			"origin": [7.62936, 3.95872, 8.3],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

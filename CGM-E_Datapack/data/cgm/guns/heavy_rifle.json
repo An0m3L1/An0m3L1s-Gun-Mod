@@ -1,0 +1,70 @@
+{
+  "general": {
+    "rate": 12,
+    "gripType": "cgm:two_handed",
+	
+    "maxAmmo": 8,
+    "lightMagAmmo": 5,
+    "extendedMagAmmo": 10,
+	"useMagReload": true,
+	"magReloadTime": 70,
+	"reloadAllowedCooldown": 0.2,
+	
+    "recoilAngle": 10.0,
+    "recoilKick": 1.0,
+    "recoilAdsReduction": 0.4,
+	
+    "spread": 10.0,
+    "restingSpread": 3.0,
+    "spreadAdsReduction": 0.95,
+    "adsMaxSpreadPenalty": 1.0,
+	"adsSpeed": 0.75
+  },
+  "projectile": {
+    "item": "cgm:advanced_bullet",
+    "damage": 16,
+    "headshotMultiplierMin": 1.5,
+    "size": 0.0625,
+    "speed": 25.0,
+    "life": 40,
+    "gravity": true
+  },
+  "sounds": {
+    "fire": "cgm:item.heavy_rifle.fire",
+    "reload": "nzgmaddon:item.rifle.reload",
+    "cock": "cgm:item.heavy_rifle.cock",
+    "silencedFire": "cgm:item.heavy_rifle.silenced_fire",
+    "enchantedFire": "cgm:item.heavy_rifle.enchanted_fire"
+  },
+  "display": {
+    "flash": {
+      "yOffset": 3.6,
+      "zOffset": -9.41,
+      "size": 1.0
+    }
+  },
+  "modules": {
+    "zoom": {
+      "yOffset": 5.1,
+      "zOffset": 2.0,
+      "fovModifier": 0.6
+    },
+    "attachments": {
+      "scope": {
+        "yOffset": 4.4,
+        "zOffset": 4.0
+      },
+      "barrel": {
+        "yOffset": 3.6,
+        "zOffset": -9.4,
+        "scale": 0.5
+      },
+      "underBarrel": {
+        "yOffset": 3.0,
+        "zOffset": -0.5
+      },
+      "magazine": {
+      }
+    }
+  }
+}

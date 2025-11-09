@@ -1,0 +1,47 @@
+{
+  "general": {
+    "auto": true,
+    "rate": 1,
+    "rampUpMinRate": 3,
+    "projectileAmount": 1,
+    "gripType": "cgm:mini_gun",
+	
+    "maxAmmo": 150,
+    "reloadAmount": 15,
+    "reloadStartDelay": 0,
+    "reloadInterruptDelay": 8,
+    "reloadEndDelay": 0,
+	"reloadAllowedCooldown": 0.0,
+	"useMagReload": true,
+	"magReloadTime": 108,
+	"reloadAllowedCooldown": 0.0,
+	"drawTime": 20,
+	
+    "recoilAngle": 1.0,
+    "alwaysSpread": true,
+    "spread": 6.0,
+    "restingSpread": 2.5,
+    "doRampUp": true,
+    "rampUpShotsNeeded": 5
+  },
+  "projectile": {
+    "item": "cgm:basic_bullet",
+    "damage": 4.0,
+    "size": 0.2,
+    "speed": 28.0,
+    "life": 15,
+    "gravity": true
+  },
+  "sounds": {
+    "fire": "cgm:item.mini_gun.fire",
+	"changePitchWithRampUp": false,
+    "reload": "nzgmaddon:item.rifle.reload",
+    "enchantedFire": "cgm:item.mini_gun.enchanted_fire"
+  },
+  "display": {
+    "flash": {
+      "yOffset": 2.7,
+      "zOffset": -11.51
+    }
+  }
+}

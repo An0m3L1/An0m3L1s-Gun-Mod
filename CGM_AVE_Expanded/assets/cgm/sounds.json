@@ -1,0 +1,82 @@
+{
+  "item.pistol.fire": {
+    "sounds": [
+      "cgm:item/pistol/fire2",
+      "cgm:item/pistol/fire3",
+      "cgm:item/pistol/fire4"
+    ]
+  },
+  "item.pistol.enchanted_fire": {
+    "sounds": [
+      "cgm:item/pistol/enchanted_fire2",
+      "cgm:item/pistol/enchanted_fire3",
+      "cgm:item/pistol/enchanted_fire4"
+    ]
+  },
+  
+  "item.machine_pistol.cock": {
+    "replace": "true",
+    "subtitle":"subtitle.cgm.cock",
+    "sounds": [{"name":"cgm:item/machine_pistol/cock"}]
+  },
+  "item.machine_pistol.fire": {
+    "sounds": [
+      "cgm:item/machine_pistol/fire2",
+      "cgm:item/machine_pistol/fire3"
+    ]
+  },
+  "item.machine_pistol.enchanted_fire": {
+    "sounds": [
+      "cgm:item/machine_pistol/enchanted_fire2",
+      "cgm:item/machine_pistol/enchanted_fire3"
+    ]
+  },
+  
+  "item.shotgun.fire": {
+    "sounds": [
+      "cgm:item/shotgun/fire2",
+      "cgm:item/shotgun/fire3"
+    ]
+  },
+  "item.shotgun.enchanted_fire": {
+    "sounds": [
+      "cgm:item/shotgun/enchanted_fire2",
+      "cgm:item/shotgun/enchanted_fire3"
+    ]
+  },
+  
+  "item.assault_rifle.fire": {
+    "sounds": [
+      "cgm:item/assault_rifle/fire2",
+      "cgm:item/assault_rifle/fire3"
+    ]
+  },
+  
+  "item.assault_rifle.enchanted_fire": {
+    "sounds": [
+      "cgm:item/assault_rifle/enchanted_fire2",
+      "cgm:item/assault_rifle/enchanted_fire3"
+    ]
+  },
+  
+  "item.rifle.fire": {
+    "sounds": [
+      "cgm:item/rifle/fire2",
+      "cgm:item/rifle/fire3"
+    ]
+  },
+  
+  "item.rifle.enchanted_fire": {
+    "sounds": [
+      "cgm:item/rifle/enchanted_fire2",
+      "cgm:item/rifle/enchanted_fire3"
+    ]
+  },
+  
+  "item.heavy_rifle.fire": {
+    "sounds": [
+      "cgm:item/heavy_rifle/fire2",
+      "cgm:item/heavy_rifle/fire3"
+    ]
+  }
+}

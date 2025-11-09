@@ -1,0 +1,82 @@
+{
+  "general": {
+    "auto": true,
+    "rate": 2,
+    "gripType": "cgm:pistol_custom",
+    "maxAmmo": 20,
+    "lightMagAmmo": 15,
+    "extendedMagAmmo": 32,
+	
+    "reloadAmount": 10,
+	"useMagReload": true,
+	"magReloadTime": 45,
+    "reloadStartDelay": 0,
+    "reloadInterruptDelay": 8,
+    "reloadEndDelay": 5,
+	"reloadAllowedCooldown": 0.0,
+	
+    "recoilAngle": 1.4,
+    "recoilKick": 0.4,
+    "recoilAdsReduction": 0.35,
+    "spread": 7.0,
+    "restingSpread": 3.0,
+    "spreadAdsReduction": 0.3,
+	"adsSpeed": 1.4
+  },
+  "projectile": {
+    "item": "cgm:basic_bullet",
+    "damage": 4.3,
+    "size": 0.2,
+    "speed": 12.0,
+    "life": 11,
+    "gravity": true
+  },
+  "fireModes": {
+    "useFireModes": true
+  },
+  "sounds": {
+    "fire": "cgm:item.machine_pistol.fire",
+    "reload": "cgm:item.pistol.reload",
+    "reloadFrames": 4,
+    "reloadClipOut": "nzgmaddon:item.compact_smg.mag_out",
+    "reloadClipOutThreshold": 0.9,
+    "reloadClipIn": "nzgmaddon:item.compact_smg.mag_in",
+    "reloadClipInThreshold": 2.78,
+    "reloadLate": "cgm:item.rifle.cock",
+    "reloadLateThreshold": 4,
+    "cock": "cgm:item.machine_pistol.cock",
+    "silencedFire": "cgm:item.machine_pistol.silenced_fire",
+    "enchantedFire": "cgm:item.machine_pistol.enchanted_fire"
+  },
+  "display": {
+    "flash": {
+      "yOffset": 3.2,
+      "zOffset": 1.79,
+      "size": 0.35
+    }
+  },
+  "modules": {
+    "zoom": {
+      "yOffset": 4.8,
+      "zOffset": -1.0,
+      "fovModifier": 0.8
+    },
+    "attachments": {
+      "scope": {
+        "yOffset": 4.0,
+        "zOffset": 5.5
+      },
+      "barrel": {
+        "yOffset": 3.2,
+        "zOffset": 2.2,
+        "scale": 0.5
+      },
+      "stock": {
+        "yOffset": 3.1,
+        "zOffset": 8.2
+      },
+      "magazine": {
+      }
+    }
+  }
+}

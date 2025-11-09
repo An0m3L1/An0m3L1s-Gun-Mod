@@ -1,0 +1,52 @@
+{
+	"credit": "Made with Blockbench",
+	"loader": "framework:open_model",
+	"textures": {
+		"1": "cgm:items/assault_rifle"
+	},
+	"components": [
+		{
+			"from": [7.4995, -0.87634, 10.88208],
+			"to": [8.5095, 0.67466, 13.38208],
+			"rotation": {"angle": 10, "axis": "x", "origin": [8, 0.17416, 12.13208]},
+			"faces": {
+				"north": {"uv": [0, 7.75, 1, 8.5], "texture": "#1"},
+				"east": {"uv": [3.5, 7.75, 1, 8.5], "texture": "#1"},
+				"south": {"uv": [3.5, 7.75, 4.5, 8.5], "texture": "#1"},
+				"west": {"uv": [1, 7.75, 3.5, 8.5], "texture": "#1"}
+			}
+		},
+		{
+			"from": [7.499, -2.66935, 10.35589],
+			"to": [8.519, -0.57935, 12.85589],
+			"rotation": {"angle": 20, "axis": "x", "origin": [8, -1.74935, 11.60589]},
+			"faces": {
+				"north": {"uv": [0, 8.25, 1, 10], "texture": "#1"},
+				"east": {"uv": [3.5, 8.25, 1, 10], "texture": "#1"},
+				"south": {"uv": [3.5, 8.25, 4.5, 10], "texture": "#1"},
+				"west": {"uv": [1, 8.25, 3.5, 10], "texture": "#1"},
+				"down": {"uv": [1, 10, 3.5, 11], "rotation": 90, "texture": "#1"}
+			}
+		},
+		{
+			"from": [7.5, 0.45, 10.95],
+			"to": [8.5, 3.3, 13.45],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1.95, 0.25]},
+			"faces": {
+				"north": {"uv": [1, 7.5, 0, 8.25], "texture": "#1"},
+				"east": {"uv": [3.5, 7.5, 1, 8.25], "texture": "#1"},
+				"south": {"uv": [4.5, 7.5, 3.5, 8.25], "texture": "#1"},
+				"west": {"uv": [1, 7.5, 3.5, 8.25], "texture": "#1"},
+				"up": {"uv": [9, 8.5, 10.25, 9], "rotation": 90, "texture": "#1"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "magazine",
+			"origin": [7.5, -0.8, 13.2],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

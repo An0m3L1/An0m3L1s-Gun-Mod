@@ -1,0 +1,30 @@
+{
+    "cgm:weapon": {
+        "attachments": {
+            "barrel": {
+                "translation": [8.0, 3.6, -1.4],
+                "scale": [0.5, 0.5, 0.5]
+            },
+            "scope": {
+                "translation": [8.0, 4.4, 11.5]
+            },
+            "underBarrel": {
+                "translation": [8.0, 3.0, 7.1]
+            }
+        },
+        "ironSight": {
+            "camera": [8.0, 5.4, 20.0],
+            "viewportFov": 55.0,
+			"sightAnimation": {
+				"viewportCurve": "ease_in_out_sin",
+				"sightCurve": "ease_in_out_sin",
+				"fovCurve": "ease_in_out_sin",
+				"aimTransformCurve": "ease_in_out_quad"
+			}
+        },
+        "muzzleFlash": {
+            "translation": [8.0, 3.6, -1.41],
+            "scale": [0.6, 0.6, 0.6]
+        }
+    }
+}

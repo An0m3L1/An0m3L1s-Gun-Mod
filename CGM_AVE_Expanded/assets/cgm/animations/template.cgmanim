@@ -1,0 +1,18 @@
+{
+    "cgm:animations": {
+        "reload": {
+			"frames": 1,
+			"progressOffset": 0.0,
+			"viewModel": {
+				"rotOffset": [0, 0.0, 0.0],
+				"endEasing": "ease_out_quad",
+				"0": {
+					"translation": [0.0, 0.0, 0.0],
+					"transEasing": "linear",
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "linear"
+				}
+			}
+		}
+    }
+}
