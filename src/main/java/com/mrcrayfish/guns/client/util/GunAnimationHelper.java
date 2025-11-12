@@ -607,6 +607,12 @@ public final class GunAnimationHelper
 	public static double getAnimationValuePublic(String animationType, ResourceLocation weapKey, String transform) {
 		return getAnimationValue(animationType, weapKey, transform);
 	}
+	public static double getAnimationValuePublic(String animationType, ItemStack weapon, String transform) {
+		return getAnimationValue(animationType, lookForParentAnimation(animationType, getItemLocationKey(weapon)), transform);
+	}
+	public static double getAnimationValuePublic(String animationType, ItemStack weapon, String component, String transform) {
+		return getAnimationValue(animationType, lookForParentAnimation(animationType, getItemLocationKey(weapon)), component, transform);
+	}
 	public static double getAnimationValuePublic(String animationType, ResourceLocation weapKey, String component, int frame, String transform) {
 		return getAnimationValue(animationType, weapKey, component, frame, transform);
 	}
@@ -835,6 +841,21 @@ public final class GunAnimationHelper
 	}
 	static float getAnimationValueFloat(String animationType, ResourceLocation weapKey, String transform) {
 		return (float) getAnimationValue(animationType, weapKey, transform);
+	}
+	
+	static double getAnimationValue(String animationType, ResourceLocation weapKey, String component, String transform) {
+		DataObject transformObject = getObjectByPath(weapKey, ANIMATION_KEY, animationType, component);
+		if (transformObject.has(transform, DataType.NUMBER))
+		{
+			DataNumber transformData = transformObject.getDataNumber(transform);
+			if (transformData!=null)
+			return transformData.asDouble();
+		}
+		
+		return 0;
+	}
+	static float getAnimationValueFloat(String animationType, ResourceLocation weapKey, String component, String transform) {
+		return (float) getAnimationValue(animationType, weapKey, component, transform);
 	}
 	
 	static double getAnimationValue(String animationType, ResourceLocation weapKey, String component, int frame, String transform) {
