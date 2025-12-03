@@ -2,8 +2,9 @@ package com.mrcrayfish.guns;
 
 import com.mrcrayfish.guns.client.DotRenderMode;
 import com.mrcrayfish.guns.client.SwayType;
-import com.mrcrayfish.guns.client.render.crosshair.Crosshair;
+//import com.mrcrayfish.guns.client.render.crosshair.Crosshair;
 import com.mrcrayfish.guns.client.screen.ButtonAlignment;
+
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -106,7 +107,7 @@ public class Config
             builder.comment("Configuration for display related options").push("display");
             {
                 this.oldAnimations = builder.comment("If true, uses the old animation poses for weapons. This is only for nostalgic reasons and not recommended to switch back.").define("oldAnimations", false);
-                this.crosshair = builder.comment("The custom crosshair to use for weapons. Go to (Options > Controls > Mouse Settings > Crosshair) in game to change this!").define("crosshair", Crosshair.DEFAULT.getLocation().toString());
+                this.crosshair = builder.comment("The custom crosshair to use for weapons. Go to (Options > Controls > Mouse Settings > Crosshair) in game to change this!").define("crosshair", "cgm:dynamic");
                 this.forceShowCrosshair = builder.comment("If enabled, forces the crosshair to show even when it should be hidden (i.e. when aiming).").define("forceShowCrosshair", false);
                 this.blendCrosshair = builder.comment("If enabled, blends all custom crosshairs to match the behavior of the default crosshair.").define("blendCrosshair", true);
                 this.dynamicCrosshairBaseSpread = builder.comment("The resting size of the Dynamic Crosshair when spread is zero.").defineInRange("dynamicCrosshairBaseSpread", 1.0, 0, 5);
