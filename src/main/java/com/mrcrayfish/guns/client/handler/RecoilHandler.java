@@ -156,9 +156,9 @@ public class RecoilHandler
 	            targetVRecoil += Mth.clamp(vRecoilPushForce, -recoilVariance,recoilVariance);
 	            
 	            float hRecoilRandom = Mth.clamp(1F-(gunRecoilRandom*2.0F),-1,1);
-	            hRecoilPushForce = Mth.clamp((lastHRecoilPushForce+(Math.min(Easings.EASE_IN_OUT_QUAD.apply((float) recoilBuildup),1)*hRecoilRandom)/4F),-recoilVariance/3F,recoilVariance/3F);
-	            float clampedLastShotHRecoil = Mth.clamp(lastShotHRecoil, -recoilVariance/1.6F,recoilVariance/1.6F);
-	            float targetHRecoil = Mth.clamp(clampedLastShotHRecoil + hRecoilPushForce, -recoilVariance,recoilVariance);
+	            hRecoilPushForce = Mth.clamp((lastHRecoilPushForce+(Math.min(Easings.EASE_IN_OUT_QUAD.apply((float) recoilBuildup),1)*hRecoilRandom)/2F),-recoilVariance/3F,recoilVariance/3F);
+	            float clampedLastShotHRecoil = Mth.clamp(lastShotHRecoil, -recoilVariance/1.4F,recoilVariance/1.4F);
+	            float targetHRecoil = clampedLastShotHRecoil + hRecoilPushForce;
 
 	            //float hRecoilPushForce = Math.min(cameraRecoil * (Easings.EASE_IN_SIN.apply(excessRecoilRatio-1)*0.5F),cameraRecoil/2F);
 	            //float targetHRecoil = Mth.clamp(lastShotHRecoil + (hRecoilPushForce * Mth.clamp(2F-(gunRecoilRandom*4.0F),-1,1)) , -targetVRecoil*0.8F,targetVRecoil*0.8F);

@@ -811,9 +811,9 @@ public class GunRenderingHandler
 	        
 	        float vRecoil = RecoilHandler.get().getCurrentVRecoil(partialTicks);
 	        float hRecoil = RecoilHandler.get().getCurrentHRecoil(partialTicks);
-	        Vec3 recoilXRotations = new Vec3(vRecoil*0.2F,0,0).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
-	        Vec3 recoilHRotations = new Vec3(0,hRecoil*1.3f,hRecoil*1.0f).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
-	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilXRotations, new Vec3(0,1.0,12.0));
+	        Vec3 recoilXRotations = new Vec3(vRecoil*0.3F,0,0).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
+	        Vec3 recoilHRotations = new Vec3(0,hRecoil*1.8f,hRecoil*1.3f).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
+	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilXRotations, new Vec3(0,1.0,2.0));
 	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilHRotations, new Vec3(0,2.0,4.0));
     	}
         
