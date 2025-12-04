@@ -9,6 +9,7 @@ import com.mrcrayfish.guns.client.handler.GunRenderingHandler;
 import com.mrcrayfish.guns.client.util.GunAnimationHelper;
 import com.mrcrayfish.guns.common.NetworkGunManager;
 import com.mrcrayfish.guns.init.ModParticleTypes;
+import com.mrcrayfish.guns.network.message.C2SMessageForceSetReserveAmmo;
 import com.mrcrayfish.guns.network.message.S2CMessageBlood;
 import com.mrcrayfish.guns.network.message.S2CMessageBulletTrail;
 import com.mrcrayfish.guns.network.message.S2CMessageGunSound;
@@ -246,6 +247,11 @@ public class ClientPlayHandler
     public static void handleRemoveProjectile(S2CMessageRemoveProjectile message)
     {
         BulletTrailRenderingHandler.get().remove(message.getEntityId());
+    }
+
+    public static void handleForceSetReserveAmmo(C2SMessageForceSetReserveAmmo message)
+    {
+    	GunRenderingHandler.get().forceSetReserveAmmo(message.getAmmoAfterLoad());
     }
 
     public static void handleUpdateGuns(S2CMessageUpdateGuns message)

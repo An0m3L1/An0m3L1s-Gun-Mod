@@ -9,6 +9,7 @@ import com.mrcrayfish.guns.common.Gun.ReloadSoundsBase;
 import com.mrcrayfish.guns.init.ModSyncedDataKeys;
 import com.mrcrayfish.guns.item.GunItem;
 import com.mrcrayfish.guns.network.PacketHandler;
+import com.mrcrayfish.guns.network.message.C2SMessageForceSetReserveAmmo;
 import com.mrcrayfish.guns.network.message.S2CMessageGunSound;
 import com.mrcrayfish.guns.util.GunCompositeStatHelper;
 import com.mrcrayfish.guns.util.GunEnchantmentHelper;
@@ -16,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -181,7 +183,8 @@ public class ReloadTracker
         int ammoAfterLoad = getInventoryAmmo(player);
         DelayedTask.runAfter(1, () ->
         {
-        	GunRenderingHandler.get().forceSetReserveAmmo(ammoAfterLoad);
+        	C2SMessageForceSetReserveAmmo message = new C2SMessageForceSetReserveAmmo(ammoAfterLoad);
+            PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, message);
         });
         
         this.resetSoundStates = true;
