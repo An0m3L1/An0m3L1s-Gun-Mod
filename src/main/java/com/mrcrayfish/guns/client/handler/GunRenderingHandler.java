@@ -768,12 +768,14 @@ public class GunRenderingHandler
 	        aiming = Math.max(1-(aiming*0.5F), 0);
         	double zoomFactor = (1-Gun.getFovModifier(item, modifiedGun)) * AimingHandler.get().getNormalisedAdsProgress();
         	float baseRecoil = modifiedGun.getGeneral().getRecoilAngle();
-        	float recoilAttachmentModifier = (float) (1.0F - (GunModifierHelper.getRecoilModifier(item) * GunAnimationHelper.getAnimationValuePublic("recoil", item, "viewModel", "modifierScale")));
+        	float recoilAttachmentModifier = (float) (1.0F - (GunModifierHelper.getRecoilModifier(item) * GunAnimationHelper.getAnimationValuePublic("recoil", item, "modifierScale", 0.7)));
         	float recoilModifier = (float) Math.min((recoilAttachmentModifier) * RecoilHandler.get().getAdsRecoilReduction(modifiedGun),1);
-            float scaledRecoil = baseRecoil * Mth.lerp(0.4F,recoilModifier,1);
-            float recoilRatio = baseRecoil>0 ? Mth.lerp(0.2F,scaledRecoil/baseRecoil,1) : 1;
+            float recoilScalar = (float) GunAnimationHelper.getAnimationValuePublic("recoil", item, "recoilScalar", 0.6F);
+        	float scaledRecoil = baseRecoil * Mth.lerp(1-recoilScalar,recoilModifier,1);
+            float recoilRatio = baseRecoil>0 ? scaledRecoil/baseRecoil : 1;
+            float recoilRatio2 = baseRecoil>0 ? Mth.lerp(0.3F,scaledRecoil/baseRecoil,1) : 1;
         	
-        	Vec3 translations = GunAnimationHelper.getSpecificAnimationTrans("recoil", item, player, partialTicks, "viewModel").scale(recoilRatio).scale(1-zoomFactor);
+        	Vec3 translations = GunAnimationHelper.getSpecificAnimationTrans("recoil", item, player, partialTicks, "viewModel").multiply(recoilRatio,recoilRatio,recoilRatio2).scale(1-zoomFactor);
             Vec3 rotations = GunAnimationHelper.getSpecificAnimationRot("recoil", item, player, partialTicks, "viewModel").scale(recoilRatio).scale(1-zoomFactor);
             Vec3 offsets = GunAnimationHelper.getSpecificAnimationRotOffset("recoil", item, "viewModel").add(5.25, 4.0, 4.0);
             
@@ -807,14 +809,14 @@ public class GunRenderingHandler
         if (recoilBuildup>0)
         {
 	        float aiming = getAimProgress(item);
-	        aiming = Math.max(1-(aiming*0.8F), 0);
+	        float aimScalar = Math.max(1-(aiming*0.7F), 0);
 	        
 	        float vRecoil = RecoilHandler.get().getCurrentVRecoil(partialTicks);
 	        float hRecoil = RecoilHandler.get().getCurrentHRecoil(partialTicks);
-	        Vec3 recoilXRotations = new Vec3(vRecoil*0.3F,0,0).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
-	        Vec3 recoilHRotations = new Vec3(0,hRecoil*1.8f,hRecoil*1.3f).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aiming);
-	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilXRotations, new Vec3(0,1.0,2.0));
-	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilHRotations, new Vec3(0,2.0,4.0));
+	        Vec3 recoilXRotations = new Vec3(vRecoil*0.2F,0,0).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aimScalar);
+	        Vec3 recoilHRotations = new Vec3(0,hRecoil*1.3f,hRecoil*1.2f).scale(Easings.EASE_IN_OUT_SIN.apply(recoilBuildup)).scale(aimScalar);
+	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilXRotations, new Vec3(0,1.0,6.0*aiming));
+	        GunAnimationHelper.rotateAroundOffset(poseStack, recoilHRotations, new Vec3(4.0,2.0,6.0));
     	}
         
         // CS-style viewmodel recoil accumulation.
