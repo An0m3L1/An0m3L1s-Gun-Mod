@@ -68,15 +68,14 @@ public class GunModifierHelper
     	for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
             IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
-            IGunModifier[] modifiers = getModifiers(weapon, attachType);
-            for(IGunModifier modifier : modifiers)
+            if (modifiedGun.getAttachmentSlot(attachType)!=null)
             {
-            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getSpreadModifierScale();
-            	spread = Mth.lerp(modifierScale,spread,modifier.modifyProjectileSpread(spread));
-            	/*if (!modifiedGun.getGeneral().usesShotgunSpread())
-            	spread = modifier.modifyProjectileSpread(spread);
-            	else
-            	spread = Mth.lerp((attachType == IAttachment.Type.BARREL ? 0.8F : 0.2F),spread,modifier.modifyProjectileSpread(spread));*/
+                IGunModifier[] modifiers = getModifiers(weapon, attachType);
+	            for(IGunModifier modifier : modifiers)
+	            {
+	            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getSpreadModifierScale();
+	            	spread = Mth.lerp(modifierScale,spread,modifier.modifyProjectileSpread(spread));
+	            }
             }
         }
         return spread;
@@ -143,11 +142,14 @@ public class GunModifierHelper
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
             IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
-            IGunModifier[] modifiers = getModifiers(weapon, attachType);
-            for(IGunModifier modifier : modifiers)
+            if (modifiedGun.getAttachmentSlot(attachType)!=null)
             {
-            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
-                kickReduction *= Mth.clamp((Mth.lerp(modifierScale,1,modifier.recoilModifier())*0.8F)+0.2F, 0.0F, 1.0F);
+	            IGunModifier[] modifiers = getModifiers(weapon, attachType);
+	            for(IGunModifier modifier : modifiers)
+	            {
+	            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+	                kickReduction *= Mth.clamp((Mth.lerp(modifierScale,1,modifier.recoilModifier())*0.8F)+0.2F, 0.0F, 1.0F);
+	            }
             }
         }
         return 1.0F - kickReduction;
@@ -160,11 +162,14 @@ public class GunModifierHelper
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
             IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
-            IGunModifier[] modifiers = getModifiers(weapon, attachType);
-            for(IGunModifier modifier : modifiers)
+            if (modifiedGun.getAttachmentSlot(attachType)!=null)
             {
-            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
-                recoilReduction *= Math.max(Mth.lerp(modifierScale,1,modifier.recoilModifier()), 0.0F);
+	            IGunModifier[] modifiers = getModifiers(weapon, attachType);
+	            for(IGunModifier modifier : modifiers)
+	            {
+	            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+	                recoilReduction *= Math.max(Mth.lerp(modifierScale,1,modifier.recoilModifier()), 0.0F);
+	            }
             }
         }
         return 1.0F - recoilReduction;
@@ -259,15 +264,16 @@ public class GunModifierHelper
     	if (!(weapon.getItem() instanceof GunItem))
     		return speed;
     		
-    	Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
+    	//Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
         for(int i = 0; i < IAttachment.Type.values().length; i++)
         {
             IGunModifier[] modifiers = getModifiers(weapon, IAttachment.Type.values()[i]);
-            IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
+            //IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
             for(IGunModifier modifier : modifiers)
             {
-            	float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
-                speed = Mth.lerp(modifierScale,speed,modifier.modifyAimDownSightSpeed(speed));
+            	//float modifierScale = (float) modifiedGun.getAttachmentSlot(attachType).getRecoilModifierScale();
+                //speed = Mth.lerp(modifierScale,speed,modifier.modifyAimDownSightSpeed(speed));
+            	speed = modifier.modifyAimDownSightSpeed(speed);
             }
         }
         return Mth.clamp(speed, 0.01, Double.MAX_VALUE);
