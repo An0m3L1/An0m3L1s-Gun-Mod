@@ -156,7 +156,7 @@ public class RecoilHandler
 	            targetVRecoil += Mth.clamp(vRecoilPushForce, -recoilVariance,recoilVariance);
 	            
 	            float hRecoilRandom = Mth.clamp(1F-(gunRecoilRandom*2.0F),-1,1);
-	            hRecoilPushForce = Mth.clamp((lastHRecoilPushForce+(Math.min(Easings.EASE_IN_QUAD.apply((float) recoilBuildup),1)*hRecoilRandom)/1.5F),-recoilVariance/3F,recoilVariance/3F);
+	            hRecoilPushForce = Mth.clamp((lastHRecoilPushForce+(Math.min(Easings.EASE_IN_QUAD.apply((float) recoilBuildup),1)*hRecoilRandom)/1.4F),-recoilVariance/3F,recoilVariance/3F);
 	            float clampedLastShotHRecoil = Mth.clamp(lastShotHRecoil, -recoilVariance/1.0F,recoilVariance/1.0F);
 	            float targetHRecoil = clampedLastShotHRecoil + hRecoilPushForce;
 
