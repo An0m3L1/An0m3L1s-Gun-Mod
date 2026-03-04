@@ -1843,7 +1843,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
         private ResourceLocation emptyClick;
         @Optional
         @Nullable
-        private ResourceLocation fireSwitch;
+        private ResourceLocation selectorSwitch;
 
 
         @Override
@@ -1947,9 +1947,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 tag.putString("EmptyClick", this.emptyClick.toString());
             }
-            if(this.fireSwitch != null)
+            if(this.selectorSwitch != null)
             {
-                tag.putString("FireSwitch", this.fireSwitch.toString());
+                tag.putString("SelectorSwitch", this.selectorSwitch.toString());
             }
             return tag;
         }
@@ -2079,9 +2079,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 this.emptyClick = this.createSound(tag, "EmptyClick");
             }
-            if(tag.contains("FireSwitch", Tag.TAG_STRING))
+            if(tag.contains("SelectorSwitch", Tag.TAG_STRING))
             {
-                this.fireSwitch = this.createSound(tag, "FireSwitch");
+                this.selectorSwitch = this.createSound(tag, "SelectorSwitch");
             }
         }
 
@@ -2187,9 +2187,9 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             {
                 object.addProperty("emptyClick", this.emptyClick.toString());
             }
-            if(this.fireSwitch != null)
+            if(this.selectorSwitch != null)
             {
-                object.addProperty("fireSwitch", this.fireSwitch.toString());
+                object.addProperty("selectorSwitch", this.selectorSwitch.toString());
             }
             return object;
         }
@@ -2227,7 +2227,7 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
             sounds.weaponSelect = this.weaponSelect;
             sounds.weaponSelectDelay = this.weaponSelectDelay;
             sounds.emptyClick = this.emptyClick;
-            sounds.fireSwitch = this.fireSwitch;
+            sounds.selectorSwitch = this.selectorSwitch;
             return sounds;
         }
 
@@ -2544,11 +2544,11 @@ public class Gun implements INBTSerializable<CompoundTag>, IEditorMenu
          * @return The registry id of the sound event when switching the weapon's fire mode.
          */
         @Nullable
-        public ResourceLocation getFireSwitch()
+        public ResourceLocation getSelectorSwitch()
         {
-            if (this.fireSwitch==null)
-            	return getEmptyClick();
-        	return this.fireSwitch;
+            if (this.selectorSwitch==null)
+            	return new ResourceLocation(Reference.MOD_ID, "item.selector_switch");
+        	return this.selectorSwitch;
         }
     }
     

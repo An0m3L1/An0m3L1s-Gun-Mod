@@ -48,7 +48,26 @@ public class ModSounds
 	
 	// The following sounds were added in CGM Expanded:
 	public static final RegistryObject<SoundEvent> ITEM_EMPTY_CLICK = register("item.empty_click");
+	public static final RegistryObject<SoundEvent> ITEM_SELECTOR_SWITCH = register("item.selector_switch");
+	
+	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_COCK = register("item.machine_pistol.cock");
+	
+	public static final RegistryObject<SoundEvent> ITEM_SHOTGUN_LOADSHELL = register("item.shotgun.load_shell");
+	
+	public static final RegistryObject<SoundEvent> ITEM_GRENADE_THROW = register("item.grenade.throw");
+	
+	public static final RegistryObject<SoundEvent> FOLEY_SMALL_RATTLE = register("item.foley.small_rattle");
+	
+	public static final RegistryObject<SoundEvent> FOLEY_MEDIUM_RATTLE = register("item.foley.medium_rattle");
+	public static final RegistryObject<SoundEvent> FOLEY_MEDIUM_SHOULDER = register("item.foley.medium_shoulder");
+	
+	public static final RegistryObject<SoundEvent> FOLEY_LARGE_RATTLE = register("item.foley.large_rattle");
+	
+	public static final RegistryObject<SoundEvent> FOLEY_CARBINE_SHOULDER = register("item.foley.carbine_shoulder");
+	
+	public static final RegistryObject<SoundEvent> ENTITY_GRENADE_BOUNCE = register("entity.grenade.bounce");
 
+	// Legacy foley sounds, which will be phased out:
 	public static final RegistryObject<SoundEvent> ITEM_PISTOL1_DRAW = register("item.foley.pistol1_draw");
 	public static final RegistryObject<SoundEvent> ITEM_SMG1_DRAW = register("item.foley.smg1_draw");
 	public static final RegistryObject<SoundEvent> ITEM_SMG2_DRAW = register("item.foley.smg2_draw");
@@ -65,14 +84,6 @@ public class ModSounds
 	public static final RegistryObject<SoundEvent> ITEM_SNIPER2_DRAW = register("item.foley.sniper2_draw");
 	public static final RegistryObject<SoundEvent> ITEM_SNIPER3_DRAW = register("item.foley.sniper3_draw");
 	public static final RegistryObject<SoundEvent> ITEM_SNIPER4_DRAW = register("item.foley.sniper4_draw");
-	
-	public static final RegistryObject<SoundEvent> ITEM_MACHINE_PISTOL_COCK = register("item.machine_pistol.cock");
-	
-	public static final RegistryObject<SoundEvent> ITEM_SHOTGUN_LOADSHELL = register("item.shotgun.load_shell");
-	
-	public static final RegistryObject<SoundEvent> ITEM_GRENADE_THROW = register("item.grenade.throw");
-	
-	public static final RegistryObject<SoundEvent> ENTITY_GRENADE_BOUNCE = register("entity.grenade.bounce");
 	
 
 	private static RegistryObject<SoundEvent> register(String key)

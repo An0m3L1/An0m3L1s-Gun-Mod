@@ -230,7 +230,10 @@ public class ShootingHandler
 	            CompoundTag tag = heldItem.getTag();
 	        	boolean gunIsFull = (tag.getInt("AmmoCount") == GunCompositeStatHelper.getAmmoCapacity(heldItem));
 	            if (isInGame() && (KeyBinds.KEY_INSPECT.consumeClick() || (KeyBinds.KEY_RELOAD.isDown() && gunIsFull && Config.CLIENT.controls.inspectWhenReloadWhileFull.get()))
-	            && GunAnimationHelper.getSmartAnimationType(heldItem, player, mc.getPartialTick()).equals("none") && !AimingHandler.get().isAiming())
+	    	    && !AimingHandler.get().isAiming()
+	            && !(ModSyncedDataKeys.RELOADING.getValue(player) || ModSyncedDataKeys.SHOOTING.getValue(player))
+	            && GunAnimationHelper.getSmartAnimationType(heldItem, player, mc.getPartialTick()).equals("none")
+	            )
 	            {
 	            	weaponInspectTick = player.tickCount;
 	            	KeyBinds.KEY_RELOAD.setDown(false);
@@ -276,7 +279,7 @@ public class ShootingHandler
             	if(heldItem.getItem() instanceof GunItem gunItem)
                 {
                 	Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-                	if (modifiedGun.getFireModes().usesFireModes() && (!ModSyncedDataKeys.SHOOTING.getValue(player) && !ModSyncedDataKeys.RELOADING.getValue(player) && ModSyncedDataKeys.BURSTCOUNT.getValue(player)<=0))
+                	if (modifiedGun.getFireModes().usesFireModes() && (canUseTrigger(player, heldItem)))
                 	{
                         Boolean changedFireMode = false;
                         int newFireMode = 0;
@@ -309,7 +312,7 @@ public class ShootingHandler
                         {
                         	PacketHandler.getPlayChannel().sendToServer(new C2SMessageFireSwitch(newFireMode));
                         	//tag.putInt("FireMode", newFireMode);
-                        	Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(gunItem.getModifiedGun(heldItem).getSounds().getFireSwitch(), SoundSource.PLAYERS, 0.8F, 1.0F, mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
+                        	Minecraft.getInstance().getSoundManager().play(new SimpleSoundInstance(gunItem.getModifiedGun(heldItem).getSounds().getSelectorSwitch(), SoundSource.PLAYERS, 0.8F, 1.0F, mc.level.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
                         }
                 	}
                 }

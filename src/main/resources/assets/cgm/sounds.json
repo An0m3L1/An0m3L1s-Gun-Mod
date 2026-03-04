@@ -32,57 +32,58 @@
    "item.grenade.throw":                { "subtitle": "subtitle.cgm.grenade.throw",  "sounds": [{ "name": "cgm:item/grenade/throw" }]},
    "entity.stun_grenade.explosion":     { "subtitle": "subtitle.cgm.stun.explosion", "sounds": [{ "name": "cgm:entity/stun_grenade/explosion" }]},
    "entity.stun_grenade.ring":          { "subtitle": "subtitle.cgm.stun.ring",      "sounds": [{ "name": "cgm:entity/stun_grenade/ring", "stream": true }]},
-   "item.empty_click":                  { "subtitle": "subtitle.cgm.empty",          "sounds": [{ "name": "cgm:item/empty_click" }]},
    "ui.weapon.attach":                  { "subtitle": "subtitle.cgm.attach",         "sounds": [{ "name": "cgm:ui/weapon/attach" }]},
    
    
-	"item.foley.pistol1_draw": {
-		"sounds": [{"name":"cgm:item/foley/pistol1_draw"}]
+	"item.empty_click": {
+		"subtitle":"subtitle.cgm.empty",
+		"sounds": [{"name":"cgm:item/empty_click"}]
 	},
-	"item.foley.smg1_draw": {
-		"sounds": [{"name":"cgm:item/foley/smg1_draw"}]
+	"item.selector_switch": {
+		"sounds": [{"name":"cgm:item/selector_switch"}]
 	},
-	"item.foley.smg2_draw": {
-		"sounds": [{"name":"cgm:item/foley/smg1_draw"}]
+	
+    
+	"item.foley.small_rattle": {
+		"sounds": [
+		  "cgm:item/foley/small_rattle1",
+		  "cgm:item/foley/small_rattle2",
+		  "cgm:item/foley/small_rattle3",
+		  "cgm:item/foley/small_rattle4"
+		]
 	},
-	"item.foley.ar1_draw": {
-		"sounds": [{"name":"cgm:item/foley/ar1_draw"}]
+    
+	"item.foley.medium_rattle": {
+		"sounds": [
+		  "cgm:item/foley/medium_rattle1",
+		  "cgm:item/foley/medium_rattle2",
+		  "cgm:item/foley/medium_rattle3",
+		  "cgm:item/foley/medium_rattle4"
+		]
 	},
-	"item.foley.ar2_draw": {
-		"sounds": [{"name":"cgm:item/foley/ar2_draw"}]
+	"item.foley.medium_shoulder": {
+		"sounds": [
+		  "cgm:item/foley/medium_shoulder1",
+		  "cgm:item/foley/medium_shoulder2",
+		  "cgm:item/foley/medium_shoulder3"
+		]
 	},
-	"item.foley.ar3_draw_start": {
-		"sounds": [{"name":"cgm:item/foley/ar3_draw_start"}]
+	
+	"item.foley.large_rattle": {
+		"sounds": [
+		  "cgm:item/foley/large_rattle1",
+		  "cgm:item/foley/large_rattle2",
+		  "cgm:item/foley/large_rattle3",
+		  "cgm:item/foley/large_rattle4"
+		]
 	},
-	"item.foley.ar3_draw_end": {
-		"sounds": [{"name":"cgm:item/foley/ar3_draw_end"}]
-	},
-	"item.foley.ar4_draw": {
-		"sounds": [{"name":"cgm:item/foley/ar4_draw"}]
-	},
-	"item.foley.rifle1_draw": {
-		"sounds": [{"name":"cgm:item/foley/rifle1_draw"}]
-	},
-	"item.foley.rifle2_draw": {
-		"sounds": [{"name":"cgm:item/foley/rifle2_draw"}]
-	},
-	"item.foley.rifle3_draw": {
-		"sounds": [{"name":"cgm:item/foley/rifle3_draw"}]
-	},
-	"item.foley.rifle4_draw": {
-		"sounds": [{"name":"cgm:item/foley/rifle4_draw"}]
-	},
-	"item.foley.sniper1_draw": {
-		"sounds": [{"name":"cgm:item/foley/sniper1_draw"}]
-	},
-	"item.foley.sniper2_draw": {
-		"sounds": [{"name":"cgm:item/foley/sniper2_draw"}]
-	},
-	"item.foley.sniper3_draw": {
-		"sounds": [{"name":"cgm:item/foley/sniper3_draw"}]
-	},
-	"item.foley.sniper4_draw": {
-		"sounds": [{"name":"cgm:item/foley/sniper4_draw"}]
+    
+	"item.foley.carbine_shoulder": {
+		"sounds": [
+		  "cgm:item/foley/carbine_shoulder1",
+		  "cgm:item/foley/carbine_shoulder2",
+		  "cgm:item/foley/carbine_shoulder3"
+		]
 	},
 	
 	
@@ -135,5 +136,55 @@
 		  "cgm:entity/grenade/bounce2",
 		  "cgm:entity/grenade/bounce3"
 		]
+	},
+	
+   
+	"item.foley.pistol1_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/pistol1_draw"}]
+	},
+	"item.foley.smg1_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/smg1_draw"}]
+	},
+	"item.foley.smg2_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/smg1_draw"}]
+	},
+	"item.foley.ar1_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/ar1_draw"}]
+	},
+	"item.foley.ar2_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/ar2_draw"}]
+	},
+	"item.foley.ar3_draw_start": {
+		"sounds": [{"name":"cgm:item/foley/old/ar3_draw_start"}]
+	},
+	"item.foley.ar3_draw_end": {
+		"sounds": [{"name":"cgm:item/foley/old/ar3_draw_end"}]
+	},
+	"item.foley.ar4_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/ar4_draw"}]
+	},
+	"item.foley.rifle1_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/rifle1_draw"}]
+	},
+	"item.foley.rifle2_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/rifle2_draw"}]
+	},
+	"item.foley.rifle3_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/rifle3_draw"}]
+	},
+	"item.foley.rifle4_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/rifle4_draw"}]
+	},
+	"item.foley.sniper1_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/sniper1_draw"}]
+	},
+	"item.foley.sniper2_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/sniper2_draw"}]
+	},
+	"item.foley.sniper3_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/sniper3_draw"}]
+	},
+	"item.foley.sniper4_draw": {
+		"sounds": [{"name":"cgm:item/foley/old/sniper4_draw"}]
 	}
 }

@@ -89,6 +89,7 @@ public final class GunAnimationHelper
             	if (cooldown>0 && weaponSwitchTick==-1)
             		return "fire";
 			}
+            else
             {
             	float animationSpeed = (float) getAnimationValue("fire", weapKey, "animationSpeed");
             	int lastFiretick = GunRenderingHandler.get().getLastFireTick();
