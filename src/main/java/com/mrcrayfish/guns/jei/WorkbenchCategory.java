@@ -140,11 +140,13 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 
         for(int i = 0; i < recipe.getMaterials().size(); i++)
         {
-            poseStack.translate(0.0D, 0.0D, Minecraft.getInstance().getItemRenderer().blitOffset + 200.0F);
+        	poseStack.pushPose();
+        	poseStack.translate(0.0D, 0.0D, Minecraft.getInstance().getItemRenderer().blitOffset + 200.0F);
             String materialCount = recipe.getMaterials().get(i).getCount() + "";
 			int stringX = (((i % 8) * 18 + 1) + 19 - 2 - Minecraft.getInstance().font.width(materialCount));
         	if (recipe.getMaterials().get(i).getCount()>1)
         	GuiComponent.drawString(poseStack, Minecraft.getInstance().font, recipe.getMaterials().get(i).getCount() + "", stringX, 97 + (i / 8) * 18, 0xFFFFFFFF);
+        	poseStack.popPose();
         }
 
         PoseStack stack = RenderSystem.getModelViewStack();
