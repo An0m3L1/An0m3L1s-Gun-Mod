@@ -701,27 +701,26 @@ public class GunRenderingHandler
 
     private void applySprintingTransforms(Gun modifiedGun, ItemStack item, HumanoidArm hand, PoseStack poseStack, float partialTicks)
     {
-        if(Config.CLIENT.display.sprintAnimation.get() && modifiedGun.getGeneral().getGripType().getHeldAnimation().canApplySprintingAnimation())
+    	GripType pose = PropertyHelper.getGripType(item, modifiedGun);
+    	//if(Config.CLIENT.display.sprintAnimation.get() && modifiedGun.getGeneral().getGripType().getHeldAnimation().canApplySprintingAnimation())
+        if(Config.CLIENT.display.sprintAnimation.get() && pose.getHeldAnimation().canApplySprintingAnimation())
         {
-        	GripType pose = PropertyHelper.getGripType(item, modifiedGun);
+        	float transition = (this.prevSprintTransition + (this.sprintTransition - this.prevSprintTransition) * partialTicks) / 5F;
+        	transition = (float) Math.sin((transition * Math.PI) / 2);
+        	transition = (float) (transition*(1-AimingHandler.get().getNormalisedAdsProgress()));
+
         	//GripType pose = modifiedGun.getGeneral().getGripType();
         	if(pose == GripType.ONE_HANDED || pose == GripType.PISTOL_CUSTOM)
         	{
-            	float transition = (this.prevSprintTransition + (this.sprintTransition - this.prevSprintTransition) * partialTicks) / 5F;
-            	transition = (float) Math.sin((transition * Math.PI) / 2);
-            	transition = (float) (transition*(1-AimingHandler.get().getNormalisedAdsProgress()));
             	poseStack.translate(0, 0.35 * transition, -0.1 * transition);
             	poseStack.mulPose(Vector3f.XP.rotationDegrees(45F * transition));
         	}
         	else
         	{
         		float leftHanded = hand == HumanoidArm.LEFT ? -1 : 1;
-            	float transition = (this.prevSprintTransition + (this.sprintTransition - this.prevSprintTransition) * partialTicks) / 5F;
-            	transition = (float) Math.sin((transition * Math.PI) / 2);
-            	transition = (float) (transition*(1-AimingHandler.get().getNormalisedAdsProgress()));
-            	poseStack.translate(-0.25 * leftHanded * transition, -0.1 * transition, 0);
+            	poseStack.translate(-0.35 * leftHanded * transition, -0.1 * transition, (0.25*0.125) * transition);
             	poseStack.mulPose(Vector3f.YP.rotationDegrees(45F * leftHanded * transition));
-            	poseStack.mulPose(Vector3f.XP.rotationDegrees(-25F * transition));
+            	poseStack.mulPose(Vector3f.XP.rotationDegrees(-20F * transition));
         	}
         }
     }

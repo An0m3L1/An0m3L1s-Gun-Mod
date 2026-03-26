@@ -78,6 +78,14 @@
 		]
 	},
     
+	"item.foley.carbine_rattle": {
+		"sounds": [
+		  "cgm:item/foley/carbine_rattle1",
+		  "cgm:item/foley/carbine_rattle2",
+		  "cgm:item/foley/carbine_rattle3",
+		  "cgm:item/foley/carbine_rattle4"
+		]
+	},
 	"item.foley.carbine_shoulder": {
 		"sounds": [
 		  "cgm:item/foley/carbine_shoulder1",

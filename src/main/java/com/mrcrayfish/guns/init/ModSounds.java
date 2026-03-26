@@ -62,7 +62,8 @@ public class ModSounds
 	public static final RegistryObject<SoundEvent> FOLEY_MEDIUM_SHOULDER = register("item.foley.medium_shoulder");
 	
 	public static final RegistryObject<SoundEvent> FOLEY_LARGE_RATTLE = register("item.foley.large_rattle");
-	
+
+	public static final RegistryObject<SoundEvent> FOLEY_CARBINE_RATTLE = register("item.foley.carbine_rattle");
 	public static final RegistryObject<SoundEvent> FOLEY_CARBINE_SHOULDER = register("item.foley.carbine_shoulder");
 	
 	public static final RegistryObject<SoundEvent> ENTITY_GRENADE_BOUNCE = register("entity.grenade.bounce");
