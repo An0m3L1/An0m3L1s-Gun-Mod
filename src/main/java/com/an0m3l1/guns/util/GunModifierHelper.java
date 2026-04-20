@@ -80,7 +80,7 @@ public class GunModifierHelper
 				}
 				else
 				{
-					spread = Mth.lerp((attachType == IAttachment.Type.BARREL ? 0.8F : 0.2F), spread, modifier.modifyProjectileSpread(spread));
+					spread = Mth.lerp((attachType == IAttachment.Type.BARREL ? 0.5F : 0.25F), spread, modifier.modifyProjectileSpread(spread));
 				}
 			}
 		}

@@ -38,29 +38,6 @@ public abstract class Crosshair implements IResourceLocation
 	}
 	
 	/**
-	 * Checks if rendering crosshairs for sniper weapons is disabled.
-	 *
-	 * @param mc
-	 * 		a minecraft instance
-	 *
-	 * @return true if held gun is a sniper and corresponding config is enabled
-	 */
-	protected boolean disableSniperCrosshair(Minecraft mc)
-	{
-		if(mc.player == null)
-		{
-			return false;
-		}
-		ItemStack heldItem = mc.player.getMainHandItem();
-		if(heldItem.getItem() instanceof GunItem gunItem)
-		{
-			Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-			return modifiedGun.getGeneral().getUseSniperSpread() && GunConfig.CLIENT.disableCrosshairForSnipers.get();
-		}
-		return false;
-	}
-	
-	/**
 	 * Renders the crosshair to the screen. If implementing, positioning is not initially set to
 	 * the center of the screen. Use windowWidth and windowHeight for calculating the center. It
 	 * should be considered that the player may not be in a world.
@@ -108,6 +85,29 @@ public abstract class Crosshair implements IResourceLocation
 	public final boolean isDefault()
 	{
 		return this == DEFAULT;
+	}
+	
+	/**
+	 * Checks if rendering crosshairs for sniper weapons is disabled.
+	 *
+	 * @param mc
+	 * 		a minecraft instance
+	 *
+	 * @return true if held gun is a sniper and corresponding config is enabled
+	 */
+	protected boolean disableSniperCrosshair(Minecraft mc)
+	{
+		if(mc.player == null)
+		{
+			return false;
+		}
+		ItemStack heldItem = mc.player.getMainHandItem();
+		if(heldItem.getItem() instanceof GunItem gunItem)
+		{
+			Gun modifiedGun = gunItem.getModifiedGun(heldItem);
+			return modifiedGun.getGeneral().getUseSniperSpread() && GunConfig.CLIENT.noCrosshairForSnipers.get();
+		}
+		return false;
 	}
 	
 	/**

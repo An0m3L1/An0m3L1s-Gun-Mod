@@ -18,15 +18,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Author: MrCrayfish
- */
-@SuppressWarnings("UnnecessaryLocalVariable")
 public class DynamicCrosshair extends Crosshair
 {
-	private static final ResourceLocation DYNAMIC_CROSSHAIR_H = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dynamic_horizontal.png");
-	private static final ResourceLocation DYNAMIC_CROSSHAIR_V = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dynamic_vertical.png");
-	private static final ResourceLocation DOT_CROSSHAIR = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dot.png");
+	private static final ResourceLocation DYNAMIC_H = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dynamic_h.png");
+	private static final ResourceLocation DYNAMIC_V = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dynamic_v.png");
+	private static final ResourceLocation SHOTGUN_H = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/shotgun_h.png");
+	private static final ResourceLocation SHOTGUN_V = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/shotgun_v.png");
+	private static final ResourceLocation DOT = new ResourceLocation(GunMod.MOD_ID, "textures/crosshair/dot.png");
 	
 	private float scale;
 	private float prevScale;
@@ -58,15 +56,15 @@ public class DynamicCrosshair extends Crosshair
 		Minecraft mc = Minecraft.getInstance();
 		if(mc.player != null)
 		{
-			/* Check for sprint/airborne */
+			// Check for sprint/airborne
 			boolean currentPenaltyState = GunConfig.COMMON.doSpreadPenalties.get() && (mc.player.isSprinting() || !mc.player.isOnGround());
-			/* Change between penalty and no penalty states */
+			// Change between penalty and no penalty states
 			if(currentPenaltyState != lastPenaltyState)
 			{
 				lastPenaltyState = currentPenaltyState;
 			}
 			float targetPenalty = currentPenaltyState ? 1.0F : 0.0F;
-			float change = 1.0F / 5F; /* 5 ticks for interpolation to correlate to visual change in GunRenderingHandler */
+			float change = 1.0F / 5F; // 5 ticks for interpolation to correlate to visual change in GunRenderingHandler
 			if(this.smoothPenaltyDisplay < targetPenalty)
 			{
 				this.smoothPenaltyDisplay = Math.min(this.smoothPenaltyDisplay + change, targetPenalty);
@@ -127,14 +125,17 @@ public class DynamicCrosshair extends Crosshair
 		float size2 = 1F;
 		float spread = 0F;
 		boolean renderDot = false;
+		boolean multishot = false;
 		SpreadTracker spreadTracker = mc.player != null ? SpreadTracker.get(mc.player) : null;
+		Gun modifiedGun;
 		
 		if(mc.player != null && spreadTracker != null)
 		{
 			ItemStack heldItem = mc.player.getMainHandItem();
 			if(heldItem.getItem() instanceof GunItem gunItem)
 			{
-				Gun modifiedGun = gunItem.getModifiedGun(heldItem);
+				modifiedGun = gunItem.getModifiedGun(heldItem);
+				multishot = modifiedGun.getGeneral().getProjectileAmount() >= 2 && GunConfig.CLIENT.specialCrosshairForShotguns.get();
 				float aiming = (float) AimingHandler.get().getNormalisedAdsProgress();
 				float currentSpread = spreadTracker.getSpread(mc.player, gunItem);
 				
@@ -147,7 +148,7 @@ public class DynamicCrosshair extends Crosshair
 				
 				if(penaltyActive && !alwaysSpread)
 				{
-					/* Dot disappears immediately to better convey that the spread change is instant */
+					// Dot disappears immediately to better convey that the spread change is instant
 					isAtMinSpread = false;
 				}
 				else
@@ -159,13 +160,6 @@ public class DynamicCrosshair extends Crosshair
 			}
 		}
 		
-		float scaleMultiplier = (float) (GunConfig.CLIENT.dynamicCrosshairReactivity.get() * 1F);
-		float baseScale = 1F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * scaleMultiplier);
-		float scale = (float) (baseScale + (spread * (2F * GunConfig.CLIENT.dynamicCrosshairSpreadMultiplier.get())));
-		float scaleSize = (scale / 6F) + 1.15F;
-		float crosshairBaseTightness = (float) (0.8 - (GunConfig.CLIENT.dynamicCrosshairBaseSpread.get() / 2));
-		float finalSpreadTranslate = (float) ((Mth.lerp(0.95, scaleSize - 1, Math.log(scaleSize))) * (2.8F));
-		
 		double windowCenteredX = Math.round((windowWidth) / 2F) - 0.5;
 		double windowCenteredY = Math.round((windowHeight) / 2F) - 0.5;
 		
@@ -175,101 +169,45 @@ public class DynamicCrosshair extends Crosshair
 		{
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		}
-		BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 		
-		// Left
-		stack.pushPose();
+		// Common spread calculation
+		float scaleMultiplier = (float) (GunConfig.CLIENT.dynamicCrosshairReactivity.get() * 1F);
+		float baseScale = 1F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * scaleMultiplier);
+		float scale = (float) (baseScale + (spread * (2F * GunConfig.CLIENT.dynamicCrosshairSpreadMultiplier.get())));
+		float scaleSize = (scale / 6F) + 1.15F;
+		float crosshairBaseTightness = (float) (0.8 - (GunConfig.CLIENT.dynamicCrosshairBaseSpread.get() / 2));
+		float finalSpreadTranslate = (float) ((Mth.lerp(0.95, scaleSize - 1, Math.log(scaleSize))) * (2.8F));
+		
+		// Offsets for shotgun crosshair
+		float rawOffset = (size1 / 2F + finalSpreadTranslate - crosshairBaseTightness) * 0.5F;
+		float offset = rawOffset * scaleSize;
+		
+		// Shotgun crosshair
+		if(multishot)
 		{
-			Matrix4f matrix = stack.last().pose();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderTexture(0, DYNAMIC_CROSSHAIR_H);
-			
-			stack.translate(windowCenteredX, windowCenteredY, 0);
-			stack.scale(scaleSize, 1, 1);
-			stack.translate((-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness - 0.0F, -size2 / 2F, 0);
-			
-			float sizeX = size1;
-			float sizeY = size2;
-			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0, sizeY, 0).uv(0, 1F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, sizeY, 0).uv(1, 1F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, 0, 0).uv(1, 0F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, 0, 0, 0).uv(0, 0F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			BufferUploader.drawWithShader(buffer.end());
+			// Top
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, 2 * offset, size2, SHOTGUN_H, 0, 1F / 9F, 1, 1F / 9F, alpha);
+			// Bottom
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY + offset - size2, 1.0F, 1.0F, 0.0F, 0.0F, 2 * offset, size2, SHOTGUN_H, 0, 1.0f, 1, 8F / 9F, alpha);
+			// Left
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2 * offset, SHOTGUN_V, 0F / 9F, 1, 1F / 9F, 0, alpha);
+			// Right
+			drawCrosshairPart(stack, windowCenteredX + offset - size2, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2 * offset, SHOTGUN_V, 8F / 9F, 1, 1.0f, 0, alpha);
 		}
-		stack.popPose();
-		
-		// Right
-		stack.pushPose();
+		// Normal crosshair
+		else
 		{
-			Matrix4f matrix = stack.last().pose();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderTexture(0, DYNAMIC_CROSSHAIR_H);
-			
-			stack.translate(windowCenteredX, windowCenteredY, 0);
-			stack.scale(scaleSize, 1, 1);
-			stack.translate((-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, -size2 / 2F, 0);
-			
-			float sizeX = size1;
-			float sizeY = size2;
-			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0, sizeY, 0).uv(0, 1.0f).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, sizeY, 0).uv(1, 1.0f).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, 0, 0).uv(1, 8F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, 0, 0, 0).uv(0, 8F / 9F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			BufferUploader.drawWithShader(buffer.end());
+			// Left
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness - 0.0F, -size2 / 2F, size1, size2, DYNAMIC_H, 0.0F, 0.0F / 9F, 1.0F, 1.0F / 9F, alpha);
+			// Right
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, -size2 / 2F, size1, size2, DYNAMIC_H, 0.0F, 8.0F / 9F, 1.0F, 1.0F, alpha);
+			// Top
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2F, (-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness, size2, size1, DYNAMIC_V, 0.0F / 9F, 0.0F, 1.0F / 9F, 1.0F, alpha);
+			// Bottom
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2F - 0.0F, (-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, size2, size1, DYNAMIC_V, 8.0F / 9F, 0.0F, 1.0F, 1.0F, alpha);
 		}
-		stack.popPose();
 		
-		// Top
-		stack.pushPose();
-		{
-			Matrix4f matrix = stack.last().pose();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderTexture(0, DYNAMIC_CROSSHAIR_V);
-			
-			stack.translate(windowCenteredX, windowCenteredY, 0);
-			stack.scale(1, scaleSize, 1);
-			stack.translate(-size2 / 2F, (-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness, 0);
-			
-			float sizeX = size2;
-			float sizeY = size1;
-			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0, sizeY, 0).uv(0F / 9F, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, sizeY, 0).uv(1F / 9F, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, 0, 0).uv(1F / 9F, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, 0, 0, 0).uv(0F / 9F, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			BufferUploader.drawWithShader(buffer.end());
-		}
-		stack.popPose();
-		
-		// Bottom
-		stack.pushPose();
-		{
-			Matrix4f matrix = stack.last().pose();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.setShaderTexture(0, DYNAMIC_CROSSHAIR_V);
-			
-			stack.translate(windowCenteredX, windowCenteredY, 0);
-			stack.scale(1, scaleSize, 1);
-			stack.translate(-size2 / 2F - 0.0F, (-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, 0);
-			
-			float sizeX = size2;
-			float sizeY = size1;
-			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0, sizeY, 0).uv(8F / 9F, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, sizeY, 0).uv(1.0f, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, sizeX, 0, 0).uv(1.0f, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, 0, 0, 0).uv(8F / 9F, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			BufferUploader.drawWithShader(buffer.end());
-		}
-		stack.popPose();
-		
-		// Dot
+		// Center dot
 		if(renderDot)
 		{
 			stack.pushPose();
@@ -277,10 +215,11 @@ public class DynamicCrosshair extends Crosshair
 				int dotSize = 9;
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.setShaderTexture(0, DOT_CROSSHAIR);
+				RenderSystem.setShaderTexture(0, DOT);
 				Matrix4f matrix = stack.last().pose();
 				stack.translate(windowCenteredX, windowCenteredY, 0);
 				stack.translate(-dotSize / 2F, -dotSize / 2F, 0);
+				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 				buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 				buffer.vertex(matrix, 0, dotSize, 0).uv(0, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
 				buffer.vertex(matrix, dotSize, dotSize, 0).uv(1, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
@@ -295,5 +234,61 @@ public class DynamicCrosshair extends Crosshair
 		{
 			RenderSystem.defaultBlendFunc();
 		}
+	}
+	
+	/**
+	 * Universal method to draw a crosshair part.
+	 *
+	 * @param centerX
+	 * 		X coordinate of the center / starting point
+	 * @param centerY
+	 * 		Y coordinate of the center / starting point
+	 * @param scaleX
+	 * 		X scale before translation
+	 * @param scaleY
+	 * 		Y scale before translation
+	 * @param offsetX
+	 * 		additional X offset after scaling
+	 * @param offsetY
+	 * 		additional Y offset after scaling
+	 * @param width
+	 * 		width of the drawn rectangle
+	 * @param height
+	 * 		height of the drawn rectangle
+	 * @param texture
+	 * 		texture to use
+	 * @param u0
+	 * 		UV coordinate
+	 * @param u1
+	 * 		UV coordinate
+	 * @param v0
+	 * 		UV coordinate
+	 * @param v1
+	 * 		UV coordinate
+	 * @param alpha
+	 * 		transparency
+	 */
+	private void drawCrosshairPart(PoseStack stack, double centerX, double centerY, float scaleX, float scaleY, float offsetX, float offsetY, float width, float height, ResourceLocation texture, float u0, float v0, float u1, float v1, float alpha)
+	{
+		stack.pushPose();
+		{
+			Matrix4f matrix = stack.last().pose();
+			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.setShaderTexture(0, texture);
+			
+			stack.translate(centerX, centerY, 0);
+			stack.scale(scaleX, scaleY, 1);
+			stack.translate(offsetX, offsetY, 0);
+			
+			BufferBuilder buffer = Tesselator.getInstance().getBuilder();
+			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+			buffer.vertex(matrix, 0, height, 0).uv(u0, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, height, 0).uv(u1, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, 0, 0).uv(u1, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, 0, 0, 0).uv(u0, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			BufferUploader.drawWithShader(buffer.end());
+		}
+		stack.popPose();
 	}
 }
