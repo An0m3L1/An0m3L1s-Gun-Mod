@@ -1,6 +1,5 @@
 package com.an0m3l1.guns.client;
 
-import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.common.BoundingBoxManager;
 import com.an0m3l1.guns.interfaces.IHeadshotBox;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -19,7 +18,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
-public class HeadHitboxRenderer
+public class HeadshotBoxRenderer
 {
 	
 	@SubscribeEvent
@@ -32,11 +31,6 @@ public class HeadHitboxRenderer
 		
 		Minecraft mc = Minecraft.getInstance();
 		if(mc.level == null || !mc.getEntityRenderDispatcher().shouldRenderHitBoxes())
-		{
-			return;
-		}
-		
-		if(!GunConfig.COMMON.improvedHitboxes.get())
 		{
 			return;
 		}

@@ -1,7 +1,8 @@
 Fixes and Overhauls
 
 Add and overhaul animations:
-    - Prone/Swimming
+    - Crawling/Swimming
+    - Riding entities
     - Smooth third person sprint animation for one-handed weapons
     - Third person reload animation
 Overhaul items:
@@ -25,8 +26,7 @@ Return coloring weapons (if a weapon has a dye applied to it, change the texture
 Improve explosion VFX
 Overhaul head hitboxes:
     - Make hitboxes data driven
-    - Adjust player hitbox when riding entities (check other player behavior)
-    - Optimize HeadHitboxRenderer
+    - Optimize HeadshotBoxRenderer
 Update reload logic and animations:
     - When ammo is empty, slides should lock back/forward
     - Add reload empty animations to all applicable guns

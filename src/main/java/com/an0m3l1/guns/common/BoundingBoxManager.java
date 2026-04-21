@@ -40,14 +40,20 @@ public class BoundingBoxManager
 			final double headHalfSize = 4 * 0.0625;
 			final double headHeight = 8 * 0.0625;
 			AABB headBox = new AABB(-headHalfSize, 0, -headHalfSize, headHalfSize, headHeight, headHalfSize);
-			boolean swimming = entity.isVisuallySwimming();
-			boolean crawling = entity.isVisuallyCrawling();
+			
+			boolean swimming = entity.isSwimming();
+			boolean crawling = (!entity.isInWater() || (entity.isInWater() && !swimming)) && entity.isVisuallySwimming();
 			
 			if(swimming || crawling)
 			{
-				headBox = headBox.move(0, 3 * 0.0625, 0);
-				float pitch = swimming ? entity.getXRot() : 0.0F;
-				Vec3 direction = Vec3.directionFromRotation(pitch, entity.yBodyRot).normalize().scale(0.75);
+				boolean isDynamicHeadBox = swimming || (entity.isInWater() && entity.isVisuallySwimming());
+				float pitch = isDynamicHeadBox ? entity.getXRot() : 0.0F;
+				
+				double headScale = getPlayerHeadScale(isDynamicHeadBox, pitch);
+				double headY = getPlayerHeadY(isDynamicHeadBox, pitch);
+				
+				headBox = headBox.move(0, headY * 0.0625, 0);
+				Vec3 direction = Vec3.directionFromRotation(pitch, entity.yBodyRot).normalize().scale(headScale);
 				headBox = headBox.move(direction);
 			}
 			else
@@ -93,6 +99,63 @@ public class BoundingBoxManager
 		registerHeadshotBox(EntityType.HOGLIN, new RotatedHeadshotBox<>(14.0, 16.0, 7.0, 19.0, false, true));
 		registerHeadshotBox(EntityType.ZOGLIN, new RotatedHeadshotBox<>(14.0, 16.0, 7.0, 19.0, false, true));
 		registerHeadshotBox(EntityType.PIGLIN, new ChildHeadshotBox<>(8.0, 24.0, 0.75, 0.5));
+	}
+	
+	private static double getPlayerHeadScale(boolean dynamicHeadBox, float pitch)
+	{
+		double headScale;
+		final double scaleUp = 0.1;
+		final double scaleStraight = 0.65;
+		final double scaleDown = 1.1;
+		
+		if(dynamicHeadBox)
+		{
+			float clampedPitch = Mth.clamp(pitch, -45.0F, 45.0F);
+			
+			if(clampedPitch <= 0)
+			{
+				float t = (clampedPitch + 45.0F) / 45.0F;
+				headScale = Mth.lerp(t, scaleUp, scaleStraight);
+			}
+			else
+			{
+				float t = clampedPitch / 45.0F;
+				headScale = Mth.lerp(t, scaleStraight, scaleDown);
+			}
+		}
+		else
+		{
+			headScale = scaleStraight;
+		}
+		return headScale;
+	}
+	
+	private static double getPlayerHeadY(boolean dynamicHeadBox, float pitch)
+	{
+		double headY;
+		final double yUp = 7.75;
+		final double yStraight = 4.5;
+		final double yDown = 6.75;
+		
+		if(dynamicHeadBox)
+		{
+			float clampedPitch = Mth.clamp(pitch, -45.0F, 45.0F);
+			if(clampedPitch <= 0)
+			{
+				float t = (clampedPitch + 45.0F) / 45.0F;
+				headY = Mth.lerp(t, yUp, yStraight);
+			}
+			else
+			{
+				float t = clampedPitch / 45.0F;
+				headY = Mth.lerp(t, yStraight, yDown);
+			}
+		}
+		else
+		{
+			headY = yStraight;
+		}
+		return headY;
 	}
 	
 	/**

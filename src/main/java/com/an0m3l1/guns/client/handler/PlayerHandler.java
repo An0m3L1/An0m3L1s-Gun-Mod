@@ -3,6 +3,7 @@ package com.an0m3l1.guns.client.handler;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.init.ModTags;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -54,7 +55,7 @@ public class PlayerHandler
 		}
 		
 		// Crouching restrictions
-		if(player.isVisuallyCrawling())
+		if(player.isVisuallyCrawling() || (player.isInWater() && player.getPose() == Pose.SWIMMING && !player.isSwimming()))
 		{
 			mc.options.keyShift.setDown(false);
 		}
