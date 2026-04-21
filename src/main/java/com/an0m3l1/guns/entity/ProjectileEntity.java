@@ -321,11 +321,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				}
 				
 				float volume = 0.5F + this.level.getRandom().nextFloat() * 0.4F;
-				boolean isMultishot = general.getProjectileAmount() > 1;
+				boolean multishot = general.getProjectileAmount() >= 2;
 				if(!players.isEmpty() && this.tickCount > 3 && soundTime < this.tickCount - 3)
 				{
 					// Divide volume by projectile amount
-					if(isMultishot)
+					if(multishot)
 					{
 						volume = volume / general.getProjectileAmount();
 					}

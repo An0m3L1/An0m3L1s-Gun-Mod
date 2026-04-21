@@ -60,6 +60,7 @@ public class ClientHandler
 		MinecraftForge.EVENT_BUS.register(SoundHandler.get());
 		MinecraftForge.EVENT_BUS.register(PlayerHandler.get());
 		MinecraftForge.EVENT_BUS.register(new PlayerModelHandler());
+		MinecraftForge.EVENT_BUS.register(new HeadHitboxRenderer());
 		
 		/* Only register controller events if Controllable is loaded otherwise it will crash */
 		if(GunMod.controllableLoaded)

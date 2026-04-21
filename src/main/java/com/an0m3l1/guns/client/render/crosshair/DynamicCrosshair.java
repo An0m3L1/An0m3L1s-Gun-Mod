@@ -46,10 +46,10 @@ public class DynamicCrosshair extends Crosshair
 		this.prevScale = this.scale;
 		this.scale *= 0.5F;
 		this.prevFireBloom = this.fireBloom;
-		if(this.fireBloom > 0)
+		if(this.fireBloom > 0.0F)
 		{
-			float i = (float) GunConfig.COMMON.spreadThreshold.get() / 50;
-			this.fireBloom -= Math.min(3F / (Math.max(i, 1)), this.fireBloom);
+			float i = (float) GunConfig.COMMON.spreadThreshold.get() / 50.0F;
+			this.fireBloom -= Math.min(3.0F / (Math.max(i, 1.0F)), this.fireBloom);
 		}
 		this.prevSmoothPenaltyDisplay = this.smoothPenaltyDisplay;
 		
@@ -64,7 +64,7 @@ public class DynamicCrosshair extends Crosshair
 				lastPenaltyState = currentPenaltyState;
 			}
 			float targetPenalty = currentPenaltyState ? 1.0F : 0.0F;
-			float change = 1.0F / 5F; // 5 ticks for interpolation to correlate to visual change in GunRenderingHandler
+			float change = 1.0F / 5.0F; // 5 ticks for interpolation to correlate to visual change in GunRenderingHandler
 			if(this.smoothPenaltyDisplay < targetPenalty)
 			{
 				this.smoothPenaltyDisplay = Math.min(this.smoothPenaltyDisplay + change, targetPenalty);
@@ -86,12 +86,12 @@ public class DynamicCrosshair extends Crosshair
 	
 	private float calculateSpread(SpreadTracker spreadTracker, ItemStack heldItem, GunItem gunItem, Gun modifiedGun, float aiming, float currentSpread, float partialTicks)
 	{
-		float nextSpreadIncrement = (GunConfig.COMMON.doSpreadPenalties.get() ? 1F + aiming : 1F) / (float) GunConfig.COMMON.maxCount.get();
-		float spreadModifier = (currentSpread + nextSpreadIncrement) * Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom), 1F);
+		float nextSpreadIncrement = (GunConfig.COMMON.doSpreadPenalties.get() ? 1.0F + aiming : 1.0F) / (float) GunConfig.COMMON.maxCount.get();
+		float spreadModifier = (currentSpread + nextSpreadIncrement) * Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom), 1.0F);
 		
 		float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
 		float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
-		minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0F ? minSpread : (modifiedGun.getGeneral().getAlwaysSpread() ? baseSpread : 0));
+		minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0.0F ? minSpread : (modifiedGun.getGeneral().getAlwaysSpread() ? baseSpread : 0.0F));
 		
 		float smoothPenaltyDisplay = Mth.lerp(partialTicks, this.prevSmoothPenaltyDisplay, this.smoothPenaltyDisplay);
 		boolean alwaysSpread = modifiedGun.getGeneral().getAlwaysSpread();
@@ -109,7 +109,7 @@ public class DynamicCrosshair extends Crosshair
 		}
 		
 		float aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction());
-		return Math.max(Mth.lerp(spreadModifier, visualMinSpread, baseSpread) * aimingSpreadMultiplier, 0F);
+		return Math.max(Mth.lerp(spreadModifier, visualMinSpread, baseSpread) * aimingSpreadMultiplier, 0.0F);
 	}
 	
 	@Override
@@ -121,9 +121,9 @@ public class DynamicCrosshair extends Crosshair
 		}
 		
 		float alpha = 1.0F;
-		float size1 = 7F;
-		float size2 = 1F;
-		float spread = 0F;
+		float size1 = 7.0F;
+		float size2 = 1.0F;
+		float spread = 0.0F;
 		boolean renderDot = false;
 		boolean multishot = false;
 		SpreadTracker spreadTracker = mc.player != null ? SpreadTracker.get(mc.player) : null;
@@ -153,15 +153,15 @@ public class DynamicCrosshair extends Crosshair
 				}
 				else
 				{
-					isAtMinSpread = (currentSpread == 0.0f && spread <= GunConfig.CLIENT.dynamicCrosshairDotThreshold.get());
+					isAtMinSpread = (currentSpread == 0.0F && spread <= GunConfig.CLIENT.dynamicCrosshairDotThreshold.get());
 				}
 				
 				renderDot = (dotRenderMode == DotRenderMode.ALWAYS) || (dotRenderMode == DotRenderMode.AT_MIN_SPREAD && isAtMinSpread) || (dotRenderMode == DotRenderMode.THRESHOLD && spread <= GunConfig.CLIENT.dynamicCrosshairDotThreshold.get()) && (!GunConfig.CLIENT.onlyRenderDotWhileAiming.get() || aiming > 0.9F);
 			}
 		}
 		
-		double windowCenteredX = Math.round((windowWidth) / 2F) - 0.5;
-		double windowCenteredY = Math.round((windowHeight) / 2F) - 0.5;
+		double windowCenteredX = Math.round((windowWidth) / 2.0F) - 0.5;
+		double windowCenteredY = Math.round((windowHeight) / 2.0F) - 0.5;
 		
 		boolean blend = GunConfig.CLIENT.blendCrosshair.get();
 		RenderSystem.enableBlend();
@@ -171,40 +171,40 @@ public class DynamicCrosshair extends Crosshair
 		}
 		
 		// Common spread calculation
-		float scaleMultiplier = (float) (GunConfig.CLIENT.dynamicCrosshairReactivity.get() * 1F);
-		float baseScale = 1F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * scaleMultiplier);
-		float scale = (float) (baseScale + (spread * (2F * GunConfig.CLIENT.dynamicCrosshairSpreadMultiplier.get())));
-		float scaleSize = (scale / 6F) + 1.15F;
-		float crosshairBaseTightness = (float) (0.8 - (GunConfig.CLIENT.dynamicCrosshairBaseSpread.get() / 2));
-		float finalSpreadTranslate = (float) ((Mth.lerp(0.95, scaleSize - 1, Math.log(scaleSize))) * (2.8F));
+		float scaleMultiplier = (float) (GunConfig.CLIENT.dynamicCrosshairReactivity.get() * 1.0F);
+		float baseScale = 1.0F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * scaleMultiplier);
+		float scale = (float) (baseScale + (spread * (2.0F * GunConfig.CLIENT.dynamicCrosshairSpreadMultiplier.get())));
+		float scaleSize = (scale / 6.0F) + 1.15F;
+		float crosshairBaseTightness = (float) (0.8 - (GunConfig.CLIENT.dynamicCrosshairBaseSpread.get() / 2.0F));
+		float finalSpreadTranslate = (float) ((Mth.lerp(0.95, scaleSize - 1.0F, Math.log(scaleSize))) * (2.8F));
 		
 		// Offsets for shotgun crosshair
-		float rawOffset = (size1 / 2F + finalSpreadTranslate - crosshairBaseTightness) * 0.5F;
+		float rawOffset = (size1 / 2.0F + finalSpreadTranslate - crosshairBaseTightness) * 0.5F;
 		float offset = rawOffset * scaleSize;
 		
 		// Shotgun crosshair
 		if(multishot)
 		{
 			// Top
-			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, 2 * offset, size2, SHOTGUN_H, 0, 1F / 9F, 1, 1F / 9F, alpha);
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, 2.0F * offset, size2, SHOTGUN_H, 0.0F, 0.0F, 1.0F, 1.0F / 9.0F, alpha);
 			// Bottom
-			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY + offset - size2, 1.0F, 1.0F, 0.0F, 0.0F, 2 * offset, size2, SHOTGUN_H, 0, 1.0f, 1, 8F / 9F, alpha);
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY + offset - size2, 1.0F, 1.0F, 0.0F, 0.0F, 2.0F * offset, size2, SHOTGUN_H, 0.0F, 8.0F / 9.0F, 1.0F, 1.0F, alpha);
 			// Left
-			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2 * offset, SHOTGUN_V, 0F / 9F, 1, 1F / 9F, 0, alpha);
+			drawCrosshairPart(stack, windowCenteredX - offset, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2.0F * offset, SHOTGUN_V, 0.0F, 0.0F, 1.0F / 9.0F, 1.0F, alpha);
 			// Right
-			drawCrosshairPart(stack, windowCenteredX + offset - size2, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2 * offset, SHOTGUN_V, 8F / 9F, 1, 1.0f, 0, alpha);
+			drawCrosshairPart(stack, windowCenteredX + offset - size2, windowCenteredY - offset, 1.0F, 1.0F, 0.0F, 0.0F, size2, 2.0F * offset, SHOTGUN_V, 8.0F / 9.0F, 0.0F, 1.0F, 1.0F, alpha);
 		}
 		// Normal crosshair
 		else
 		{
 			// Left
-			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness - 0.0F, -size2 / 2F, size1, size2, DYNAMIC_H, 0.0F, 0.0F / 9F, 1.0F, 1.0F / 9F, alpha);
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2.0F) - finalSpreadTranslate + crosshairBaseTightness, -size2 / 2.0F, size1, size2, DYNAMIC_H, 0.0F, 0.0F, 1.0F, 1.0F / 9.0F, alpha);
 			// Right
-			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, -size2 / 2F, size1, size2, DYNAMIC_H, 0.0F, 8.0F / 9F, 1.0F, 1.0F, alpha);
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, scaleSize, 1.0F, (-size1 / 2.0F) + finalSpreadTranslate - crosshairBaseTightness, -size2 / 2.0F, size1, size2, DYNAMIC_H, 0.0F, 8.0F / 9.0F, 1.0F, 1.0F, alpha);
 			// Top
-			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2F, (-size1 / 2F) - finalSpreadTranslate + crosshairBaseTightness, size2, size1, DYNAMIC_V, 0.0F / 9F, 0.0F, 1.0F / 9F, 1.0F, alpha);
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2.0F, (-size1 / 2.0F) - finalSpreadTranslate + crosshairBaseTightness, size2, size1, DYNAMIC_V, 0.0F, 0.0F, 1.0F / 9.0F, 1.0F, alpha);
 			// Bottom
-			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2F - 0.0F, (-size1 / 2F) + finalSpreadTranslate - crosshairBaseTightness, size2, size1, DYNAMIC_V, 8.0F / 9F, 0.0F, 1.0F, 1.0F, alpha);
+			drawCrosshairPart(stack, windowCenteredX, windowCenteredY, 1.0F, scaleSize, -size2 / 2.0F, (-size1 / 2.0F) + finalSpreadTranslate - crosshairBaseTightness, size2, size1, DYNAMIC_V, 8.0F / 9.0F, 0.0F, 1.0F, 1.0F, alpha);
 		}
 		
 		// Center dot
@@ -217,57 +217,20 @@ public class DynamicCrosshair extends Crosshair
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 				RenderSystem.setShaderTexture(0, DOT);
 				Matrix4f matrix = stack.last().pose();
-				stack.translate(windowCenteredX, windowCenteredY, 0);
-				stack.translate(-dotSize / 2F, -dotSize / 2F, 0);
+				stack.translate(windowCenteredX, windowCenteredY, 0.0);
+				stack.translate(-dotSize / 2.0F, -dotSize / 2.0F, 0.0);
 				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 				buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-				buffer.vertex(matrix, 0, dotSize, 0).uv(0, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-				buffer.vertex(matrix, dotSize, dotSize, 0).uv(1, 1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-				buffer.vertex(matrix, dotSize, 0, 0).uv(1, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-				buffer.vertex(matrix, 0, 0, 0).uv(0, 0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, 0.0F, dotSize, 0.0F).uv(0.0F, 1.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, dotSize, dotSize, 0.0F).uv(1.0F, 1.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, dotSize, 0.0F, 0.0F).uv(1.0F, 0.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, 0.0F, 0.0F, 0.0F).uv(0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
 				BufferUploader.drawWithShader(buffer.end());
 			}
 			stack.popPose();
 		}
-		
-		if(blend)
-		{
-			RenderSystem.defaultBlendFunc();
-		}
 	}
 	
-	/**
-	 * Universal method to draw a crosshair part.
-	 *
-	 * @param centerX
-	 * 		X coordinate of the center / starting point
-	 * @param centerY
-	 * 		Y coordinate of the center / starting point
-	 * @param scaleX
-	 * 		X scale before translation
-	 * @param scaleY
-	 * 		Y scale before translation
-	 * @param offsetX
-	 * 		additional X offset after scaling
-	 * @param offsetY
-	 * 		additional Y offset after scaling
-	 * @param width
-	 * 		width of the drawn rectangle
-	 * @param height
-	 * 		height of the drawn rectangle
-	 * @param texture
-	 * 		texture to use
-	 * @param u0
-	 * 		UV coordinate
-	 * @param u1
-	 * 		UV coordinate
-	 * @param v0
-	 * 		UV coordinate
-	 * @param v1
-	 * 		UV coordinate
-	 * @param alpha
-	 * 		transparency
-	 */
 	private void drawCrosshairPart(PoseStack stack, double centerX, double centerY, float scaleX, float scaleY, float offsetX, float offsetY, float width, float height, ResourceLocation texture, float u0, float v0, float u1, float v1, float alpha)
 	{
 		stack.pushPose();
@@ -277,16 +240,16 @@ public class DynamicCrosshair extends Crosshair
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.setShaderTexture(0, texture);
 			
-			stack.translate(centerX, centerY, 0);
-			stack.scale(scaleX, scaleY, 1);
-			stack.translate(offsetX, offsetY, 0);
+			stack.translate(centerX, centerY, 0.0);
+			stack.scale(scaleX, scaleY, 1.0F);
+			stack.translate(offsetX, offsetY, 0.0);
 			
 			BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0, height, 0).uv(u0, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, width, height, 0).uv(u1, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, width, 0, 0).uv(u1, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
-			buffer.vertex(matrix, 0, 0, 0).uv(u0, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, 0.0F, height, 0.0F).uv(u0, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, height, 0.0F).uv(u1, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, 0.0F, 0.0F).uv(u1, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, 0.0F, 0.0F, 0.0F).uv(u0, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
 			BufferUploader.drawWithShader(buffer.end());
 		}
 		stack.popPose();

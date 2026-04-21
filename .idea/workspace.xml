@@ -4,21 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="Crosshair update.&#10;&#10;Shotguns now have a box crosshair variant.&#10;Added config for shotgun crosshairs.">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/dynamic_h.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/dynamic_v.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/shotgun_h.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/shotgun_v.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="---&#10;&#10;Slightly tweaked dynamic crosshair rendering code.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/HeadHitboxRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/notes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/Crosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/Crosshair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/util/GunModifierHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/util/GunModifierHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/dynamic_horizontal.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/crosshair/dynamic_vertical.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/BoundingBoxManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/BoundingBoxManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" afterDir="false" />
     </list>
     <list id="e22d67f2-48d1-4a82-bc4a-3d7fb8628620" name="Local" comment="Local" />
     <option name="SHOW_DIALOG" value="false" />
@@ -157,28 +150,28 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/src/main/resources",
+    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/run/resourcepacks/AGM Debug",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3411514",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "diff.external"
+    "settings.editor.selected.configurable": "preferences.sourceCode.JAVA"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Debug" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\main\resources" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\debug resources" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\Settings" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\Debug\datapacks" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Debug" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\CGM-plus\notes and misc\CGM+ Tweaks Datapack\data\minecraft\tags\blocks" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\CGM-plus\src\main\resources\assets\cgm\models\special" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\CGM-plus\src\main\resources\assets\cgm\models\special\semi_auto_shotgun" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\CGM-plus\src\main\resources\assets\cgm\animations\old" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.mrcrayfish.guns.client.handler" />
