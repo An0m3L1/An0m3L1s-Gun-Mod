@@ -1,4 +1,4 @@
-package com.an0m3l1.guns.common;
+package com.an0m3l1.guns.common.tracker;
 
 import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;

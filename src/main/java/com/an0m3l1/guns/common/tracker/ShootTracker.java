@@ -1,5 +1,6 @@
-package com.an0m3l1.guns.common;
+package com.an0m3l1.guns.common.tracker;
 
+import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.util.GunModifierHelper;
 import com.google.common.collect.Maps;
@@ -56,7 +57,7 @@ public class ShootTracker
 	 */
 	public void putCooldown(Player player, ItemStack weapon, GunItem item, Gun modifiedGun)
 	{
-		int rate = modifiedGun.general.getRate();
+		int rate = modifiedGun.getGeneral().getRate();
 		rate = GunModifierHelper.getModifiedRate(weapon, rate);
 		rate = GunModifierHelper.getRampUpRate(player, weapon, rate);
 		

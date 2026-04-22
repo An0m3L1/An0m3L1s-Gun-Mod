@@ -1,6 +1,6 @@
 package com.an0m3l1.guns.client;
 
-import com.an0m3l1.guns.common.BoundingBoxManager;
+import com.an0m3l1.guns.common.headshot.HeadshotBoxManager;
 import com.an0m3l1.guns.interfaces.IHeadshotBox;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -24,13 +24,9 @@ public class HeadshotBoxRenderer
 	@SubscribeEvent
 	public void onRenderLevelStage(RenderLevelStageEvent event)
 	{
-		if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS)
-		{
-			return;
-		}
-		
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.level == null || !mc.getEntityRenderDispatcher().shouldRenderHitBoxes())
+		// Render only when rendering hitboxes is enabled
+		if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS || mc.level == null || !mc.getEntityRenderDispatcher().shouldRenderHitBoxes())
 		{
 			return;
 		}
@@ -41,33 +37,20 @@ public class HeadshotBoxRenderer
 		
 		for(Entity entity : mc.level.entitiesForRendering())
 		{
-			if(!(entity instanceof LivingEntity living))
-			{
-				continue;
-			}
-			
-			if(living == mc.player && mc.options.getCameraType().isFirstPerson())
-			{
-				continue;
-			}
-			
-			IHeadshotBox<LivingEntity> headshotBox = (IHeadshotBox<LivingEntity>) BoundingBoxManager.getHeadshotBoxes(living.getType());
-			if(headshotBox == null)
+			// Check if this entity is Living, player isn't in first person and there is a headshot box present
+			IHeadshotBox<LivingEntity> headshotBox;
+			if(!(entity instanceof LivingEntity living) || (living == mc.player && mc.options.getCameraType().isFirstPerson()) || (headshotBox = HeadshotBoxManager.getHeadshotBox(living.getType())) == null || headshotBox.getHeadshotBox(living) == null)
 			{
 				continue;
 			}
 			
 			AABB headBox = headshotBox.getHeadshotBox(living);
-			if(headBox == null)
-			{
-				continue;
-			}
-			
 			double x = Mth.lerp(partialTick, entity.xOld, entity.getX());
 			double y = Mth.lerp(partialTick, entity.yOld, entity.getY());
 			double z = Mth.lerp(partialTick, entity.zOld, entity.getZ());
 			Vec3 interpolatedPos = new Vec3(x, y, z);
 			
+			assert headBox != null;
 			headBox = headBox.move(interpolatedPos);
 			renderHitbox(poseStack, headBox, cameraPos);
 		}
@@ -78,9 +61,7 @@ public class HeadshotBoxRenderer
 		double camX = cameraPos.x;
 		double camY = cameraPos.y;
 		double camZ = cameraPos.z;
-		
 		VertexConsumer vertexConsumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.lines());
-		
 		LevelRenderer.renderLineBox(poseStack, vertexConsumer, aabb.move(-camX, -camY, -camZ), 1.0F, 0.0F, 0.0F, 1.0F);
 	}
 }

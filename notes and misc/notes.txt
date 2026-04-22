@@ -15,7 +15,6 @@ Overhaul items:
     - Grenade Launcher (full overhaul)
     - Rocket Launcher (full overhaul)
     - Minigun (full overhaul)
-Touch up all gun models
 Fix recoil not working in third person (shoulder surfing)
     - Crosshair stays in 1 place when looking directly at a block/entity
 Test dependency mod versions to figure out the lowest version where everything works correctly
@@ -25,8 +24,7 @@ Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
 Overhaul head hitboxes:
-    - Make hitboxes data driven
-    - Optimize HeadshotBoxRenderer
+    - Complete hitbox json files
 Update reload logic and animations:
     - When ammo is empty, slides should lock back/forward
     - Add reload empty animations to all applicable guns
@@ -38,6 +36,9 @@ Complete hardness tag lists:
     - Low (wooden doors, wooden trapdoors, fences, fence gates, furniture)
     - Medium (planks, logs, iron doors, iron trapdoors, iron bars)
     - High (stone bricks, walls)
+Port animation changes from CGM Expander
+Update datagen files
+Fix runData configuration
 
 New Content
 

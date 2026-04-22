@@ -3,14 +3,11 @@ package com.an0m3l1.guns;
 import com.an0m3l1.guns.client.*;
 import com.an0m3l1.guns.client.handler.CrosshairHandler;
 import com.an0m3l1.guns.client.render.entity.BulletRenderer;
-import com.an0m3l1.guns.common.BoundingBoxManager;
 import com.an0m3l1.guns.common.NetworkGunManager;
 import com.an0m3l1.guns.common.ProjectileManager;
+import com.an0m3l1.guns.common.headshot.HeadshotBoxManager;
 import com.an0m3l1.guns.crafting.WorkbenchIngredient;
-import com.an0m3l1.guns.datagen.BlockTagGen;
-import com.an0m3l1.guns.datagen.EntityTagGen;
-import com.an0m3l1.guns.datagen.GunGen;
-import com.an0m3l1.guns.datagen.ItemTagGen;
+import com.an0m3l1.guns.datagen.*;
 import com.an0m3l1.guns.entity.projectile.BulletEntity;
 import com.an0m3l1.guns.entity.projectile.PipeGrenadeEntity;
 import com.an0m3l1.guns.entity.projectile.RocketEntity;
@@ -156,7 +153,7 @@ public class GunMod
 			
 			if(GunConfig.COMMON.improvedHitboxes.get())
 			{
-				MinecraftForge.EVENT_BUS.register(new BoundingBoxManager());
+				MinecraftForge.EVENT_BUS.register(new HeadshotBoxManager());
 			}
 		});
 	}
@@ -183,6 +180,7 @@ public class GunMod
 		generator.addProvider(event.includeServer(), new ItemTagGen(generator, blockTagGen, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EntityTagGen(generator, existingFileHelper));
 		generator.addProvider(event.includeServer(), new GunGen(generator));
+		generator.addProvider(event.includeServer(), new HeadshotBoxGen(generator));
 	}
 	
 	public void enqueueIMC(InterModEnqueueEvent event)

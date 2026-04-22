@@ -17,9 +17,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Author: MrCrayfish
- */
 public abstract class GunProvider implements DataProvider
 {
 	private static final Logger LOGGER = LogManager.getLogger();

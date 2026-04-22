@@ -1,7 +1,10 @@
-package com.an0m3l1.guns.common;
+package com.an0m3l1.guns.common.tracker;
 
 import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;
+import com.an0m3l1.guns.common.AmmoContext;
+import com.an0m3l1.guns.common.DelayedTask;
+import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.common.Gun.ReloadSoundsBase;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;

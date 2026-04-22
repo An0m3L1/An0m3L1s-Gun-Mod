@@ -54,6 +54,20 @@ minecraft {
                 }
             }
         }
+        data {
+            workingDirectory project.file("run")
+            property "mixin.env.disableRefMap", "true"
+            property "mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg"
+            property "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
+            property "forge.logging.console.level", "debug"
+            args "--mod", "${modId}", "--all", "--output", file("src/generated/resources/")
+            arg "-mixin.config=${modId}.mixins.json"
+            mods {
+                "${modId}" {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 

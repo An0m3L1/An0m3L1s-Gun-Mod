@@ -5,7 +5,7 @@ import com.an0m3l1.guns.GunMod;
 import com.an0m3l1.guns.client.DotRenderMode;
 import com.an0m3l1.guns.client.handler.AimingHandler;
 import com.an0m3l1.guns.common.Gun;
-import com.an0m3l1.guns.common.SpreadTracker;
+import com.an0m3l1.guns.common.tracker.SpreadTracker;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.util.GunCompositeStatHelper;
 import com.mojang.blaze3d.platform.GlStateManager;

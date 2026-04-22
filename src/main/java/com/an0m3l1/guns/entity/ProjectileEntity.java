@@ -2,11 +2,11 @@ package com.an0m3l1.guns.entity;
 
 import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;
-import com.an0m3l1.guns.common.BoundingBoxManager;
 import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.common.Gun.Projectile;
-import com.an0m3l1.guns.common.ServerAimTracker;
-import com.an0m3l1.guns.common.SpreadTracker;
+import com.an0m3l1.guns.common.headshot.HeadshotBoxManager;
+import com.an0m3l1.guns.common.tracker.ServerAimTracker;
+import com.an0m3l1.guns.common.tracker.SpreadTracker;
 import com.an0m3l1.guns.entity.grenade.ThrowableGrenadeEntity;
 import com.an0m3l1.guns.entity.grenade.ThrowableImpactGrenadeEntity;
 import com.an0m3l1.guns.entity.projectile.BulletEntity;
@@ -512,7 +512,6 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	}
 	
 	@Nullable
-	@SuppressWarnings("unchecked")
 	private EntityResult getHitResult(Entity entity, Vec3 startVec, Vec3 endVec)
 	{
 		double expandHeight = entity instanceof Player && !entity.isCrouching() ? 0.0625 : 0.0;
@@ -520,7 +519,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		if(GunConfig.COMMON.improvedHitboxes.get() && entity instanceof ServerPlayer && this.shooter != null)
 		{
 			int ping = (int) Math.floor((((ServerPlayer) this.shooter).latency / 1000.0) * 20.0 + 0.5);
-			boundingBox = BoundingBoxManager.getBoundingBox((Player) entity, ping);
+			boundingBox = HeadshotBoxManager.getBoundingBox((Player) entity, ping);
 		}
 		boundingBox = boundingBox.expandTowards(0, expandHeight, 0);
 		
@@ -540,7 +539,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		boolean headshot = false;
 		if(GunConfig.COMMON.enableHeadShots.get() && entity instanceof LivingEntity)
 		{
-			IHeadshotBox<LivingEntity> headshotBox = (IHeadshotBox<LivingEntity>) BoundingBoxManager.getHeadshotBoxes(entity.getType());
+			IHeadshotBox<LivingEntity> headshotBox = HeadshotBoxManager.getHeadshotBox(entity.getType());
 			if(headshotBox != null)
 			{
 				AABB box = headshotBox.getHeadshotBox((LivingEntity) entity);

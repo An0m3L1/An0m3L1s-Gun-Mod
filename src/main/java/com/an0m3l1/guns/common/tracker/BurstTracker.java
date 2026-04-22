@@ -1,6 +1,7 @@
-package com.an0m3l1.guns.common;
+package com.an0m3l1.guns.common.tracker;
 
 import com.an0m3l1.guns.GunMod;
+import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.util.GunCompositeStatHelper;
