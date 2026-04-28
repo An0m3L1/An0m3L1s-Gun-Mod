@@ -516,7 +516,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	{
 		double expandHeight = entity instanceof Player && !entity.isCrouching() ? 0.0625 : 0.0;
 		AABB boundingBox = entity.getBoundingBox();
-		if(GunConfig.COMMON.improvedHitboxes.get() && entity instanceof ServerPlayer && this.shooter != null)
+		if(entity instanceof ServerPlayer && this.shooter != null)
 		{
 			int ping = (int) Math.floor((((ServerPlayer) this.shooter).latency / 1000.0) * 20.0 + 0.5);
 			boundingBox = HeadshotBoxManager.getBoundingBox((Player) entity, ping);

@@ -59,7 +59,7 @@ public class HeadshotBoxManager
 	private static void loadHeadshotBoxes(ResourceManager resourceManager)
 	{
 		headshotBoxes.clear();
-		String folder = "headshot_boxes";
+		String folder = "head_boxes";
 		
 		for(EntityType<?> entityType : ForgeRegistries.ENTITY_TYPES)
 		{
@@ -82,13 +82,19 @@ public class HeadshotBoxManager
 						JsonObject json = GSON.fromJson(reader, JsonObject.class);
 						HeadshotBox box = HeadshotBox.fromJson(json);
 						headshotBoxes.put(entityType, box);
-						GunMod.LOGGER.debug("Loaded headshot box for {} from {}", entityId, jsonLocation);
+						if(GunConfig.COMMON.showDebugMessages.get())
+						{
+							GunMod.LOGGER.debug("Loaded head box for {} from {}", entityId, jsonLocation);
+						}
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				GunMod.LOGGER.error("Failed to load headshot box for {} from {}", entityId, jsonLocation, e);
+				if(GunConfig.COMMON.showDebugMessages.get())
+				{
+					GunMod.LOGGER.error("Failed to load head box for {} from {}", entityId, jsonLocation, e);
+				}
 			}
 		}
 		
@@ -188,15 +194,9 @@ public class HeadshotBoxManager
 		return (IHeadshotBox<T>) headshotBoxes.get(type);
 	}
 	
-	// ========== Player lag compensation logic (unchanged) ==========
-	
 	@SubscribeEvent(receiveCanceled = true)
 	public void onPlayerTick(TickEvent.PlayerTickEvent event)
 	{
-		if(!GunConfig.COMMON.improvedHitboxes.get())
-		{
-			return;
-		}
 		if(event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END)
 		{
 			if(event.player.isSpectator())

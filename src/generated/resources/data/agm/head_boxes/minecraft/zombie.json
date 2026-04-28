@@ -1,0 +1,10 @@
+{
+	"child": {
+		"heightScale": 0.75,
+		"offsetYScale": 0.5,
+		"widthScale": 0.75
+	},
+	"height": 8.0,
+	"offsetY": 24.0,
+	"width": 8.0
+}

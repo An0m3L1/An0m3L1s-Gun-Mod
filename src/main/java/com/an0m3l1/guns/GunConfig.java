@@ -160,7 +160,6 @@ public class GunConfig
 		public final ForgeConfigSpec.BooleanValue enableResistantEntities;
 		public final ForgeConfigSpec.DoubleValue resistantEntitiesDamageMultiplier;
 		public final ForgeConfigSpec.DoubleValue aimingMovementSpeedMultiplier;
-		public final ForgeConfigSpec.BooleanValue improvedHitboxes;
 		public final ForgeConfigSpec.BooleanValue blindMobs;
 		public final ForgeConfigSpec.BooleanValue panicMobs;
 		
@@ -207,7 +206,6 @@ public class GunConfig
 				this.enableResistantEntities = builder.comment("If true, entities with tag 'hit_resistant' take less damage from weapons and can't be pierced.").define("enableResistantEntities", true);
 				this.resistantEntitiesDamageMultiplier = builder.comment("The value to multiply the damage by if projectile hits a resistant entity.").defineInRange("resistantEntitiesDamageMultiplier", 0.5, 0.0, 1.0);
 				this.aimingMovementSpeedMultiplier = builder.comment("Sets the multiplier to movement speed when aiming. Set to 1.0 to disable slowing down when aiming.").defineInRange("aimingMovementSpeedMultiplier", 0.65, 0.0, 1.0);
-				this.improvedHitboxes = builder.comment("If true, improves the accuracy of weapons by considering the ping of the player. This has no effect on singleplayer. This will add a little overhead if enabled.").define("improvedHitboxes", true);
 				this.blindMobs = builder.comment("If true, hostile mobs will be unable to target entities while they are blinded by a Stun Grenade.").define("blindMobs", true);
 				this.panicMobs = builder.comment("If true, peaceful mobs will panic upon being stunned by a Stun Grenade.").define("panicMobs", true);
 			}

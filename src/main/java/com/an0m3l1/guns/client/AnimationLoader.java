@@ -24,7 +24,6 @@ import java.util.List;
 public final class AnimationLoader implements IDataLoader<AnimationLoader.AnimResource>
 {
 	private static AnimationLoader instance;
-	boolean debug = GunConfig.COMMON.showDebugMessages.get();
 	
 	public static AnimationLoader getInstance()
 	{
@@ -44,7 +43,7 @@ public final class AnimationLoader implements IDataLoader<AnimationLoader.AnimRe
 	public DataObject getData(ResourceLocation key)
 	{
 		String newKey = new ResourceLocation(key.getNamespace(), key.getPath()).toString();
-		if(debug)
+		if(GunConfig.COMMON.showDebugMessages.get())
 		{
 			GunMod.LOGGER.info("Searching for animation {}; HashMap contains the following keys: {}", newKey, resourceToData);
 		}
@@ -64,7 +63,7 @@ public final class AnimationLoader implements IDataLoader<AnimationLoader.AnimRe
 				ResourceLocation location = new ResourceLocation(key.getNamespace(), key.getPath());
 				String identifier = key.getNamespace() + ":" + convertToName(key.getPath());
 				resources.add(new AnimResource(identifier, location));
-				if(debug)
+				if(GunConfig.COMMON.showDebugMessages.get())
 				{
 					GunMod.LOGGER.info("Added animation resource {} with resource location {}", identifier, location);
 				}
@@ -89,7 +88,7 @@ public final class AnimationLoader implements IDataLoader<AnimationLoader.AnimRe
 			{
 				AnimResource resource = pair.getLeft();
 				this.resourceToData.put(resource.identifier(), object);
-				if(debug)
+				if(GunConfig.COMMON.showDebugMessages.get())
 				{
 					GunMod.LOGGER.info("Loaded animation {} at file location {}", resource.identifier(), resource.location());
 				}

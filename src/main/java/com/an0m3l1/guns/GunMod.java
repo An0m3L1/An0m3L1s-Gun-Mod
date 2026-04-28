@@ -7,7 +7,7 @@ import com.an0m3l1.guns.common.NetworkGunManager;
 import com.an0m3l1.guns.common.ProjectileManager;
 import com.an0m3l1.guns.common.headshot.HeadshotBoxManager;
 import com.an0m3l1.guns.crafting.WorkbenchIngredient;
-import com.an0m3l1.guns.datagen.*;
+import com.an0m3l1.guns.datagen.HeadshotBoxGen;
 import com.an0m3l1.guns.entity.projectile.BulletEntity;
 import com.an0m3l1.guns.entity.projectile.PipeGrenadeEntity;
 import com.an0m3l1.guns.entity.projectile.RocketEntity;
@@ -151,10 +151,7 @@ public class GunMod
 			ProjectileManager.getInstance().registerFactory(ModItems.PIPE_GRENADE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new PipeGrenadeEntity(ModEntities.PIPE_GRENADE.get(), worldIn, entity, weapon, item, modifiedGun));
 			ProjectileManager.getInstance().registerFactory(ModItems.ROCKET.get(), (worldIn, entity, weapon, item, modifiedGun) -> new RocketEntity(ModEntities.ROCKET.get(), worldIn, entity, weapon, item, modifiedGun));
 			
-			if(GunConfig.COMMON.improvedHitboxes.get())
-			{
-				MinecraftForge.EVENT_BUS.register(new HeadshotBoxManager());
-			}
+			MinecraftForge.EVENT_BUS.register(new HeadshotBoxManager());
 		});
 	}
 	
@@ -175,11 +172,6 @@ public class GunMod
 	{
 		DataGenerator generator = event.getGenerator();
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-		BlockTagGen blockTagGen = new BlockTagGen(generator, existingFileHelper);
-		generator.addProvider(event.includeServer(), blockTagGen);
-		generator.addProvider(event.includeServer(), new ItemTagGen(generator, blockTagGen, existingFileHelper));
-		generator.addProvider(event.includeServer(), new EntityTagGen(generator, existingFileHelper));
-		generator.addProvider(event.includeServer(), new GunGen(generator));
 		generator.addProvider(event.includeServer(), new HeadshotBoxGen(generator));
 	}
 	
