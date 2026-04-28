@@ -1,11 +1,26 @@
 {
 	"stats": {
 		"minecraft:custom": {
-			"minecraft:jump": 12, "minecraft:time_since_rest": 3086, "minecraft:crouch_one_cm": 31, "minecraft:leave_game": 2,
-			"minecraft:play_time": 3086, "minecraft:sprint_one_cm": 5371, "minecraft:walk_on_water_one_cm": 30,
-			"minecraft:time_since_death": 3086, "minecraft:walk_one_cm": 6034, "minecraft:sneak_time": 30,
-			"minecraft:total_world_time": 3605, "minecraft:walk_under_water_one_cm": 501, "minecraft:swim_one_cm": 197,
-			"minecraft:fly_one_cm": 12587
-		}, "minecraft:used": {"minecraft:light": 4, "minecraft:white_concrete": 1, "cgm:assault_rifle": 16}
+			"minecraft:time_since_rest": 134278, "minecraft:sprint_one_cm": 139148, "minecraft:walk_one_cm": 425408,
+			"minecraft:mob_kills": 215, "minecraft:minecart_one_cm": 3005, "minecraft:swim_one_cm": 79539,
+			"minecraft:fly_one_cm": 315531, "minecraft:target_hit": 78, "minecraft:crouch_one_cm": 2416,
+			"minecraft:play_time": 134278, "minecraft:sneak_time": 1536, "minecraft:walk_under_water_one_cm": 117809,
+			"minecraft:jump": 589, "minecraft:walk_on_water_one_cm": 22738, "minecraft:leave_game": 5,
+			"minecraft:time_since_death": 134278, "minecraft:total_world_time": 772402, "minecraft:horse_one_cm": 45569
+		}, "minecraft:mined": {"minecraft:bricks": 1}, "minecraft:killed": {
+			"minecraft:sheep": 3, "minecraft:horse": 3, "minecraft:skeleton": 46, "minecraft:cave_spider": 1,
+			"minecraft:zombie": 35, "minecraft:witch": 1, "minecraft:zombie_villager": 1, "minecraft:spider": 28,
+			"minecraft:slime": 1, "minecraft:zoglin": 2, "minecraft:creeper": 35, "minecraft:cow": 2
+		}, "minecraft:used": {
+			"minecraft:spider_spawn_egg": 1, "agm:sniper_rifle": 7, "agm:heavy_sniper_rifle": 13, "agm:incendiary_grenade": 1,
+			"minecraft:water_bucket": 250, "agm:impact_grenade": 6, "minecraft:light": 4, "minecraft:cow_spawn_egg": 2,
+			"minecraft:bricks": 23, "minecraft:witch_spawn_egg": 1, "agm:smoke_grenade": 3, "agm:combat_rifle": 295,
+			"minecraft:wooden_pickaxe": 1, "minecraft:zombie_spawn_egg": 5, "minecraft:sheep_spawn_egg": 2,
+			"agm:semi_auto_shotgun": 279, "minecraft:horse_spawn_egg": 3, "agm:assault_rifle": 806, "agm:grenade": 3,
+			"agm:molotov": 1, "agm:automatic_pistol": 147, "minecraft:rail": 31, "agm:pistol": 115, "agm:stun_grenade": 48,
+			"minecraft:oak_slab": 3, "minecraft:minecart": 1, "agm:tactical_rifle": 27, "minecraft:cave_spider_spawn_egg": 1,
+			"minecraft:white_concrete": 9, "minecraft:zombified_piglin_spawn_egg": 2, "minecraft:splash_potion": 1,
+			"minecraft:zoglin_spawn_egg": 1
+		}, "minecraft:picked_up": {"minecraft:saddle": 1}
 	}, "DataVersion": 3120
 }

@@ -1,0 +1,14 @@
+{
+	"stats": {
+		"minecraft:custom": {
+			"minecraft:time_since_rest": 14215, "minecraft:crouch_one_cm": 29, "minecraft:sprint_one_cm": 11373,
+			"minecraft:play_time": 14215, "minecraft:walk_one_cm": 58013, "minecraft:sneak_time": 32,
+			"minecraft:mob_kills": 96, "minecraft:jump": 51, "minecraft:leave_game": 1, "minecraft:walk_on_water_one_cm": 214,
+			"minecraft:time_since_death": 14215, "minecraft:total_world_time": 89614, "minecraft:fly_one_cm": 56694
+		}, "minecraft:killed": {"minecraft:skeleton": 95}, "minecraft:used": {
+			"agm:assault_rifle": 47, "agm:grenade": 3, "minecraft:oak_leaves": 7, "agm:sniper_rifle": 44,
+			"agm:heavy_sniper_rifle": 3, "minecraft:iron_bars": 2, "agm:pistol": 119, "minecraft:light_gray_concrete": 12,
+			"minecraft:barrier": 4, "create:copycat_panel": 1, "minecraft:minecart": 1, "agm:hemp_seeds": 8
+		}
+	}, "DataVersion": 3120
+}

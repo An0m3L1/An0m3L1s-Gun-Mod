@@ -1,4 +1,186 @@
 {
+	"farmersdelight:main/root": {
+		"criteria": {
+			"seeds": "2026-04-09 22:34:17 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/building_blocks/brick_stairs_from_bricks_stonecutting": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/dark_oak_boat": {
+		"criteria": {
+			"in_water": "2026-04-09 22:35:29 +0300"
+		},
+		"done": true
+	},
+	"minecraft:adventure/kill_a_mob": {
+		"criteria": {
+			"minecraft:skeleton": "2026-04-17 20:40:29 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/activator_rail": {
+		"criteria": {
+			"has_rail": "2026-04-21 21:14:10 +0300"
+		},
+		"done": true
+	},
+	"minecraft:adventure/kill_all_mobs": {
+		"criteria": {
+			"minecraft:skeleton": "2026-04-17 20:40:29 +0300",
+			"minecraft:zoglin": "2026-04-23 00:17:19 +0300",
+			"minecraft:spider": "2026-04-21 20:56:10 +0300",
+			"minecraft:creeper": "2026-04-21 20:56:40 +0300",
+			"minecraft:slime": "2026-04-21 21:00:58 +0300",
+			"minecraft:witch": "2026-04-28 18:19:44 +0300",
+			"minecraft:cave_spider": "2026-04-23 00:21:52 +0300",
+			"minecraft:zombie": "2026-04-21 20:56:40 +0300",
+			"minecraft:zombie_villager": "2026-04-21 21:00:07 +0300"
+		},
+		"done": false
+	},
+	"minecraft:recipes/transportation/detector_rail": {
+		"criteria": {
+			"has_rail": "2026-04-21 21:14:10 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/decorations/brick_wall": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/building_blocks/brick_stairs": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"backpacked:recipes/backpacked/oak_backpack_shelf": {
+		"criteria": {
+			"has_slab": "2026-04-20 23:27:23 +0300"
+		},
+		"done": true
+	},
+	"minecraft:adventure/sniper_duel": {
+		"criteria": {
+			"killed_skeleton": "2026-04-21 20:56:13 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/building_blocks/brick_slab": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/tnt_minecart": {
+		"criteria": {
+			"has_minecart": "2026-04-21 21:14:11 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/furnace_minecart": {
+		"criteria": {
+			"has_minecart": "2026-04-21 21:14:11 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/brewing/cauldron": {
+		"criteria": {
+			"has_water_bucket": "2026-04-21 22:02:31 +0300"
+		},
+		"done": true
+	},
+	"minecraft:adventure/adventuring_time": {
+		"criteria": {
+			"minecraft:plains": "2026-03-31 12:06:31 +0300"
+		},
+		"done": false
+	},
+	"minecraft:recipes/transportation/chest_minecart": {
+		"criteria": {
+			"has_minecart": "2026-04-21 21:14:11 +0300"
+		},
+		"done": true
+	},
+	"minecraft:adventure/bullseye": {
+		"criteria": {
+			"bullseye": "2026-04-21 21:24:01 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/rail": {
+		"criteria": {
+			"has_minecart": "2026-04-21 21:14:11 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/decorations/composter": {
+		"criteria": {
+			"has_wood_slab": "2026-04-20 23:27:23 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/decorations/brick_wall_from_bricks_stonecutting": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"create:root": {
+		"criteria": {
+			"0": "2026-04-09 22:34:17 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/building_blocks/brick_slab_from_bricks_stonecutting": {
+		"criteria": {
+			"has_bricks": "2026-04-17 20:44:57 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/birch_boat": {
+		"criteria": {
+			"in_water": "2026-04-09 22:35:29 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/decorations/chest": {
+		"criteria": {
+			"has_lots_of_items": "2026-04-16 21:06:57 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/hopper_minecart": {
+		"criteria": {
+			"has_minecart": "2026-04-21 21:14:11 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/mangrove_boat": {
+		"criteria": {
+			"in_water": "2026-04-09 22:35:29 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/decorations/barrel": {
+		"criteria": {
+			"has_wood_slab": "2026-04-20 23:27:23 +0300"
+		},
+		"done": true
+	},
+	"minecraft:recipes/transportation/powered_rail": {
+		"criteria": {
+			"has_rail": "2026-04-21 21:14:10 +0300"
+		},
+		"done": true
+	},
 	"minecraft:recipes/transportation/acacia_boat": {
 		"criteria": {
 			"in_water": "2026-04-09 22:35:29 +0300"
@@ -11,37 +193,19 @@
 		},
 		"done": true
 	},
-	"farmersdelight:main/root": {
+	"minecraft:adventure/avoid_vibration": {
 		"criteria": {
-			"seeds": "2026-04-09 22:34:17 +0300"
+			"avoid_vibration": "2026-04-21 21:53:37 +0300"
 		},
 		"done": true
 	},
-	"create:root": {
+	"minecraft:adventure/root": {
 		"criteria": {
-			"0": "2026-04-09 22:34:17 +0300"
-		},
-		"done": true
-	},
-	"minecraft:recipes/transportation/dark_oak_boat": {
-		"criteria": {
-			"in_water": "2026-04-09 22:35:29 +0300"
-		},
-		"done": true
-	},
-	"minecraft:recipes/transportation/birch_boat": {
-		"criteria": {
-			"in_water": "2026-04-09 22:35:29 +0300"
+			"killed_something": "2026-04-16 22:54:04 +0300"
 		},
 		"done": true
 	},
 	"minecraft:recipes/transportation/jungle_boat": {
-		"criteria": {
-			"in_water": "2026-04-09 22:35:29 +0300"
-		},
-		"done": true
-	},
-	"minecraft:recipes/transportation/mangrove_boat": {
 		"criteria": {
 			"in_water": "2026-04-09 22:35:29 +0300"
 		},
@@ -53,11 +217,11 @@
 		},
 		"done": true
 	},
-	"minecraft:adventure/adventuring_time": {
+	"minecraft:husbandry/tame_an_animal": {
 		"criteria": {
-			"minecraft:plains": "2026-03-31 12:06:31 +0300"
+			"tamed_animal": "2026-04-21 21:15:33 +0300"
 		},
-		"done": false
+		"done": true
 	},
 	"DataVersion": 3120
 }

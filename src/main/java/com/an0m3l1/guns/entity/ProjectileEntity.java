@@ -91,7 +91,7 @@ import static com.an0m3l1.guns.init.ModTags.Entities.RESISTANT;
 public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnData
 {
 	private static final Predicate<Entity> PROJECTILE_TARGETS = input -> input != null && input.isPickable() && !input.isSpectator();
-	private static final Predicate<BlockState> IGNORE_NONE = state -> false;
+	private static final Predicate<BlockState> IGNORE_BLOCKS = input -> input != null && GunConfig.COMMON.projectileGriefing.get() && input.is(ModTags.Blocks.IGNORED);
 	private static final Method updateRedstoneOutputMethod = ObfuscationReflectionHelper.findMethod(TargetBlock.class, "m_57391_", LevelAccessor.class, BlockState.class, BlockHitResult.class, Entity.class);
 	
 	protected int shooterId;
@@ -305,7 +305,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		{
 			Vec3 startVec = this.position();
 			Vec3 endVec = startVec.add(this.getDeltaMovement());
-			HitResult result = rayTraceBlocks(this.level, new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_NONE);
+			HitResult result = rayTraceBlocks(this.level, new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_BLOCKS);
 			
 			// Projectile flyby sound
 			boolean isBullet = this instanceof BulletEntity;
@@ -527,7 +527,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		Vec3 grownHitPos = boundingBox.inflate(GunConfig.COMMON.growBoundingBoxAmount.get(), 0, GunConfig.COMMON.growBoundingBoxAmount.get()).clip(startVec, endVec).orElse(null);
 		if(hitPos == null && grownHitPos != null)
 		{
-			HitResult raytraceresult = rayTraceBlocks(this.level, new ClipContext(startVec, grownHitPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_NONE);
+			HitResult raytraceresult = rayTraceBlocks(this.level, new ClipContext(startVec, grownHitPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_BLOCKS);
 			if(raytraceresult.getType() == HitResult.Type.BLOCK)
 			{
 				return null;
@@ -1218,41 +1218,22 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		{
 			return false;
 		}
-		
 		Level world = this.level;
 		BlockState state = world.getBlockState(hitPos);
-		
 		BlockPos rootPos = TreeHelper.findRootNode(world, hitPos);
-		if(rootPos == BlockPos.ZERO)
-		{
-			return false;
-		}
-		
-		BlockState rootState = world.getBlockState(rootPos);
-		RootyBlock rooty = TreeHelper.getRooty(rootState);
-		if(rooty == null)
-		{
-			return false;
-		}
-		
-		Species species = rooty.getSpecies(rootState, world, rootPos);
-		if(species == Species.NULL_SPECIES)
-		{
-			return false;
-		}
-		
+		BlockState rootState = rootPos != BlockPos.ZERO ? world.getBlockState(rootPos) : null;
+		RootyBlock rooty = rootState != null ? TreeHelper.getRooty(rootState) : null;
+		Species species = rooty != null ? rooty.getSpecies(rootState, world, rootPos) : Species.NULL_SPECIES;
 		BranchBlock branch = TreeHelper.getBranch(state);
-		if(branch == null)
+		if(rootPos == BlockPos.ZERO || rooty == null || species == Species.NULL_SPECIES || branch == null)
 		{
 			return false;
 		}
-		
 		BranchDestructionData destructionData = branch.destroyBranchFromNode(world, hitPos, face, false, this.shooter);
 		if(destructionData.getNumBranches() == 0)
 		{
 			return false;
 		}
-		
 		for(BlockPos pos : destructionData.getPositions(BranchDestructionData.PosType.BRANCHES))
 		{
 			BlockDamageManager.removeDamage(world, pos);
@@ -1261,9 +1242,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		{
 			BlockDamageManager.removeDamage(world, pos);
 		}
-		
 		List<ItemStack> woodDropList = new ArrayList<>(destructionData.species.getBranchesDrops(world, destructionData.woodVolume));
-		
 		FallingTreeEntity.dropTree(world, destructionData, woodDropList, destroyType);
 		return true;
 	}

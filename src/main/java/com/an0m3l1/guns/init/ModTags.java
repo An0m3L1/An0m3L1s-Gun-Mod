@@ -20,6 +20,7 @@ public class ModTags
 	
 	public static class Blocks
 	{
+		public static final TagKey<Block> IGNORED = modBlockTag("ignored");
 		public static final TagKey<Block> DESTRUCTIBLE = modBlockTag("destructible");
 		public static final TagKey<Block> HARDNESS_NONE = modBlockTag("hardness_none");
 		public static final TagKey<Block> HARDNESS_LOW = modBlockTag("hardness_low");
