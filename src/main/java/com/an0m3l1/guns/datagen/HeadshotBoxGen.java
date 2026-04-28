@@ -16,68 +16,69 @@ public class HeadshotBoxGen extends HeadshotBoxProvider
 	protected void registerHeadshotBoxes()
 	{
 		// Zombie-like mobs
-		addHeadshotBox(EntityType.ZOMBIE, HeadshotBox.builder().width(8.0).offsetY(24.0).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
-		addHeadshotBox(EntityType.DROWNED, HeadshotBox.builder().width(8.0).offsetY(24.0).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
-		addHeadshotBox(EntityType.ZOMBIFIED_PIGLIN, HeadshotBox.builder().width(8.0).offsetY(24.0).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
-		addHeadshotBox(EntityType.HUSK, HeadshotBox.builder().width(8.0).offsetY(24.0).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
-		addHeadshotBox(EntityType.PIGLIN, HeadshotBox.builder().width(8.0).offsetY(24.0).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
+		addHeadshotBox(EntityType.ZOMBIE, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
+		addHeadshotBox(EntityType.DROWNED, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
+		addHeadshotBox(EntityType.ZOMBIFIED_PIGLIN, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
+		addHeadshotBox(EntityType.HUSK, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
+		addHeadshotBox(EntityType.PIGLIN, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).child(0.75, 0.75, 1.0, 0.5, 1.0).build());
 		
 		// Skeletons
-		addHeadshotBox(EntityType.SKELETON, HeadshotBox.builder().width(8.0).offsetY(24.0).build());
-		addHeadshotBox(EntityType.STRAY, HeadshotBox.builder().width(8.0).offsetY(24.0).build());
+		addHeadshotBox(EntityType.SKELETON, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).build());
+		addHeadshotBox(EntityType.STRAY, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(24.0).build()).build());
 		
 		// Creeper
-		addHeadshotBox(EntityType.CREEPER, HeadshotBox.builder().width(8.0).offsetY(18.0).build());
+		addHeadshotBox(EntityType.CREEPER, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(18.0).build()).build());
 		
 		// Spider
-		addHeadshotBox(EntityType.SPIDER, HeadshotBox.builder().width(8.0).height(5.0).offsetY(7.0).offsetZ(7.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.SPIDER, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).headHeight(8.0).y(5.0).z(7.0).rotateYaw(true).build()).build());
 		
 		// Villagers
-		addHeadshotBox(EntityType.VILLAGER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.ZOMBIE_VILLAGER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.VINDICATOR, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.EVOKER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.PILLAGER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.ILLUSIONER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.WANDERING_TRADER, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
-		addHeadshotBox(EntityType.WITCH, HeadshotBox.builder().width(8.0).height(9.0).offsetY(23.0).build());
+		HeadshotBox.General villager = HeadshotBox.General.builder().headWidth(8.0).headHeight(9.0).y(23.0).build();
+		addHeadshotBox(EntityType.VILLAGER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.ZOMBIE_VILLAGER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.VINDICATOR, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.EVOKER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.PILLAGER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.ILLUSIONER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.WANDERING_TRADER, HeadshotBox.builder().general(villager).build());
+		addHeadshotBox(EntityType.WITCH, HeadshotBox.builder().general(villager).build());
 		
 		// Animals
-		addHeadshotBox(EntityType.SHEEP, HeadshotBox.builder().width(7.5).height(8.0).offsetY(15.0).offsetZ(9.5).rotateYaw(true).build());
-		addHeadshotBox(EntityType.CHICKEN, HeadshotBox.builder().width(4.0).height(6.0).offsetY(9.0).offsetZ(5.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.COW, HeadshotBox.builder().width(7.5).height(8.0).offsetY(16.0).offsetZ(10.5).rotateYaw(true).build());
-		addHeadshotBox(EntityType.MOOSHROOM, HeadshotBox.builder().width(7.5).height(8.0).offsetY(16.0).offsetZ(10.5).rotateYaw(true).build());
-		addHeadshotBox(EntityType.PIG, HeadshotBox.builder().width(8.0).height(8.0).offsetY(10.0).offsetZ(10.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.SHEEP, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(7.5).headHeight(8.0).y(15.0).z(9.5).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.CHICKEN, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(4.0).headHeight(6.0).y(9.0).z(5.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.COW, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(7.5).headHeight(8.0).y(16.0).z(10.5).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.MOOSHROOM, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(7.5).headHeight(8.0).y(16.0).z(10.5).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.PIG, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).headHeight(8.0).y(10.0).z(10.0).rotateYaw(true).build()).build());
 		
 		// Horses
-		addHeadshotBox(EntityType.HORSE, HeadshotBox.builder().width(10.0).offsetY(26.0).offsetZ(16.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.SKELETON_HORSE, HeadshotBox.builder().width(10.0).offsetY(26.0).offsetZ(16.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.DONKEY, HeadshotBox.builder().width(7.5).height(8.0).offsetY(20.0).offsetZ(13.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.MULE, HeadshotBox.builder().width(7.5).height(8.0).offsetY(21.0).offsetZ(14.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.HORSE, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(10.0).y(26.0).z(16.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.SKELETON_HORSE, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(10.0).y(26.0).z(16.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.DONKEY, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(7.5).headHeight(8.0).y(20.0).z(13.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.MULE, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(7.5).headHeight(8.0).y(21.0).z(14.0).rotateYaw(true).build()).build());
 		
 		// Llamas
-		addHeadshotBox(EntityType.LLAMA, HeadshotBox.builder().width(8.0).offsetY(26.0).offsetZ(10.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.TRADER_LLAMA, HeadshotBox.builder().width(8.0).offsetY(26.0).offsetZ(10.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.LLAMA, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(26.0).z(10.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.TRADER_LLAMA, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).y(26.0).z(10.0).rotateYaw(true).build()).build());
 		
 		// Polar Bear
-		addHeadshotBox(EntityType.POLAR_BEAR, HeadshotBox.builder().width(9.0).height(12.0).offsetY(20.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.POLAR_BEAR, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(9.0).headHeight(12.0).y(20.0).rotateYaw(true).build()).build());
 		
 		// Snow Golem
-		addHeadshotBox(EntityType.SNOW_GOLEM, HeadshotBox.builder().width(10.0).offsetY(20.5).build());
+		addHeadshotBox(EntityType.SNOW_GOLEM, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(10.0).y(20.5).build()).build());
 		
 		// Turtle
-		addHeadshotBox(EntityType.TURTLE, HeadshotBox.builder().width(6.0).height(5.0).offsetY(1.0).offsetZ(10.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.TURTLE, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(6.0).headHeight(5.0).y(1.0).z(10.0).rotateYaw(true).build()).build());
 		
 		// Iron Golem
-		addHeadshotBox(EntityType.IRON_GOLEM, HeadshotBox.builder().width(8.0).height(10.0).offsetY(33.0).offsetZ(3.5).rotateYaw(true).build());
+		addHeadshotBox(EntityType.IRON_GOLEM, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(8.0).headHeight(10.0).y(33.0).z(3.5).rotateYaw(true).build()).build());
 		
 		// Phantom
-		addHeadshotBox(EntityType.PHANTOM, HeadshotBox.builder().width(6.0).height(3.0).offsetY(1.5).offsetZ(6.5).rotatePitch(true).rotateYaw(true).build());
+		addHeadshotBox(EntityType.PHANTOM, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(6.0).headHeight(3.0).y(1.5).z(6.5).rotatePitch(true).rotateYaw(true).build()).build());
 		
 		// Hoglins
-		addHeadshotBox(EntityType.HOGLIN, HeadshotBox.builder().width(14.0).height(16.0).offsetY(7.0).offsetZ(19.0).rotateYaw(true).build());
-		addHeadshotBox(EntityType.ZOGLIN, HeadshotBox.builder().width(14.0).height(16.0).offsetY(7.0).offsetZ(19.0).rotateYaw(true).build());
+		addHeadshotBox(EntityType.HOGLIN, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(14.0).headHeight(16.0).y(7.0).z(19.0).rotateYaw(true).build()).build());
+		addHeadshotBox(EntityType.ZOGLIN, HeadshotBox.builder().general(HeadshotBox.General.builder().headWidth(14.0).headHeight(16.0).y(7.0).z(19.0).rotateYaw(true).build()).build());
 		
-		// Player is handled separately in BoundingBoxManager code, no JSON needed.
+		// Player is handled separately in HeadshotBoxManager code, no JSON needed.
 	}
 }

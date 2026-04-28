@@ -1,10 +1,12 @@
 {
 	"child": {
-		"heightScale": 0.75,
-		"offsetYScale": 0.5,
-		"widthScale": 0.75
+		"headHeightScale": 0.75,
+		"headWidthScale": 0.75,
+		"yScale": 0.5
 	},
-	"height": 8.0,
-	"offsetY": 24.0,
-	"width": 8.0
+	"general": {
+		"headHeight": 8.0,
+		"headWidth": 8.0,
+		"y": 24.0
+	}
 }

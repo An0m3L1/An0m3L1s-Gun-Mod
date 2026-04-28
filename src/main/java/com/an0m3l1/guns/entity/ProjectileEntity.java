@@ -609,8 +609,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			this.level.gameEvent(GameEvent.PROJECTILE_LAND, pos, GameEvent.Context.of(this));
 			
 			// Check if the projectile should grief
-			boolean projectileIsGriefing = GunConfig.COMMON.projectileGriefing.get() && this.modifiedGun.getProjectile().isGriefing();
-			
+			boolean projectileIsGriefing = false;
+			if(this.modifiedGun != null)
+			{
+				projectileIsGriefing = GunConfig.COMMON.projectileGriefing.get() && this.modifiedGun.getProjectile().isGriefing();
+			}
 			// Handle target blocks
 			if(block instanceof TargetBlock targetBlock)
 			{
@@ -675,7 +678,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				boolean blockIsTree = GunMod.dynamicTreesLoaded && TreeHelper.isTreePart(state);
 				if(blockIsTree)
 				{
-					blockRawHardness = state.getDestroySpeed(this.level, pos) * 0.25F;
+					blockRawHardness = state.getDestroySpeed(this.level, pos) * 0.4F;
 				}
 				else
 				{

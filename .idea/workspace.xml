@@ -5,42 +5,88 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="Data driven headshot boxes (WIP).&#10;&#10;Headshot hitboxes are now data driven.&#10;Optimized headshot box renderer.&#10;Moved some classes around.&#10;Restored datagen run configuration.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/HeadshotBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/HeadshotBoxManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/BurstTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/RampUpTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/ReloadTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/ServerAimTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/ShootTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/SpreadTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/tracker/SwitchGunTracker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxGen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/forge/tags/blocks/glass.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/minecraft/dimension/overworld.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/minecraft/tags/blocks/planks.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/minecraft/tags/blocks/wooden_slabs.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/minecraft/tags/blocks/wooden_stairs.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/sulfurpotassiummod/loot_tables/blocks/potassium_ore.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/sulfurpotassiummod/recipes/gunpowder.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/create/villager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/create/recipes/crafting/curiosities/cake.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/create/recipes/crafting/curiosities/cake.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/cooking/dumplings.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/cooking/dumplings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/cutting/tag_dough.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/cutting/tag_dough.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/wheat_dough_from_eggs.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/farmersdelight/recipes/wheat_dough_from_eggs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/create/recipes/crafting/curiosities/cake.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/create/recipes/crafting/curiosities/cake.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/cooking/dumplings.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/cooking/dumplings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/cutting/tag_dough.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/cutting/tag_dough.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/wheat_dough_from_eggs.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/datapacks/AGM Tweaks/data/farmersdelight/recipes/wheat_dough_from_eggs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/create/recipes/crafting/curiosities/cake.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/bread_from_smelting.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/bread_from_smoking.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/cooking/dumplings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/cutting/tag_dough.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/wheat_dough_from_eggs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/data/farmersdelight/recipes/wheat_dough_from_water.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/An0m3L1's Gun Mod Tweaks Datapack/pack.mcmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/create/recipes/crafting/curiosities/cake.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/bread_from_smelting.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/bread_from_smoking.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/cooking/dumplings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/cutting/tag_dough.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/wheat_dough_from_eggs.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/farmersdelight/recipes/wheat_dough_from_water.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/forge/tags/blocks/glass.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/forge/tags/blocks/glass.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/minecraft/dimension/overworld.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/minecraft/dimension/overworld.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/minecraft/tags/blocks/planks.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/minecraft/tags/blocks/planks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/minecraft/tags/blocks/wooden_slabs.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/minecraft/tags/blocks/wooden_slabs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/minecraft/tags/blocks/wooden_stairs.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/minecraft/tags/blocks/wooden_stairs.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/sulfurpotassiummod/loot_tables/blocks/potassium_ore.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/sulfurpotassiummod/loot_tables/blocks/potassium_ore.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/data/sulfurpotassiummod/recipes/gunpowder.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Tweaks/data/sulfurpotassiummod/recipes/gunpowder.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/datapacks/CGM+ Tweaks Datapack/pack.mcmeta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/notes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/AnimationLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/AnimationLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/HeadshotBoxRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/HeadshotBoxRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/BoundingBoxManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/BurstTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/RampUpTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/ReloadTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/ServerAimTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/ShootTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/SpreadTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/SwitchGunTracker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/BasicHeadshotBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/ChildHeadshotBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/NoChildHeadshotBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/NoChildRotatedHeadshotBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/RotatedHeadshotBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/network/ServerPlayHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/network/ServerPlayHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/GunProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/GunProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/chicken.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/chicken.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/cow.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/cow.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/creeper.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/creeper.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/donkey.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/donkey.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/drowned.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/drowned.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/evoker.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/evoker.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/hoglin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/hoglin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/horse.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/horse.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/husk.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/husk.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/illusioner.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/illusioner.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/iron_golem.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/iron_golem.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/llama.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/llama.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/mooshroom.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/mooshroom.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/mule.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/mule.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/phantom.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/phantom.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/pig.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/pig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/piglin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/piglin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/pillager.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/pillager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/polar_bear.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/polar_bear.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/sheep.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/sheep.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/skeleton.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/skeleton.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/skeleton_horse.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/skeleton_horse.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/snow_golem.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/snow_golem.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/spider.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/spider.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/stray.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/stray.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/trader_llama.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/trader_llama.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/turtle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/turtle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/villager.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/villager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/vindicator.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/vindicator.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/wandering_trader.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/wandering_trader.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/witch.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/witch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zoglin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zoglin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombie.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombie.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombie_villager.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombie_villager.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombified_piglin.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/minecraft/zombified_piglin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/HeadshotBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/common/headshot/HeadshotBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxGen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/datagen/HeadshotBoxProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/interfaces/IHeadshotBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/interfaces/IHeadshotBox.java" afterDir="false" />
     </list>
     <list id="e22d67f2-48d1-4a82-bc4a-3d7fb8628620" name="Local" comment="Local" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,6 +97,7 @@
   <component name="ChangesViewManager">
     <option name="groupingKeys">
       <option value="directory" />
+      <option value="module" />
       <option value="repository" />
     </option>
   </component>
@@ -107,6 +154,11 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
@@ -168,6 +220,7 @@
     "Gradle.Client Kanye.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.Generate Data.executor": "Run",
+    "Gradle.Generate Head Data.executor": "Run",
     "Gradle.Kanye West.executor": "Run",
     "Gradle.Kanye.executor": "Run",
     "Gradle.Run Kanye.executor": "Run",
@@ -186,7 +239,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/notes and misc",
+    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/src/generated/resources/data/agm/head_boxes/create",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3411514",
@@ -196,18 +249,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm\head_boxes\create" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\data\agm\head_boxes\minecraft" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm\headshot_boxes\minecraft" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Debug" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm\head_boxes" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm\headshot_boxes\" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\generated\resources\data\agm\headshot_boxes\minecraft" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Debug" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.mrcrayfish.guns.client.handler" />
@@ -221,32 +274,7 @@
       <recent name="com.mrcrayfish.guns.network.message" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Generate Data">
-    <configuration name="Generate Data" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="runData" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Gradle.Client An0m3L1">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="com.an0m3l1.guns.test" />
       <method v="2">
@@ -259,9 +287,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Gradle.Generate Head Data" />
       <item itemvalue="Gradle.Build" />
       <item itemvalue="Gradle.Client An0m3L1" />
-      <item itemvalue="Gradle.Generate Data" />
       <item itemvalue="Gradle.Client Dev" />
     </list>
   </component>

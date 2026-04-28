@@ -53,7 +53,7 @@ public abstract class HeadshotBoxProvider implements DataProvider
 		
 		this.boxes.forEach((entityId, box) ->
 		{
-			Path path = this.generator.getOutputFolder().resolve("data/" + GunMod.MOD_ID + "/headshot_boxes/" + entityId.getNamespace() + "/" + entityId.getPath() + ".json");
+			Path path = this.generator.getOutputFolder().resolve("data/" + GunMod.MOD_ID + "/head_boxes/" + entityId.getNamespace() + "/" + entityId.getPath() + ".json");
 			try
 			{
 				JsonObject json = box.toJsonObject();
@@ -61,7 +61,7 @@ public abstract class HeadshotBoxProvider implements DataProvider
 			}
 			catch(IOException e)
 			{
-				LOGGER.error("Couldn't save headshot box to {}", path, e);
+				LOGGER.error("Couldn't save head box to {}", path, e);
 			}
 		});
 	}
@@ -69,6 +69,6 @@ public abstract class HeadshotBoxProvider implements DataProvider
 	@Override
 	public String getName()
 	{
-		return "Headshot Boxes: " + GunMod.MOD_ID;
+		return "Head Boxes: " + GunMod.MOD_ID;
 	}
 }

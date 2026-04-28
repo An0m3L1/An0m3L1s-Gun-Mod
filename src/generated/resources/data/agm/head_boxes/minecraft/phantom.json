@@ -1,8 +1,10 @@
 {
-	"height": 3.0,
-	"offsetY": 1.5,
-	"offsetZ": 6.5,
-	"rotatePitch": true,
-	"rotateYaw": true,
-	"width": 6.0
+	"general": {
+		"headHeight": 3.0,
+		"headWidth": 6.0,
+		"rotatePitch": true,
+		"rotateYaw": true,
+		"y": 1.5,
+		"z": 6.5
+	}
 }

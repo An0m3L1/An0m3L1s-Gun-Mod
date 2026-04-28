@@ -1,5 +1,7 @@
 package com.an0m3l1.guns.common.headshot;
 
+import com.an0m3l1.guns.annotation.Optional;
+import com.an0m3l1.guns.annotation.Validator;
 import com.an0m3l1.guns.interfaces.IHeadshotBox;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
@@ -9,6 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
+import java.io.InvalidObjectException;
 
 /**
  * Data class representing a headshot hitbox configuration.
@@ -18,134 +21,115 @@ import javax.annotation.Nullable;
 public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable<CompoundTag>
 {
 	
-	private double width = 8.0;
-	private double height = 8.0;
-	private double offsetX = 0.0;
-	private double offsetY = 0.0;
-	private double offsetZ = 0.0;
-	private boolean rotatePitch = false;
-	private boolean rotateYaw = false;
-	private ChildSettings child = null;
+	private final General general;
+	@Optional
+	private Child child;
 	
 	public HeadshotBox()
 	{
+		this.general = new General();
 	}
 	
 	private HeadshotBox(Builder builder)
 	{
-		this.width = builder.width;
-		this.height = builder.height;
-		this.offsetX = builder.offsetX;
-		this.offsetY = builder.offsetY;
-		this.offsetZ = builder.offsetZ;
-		this.rotatePitch = builder.rotatePitch;
-		this.rotateYaw = builder.rotateYaw;
+		this.general = builder.general;
 		this.child = builder.child;
+		validate();
 	}
 	
-	// Getters (used by JSON serialization and runtime)
-	public double getWidth()
+	public double getheadWidth()
 	{
-		return width;
+		return general.getHeadWidth();
 	}
 	
-	public double getHeight()
+	public double getheadHeight()
 	{
-		return height;
+		return general.getHeadHeight();
 	}
 	
-	public double getOffsetX()
+	public double getx()
 	{
-		return offsetX;
+		return general.getX();
 	}
 	
-	public double getOffsetY()
+	public double gety()
 	{
-		return offsetY;
+		return general.getY();
 	}
 	
-	public double getOffsetZ()
+	public double getz()
 	{
-		return offsetZ;
+		return general.getZ();
 	}
 	
 	public boolean isRotatePitch()
 	{
-		return rotatePitch;
+		return general.isRotatePitch();
 	}
 	
 	public boolean isRotateYaw()
 	{
-		return rotateYaw;
-	}
-	
-	public ChildSettings getChild()
-	{
-		return child;
-	}
-	
-	public boolean hasChild()
-	{
-		return child != null;
+		return general.isRotateYaw();
 	}
 	
 	@Nullable
 	@Override
 	public AABB getHeadshotBox(LivingEntity entity)
 	{
-		// If the entity is a baby and child support is disabled, no headshot box.
-		boolean childEnabled = hasChild();
-		if(entity.isBaby() && !childEnabled)
+		if(entity.isBaby() && child == null)
 		{
 			return null;
 		}
 		
-		double finalWidth = width;
-		double finalHeight = height;
-		double finalOffsetX = offsetX;
-		double finalOffsetY = offsetY;
-		double finalOffsetZ = offsetZ;
+		double finalHeadWidth = general.getHeadWidth();
+		double finalHeadHeight = general.getHeadHeight();
+		double finalX = general.getX();
+		double finalY = general.getY();
+		double finalZ = general.getZ();
 		
-		if(entity.isBaby() && childEnabled)
+		if(entity.isBaby() && child != null)
 		{
-			finalWidth *= child.widthScale;
-			finalHeight *= child.heightScale;
-			finalOffsetX *= child.offsetXScale;
-			finalOffsetY *= child.offsetYScale;
-			finalOffsetZ *= child.offsetZScale;
+			finalHeadWidth *= child.getHeadWidthScale();
+			finalHeadHeight *= child.getHeadHeightScale();
+			finalX *= child.getXScale();
+			finalY *= child.getYScale();
+			finalZ *= child.getZScale();
 		}
 		
-		// Convert from pixels to blocks (1 pixel = 1/16 block = 0.0625)
-		double halfWidth = finalWidth * 0.0625 / 2.0;
-		double heightBlocks = finalHeight * 0.0625;
-		double offsetXBlocks = finalOffsetX * 0.0625;
-		double offsetYBlocks = finalOffsetY * 0.0625;
-		double offsetZBlocks = finalOffsetZ * 0.0625;
+		double halfHeadWidth = finalHeadWidth * 0.0625 / 2.0;
+		double headHeightBlocks = finalHeadHeight * 0.0625;
+		Vec3 offset = new Vec3(finalX * 0.0625, finalY * 0.0625, finalZ * 0.0625);
 		
-		AABB box = new AABB(-halfWidth + offsetXBlocks, offsetYBlocks, -halfWidth + offsetZBlocks, halfWidth + offsetXBlocks, heightBlocks + offsetYBlocks, halfWidth + offsetZBlocks);
-		
-		if(rotatePitch || rotateYaw)
+		if(general.isRotateYaw() || general.isRotatePitch())
 		{
-			float pitch = rotatePitch ? entity.getXRot() : 0.0F;
-			float yaw = rotateYaw ? entity.yBodyRot : 0.0F;
-			Vec3 direction = Vec3.directionFromRotation(pitch, yaw).normalize();
-			box = box.move(direction.scale(offsetZBlocks));
+			float pitch = general.isRotatePitch() ? entity.getXRot() : 0.0F;
+			float yaw = general.isRotateYaw() ? entity.yBodyRot : 0.0F;
+			
+			double pitchRad = Math.toRadians(pitch);
+			double yawRad = Math.toRadians(yaw);
+			double cosPitch = Math.cos(pitchRad);
+			double sinPitch = Math.sin(pitchRad);
+			double cosYaw = Math.cos(yawRad);
+			double sinYaw = Math.sin(yawRad);
+			
+			double x1 = offset.x * cosYaw - offset.z * sinYaw;
+			double y1 = offset.y;
+			double z1 = offset.x * sinYaw + offset.z * cosYaw;
+			
+			double y2 = y1 * cosPitch - z1 * sinPitch;
+			double z2 = y1 * sinPitch + z1 * cosPitch;
+			
+			offset = new Vec3(x1, y2, z2);
 		}
 		
-		return box;
+		return new AABB(-halfHeadWidth + offset.x, offset.y, -halfHeadWidth + offset.z, halfHeadWidth + offset.x, headHeightBlocks + offset.y, halfHeadWidth + offset.z);
 	}
 	
 	@Override
 	public CompoundTag serializeNBT()
 	{
 		CompoundTag tag = new CompoundTag();
-		tag.putDouble("Width", width);
-		tag.putDouble("Height", height);
-		tag.putDouble("OffsetX", offsetX);
-		tag.putDouble("OffsetY", offsetY);
-		tag.putDouble("OffsetZ", offsetZ);
-		tag.putBoolean("RotatePitch", rotatePitch);
-		tag.putBoolean("RotateYaw", rotateYaw);
+		tag.put("General", general.serializeNBT());
 		if(child != null)
 		{
 			tag.put("Child", child.serializeNBT());
@@ -162,28 +146,7 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 	public JsonObject toJsonObject()
 	{
 		JsonObject json = new JsonObject();
-		json.addProperty("width", width);
-		json.addProperty("height", height);
-		if(offsetX != 0.0)
-		{
-			json.addProperty("offsetX", offsetX);
-		}
-		if(offsetY != 0.0)
-		{
-			json.addProperty("offsetY", offsetY);
-		}
-		if(offsetZ != 0.0)
-		{
-			json.addProperty("offsetZ", offsetZ);
-		}
-		if(rotatePitch)
-		{
-			json.addProperty("rotatePitch", true);
-		}
-		if(rotateYaw)
-		{
-			json.addProperty("rotateYaw", true);
-		}
+		json.add("general", general.toJsonObject());
 		if(child != null)
 		{
 			json.add("child", child.toJsonObject());
@@ -195,58 +158,33 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 	{
 		Builder builder = builder();
 		
-		if(json.has("width"))
+		if(json.has("general"))
 		{
-			builder.width(json.get("width").getAsDouble());
+			builder.general(General.fromJson(json.getAsJsonObject("general")));
 		}
-		if(json.has("height"))
-		{
-			builder.height(json.get("height").getAsDouble());
-		}
-		if(json.has("offsetX"))
-		{
-			builder.offsetX(json.get("offsetX").getAsDouble());
-		}
-		if(json.has("offsetY"))
-		{
-			builder.offsetY(json.get("offsetY").getAsDouble());
-		}
-		if(json.has("offsetZ"))
-		{
-			builder.offsetZ(json.get("offsetZ").getAsDouble());
-		}
-		if(json.has("rotatePitch"))
-		{
-			builder.rotatePitch(json.get("rotatePitch").getAsBoolean());
-		}
-		if(json.has("rotateYaw"))
-		{
-			builder.rotateYaw(json.get("rotateYaw").getAsBoolean());
-		}
-		
 		if(json.has("child"))
 		{
 			JsonObject childJson = json.getAsJsonObject("child");
-			ChildSettings.Builder childBuilder = ChildSettings.builder();
-			if(childJson.has("widthScale"))
+			Child.Builder childBuilder = Child.builder();
+			if(childJson.has("headWidthScale"))
 			{
-				childBuilder.widthScale(childJson.get("widthScale").getAsDouble());
+				childBuilder.headWidthScale(childJson.get("headWidthScale").getAsDouble());
 			}
-			if(childJson.has("heightScale"))
+			if(childJson.has("headHeightScale"))
 			{
-				childBuilder.heightScale(childJson.get("heightScale").getAsDouble());
+				childBuilder.headHeightScale(childJson.get("headHeightScale").getAsDouble());
 			}
-			if(childJson.has("offsetXScale"))
+			if(childJson.has("xScale"))
 			{
-				childBuilder.offsetXScale(childJson.get("offsetXScale").getAsDouble());
+				childBuilder.xScale(childJson.get("xScale").getAsDouble());
 			}
-			if(childJson.has("offsetYScale"))
+			if(childJson.has("yScale"))
 			{
-				childBuilder.offsetYScale(childJson.get("offsetYScale").getAsDouble());
+				childBuilder.yScale(childJson.get("yScale").getAsDouble());
 			}
-			if(childJson.has("offsetZScale"))
+			if(childJson.has("zScale"))
 			{
-				childBuilder.offsetZScale(childJson.get("offsetZScale").getAsDouble());
+				childBuilder.zScale(childJson.get("zScale").getAsDouble());
 			}
 			builder.child(childBuilder.build());
 		}
@@ -259,61 +197,265 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		return new Builder();
 	}
 	
+	private void validate()
+	{
+		try
+		{
+			Validator.isValidObject(this);
+			Validator.isValidObject(this.general);
+			if(this.child != null)
+			{
+				Validator.isValidObject(this.child);
+			}
+		}
+		catch(IllegalAccessException | InvalidObjectException e)
+		{
+			throw new RuntimeException("Invalid HeadshotBox configuration: " + e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * General hitbox parameters (dimensions and rotation flags).
+	 */
+	public static class General implements INBTSerializable<CompoundTag>
+	{
+		private double headWidth;
+		private double headHeight;
+		@Optional
+		private double x;
+		@Optional
+		private double y;
+		@Optional
+		private double z;
+		@Optional
+		private boolean rotatePitch = false;
+		@Optional
+		private boolean rotateYaw = false;
+		
+		public General()
+		{
+		}
+		
+		public General(double headWidth, double headHeight, double x, double y, double z, boolean rotatePitch, boolean rotateYaw)
+		{
+			this.headWidth = headWidth;
+			this.headHeight = headHeight;
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.rotatePitch = rotatePitch;
+			this.rotateYaw = rotateYaw;
+		}
+		
+		public double getHeadWidth()
+		{
+			return headWidth;
+		}
+		
+		public double getHeadHeight()
+		{
+			return headHeight;
+		}
+		
+		public double getX()
+		{
+			return x;
+		}
+		
+		public double getY()
+		{
+			return y;
+		}
+		
+		public double getZ()
+		{
+			return z;
+		}
+		
+		public boolean isRotatePitch()
+		{
+			return rotatePitch;
+		}
+		
+		public boolean isRotateYaw()
+		{
+			return rotateYaw;
+		}
+		
+		@Override
+		public CompoundTag serializeNBT()
+		{
+			CompoundTag tag = new CompoundTag();
+			tag.putDouble("HeadWidth", headWidth);
+			tag.putDouble("HeadHeight", headHeight);
+			tag.putDouble("X", x);
+			tag.putDouble("Y", y);
+			tag.putDouble("Z", z);
+			tag.putBoolean("RotatePitch", rotatePitch);
+			tag.putBoolean("RotateYaw", rotateYaw);
+			return tag;
+		}
+		
+		@Override
+		public void deserializeNBT(CompoundTag nbt)
+		{
+			// Not used for JSON loading
+		}
+		
+		public JsonObject toJsonObject()
+		{
+			JsonObject json = new JsonObject();
+			json.addProperty("headWidth", headWidth);
+			json.addProperty("headHeight", headHeight);
+			if(x != 0.0)
+			{
+				json.addProperty("x", x);
+			}
+			if(y != 0.0)
+			{
+				json.addProperty("y", y);
+			}
+			if(z != 0.0)
+			{
+				json.addProperty("z", z);
+			}
+			if(rotatePitch)
+			{
+				json.addProperty("rotatePitch", true);
+			}
+			if(rotateYaw)
+			{
+				json.addProperty("rotateYaw", true);
+			}
+			return json;
+		}
+		
+		public static General fromJson(JsonObject json)
+		{
+			Builder builder = builder();
+			if(json.has("headWidth"))
+			{
+				builder.headWidth(json.get("headWidth").getAsDouble());
+			}
+			if(json.has("headHeight"))
+			{
+				builder.headHeight(json.get("headHeight").getAsDouble());
+			}
+			if(json.has("x"))
+			{
+				builder.x(json.get("x").getAsDouble());
+			}
+			if(json.has("y"))
+			{
+				builder.y(json.get("y").getAsDouble());
+			}
+			if(json.has("z"))
+			{
+				builder.z(json.get("z").getAsDouble());
+			}
+			if(json.has("rotatePitch"))
+			{
+				builder.rotatePitch(json.get("rotatePitch").getAsBoolean());
+			}
+			if(json.has("rotateYaw"))
+			{
+				builder.rotateYaw(json.get("rotateYaw").getAsBoolean());
+			}
+			return builder.build();
+		}
+		
+		public static Builder builder()
+		{
+			return new Builder();
+		}
+		
+		public static class Builder
+		{
+			private double headWidth;
+			private double headHeight;
+			@Optional
+			private double x;
+			@Optional
+			private double y;
+			@Optional
+			private double z;
+			@Optional
+			private boolean rotatePitch = false;
+			@Optional
+			private boolean rotateYaw = false;
+			
+			public Builder headWidth(double headWidth)
+			{
+				this.headWidth = headWidth;
+				return this;
+			}
+			
+			public Builder headHeight(double headHeight)
+			{
+				this.headHeight = headHeight;
+				return this;
+			}
+			
+			public Builder x(double x)
+			{
+				this.x = x;
+				return this;
+			}
+			
+			public Builder y(double y)
+			{
+				this.y = y;
+				return this;
+			}
+			
+			public Builder z(double z)
+			{
+				this.z = z;
+				return this;
+			}
+			
+			public Builder rotatePitch(boolean rotatePitch)
+			{
+				this.rotatePitch = rotatePitch;
+				return this;
+			}
+			
+			public Builder rotateYaw(boolean rotateYaw)
+			{
+				this.rotateYaw = rotateYaw;
+				return this;
+			}
+			
+			public General build()
+			{
+				General general = new General(headWidth, headHeight, x, y, z, rotatePitch, rotateYaw);
+				try
+				{
+					Validator.isValidObject(general);
+				}
+				catch(IllegalAccessException | InvalidObjectException e)
+				{
+					throw new RuntimeException("Invalid General configuration: " + e.getMessage(), e);
+				}
+				return general;
+			}
+		}
+	}
+	
 	@SuppressWarnings("UnusedReturnValue")
 	public static class Builder
 	{
-		private double width = 8.0;
-		private double height = 8.0;
-		private double offsetX = 0.0;
-		private double offsetY = 0.0;
-		private double offsetZ = 0.0;
-		private boolean rotatePitch = false;
-		private boolean rotateYaw = false;
-		private ChildSettings child = null;
+		private General general = new General();
+		@Optional
+		private Child child = null;
 		
-		public Builder width(double width)
+		public Builder general(General general)
 		{
-			this.width = width;
+			this.general = general;
 			return this;
 		}
 		
-		public Builder height(double height)
-		{
-			this.height = height;
-			return this;
-		}
-		
-		public Builder offsetX(double offsetX)
-		{
-			this.offsetX = offsetX;
-			return this;
-		}
-		
-		public Builder offsetY(double offsetY)
-		{
-			this.offsetY = offsetY;
-			return this;
-		}
-		
-		public Builder offsetZ(double offsetZ)
-		{
-			this.offsetZ = offsetZ;
-			return this;
-		}
-		
-		public Builder rotatePitch(boolean rotatePitch)
-		{
-			this.rotatePitch = rotatePitch;
-			return this;
-		}
-		
-		public Builder rotateYaw(boolean rotateYaw)
-		{
-			this.rotateYaw = rotateYaw;
-			return this;
-		}
-		
-		public Builder child(ChildSettings child)
+		public Builder child(Child child)
 		{
 			this.child = child;
 			return this;
@@ -321,13 +463,13 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		
 		public Builder child()
 		{
-			this.child = new ChildSettings();
+			this.child = new Child();
 			return this;
 		}
 		
-		public Builder child(double widthScale, double heightScale, double offsetXScale, double offsetYScale, double offsetZScale)
+		public Builder child(double headWidthScale, double headHeightScale, double xScale, double yScale, double zScale)
 		{
-			this.child = new ChildSettings(widthScale, heightScale, offsetXScale, offsetYScale, offsetZScale);
+			this.child = new Child(headWidthScale, headHeightScale, xScale, yScale, zScale);
 			return this;
 		}
 		
@@ -340,61 +482,66 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 	/**
 	 * Settings for baby entities.
 	 */
-	public static class ChildSettings implements INBTSerializable<CompoundTag>
+	public static class Child implements INBTSerializable<CompoundTag>
 	{
-		private double widthScale = 0.5;
-		private double heightScale = 0.5;
-		private double offsetXScale = 1.0;
-		private double offsetYScale = 1.0;
-		private double offsetZScale = 1.0;
+		@Optional
+		private double headWidthScale;
+		@Optional
+		private double headHeightScale;
+		@Optional
+		private double xScale;
+		@Optional
+		private double yScale;
+		@Optional
+		private double zScale;
 		
-		public ChildSettings()
+		public Child()
 		{
 		}
 		
-		public ChildSettings(double widthScale, double heightScale, double offsetXScale, double offsetYScale, double offsetZScale)
+		public Child(double headWidthScale, double headHeightScale, double xScale, double yScale, double zScale)
 		{
-			this.widthScale = widthScale;
-			this.heightScale = heightScale;
-			this.offsetXScale = offsetXScale;
-			this.offsetYScale = offsetYScale;
-			this.offsetZScale = offsetZScale;
+			this.headWidthScale = headWidthScale;
+			this.headHeightScale = headHeightScale;
+			this.xScale = xScale;
+			this.yScale = yScale;
+			this.zScale = zScale;
 		}
 		
-		public double getWidthScale()
+		public double getHeadWidthScale()
 		{
-			return widthScale;
+			return headWidthScale;
 		}
 		
-		public double getHeightScale()
+		public double getHeadHeightScale()
 		{
-			return heightScale;
+			return headHeightScale;
 		}
 		
-		public double getOffsetXScale()
+		public double getXScale()
 		{
-			return offsetXScale;
+			return xScale;
 		}
 		
-		public double getOffsetYScale()
+		public double getYScale()
 		{
-			return offsetYScale;
+			return yScale;
 		}
 		
-		public double getOffsetZScale()
+		public double getZScale()
 		{
-			return offsetZScale;
+			return zScale;
 		}
 		
 		@Override
 		public CompoundTag serializeNBT()
 		{
 			CompoundTag tag = new CompoundTag();
-			tag.putDouble("WidthScale", widthScale);
-			tag.putDouble("HeightScale", heightScale);
-			tag.putDouble("OffsetXScale", offsetXScale);
-			tag.putDouble("OffsetYScale", offsetYScale);
-			tag.putDouble("OffsetZScale", offsetZScale);
+			tag.putDouble("headWidthScale", headWidthScale);
+			tag.putDouble("headHeightScale", headHeightScale);
+			tag.putDouble("xScale", xScale);
+			tag.putDouble("yScale", yScale);
+			tag.putDouble("zScale", zScale);
 			return tag;
 		}
 		
@@ -406,25 +553,25 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		public JsonObject toJsonObject()
 		{
 			JsonObject json = new JsonObject();
-			if(widthScale != 0.5)
+			if(json.has("headWidthScale"))
 			{
-				json.addProperty("widthScale", widthScale);
+				json.addProperty("headWidthScale", headWidthScale);
 			}
-			if(heightScale != 0.5)
+			if(json.has("headHeightScale"))
 			{
-				json.addProperty("heightScale", heightScale);
+				json.addProperty("headHeightScale", headHeightScale);
 			}
-			if(offsetXScale != 1.0)
+			if(json.has("xScale"))
 			{
-				json.addProperty("offsetXScale", offsetXScale);
+				json.addProperty("xScale", xScale);
 			}
-			if(offsetYScale != 1.0)
+			if(json.has("yScale"))
 			{
-				json.addProperty("offsetYScale", offsetYScale);
+				json.addProperty("yScale", yScale);
 			}
-			if(offsetZScale != 1.0)
+			if(json.has("zScale"))
 			{
-				json.addProperty("offsetZScale", offsetZScale);
+				json.addProperty("zScale", zScale);
 			}
 			return json;
 		}
@@ -437,45 +584,59 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		@SuppressWarnings("UnusedReturnValue")
 		public static class Builder
 		{
-			private double widthScale = 0.5;
-			private double heightScale = 0.5;
-			private double offsetXScale = 1.0;
-			private double offsetYScale = 1.0;
-			private double offsetZScale = 1.0;
+			@Optional
+			private double headWidthScale;
+			@Optional
+			private double headHeightScale;
+			@Optional
+			private double xScale;
+			@Optional
+			private double yScale;
+			@Optional
+			private double zScale;
 			
-			public Builder widthScale(double widthScale)
+			public Builder headWidthScale(double headWidthScale)
 			{
-				this.widthScale = widthScale;
+				this.headWidthScale = headWidthScale;
 				return this;
 			}
 			
-			public Builder heightScale(double heightScale)
+			public Builder headHeightScale(double headHeightScale)
 			{
-				this.heightScale = heightScale;
+				this.headHeightScale = headHeightScale;
 				return this;
 			}
 			
-			public Builder offsetXScale(double offsetXScale)
+			public Builder xScale(double xScale)
 			{
-				this.offsetXScale = offsetXScale;
+				this.xScale = xScale;
 				return this;
 			}
 			
-			public Builder offsetYScale(double offsetYScale)
+			public Builder yScale(double yScale)
 			{
-				this.offsetYScale = offsetYScale;
+				this.yScale = yScale;
 				return this;
 			}
 			
-			public Builder offsetZScale(double offsetZScale)
+			public Builder zScale(double zScale)
 			{
-				this.offsetZScale = offsetZScale;
+				this.zScale = zScale;
 				return this;
 			}
 			
-			public ChildSettings build()
+			public Child build()
 			{
-				return new ChildSettings(widthScale, heightScale, offsetXScale, offsetYScale, offsetZScale);
+				Child child = new Child(headWidthScale, headHeightScale, xScale, yScale, zScale);
+				try
+				{
+					Validator.isValidObject(child);
+				}
+				catch(IllegalAccessException | InvalidObjectException e)
+				{
+					throw new RuntimeException("Invalid Child configuration: " + e.getMessage(), e);
+				}
+				return child;
 			}
 		}
 	}

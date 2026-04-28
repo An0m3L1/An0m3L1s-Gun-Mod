@@ -1,5 +1,7 @@
 {
-	"height": 9.0,
-	"offsetY": 23.0,
-	"width": 8.0
+	"general": {
+		"headHeight": 9.0,
+		"headWidth": 8.0,
+		"y": 23.0
+	}
 }

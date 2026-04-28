@@ -5,6 +5,7 @@ Add and overhaul animations:
     - Riding entities
     - Smooth third person sprint animation for one-handed weapons
     - Third person reload animation
+    - Grenade throw animation (first person)
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
@@ -24,7 +25,7 @@ Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
 Overhaul head hitboxes:
-    - Complete hitbox json files
+    - Complete hitbox JSON files
 Update reload logic and animations:
     - When ammo is empty, slides should lock back/forward
     - Add reload empty animations to all applicable guns
@@ -32,13 +33,12 @@ Clean up:
     - Gun model files (use automatic pistol as template)
     - Reorganize project files
 Complete hardness tag lists:
+    - Ignored (metal bars, leaves)
     - None (glass, lanterns, wool, plants, small rocks)
     - Low (wooden doors, wooden trapdoors, fences, fence gates, furniture)
     - Medium (planks, logs, iron doors, iron trapdoors, iron bars)
     - High (stone bricks, walls)
 Port animation changes from CGM Expander
-Update datagen files
-Fix runData configuration
 
 New Content
 

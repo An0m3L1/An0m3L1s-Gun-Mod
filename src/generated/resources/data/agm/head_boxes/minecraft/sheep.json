@@ -1,7 +1,9 @@
 {
-	"height": 8.0,
-	"offsetY": 15.0,
-	"offsetZ": 9.5,
-	"rotateYaw": true,
-	"width": 7.5
+	"general": {
+		"headHeight": 8.0,
+		"headWidth": 7.5,
+		"rotateYaw": true,
+		"y": 15.0,
+		"z": 9.5
+	}
 }
