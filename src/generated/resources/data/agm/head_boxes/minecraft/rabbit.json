@@ -1,0 +1,16 @@
+{
+  "child": {
+    "headHeightScale": 0.925,
+    "headWidthScale": 0.925,
+    "xScale": 1.0,
+    "yScale": 0.525,
+    "zScale": 0.425
+  },
+  "general": {
+    "headHeight": 2.5,
+    "headWidth": 3.0,
+    "rotateYaw": true,
+    "y": 4.75,
+    "z": 2.125
+  }
+}

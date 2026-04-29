@@ -5,6 +5,7 @@ import com.an0m3l1.guns.annotation.Validator;
 import com.an0m3l1.guns.interfaces.IHeadshotBox;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -76,7 +77,9 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 	@Override
 	public AABB getHeadshotBox(LivingEntity entity)
 	{
-		if(entity.isBaby() && child == null)
+		boolean isBaby = entity.isBaby() || (entity instanceof AgeableMob && ((AgeableMob) entity).getAge() < 0);
+		
+		if(isBaby && child == null)
 		{
 			return null;
 		}
@@ -87,7 +90,7 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		double finalY = general.getY();
 		double finalZ = general.getZ();
 		
-		if(entity.isBaby() && child != null)
+		if(isBaby && child != null)
 		{
 			finalHeadWidth *= child.getHeadWidthScale();
 			finalHeadHeight *= child.getHeadHeightScale();
@@ -149,7 +152,11 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		json.add("general", general.toJsonObject());
 		if(child != null)
 		{
-			json.add("child", child.toJsonObject());
+			JsonObject childJson = child.toJsonObject();
+			if(childJson.size() > 0)
+			{
+				json.add("child", childJson);
+			}
 		}
 		return json;
 	}
@@ -455,15 +462,15 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 			return this;
 		}
 		
-		public Builder child(Child child)
+		public Builder general(double headWidth, double headHeight, double x, double y, double z, boolean rotatePitch, boolean rotateYaw)
 		{
-			this.child = child;
+			this.general = General.builder().headWidth(headWidth).headHeight(headHeight).x(x).y(y).z(z).rotatePitch(rotatePitch).rotateYaw(rotateYaw).build();
 			return this;
 		}
 		
-		public Builder child()
+		public Builder child(Child child)
 		{
-			this.child = new Child();
+			this.child = child;
 			return this;
 		}
 		
@@ -485,15 +492,15 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 	public static class Child implements INBTSerializable<CompoundTag>
 	{
 		@Optional
-		private double headWidthScale;
+		private double headWidthScale = 1.0;
 		@Optional
-		private double headHeightScale;
+		private double headHeightScale = 1.0;
 		@Optional
-		private double xScale;
+		private double xScale = 1.0;
 		@Optional
-		private double yScale;
+		private double yScale = 1.0;
 		@Optional
-		private double zScale;
+		private double zScale = 1.0;
 		
 		public Child()
 		{
@@ -553,26 +560,11 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		public JsonObject toJsonObject()
 		{
 			JsonObject json = new JsonObject();
-			if(json.has("headWidthScale"))
-			{
-				json.addProperty("headWidthScale", headWidthScale);
-			}
-			if(json.has("headHeightScale"))
-			{
-				json.addProperty("headHeightScale", headHeightScale);
-			}
-			if(json.has("xScale"))
-			{
-				json.addProperty("xScale", xScale);
-			}
-			if(json.has("yScale"))
-			{
-				json.addProperty("yScale", yScale);
-			}
-			if(json.has("zScale"))
-			{
-				json.addProperty("zScale", zScale);
-			}
+			json.addProperty("headWidthScale", headWidthScale);
+			json.addProperty("headHeightScale", headHeightScale);
+			json.addProperty("xScale", xScale);
+			json.addProperty("yScale", yScale);
+			json.addProperty("zScale", zScale);
 			return json;
 		}
 		

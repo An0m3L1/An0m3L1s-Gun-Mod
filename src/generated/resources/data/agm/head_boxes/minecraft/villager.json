@@ -1,7 +1,14 @@
 {
-	"general": {
-		"headHeight": 9.0,
-		"headWidth": 8.0,
-		"y": 23.0
-	}
+  "child": {
+    "headHeightScale": 0.5,
+    "headWidthScale": 0.5,
+    "xScale": 1.0,
+    "yScale": 0.5,
+    "zScale": 1.0
+  },
+  "general": {
+    "headHeight": 9.4,
+    "headWidth": 7.5,
+    "y": 22.5
+  }
 }

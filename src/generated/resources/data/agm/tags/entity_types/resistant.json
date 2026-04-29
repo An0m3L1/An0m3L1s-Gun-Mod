@@ -2,6 +2,9 @@
 	"values": [
 		"#forge:bosses",
 		"minecraft:warden",
-		"minecraft:elder_guardian"
+		"minecraft:elder_guardian",
+		"minecraft:giant",
+		"minecraft:iron_golem",
+		"minecraft:ravager"
 	]
 }

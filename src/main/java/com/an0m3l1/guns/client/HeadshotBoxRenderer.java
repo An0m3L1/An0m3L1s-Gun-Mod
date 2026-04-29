@@ -20,13 +20,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @OnlyIn(Dist.CLIENT)
 public class HeadshotBoxRenderer
 {
-	
 	@SubscribeEvent
 	public void onRenderLevelStage(RenderLevelStageEvent event)
 	{
+		if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES)
+		{
+			return;
+		}
+		
 		Minecraft mc = Minecraft.getInstance();
-		// Render only when rendering hitboxes is enabled
-		if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS || mc.level == null || !mc.getEntityRenderDispatcher().shouldRenderHitBoxes())
+		if(mc.level == null || !mc.getEntityRenderDispatcher().shouldRenderHitBoxes())
 		{
 			return;
 		}
@@ -38,8 +41,13 @@ public class HeadshotBoxRenderer
 		for(Entity entity : mc.level.entitiesForRendering())
 		{
 			// Check if this entity is Living, player isn't in first person and there is a headshot box present
-			IHeadshotBox<LivingEntity> headshotBox;
-			if(!(entity instanceof LivingEntity living) || (living == mc.player && mc.options.getCameraType().isFirstPerson()) || (headshotBox = HeadshotBoxManager.getHeadshotBox(living.getType())) == null || headshotBox.getHeadshotBox(living) == null)
+			if(!(entity instanceof LivingEntity living) || (living == mc.player && mc.options.getCameraType().isFirstPerson()))
+			{
+				continue;
+			}
+			
+			IHeadshotBox<LivingEntity> headshotBox = HeadshotBoxManager.getHeadshotBox(living.getType());
+			if(headshotBox == null || headshotBox.getHeadshotBox(living) == null)
 			{
 				continue;
 			}
