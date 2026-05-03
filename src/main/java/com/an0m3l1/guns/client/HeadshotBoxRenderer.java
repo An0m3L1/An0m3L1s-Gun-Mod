@@ -17,6 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Objects;
+
 @OnlyIn(Dist.CLIENT)
 public class HeadshotBoxRenderer
 {
@@ -58,8 +60,7 @@ public class HeadshotBoxRenderer
 			double z = Mth.lerp(partialTick, entity.zOld, entity.getZ());
 			Vec3 interpolatedPos = new Vec3(x, y, z);
 			
-			assert headBox != null;
-			headBox = headBox.move(interpolatedPos);
+			headBox = Objects.requireNonNull(headBox).move(interpolatedPos);
 			renderHitbox(poseStack, headBox, cameraPos);
 		}
 	}

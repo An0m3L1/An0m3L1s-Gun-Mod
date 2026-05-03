@@ -6,6 +6,7 @@ Add and overhaul animations:
     - Smooth third person sprint animation for one-handed weapons
     - Third person reload animation
     - Grenade throw animation (first person)
+    - Fix automatic pistol bolt lock not working properly when shooting last bullet or when multiple automatic pistols are in inventory
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
@@ -24,6 +25,7 @@ Make dependencies optional where applicable
 Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
+Disable right click items while reloading (shielding, eating, etc.)
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater
 Update reload logic and animations:

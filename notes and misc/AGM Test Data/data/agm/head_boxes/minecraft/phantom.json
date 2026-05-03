@@ -1,0 +1,11 @@
+{
+  "general": {
+    "headHeight": 3.0,
+    "headWidth": 7.0,
+    "rotatePitch": true,
+    "rotateYaw": true,
+    "x": -0.5,
+    "y": 1.5,
+    "z": 6.5
+  }
+}
