@@ -5,14 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="---&#10;&#10;Fixed automatic pistol bolt lock not working properly when multiple instances of item are present.">
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/chunky/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/chunky/tasks/minecraft/overworld.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/lib/client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/lib/common.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/lib/profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/lib/server_profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/common.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/default_radar_categories_client.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/default_radar_categories_server.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/profiles/entity_radar_categories/default.cfg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/profiles/info_display_config/default.cfg.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/minimap/server_profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/world-map/client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/world-map/common.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/world-map/profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaero/world-map/server_profiles/default.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaerohud.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaerominimap-common.txt.backup0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaeroworldmap-common.txt.backup0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notes and misc/Settings/config/xaeroworldmap.txt.backup0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/automatic_pistol.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/automatic_pistol.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/x6_scope.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/x6_scope.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/base.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/base.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/bolt.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/bolt.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/ext_mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/ext_mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/light_mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/light_mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/scope_rail.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/scope_rail.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol.png" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notes and misc/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/notes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/gun/model/AutomaticPistolModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/gun/model/AutomaticPistolModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/pose/OneHandedPistolPose.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/pose/OneHandedPistolPose.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/pose/TwoHandedPistolPose.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/pose/TwoHandedPistolPose.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/DIM-1/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/advancements/380ec359-1ba0-4e24-8bc9-25835b90e4ea.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/advancements/380ec359-1ba0-4e24-8bc9-25835b90e4ea.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/level.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/level.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/region/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Debug/stats/380ec359-1ba0-4e24-8bc9-25835b90e4ea.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Debug/stats/380ec359-1ba0-4e24-8bc9-25835b90e4ea.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/agm-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/agm-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/agm-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/agm-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/backpacked-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/backpacked-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/clienttweaks-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/clienttweaks-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/create-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/create-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/create-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/create-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/createdieselgenerators-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/createdieselgenerators-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/curios-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/curios-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/dynamictrees-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/dynamictrees-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/embeddium-options.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/embeddium-options.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/farmersdelight-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/farmersdelight-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/farmersdelight-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/farmersdelight-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/forge-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/forge-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/forge-common.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/forge-common.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/jade/hide-entities-1902.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/jade/hide-entities-1902.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/jade/plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/jade/plugins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/jade/sort-order.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/jade/sort-order.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/Settings/config/shouldersurfing-client.toml" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/Settings/config/shouldersurfing-client.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/automatic_pistol.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/automatic_pistol.cgmmeta" afterDir="false" />
     </list>
     <list id="e22d67f2-48d1-4a82-bc4a-3d7fb8628620" name="Local" comment="Local" />
     <option name="SHOW_DIALOG" value="false" />
@@ -176,10 +226,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Resources\assets\agm" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Resources\assets\agm\textures\item" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves\Debug\datapacks" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\Settings" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Resources\assets\agm\models\item" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Test Resources\assets\agm\models\item" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc" />

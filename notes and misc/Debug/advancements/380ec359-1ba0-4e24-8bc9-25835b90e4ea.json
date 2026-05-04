@@ -11,6 +11,12 @@
     },
     "done": true
   },
+  "minecraft:recipes/misc/iron_nugget_from_blasting": {
+    "criteria": {
+      "has_iron_sword": "2026-04-29 23:48:27 +0300"
+    },
+    "done": true
+  },
   "minecraft:recipes/misc/pink_dye_from_red_white_dye": {
     "criteria": {
       "has_white_dye": "2026-04-29 14:26:44 +0300"
@@ -219,7 +225,9 @@
       "minecraft:slime": "2026-04-21 21:00:58 +0300",
       "minecraft:evoker": "2026-04-29 16:18:28 +0300",
       "minecraft:phantom": "2026-04-29 22:07:10 +0300",
+      "minecraft:zombified_piglin": "2026-04-29 23:46:12 +0300",
       "minecraft:witch": "2026-04-28 18:19:44 +0300",
+      "minecraft:wither_skeleton": "2026-04-29 23:47:39 +0300",
       "minecraft:husk": "2026-04-29 20:18:34 +0300",
       "minecraft:cave_spider": "2026-04-23 00:21:52 +0300",
       "minecraft:piglin": "2026-04-29 22:07:10 +0300",
@@ -252,6 +260,12 @@
   "minecraft:recipes/transportation/tnt_minecart": {
     "criteria": {
       "has_minecart": "2026-04-21 21:14:11 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/iron_nugget_from_smelting": {
+    "criteria": {
+      "has_iron_sword": "2026-04-29 23:48:27 +0300"
     },
     "done": true
   },
