@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 /** Author: An0m3L1 */
@@ -33,8 +33,8 @@ public class AutomaticPistolModel implements IOverrideModel
 {
 	final Minecraft mc = Minecraft.getInstance();
 	private boolean disableAnimations = false;
-	private static final Map<Player, Boolean> PREV_BOLT_LOCKED = new HashMap<>();
-	private static final Map<Player, Integer> BOLT_LOCK_TIMER = new HashMap<>();
+	private static final Map<ItemStack, Boolean> PREV_BOLT_LOCKED = new IdentityHashMap<>();
+	private static final Map<ItemStack, Integer> BOLT_LOCK_TIMER = new IdentityHashMap<>();
 	
 	@Override
 	public void render(float partialTicks, ItemTransforms.TransformType transformType, ItemStack stack, ItemStack parent,
@@ -43,7 +43,9 @@ public class AutomaticPistolModel implements IOverrideModel
 	{
 		// Render the base model
 		BakedModel base = SpecialModels.AUTOMATIC_PISTOL_BASE.getModel();
-		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
+		Minecraft.getInstance()
+				.getItemRenderer()
+				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
 		
 		// Render the top rail model that appears when a scope is attached
 		ItemStack scopeStack = Gun.getAttachment(IAttachment.Type.SCOPE, stack);
@@ -71,7 +73,8 @@ public class AutomaticPistolModel implements IOverrideModel
 			ammoIsFull = ammoCount >= ammoCapacity;
 		}
 		boolean reloading = isPlayer && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
-		boolean reloadFromEmpty = isPlayer && ReloadHandler.get().isReloadFromEmpty();
+		boolean reloadFromEmpty = isPlayer && ReloadHandler.get()
+				.isReloadFromEmpty();
 
         /* Lock the bolt forward if:
             1. Gun has run out of ammo
@@ -108,12 +111,14 @@ public class AutomaticPistolModel implements IOverrideModel
 		// Fire animation for bolt is rendered both first and third person
 		if(isPlayer && correctContext)
 		{
-			float cooldownDivider = Math.max((float) gun.getGeneral().getRate() / 3F, 1);
+			float cooldownDivider = Math.max((float) gun.getGeneral()
+					.getRate() / 3F, 1);
 			float cooldownOffset1 = cooldownDivider - 1.0F;
 			float intensity = 1.0F + 1;
 			
 			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
+			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
+					.getFrameTime());
 			cooldown *= cooldownDivider;
 			float cooldown_a = cooldown - cooldownOffset1;
 			
@@ -137,22 +142,22 @@ public class AutomaticPistolModel implements IOverrideModel
 			else
 			{
 				Player player = (Player) entity;
-				boolean prevEmpty = PREV_BOLT_LOCKED.getOrDefault(player, false);
+				boolean prevEmpty = PREV_BOLT_LOCKED.getOrDefault(stack, false);
 			
 				/* Lock bolt movement for 1 second after lockBoltForward switches from true to false.
                 This prevents bolt jitter when transitioning from reload animation to base state */
 				if(prevEmpty && !lockBoltForward)
 				{
-					BOLT_LOCK_TIMER.put(player, 20);
+					BOLT_LOCK_TIMER.put(stack, 20);
 				}
-				PREV_BOLT_LOCKED.put(player, lockBoltForward);
+				PREV_BOLT_LOCKED.put(stack, lockBoltForward);
 				
-				int transition = BOLT_LOCK_TIMER.getOrDefault(entity, 0);
+				int transition = BOLT_LOCK_TIMER.getOrDefault(stack, 0);
 				if(transition > 0)
 				{
 					// Lock the bolt
 					boltZ = 0.0;
-					BOLT_LOCK_TIMER.put(player, transition - 1);
+					BOLT_LOCK_TIMER.put(stack, transition - 1);
 				}
 				// Move bolt 2 pixels forward
 				else if(lockBoltForward)
@@ -186,11 +191,21 @@ public class AutomaticPistolModel implements IOverrideModel
 			ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
 			if(!magStack.isEmpty())
 			{
-				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
+				if(magStack.getItem()
+						.builtInRegistryHolder()
+						.key()
+						.location()
+						.getPath()
+						.equals("light_magazine"))
 				{
 					magModel = SpecialModels.AUTOMATIC_PISTOL_LIGHT_MAG;
 				}
-				else if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
+				else if(magStack.getItem()
+						.builtInRegistryHolder()
+						.key()
+						.location()
+						.getPath()
+						.equals("extended_magazine"))
 				{
 					magModel = SpecialModels.AUTOMATIC_PISTOL_EXT_MAG;
 				}

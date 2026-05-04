@@ -3,10 +3,9 @@ Fixes and Overhauls
 Add and overhaul animations:
     - Crawling/Swimming
     - Riding entities
-    - Smooth third person sprint animation for one-handed weapons
     - Third person reload animation
     - Grenade throw animation (first person)
-    - Fix automatic pistol bolt lock not working properly when shooting last bullet or when multiple automatic pistols are in inventory
+    - Fix automatic pistol bolt lock not working properly sometimes when shooting last bullet
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
@@ -17,6 +16,7 @@ Overhaul items:
     - Grenade Launcher (full overhaul)
     - Rocket Launcher (full overhaul)
     - Minigun (full overhaul)
+    - Muzzle brake
 Fix recoil not working in third person (shoulder surfing)
     - Crosshair stays in 1 place when looking directly at a block/entity
 Test dependency mod versions to figure out the lowest version where everything works correctly
