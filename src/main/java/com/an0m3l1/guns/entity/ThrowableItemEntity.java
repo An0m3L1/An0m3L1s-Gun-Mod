@@ -57,7 +57,8 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 	
 	public boolean shouldRenderAtSqrDistance(double distance)
 	{
-		double d0 = this.getBoundingBox().getSize();
+		double d0 = this.getBoundingBox()
+				.getSize();
 		if(Double.isNaN(d0))
 		{
 			d0 = 1.0D;
@@ -121,7 +122,10 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 				BlockHitResult blockResult = (BlockHitResult) result;
 				BlockPos resultPos = blockResult.getBlockPos();
 				BlockState state = this.level.getBlockState(resultPos);
-				ResourceLocation sound = state.getBlock().getSoundType(state, this.level, resultPos, this).getStepSound().getLocation();
+				ResourceLocation sound = state.getBlock()
+						.getSoundType(state, this.level, resultPos, this)
+						.getStepSound()
+						.getLocation();
 				
 				/* Ignore leaves when checking for collisions */
 				if(state.is(BlockTags.LEAVES))
@@ -136,7 +140,8 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 						sound = bounceSound.getLocation();
 					}
 					
-					double speed = this.getDeltaMovement().length();
+					double speed = this.getDeltaMovement()
+							.length();
 					float x = (float) result.getLocation().x;
 					float y = (float) result.getLocation().y;
 					float z = (float) result.getLocation().z;
@@ -145,7 +150,9 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 					{
 						if(this.level.isClientSide())
 						{
-							Minecraft.getInstance().getSoundManager().play(DistancedSound.grenadeBounce(sound, SoundSource.BLOCKS, x, y, z, 0.85F, 1, level.getRandom()));
+							Minecraft.getInstance()
+									.getSoundManager()
+									.play(DistancedSound.grenadeBounce(sound, SoundSource.BLOCKS, x, y, z, 0.85F, 1, level.getRandom()));
 						}
 					}
 					this.bounce(blockResult.getDirection());
@@ -161,13 +168,19 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 				Entity entity = entityResult.getEntity();
 				if(this.shouldBounce)
 				{
-					double speed = this.getDeltaMovement().length();
+					double speed = this.getDeltaMovement()
+							.length();
 					if(speed > 0.1)
 					{
 						entity.hurt(DamageSource.thrown(this, this.getOwner()), 1.0F);
 					}
-					this.bounce(Direction.getNearest(this.getDeltaMovement().x(), this.getDeltaMovement().y(), this.getDeltaMovement().z()).getOpposite());
-					this.setDeltaMovement(this.getDeltaMovement().multiply(0.25, 1.0, 0.25));
+					this.bounce(Direction.getNearest(this.getDeltaMovement()
+									.x(), this.getDeltaMovement()
+									.y(), this.getDeltaMovement()
+									.z())
+							.getOpposite());
+					this.setDeltaMovement(this.getDeltaMovement()
+							.multiply(0.25, 1.0, 0.25));
 				}
 				else
 				{
@@ -185,17 +198,22 @@ public abstract class ThrowableItemEntity extends ThrowableProjectile implements
 		switch(direction.getAxis())
 		{
 			case X:
-				this.setDeltaMovement(this.getDeltaMovement().multiply(-0.5, 0.75, 0.75));
+				this.setDeltaMovement(this.getDeltaMovement()
+						.multiply(-0.5, 0.75, 0.75));
 				break;
 			case Y:
-				this.setDeltaMovement(this.getDeltaMovement().multiply(0.75, -0.25, 0.75));
-				if(this.getDeltaMovement().y() < this.getGravity())
+				this.setDeltaMovement(this.getDeltaMovement()
+						.multiply(0.75, -0.25, 0.75));
+				if(this.getDeltaMovement()
+						.y() < this.getGravity())
 				{
-					this.setDeltaMovement(this.getDeltaMovement().multiply(1, 0, 1));
+					this.setDeltaMovement(this.getDeltaMovement()
+							.multiply(1, 0, 1));
 				}
 				break;
 			case Z:
-				this.setDeltaMovement(this.getDeltaMovement().multiply(0.75, 0.75, -0.5));
+				this.setDeltaMovement(this.getDeltaMovement()
+						.multiply(0.75, 0.75, -0.5));
 				break;
 		}
 	}

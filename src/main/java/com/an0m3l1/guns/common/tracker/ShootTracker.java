@@ -57,11 +57,13 @@ public class ShootTracker
 	 */
 	public void putCooldown(Player player, ItemStack weapon, GunItem item, Gun modifiedGun)
 	{
-		int rate = modifiedGun.getGeneral().getRate();
+		int rate = modifiedGun.getGeneral()
+				.getRate();
 		rate = GunModifierHelper.getModifiedRate(weapon, rate);
 		rate = GunModifierHelper.getRampUpRate(player, weapon, rate);
 		
-		if(modifiedGun.getGeneral().getDoRampUp())
+		if(modifiedGun.getGeneral()
+				.getDoRampUp())
 		{
 			rate = Math.max(rate - 1, 1);
 		}

@@ -67,7 +67,8 @@ public class ScreenTextureState extends RenderStateShard.TexturingStateShard
 	
 	private void onRenderWorldLast(RenderLevelLastEvent event)
 	{
-		Window mainWindow = Minecraft.getInstance().getWindow();
+		Window mainWindow = Minecraft.getInstance()
+				.getWindow();
 		
 		// OpenGL will spit out an error (GL_INVALID_VALUE) if the window is minimized (or draw calls stop)
 		// It seems just testing the width or height if it's zero is enough to prevent it

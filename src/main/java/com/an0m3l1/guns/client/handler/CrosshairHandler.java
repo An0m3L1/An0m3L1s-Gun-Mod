@@ -132,17 +132,22 @@ public class CrosshairHandler
 		
 		PoseStack stack = event.getPoseStack();
 		stack.pushPose();
-		int scaledWidth = event.getWindow().getGuiScaledWidth();
-		int scaledHeight = event.getWindow().getGuiScaledHeight();
+		int scaledWidth = event.getWindow()
+				.getGuiScaledWidth();
+		int scaledHeight = event.getWindow()
+				.getGuiScaledHeight();
 		
-		if(GunRenderingHandler.get().isRenderingHitMarker())
+		if(GunRenderingHandler.get()
+				.isRenderingHitMarker())
 		{
 			Crosshair hitMarker = new SpecialHitMarker();
 			hitMarker.render(mc, stack, scaledWidth, scaledHeight, event.getPartialTick());
 		}
 		
 		Crosshair crosshair = this.getCurrentCrosshair();
-		if(AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
+		if(AimingHandler.get()
+				.getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType()
+				.isFirstPerson()))
 		{
 			event.setCanceled(true);
 			return;
@@ -161,7 +166,8 @@ public class CrosshairHandler
 			return;
 		}
 		
-		if(mc.player.getUseItem().getItem() == Items.SHIELD)
+		if(mc.player.getUseItem()
+				.getItem() == Items.SHIELD)
 		{
 			return;
 		}
@@ -202,12 +208,14 @@ public class CrosshairHandler
 	public static void onConfigReload(ModConfigEvent.Reloading event)
 	{
 		ModConfig config = event.getConfig();
-		if(config.getType() == ModConfig.Type.CLIENT && config.getModId().equals(GunMod.MOD_ID))
+		if(config.getType() == ModConfig.Type.CLIENT && config.getModId()
+				.equals(GunMod.MOD_ID))
 		{
 			ResourceLocation id = ResourceLocation.tryParse(GunConfig.CLIENT.crosshair.get());
 			if(id != null)
 			{
-				CrosshairHandler.get().setCrosshair(id);
+				CrosshairHandler.get()
+						.setCrosshair(id);
 			}
 		}
 	}

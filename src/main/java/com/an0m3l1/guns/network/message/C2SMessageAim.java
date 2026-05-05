@@ -59,7 +59,8 @@ public class C2SMessageAim extends PlayMessage<C2SMessageAim>
 					
 					if(message.aiming)
 					{
-						float reduction = 1.0F - GunConfig.COMMON.aimingMovementSpeedMultiplier.get().floatValue();
+						float reduction = 1.0F - GunConfig.COMMON.aimingMovementSpeedMultiplier.get()
+								.floatValue();
 						speedAttribute.addTransientModifier(new AttributeModifier(AIMING_SPEED_UUID, "Aiming speed reduction", -reduction, AttributeModifier.Operation.MULTIPLY_TOTAL));
 					}
 				}

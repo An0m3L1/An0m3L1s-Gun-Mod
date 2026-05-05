@@ -18,7 +18,9 @@ public abstract class RotatedObjectBlock extends HorizontalDirectionalBlock
 	public RotatedObjectBlock(Block.Properties properties)
 	{
 		super(properties);
-		this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
+		this.registerDefaultState(this.getStateDefinition()
+				.any()
+				.setValue(FACING, Direction.NORTH));
 	}
 	
 	@Override
@@ -31,7 +33,8 @@ public abstract class RotatedObjectBlock extends HorizontalDirectionalBlock
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
+		return this.defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection());
 	}
 	
 	@Override

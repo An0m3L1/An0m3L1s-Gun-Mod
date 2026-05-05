@@ -51,7 +51,8 @@ public class ControllerHandler
 					event.setCanceled(true);
 					if(event.getState())
 					{
-						ShootingHandler.get().fire(player, heldItem);
+						ShootingHandler.get()
+								.fire(player, heldItem);
 					}
 				}
 			}
@@ -87,7 +88,8 @@ public class ControllerHandler
 					event.setCanceled(true);
 					if(event.getState())
 					{
-						PacketHandler.getPlayChannel().sendToServer(new C2SMessageAttachments());
+						PacketHandler.getPlayChannel()
+								.sendToServer(new C2SMessageAttachments());
 					}
 				}
 			}
@@ -101,7 +103,8 @@ public class ControllerHandler
 		if(player != null)
 		{
 			ItemStack heldItem = player.getMainHandItem();
-			if(heldItem.getItem() instanceof GunItem && AimingHandler.get().isAiming())
+			if(heldItem.getItem() instanceof GunItem && AimingHandler.get()
+					.isAiming())
 			{
 				double adsSensitivity = GunConfig.CLIENT.aimDownSightSensitivity.get();
 				event.setYawSpeed(10.0F * (float) adsSensitivity);
@@ -132,20 +135,25 @@ public class ControllerHandler
 			ItemStack heldItem = player.getMainHandItem();
 			if(heldItem.getItem() instanceof GunItem gunItem)
 			{
-				event.getActions().put(GunButtonBindings.AIM, new Action(Component.translatable(GunMod.MOD_ID + ".action.aim"), Action.Side.RIGHT));
-				event.getActions().put(GunButtonBindings.SHOOT, new Action(Component.translatable(GunMod.MOD_ID + ".action.shoot"), Action.Side.RIGHT));
+				event.getActions()
+						.put(GunButtonBindings.AIM, new Action(Component.translatable(GunMod.MOD_ID + ".action.aim"), Action.Side.RIGHT));
+				event.getActions()
+						.put(GunButtonBindings.SHOOT, new Action(Component.translatable(GunMod.MOD_ID + ".action.shoot"), Action.Side.RIGHT));
 				
 				Gun modifiedGun = gunItem.getModifiedGun(heldItem);
 				CompoundTag tag = heldItem.getTag();
 				if(tag != null && tag.getInt("AmmoCount") < GunCompositeStatHelper.getAmmoCapacity(heldItem, modifiedGun))
 				{
-					event.getActions().put(GunButtonBindings.RELOAD, new Action(Component.translatable(GunMod.MOD_ID + ".action.reload"), Action.Side.LEFT));
+					event.getActions()
+							.put(GunButtonBindings.RELOAD, new Action(Component.translatable(GunMod.MOD_ID + ".action.reload"), Action.Side.LEFT));
 				}
 				
 				Scope scope = Gun.getScope(heldItem);
-				if(scope != null && scope.isStable() && AimingHandler.get().isAiming())
+				if(scope != null && scope.isStable() && AimingHandler.get()
+						.isAiming())
 				{
-					event.getActions().put(GunButtonBindings.STEADY_AIM, new Action(Component.translatable(GunMod.MOD_ID + ".action.steady_aim"), Action.Side.RIGHT));
+					event.getActions()
+							.put(GunButtonBindings.STEADY_AIM, new Action(Component.translatable(GunMod.MOD_ID + ".action.steady_aim"), Action.Side.RIGHT));
 				}
 			}
 		}
@@ -180,7 +188,8 @@ public class ControllerHandler
 				//Gun gun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem);
 				if(Gun.isAuto(heldItem))
 				{
-					ShootingHandler.get().fire(player, heldItem);
+					ShootingHandler.get()
+							.fire(player, heldItem);
 				}
 			}
 		}
@@ -195,13 +204,16 @@ public class ControllerHandler
 		
 		if(this.reloadCounter > 40)
 		{
-			ReloadHandler.get().setReloading(false, false);
-			PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload());
+			ReloadHandler.get()
+					.setReloading(false, false);
+			PacketHandler.getPlayChannel()
+					.sendToServer(new C2SMessageUnload());
 			this.reloadCounter = -1;
 		}
 		else if(this.reloadCounter > 0 && !Controllable.isButtonPressed(GunButtonBindings.RELOAD.getButton()))
 		{
-			ReloadHandler.get().setReloading(!ModSyncedDataKeys.RELOADING.getValue(player), true);
+			ReloadHandler.get()
+					.setReloading(!ModSyncedDataKeys.RELOADING.getValue(player), true);
 			this.reloadCounter = -1;
 		}
 	}
@@ -227,7 +239,8 @@ public class ControllerHandler
 			int startX = workbench.getGuiLeft();
 			int startY = workbench.getGuiTop();
 			
-			for(int i = 0; i < workbench.getTabs().size(); i++)
+			for(int i = 0; i < workbench.getTabs()
+					.size(); i++)
 			{
 				int tabX = startX + 28 * i + (28 / 2);
 				int tabY = startY - (28 / 2);

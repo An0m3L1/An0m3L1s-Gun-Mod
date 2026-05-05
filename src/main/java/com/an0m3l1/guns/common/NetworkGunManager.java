@@ -60,69 +60,81 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
 	protected @NotNull Map<GunItem, Gun> prepare(@NotNull ResourceManager manager, @NotNull ProfilerFiller profiler)
 	{
 		Map<GunItem, Gun> map = new HashMap<>();
-		ForgeRegistries.ITEMS.getValues().stream().filter(item -> item instanceof GunItem).forEach(item ->
-		{
-			ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-			if(id != null)
-			{
-				List<ResourceLocation> resources = new ArrayList<>(manager.listResources("guns", (fileName) -> fileName.getPath().endsWith(id.getPath() + ".json")).keySet());
-				resources.sort((r1, r2) ->
+		ForgeRegistries.ITEMS.getValues()
+				.stream()
+				.filter(item -> item instanceof GunItem)
+				.forEach(item ->
 				{
-					if(r1.getNamespace().equals(r2.getNamespace()))
+					ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
+					if(id != null)
 					{
-						return 0;
-					}
-					return r2.getNamespace().equals(GunMod.MOD_ID) ? 1 : -1;
-				});
-				resources.forEach(resourceLocation ->
-				{
-					String path = resourceLocation.getPath().substring(0, resourceLocation.getPath().length() - FILE_TYPE_LENGTH_VALUE);
-					String[] splitPath = path.split("/");
-					
-					// Makes sure the file name matches exactly with the id of the gun
-					if(!id.getPath().equals(splitPath[splitPath.length - 1]))
-					{
-						return;
-					}
-					
-					// Also check if the mod id matches with the gun's registered namespace
-					if(!id.getNamespace().equals(resourceLocation.getNamespace()))
-					{
-						return;
-					}
-					
-					manager.getResource(resourceLocation).ifPresent(resource ->
-					{
-						try(Reader reader = new BufferedReader(new InputStreamReader(resource.open(), StandardCharsets.UTF_8)))
+						List<ResourceLocation> resources = new ArrayList<>(manager.listResources("guns", (fileName) -> fileName.getPath()
+										.endsWith(id.getPath() + ".json"))
+								.keySet());
+						resources.sort((r1, r2) ->
 						{
-							Gun gun = GsonHelper.fromJson(GSON_INSTANCE, reader, Gun.class);
-							if(gun != null && Validator.isValidObject(gun))
+							if(r1.getNamespace()
+									.equals(r2.getNamespace()))
 							{
-								map.put((GunItem) item, gun);
+								return 0;
 							}
-							else
+							return r2.getNamespace()
+									.equals(GunMod.MOD_ID) ? 1 : -1;
+						});
+						resources.forEach(resourceLocation ->
+						{
+							String path = resourceLocation.getPath()
+									.substring(0, resourceLocation.getPath()
+											.length() - FILE_TYPE_LENGTH_VALUE);
+							String[] splitPath = path.split("/");
+							
+							// Makes sure the file name matches exactly with the id of the gun
+							if(!id.getPath()
+									.equals(splitPath[splitPath.length - 1]))
 							{
-								GunMod.LOGGER.error("Couldn't load data file {} as it is missing or malformed. Using default gun data", resourceLocation);
-								map.putIfAbsent((GunItem) item, new Gun());
+								return;
 							}
-						}
-						catch(InvalidObjectException e)
-						{
-							GunMod.LOGGER.error("Missing required properties for {}", resourceLocation);
-							e.printStackTrace();
-						}
-						catch(IOException e)
-						{
-							GunMod.LOGGER.error("Couldn't parse data file {}", resourceLocation);
-						}
-						catch(IllegalAccessException e)
-						{
-							e.printStackTrace();
-						}
-					});
+							
+							// Also check if the mod id matches with the gun's registered namespace
+							if(!id.getNamespace()
+									.equals(resourceLocation.getNamespace()))
+							{
+								return;
+							}
+							
+							manager.getResource(resourceLocation)
+									.ifPresent(resource ->
+									{
+										try(Reader reader = new BufferedReader(new InputStreamReader(resource.open(), StandardCharsets.UTF_8)))
+										{
+											Gun gun = GsonHelper.fromJson(GSON_INSTANCE, reader, Gun.class);
+											if(gun != null && Validator.isValidObject(gun))
+											{
+												map.put((GunItem) item, gun);
+											}
+											else
+											{
+												GunMod.LOGGER.error("Couldn't load data file {} as it is missing or malformed. Using default gun data", resourceLocation);
+												map.putIfAbsent((GunItem) item, new Gun());
+											}
+										}
+										catch(InvalidObjectException e)
+										{
+											GunMod.LOGGER.error("Missing required properties for {}", resourceLocation);
+											e.printStackTrace();
+										}
+										catch(IOException e)
+										{
+											GunMod.LOGGER.error("Couldn't parse data file {}", resourceLocation);
+										}
+										catch(IllegalAccessException e)
+										{
+											e.printStackTrace();
+										}
+									});
+						});
+					}
 				});
-			}
-		});
 		return map;
 	}
 	
@@ -244,7 +256,8 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
 	{
 		if(event.getPlayer() == null)
 		{
-			PacketHandler.getPlayChannel().sendToAll(new S2CMessageUpdateGuns());
+			PacketHandler.getPlayChannel()
+					.sendToAll(new S2CMessageUpdateGuns());
 		}
 	}
 	
@@ -286,7 +299,8 @@ public class NetworkGunManager extends SimplePreparableReloadListener<Map<GunIte
 		public void writeData(FriendlyByteBuf buffer)
 		{
 			Validate.notNull(NetworkGunManager.get());
-			NetworkGunManager.get().writeRegisteredGuns(buffer);
+			NetworkGunManager.get()
+					.writeRegisteredGuns(buffer);
 		}
 		
 		@Override

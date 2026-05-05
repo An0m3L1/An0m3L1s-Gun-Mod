@@ -54,13 +54,15 @@ public class WorkbenchBlockEntity extends SyncedBlockEntity implements IStorageB
 	@Override
 	public boolean canPlaceItem(int index, @NotNull ItemStack stack)
 	{
-		return index != 0 || (stack.getItem() instanceof DyeItem && this.inventory.get(index).getCount() < 1);
+		return index != 0 || (stack.getItem() instanceof DyeItem && this.inventory.get(index)
+				.getCount() < 1);
 	}
 	
 	@Override
 	public boolean stillValid(@NotNull Player player)
 	{
-		return Objects.requireNonNull(this.level).getBlockEntity(this.worldPosition) == this && player.distanceToSqr(this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5) <= 64.0;
+		return Objects.requireNonNull(this.level)
+				.getBlockEntity(this.worldPosition) == this && player.distanceToSqr(this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 0.5, this.worldPosition.getZ() + 0.5) <= 64.0;
 	}
 	
 	@Override

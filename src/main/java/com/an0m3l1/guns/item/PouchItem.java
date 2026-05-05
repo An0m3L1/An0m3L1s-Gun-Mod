@@ -178,7 +178,8 @@ public class PouchItem extends BundleItem
 	
 	public static int getContentWeight(ItemStack stack)
 	{
-		return getContents(stack).mapToInt((ItemStack) -> getWeight(ItemStack) * ItemStack.getCount()).sum();
+		return getContents(stack).mapToInt((ItemStack) -> getWeight(ItemStack) * ItemStack.getCount())
+				.sum();
 	}
 	
 	public int getMaxContentCount(ItemStack stack)
@@ -217,17 +218,20 @@ public class PouchItem extends BundleItem
 	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @NotNull Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag isAdvanced)
 	{
-		tooltip.add(Component.translatable("item.minecraft.bundle.fullness", getContentWeight(stack), getMaxContentCount(stack)).withStyle(ChatFormatting.GRAY));
+		tooltip.add(Component.translatable("item.minecraft.bundle.fullness", getContentWeight(stack), getMaxContentCount(stack))
+				.withStyle(ChatFormatting.GRAY));
 	}
 	
 	private void playRemoveOneSound(Entity entity)
 	{
-		entity.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + entity.level.getRandom().nextFloat() * 0.4F);
+		entity.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + entity.level.getRandom()
+				.nextFloat() * 0.4F);
 	}
 	
 	protected void playInsertSound(Entity entity)
 	{
-		entity.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + entity.level.getRandom().nextFloat() * 0.4F);
+		entity.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + entity.level.getRandom()
+				.nextFloat() * 0.4F);
 	}
 	
 	public static Stream<ItemStack> getContents(ItemStack stack)
@@ -238,7 +242,9 @@ public class PouchItem extends BundleItem
 			return Stream.empty();
 		}
 		ListTag listTag = compoundTag.getList(TAG_ITEMS, 10);
-		return listTag.stream().map(CompoundTag.class::cast).map(ItemStack::of);
+		return listTag.stream()
+				.map(CompoundTag.class::cast)
+				.map(ItemStack::of);
 	}
 	
 	private static int getWeight(ItemStack stack)

@@ -45,7 +45,8 @@ public class BulletHoleParticle extends TextureSheetParticle
 		
 		/* Expire the particle straight away if the block is air */
 		BlockState state = world.getBlockState(pos);
-		if(world.getBlockState(pos).isAir())
+		if(world.getBlockState(pos)
+				.isAir())
 		{
 			this.remove();
 		}
@@ -64,7 +65,9 @@ public class BulletHoleParticle extends TextureSheetParticle
 		{
 			return Integer.MAX_VALUE;
 		}
-		return Minecraft.getInstance().getBlockColors().getColor(state, world, pos, 0);
+		return Minecraft.getInstance()
+				.getBlockColors()
+				.getColor(state, world, pos, 0);
 	}
 	
 	@Override
@@ -83,9 +86,14 @@ public class BulletHoleParticle extends TextureSheetParticle
 		if(world != null)
 		{
 			BlockState state = world.getBlockState(pos);
-			return Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getParticleIcon(state);
+			return Minecraft.getInstance()
+					.getBlockRenderer()
+					.getBlockModelShaper()
+					.getParticleIcon(state);
 		}
-		return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
+		return Minecraft.getInstance()
+				.getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+				.apply(MissingTextureAtlasSprite.getLocation());
 	}
 	
 	@Override
@@ -116,7 +124,8 @@ public class BulletHoleParticle extends TextureSheetParticle
 	public void tick()
 	{
 		super.tick();
-		if(this.level.getBlockState(this.pos).isAir())
+		if(this.level.getBlockState(this.pos)
+				.isAir())
 		{
 			this.remove();
 		}
@@ -146,11 +155,29 @@ public class BulletHoleParticle extends TextureSheetParticle
 		float f5 = this.getV0();
 		float f6 = this.getV1();
 		int j = this.getLightColor(partialTicks);
-		float fade = GunConfig.CLIENT.bulletHoleFadeThreshold.get() >= 1.0f ? 1.0f : 1.0f - (Math.max((float) this.age - (float) this.lifetime * GunConfig.CLIENT.bulletHoleFadeThreshold.get().floatValue(), 0) / ((float) this.lifetime - (float) this.lifetime * GunConfig.CLIENT.bulletHoleFadeThreshold.get().floatValue()));
-		buffer.vertex(points[0].x(), points[0].y(), points[0].z()).uv(f8, f6).color(this.rCol, this.gCol, this.bCol, this.alpha * fade).uv2(j).endVertex();
-		buffer.vertex(points[1].x(), points[1].y(), points[1].z()).uv(f8, f5).color(this.rCol, this.gCol, this.bCol, this.alpha * fade).uv2(j).endVertex();
-		buffer.vertex(points[2].x(), points[2].y(), points[2].z()).uv(f7, f5).color(this.rCol, this.gCol, this.bCol, this.alpha * fade).uv2(j).endVertex();
-		buffer.vertex(points[3].x(), points[3].y(), points[3].z()).uv(f7, f6).color(this.rCol, this.gCol, this.bCol, this.alpha * fade).uv2(j).endVertex();
+		float fade = GunConfig.CLIENT.bulletHoleFadeThreshold.get() >= 1.0f ? 1.0f : 1.0f - (Math.max((float) this.age - (float) this.lifetime * GunConfig.CLIENT.bulletHoleFadeThreshold.get()
+				.floatValue(), 0) / ((float) this.lifetime - (float) this.lifetime * GunConfig.CLIENT.bulletHoleFadeThreshold.get()
+				.floatValue()));
+		buffer.vertex(points[0].x(), points[0].y(), points[0].z())
+				.uv(f8, f6)
+				.color(this.rCol, this.gCol, this.bCol, this.alpha * fade)
+				.uv2(j)
+				.endVertex();
+		buffer.vertex(points[1].x(), points[1].y(), points[1].z())
+				.uv(f8, f5)
+				.color(this.rCol, this.gCol, this.bCol, this.alpha * fade)
+				.uv2(j)
+				.endVertex();
+		buffer.vertex(points[2].x(), points[2].y(), points[2].z())
+				.uv(f7, f5)
+				.color(this.rCol, this.gCol, this.bCol, this.alpha * fade)
+				.uv2(j)
+				.endVertex();
+		buffer.vertex(points[3].x(), points[3].y(), points[3].z())
+				.uv(f7, f6)
+				.color(this.rCol, this.gCol, this.bCol, this.alpha * fade)
+				.uv2(j)
+				.endVertex();
 	}
 	
 	@Override

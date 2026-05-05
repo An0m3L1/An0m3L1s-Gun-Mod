@@ -29,7 +29,8 @@ public class BulletRenderer extends EntityRenderer<BulletEntity>
 	@Override
 	public void render(BulletEntity entity, float entityYaw, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource renderTypeBuffer, int light)
 	{
-		if(entity.getProjectile().isInvisible() || entity.tickCount <= 1)
+		if(entity.getProjectile()
+				.isInvisible() || entity.tickCount <= 1)
 		{
 			return;
 		}
@@ -44,7 +45,9 @@ public class BulletRenderer extends EntityRenderer<BulletEntity>
 		poseStack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot() - 90));
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(-rotation));
 		
-		Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, 15728880, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
+		Minecraft.getInstance()
+				.getItemRenderer()
+				.renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, 15728880, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
 		poseStack.translate(0, -1, 0);
 		poseStack.popPose();
 	}

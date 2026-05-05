@@ -21,6 +21,7 @@ public class LevelRendererMixin
 	@Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;checkPoseStack(Lcom/mojang/blaze3d/vertex/PoseStack;)V", ordinal = 0))
 	private void renderBullets(PoseStack stack, float partialTicks, long finishTimeNano, boolean drawBlockOutline, Camera info, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projection, CallbackInfo ci)
 	{
-		BulletTrailRenderingHandler.get().render(stack, partialTicks);
+		BulletTrailRenderingHandler.get()
+				.render(stack, partialTicks);
 	}
 }

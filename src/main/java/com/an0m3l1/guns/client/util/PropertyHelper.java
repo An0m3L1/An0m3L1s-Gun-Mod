@@ -42,7 +42,8 @@ public final class PropertyHelper
 	
 	public static void resetCache()
 	{
-		ObjectCache.getInstance(CACHE_KEY).reset();
+		ObjectCache.getInstance(CACHE_KEY)
+				.reset();
 	}
 	
 	private static DataObject getCustomData(ItemStack stack)
@@ -50,7 +51,8 @@ public final class PropertyHelper
 		// First try to get data from attachment data
 		if(stack.getItem() instanceof IMeta)
 		{
-			return MetaLoader.getInstance().getData(stack.getItem());
+			return MetaLoader.getInstance()
+					.getData(stack.getItem());
 		}
 		// Otherwise try to get the data from the model
 		return FrameworkClientAPI.getOpenModelData(stack, null, null, 0);
@@ -92,12 +94,19 @@ public final class PropertyHelper
 			assert cameraArray != null;
 			return arrayToVec3(cameraArray, Vec3.ZERO);
 		}
-		var zoom = modifiedGun.getModules().getZoom();
+		var zoom = modifiedGun.getModules()
+				.getZoom();
 		if(zoom != null)
 		{
-			double cameraX = 8 - modifiedGun.getModules().getZoom().getXOffset();
-			double cameraY = modifiedGun.getModules().getZoom().getYOffset();
-			double cameraZ = 8 - modifiedGun.getModules().getZoom().getZOffset();
+			double cameraX = 8 - modifiedGun.getModules()
+					.getZoom()
+					.getXOffset();
+			double cameraY = modifiedGun.getModules()
+					.getZoom()
+					.getYOffset();
+			double cameraZ = 8 - modifiedGun.getModules()
+					.getZoom()
+					.getZOffset();
 			return new Vec3(cameraX, cameraY, cameraZ);
 		}
 		return Vec3.ZERO;
@@ -179,7 +188,8 @@ public final class PropertyHelper
 	public static boolean hasMuzzleFlash(ItemStack weapon, Gun modifiedGun)
 	{
 		DataObject weaponObject = getObjectByPath(weapon, WEAPON_KEY);
-		return weaponObject.has("muzzleFlash", DataType.OBJECT) || modifiedGun.getDisplay().getFlash() != null;
+		return weaponObject.has("muzzleFlash", DataType.OBJECT) || modifiedGun.getDisplay()
+				.getFlash() != null;
 	}
 	
 	public static Vec3 getMuzzleFlashPosition(ItemStack weapon, Gun modifiedGun)
@@ -201,7 +211,9 @@ public final class PropertyHelper
 					Vec3 barrelOrigin = PropertyHelper.getModelOrigin(barrelStack, ATTACHMENT_DEFAULT_ORIGIN);
 					Vec3 barrelPosition = PropertyHelper.getAttachmentPosition(weapon, modifiedGun, IAttachment.Type.BARREL);
 					Vec3 barrelScale = PropertyHelper.getAttachmentScale(weapon, modifiedGun, IAttachment.Type.BARREL);
-					return muzzlePosition.subtract(barrelOrigin).multiply(barrelScale).add(barrelPosition);
+					return muzzlePosition.subtract(barrelOrigin)
+							.multiply(barrelScale)
+							.add(barrelPosition);
 				}
 			}
 		}
@@ -216,7 +228,8 @@ public final class PropertyHelper
 			return arrayToVec3(translationArray, Vec3.ZERO);
 		}
 		
-		Gun.Positioned muzzleFlash = modifiedGun.getDisplay().getFlash();
+		Gun.Positioned muzzleFlash = modifiedGun.getDisplay()
+				.getFlash();
 		if(muzzleFlash != null)
 		{
 			double displayX = muzzleFlash.getXOffset();
@@ -236,7 +249,8 @@ public final class PropertyHelper
 			assert muzzleObject != null;
 			if(muzzleObject.has("type", DataType.NUMBER))
 			{
-				return Objects.requireNonNull(muzzleObject.getDataNumber("type")).asInt();
+				return Objects.requireNonNull(muzzleObject.getDataNumber("type"))
+						.asInt();
 			}
 			return 0;
 		}
@@ -252,7 +266,8 @@ public final class PropertyHelper
 			assert muzzleObject != null;
 			if(muzzleObject.has("variant", DataType.NUMBER))
 			{
-				return Objects.requireNonNull(muzzleObject.getDataNumber("variant")).asInt();
+				return Objects.requireNonNull(muzzleObject.getDataNumber("variant"))
+						.asInt();
 			}
 			return 0;
 		}
@@ -274,7 +289,8 @@ public final class PropertyHelper
 			}
 			return DEFAULT_SCALE;
 		}
-		Gun.Display.Flash muzzleFlash = modifiedGun.getDisplay().getFlash();
+		Gun.Display.Flash muzzleFlash = modifiedGun.getDisplay()
+				.getFlash();
 		if(muzzleFlash != null)
 		{
 			double scale = muzzleFlash.getSize();
@@ -303,7 +319,8 @@ public final class PropertyHelper
 		DataObject object = isScope ? getObjectByPath(stack, SCOPE_KEY) : getObjectByPath(stack, WEAPON_KEY, "ironSight");
 		if(object.has("reticleColor", DataType.NUMBER))
 		{
-			return Objects.requireNonNull(object.getDataNumber("reticleColor")).asInt();
+			return Objects.requireNonNull(object.getDataNumber("reticleColor"))
+					.asInt();
 		}
 		else if(object.has("reticleColor", DataType.ARRAY))
 		{
@@ -356,7 +373,8 @@ public final class PropertyHelper
 			DataObject customObject = getObjectByPath(scopeStack, SCOPE_KEY);
 			if(customObject.has("viewportFov", DataType.NUMBER))
 			{
-				return Mth.clamp(Objects.requireNonNull(customObject.getDataNumber("viewportFov")).asDouble(), 1.0, 100.0);
+				return Mth.clamp(Objects.requireNonNull(customObject.getDataNumber("viewportFov"))
+						.asDouble(), 1.0, 100.0);
 			}
 		}
 		
@@ -364,7 +382,8 @@ public final class PropertyHelper
 		DataObject customObject = getObjectByPath(weapon, WEAPON_KEY, "ironSight");
 		if(customObject.has("viewportFov", DataType.NUMBER))
 		{
-			return Mth.clamp(Objects.requireNonNull(customObject.getDataNumber("viewportFov")).asDouble(), 1.0, 100.0);
+			return Mth.clamp(Objects.requireNonNull(customObject.getDataNumber("viewportFov"))
+					.asDouble(), 1.0, 100.0);
 		}
 		
 		// Return zero, which means current fov is used
@@ -401,7 +420,8 @@ public final class PropertyHelper
 		}
 		if(isRearHand)
 		{
-			Gun.Display.RearHandPos handPos = modifiedGun.getDisplay().getRearHand();
+			Gun.Display.RearHandPos handPos = modifiedGun.getDisplay()
+					.getRearHand();
 			if(handPos != null)
 			{
 				return new Vec3(handPos.getXOffset(), handPos.getYOffset(), handPos.getZOffset());
@@ -409,7 +429,8 @@ public final class PropertyHelper
 		}
 		else
 		{
-			Gun.Display.ForwardHandPos handPos = modifiedGun.getDisplay().getForwardHand();
+			Gun.Display.ForwardHandPos handPos = modifiedGun.getDisplay()
+					.getForwardHand();
 			if(handPos != null)
 			{
 				return new Vec3(handPos.getXOffset(), handPos.getYOffset(), handPos.getZOffset());
@@ -423,7 +444,8 @@ public final class PropertyHelper
 	{
 		// Gets the client-sided GripType of a gun for rendering purposes.
 		// Attempt to retrieve the GripType from the cgmmeta properties file
-		if(!modifiedGun.getGeneral().overrideClientGripType())
+		if(!modifiedGun.getGeneral()
+				.overrideClientGripType())
 		{
 			DataObject handObject = getObjectByPath(weapon, WEAPON_KEY);
 			if(handObject.has("renderGripType", DataType.STRING))
@@ -436,7 +458,8 @@ public final class PropertyHelper
 			}
 		}
 		// Fallback: retrieve the GripType from the gun's data
-		return modifiedGun.getGeneral().getGripType();
+		return modifiedGun.getGeneral()
+				.getGripType();
 	}
 	
 	public static double getHandPosScalar(ItemStack weapon)
@@ -471,7 +494,8 @@ public final class PropertyHelper
 	{
 		if(src.has(key, DataType.STRING))
 		{
-			return Optional.ofNullable(Objects.requireNonNull(src.getDataString(key)).asString());
+			return Optional.ofNullable(Objects.requireNonNull(src.getDataString(key))
+					.asString());
 		}
 		return Optional.empty();
 	}
@@ -505,7 +529,9 @@ public final class PropertyHelper
 		Optional<Vec3> cachedValue = cache.get(array.getId());
 		return cachedValue.orElseGet(() -> cache.store(array.getId(), () ->
 		{
-			if(array.values().stream().allMatch(entry -> entry.getType() == DataType.NUMBER))
+			if(array.values()
+					.stream()
+					.allMatch(entry -> entry.getType() == DataType.NUMBER))
 			{
 				double x = ((DataNumber) array.get(0)).asDouble();
 				double y = ((DataNumber) array.get(1)).asDouble();

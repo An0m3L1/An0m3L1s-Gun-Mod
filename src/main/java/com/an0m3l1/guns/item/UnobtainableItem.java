@@ -30,7 +30,9 @@ public class UnobtainableItem extends Item
 	                            @Nullable
 	                            Level worldIn, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag)
 	{
-		tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".unobtainable").withStyle(ChatFormatting.LIGHT_PURPLE).withStyle(ChatFormatting.ITALIC));
+		tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".unobtainable")
+				.withStyle(ChatFormatting.LIGHT_PURPLE)
+				.withStyle(ChatFormatting.ITALIC));
 	}
 	
 	@Override

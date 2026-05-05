@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -40,15 +39,16 @@ public class PlayerHandler
 		
 		Minecraft mc = Minecraft.getInstance();
 		Player player = mc.player;
+		
 		if(player == null)
 		{
 			return;
 		}
 		
-		ItemStack heldItem = mc.player.getMainHandItem();
+		ItemStack heldItem = player.getMainHandItem();
 		
 		// Sprinting restrictions
-		if(heldItem.is(ModTags.Items.HEAVY) || player.isVisuallyCrawling() || player.isCrouching() || (player.getUseItem().getItem() == Items.SHIELD) || ModSyncedDataKeys.RELOADING.getValue(player))
+		if(heldItem.is(ModTags.Items.HEAVY) || player.isVisuallyCrawling() || player.isCrouching() || player.isBlocking() || ModSyncedDataKeys.RELOADING.getValue(player))
 		{
 			mc.options.keySprint.setDown(false);
 			player.setSprinting(false);
@@ -58,7 +58,14 @@ public class PlayerHandler
 		if(player.isVisuallyCrawling() || (player.isInWater() && player.getPose() == Pose.SWIMMING && !player.isSwimming()))
 		{
 			mc.options.keyShift.setDown(false);
+			player.setShiftKeyDown(false);
 		}
-		player.setShiftKeyDown(false);
+		
+		// Using items restrictions
+		if(ModSyncedDataKeys.RELOADING.getValue(player) && player.isBlocking())
+		{
+			mc.options.keyUse.setDown(false);
+			player.stopUsingItem();
+		}
 	}
 }

@@ -77,10 +77,14 @@ public class SoundHandler
 			}
 		}
 		
-		if(GunConfig.SERVER.ringVolume.get() > 0 && (this.ringing == null || !Minecraft.getInstance().getSoundManager().isActive(this.ringing)))
+		if(GunConfig.SERVER.ringVolume.get() > 0 && (this.ringing == null || !Minecraft.getInstance()
+				.getSoundManager()
+				.isActive(this.ringing)))
 		{
 			this.ringing = new StunRingingSound();
-			Minecraft.getInstance().getSoundManager().play(this.ringing);
+			Minecraft.getInstance()
+					.getSoundManager()
+					.play(this.ringing);
 			return; // Return after playing sound, as doing so in the tame tick that sounds are muted causes crashing in SoundManager#updateAllSounds
 		}
 		
@@ -102,7 +106,8 @@ public class SoundHandler
 				playingSounds.forEach((sound, entry) ->
 				{
 					/* Exempt tickable sounds and stun grenade explosions from per-tick muting */
-					if(sound == null || sound instanceof TickableSoundInstance || isStunGrenade(sound.getSound().getLocation()))
+					if(sound == null || sound instanceof TickableSoundInstance || isStunGrenade(sound.getSound()
+							.getLocation()))
 					{
 						return;
 					}
@@ -148,7 +153,8 @@ public class SoundHandler
 		}
 		
 		// Exempt initial explosion from muting
-		ResourceLocation loc = Objects.requireNonNull(event.getSound()).getLocation();
+		ResourceLocation loc = Objects.requireNonNull(event.getSound())
+				.getLocation();
 		MobEffectInstance effect = Minecraft.getInstance().player.getEffect(ModEffects.STUNNED.get());
 		int duration = effect != null ? effect.getDuration() : 0;
 		boolean isStunGrenade = isStunGrenade(loc);
@@ -159,23 +165,28 @@ public class SoundHandler
 		
 		// Reduce volume to full value when duration is above threshold
 		// When below threshold, fade to original sound level as duration approaches 0
-		event.getSound().resolve(Minecraft.getInstance().getSoundManager());
+		event.getSound()
+				.resolve(Minecraft.getInstance()
+						.getSoundManager());
 		event.setSound(new SoundMuted(event.getSound(), duration, isStunGrenade));
 	}
 	
 	private boolean isStunGrenade(ResourceLocation loc)
 	{
-		return loc.toString().equals(GunMod.MOD_ID + ":grenade_stun_explosion");
+		return loc.toString()
+				.equals(GunMod.MOD_ID + ":grenade_stun_explosion");
 	}
 	
 	private boolean isSmokeGrenade(ResourceLocation loc)
 	{
-		return loc.toString().equals(GunMod.MOD_ID + ":grenade_smoke_explosion");
+		return loc.toString()
+				.equals(GunMod.MOD_ID + ":grenade_smoke_explosion");
 	}
 	
 	private boolean isIncendiaryGrenade(ResourceLocation loc)
 	{
-		return loc.toString().equals(GunMod.MOD_ID + ":grenade_incendiary_explosion");
+		return loc.toString()
+				.equals(GunMod.MOD_ID + ":grenade_incendiary_explosion");
 	}
 	
 	private float getMutedVolume(float duration, float volumeBase)
@@ -195,7 +206,8 @@ public class SoundHandler
 		{
 			this.parent = parent;
 			this.volumeInitial = Mth.clamp(parent.getVolume(), 0, 1);
-			this.volume = SoundHandler.get().getMutedVolume(duration, this.volumeInitial);
+			this.volume = SoundHandler.get()
+					.getMutedVolume(duration, this.volumeInitial);
 			if(isStunGrenade)
 			{
 				this.volumeInitial = this.volume;

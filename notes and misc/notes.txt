@@ -5,7 +5,6 @@ Add and overhaul animations:
     - Riding entities
     - Third person reload animation
     - Grenade throw animation (first person)
-    - Fix automatic pistol bolt lock not working properly sometimes when shooting last bullet
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
@@ -19,15 +18,16 @@ Overhaul items:
     - Muzzle brake
 Fix recoil not working in third person (shoulder surfing)
     - Crosshair stays in 1 place when looking directly at a block/entity
-Test dependency mod versions to figure out the lowest version where everything works correctly
-Remove redundant dependencies
-Make dependencies optional where applicable
+Overhaul dependencies:
+    - Test dependency mod versions to figure out the lowest version where everything works correctly
+    - Remove redundant dependencies
+    - Make dependencies optional where applicable
 Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
-Disable right click items while reloading (shielding, eating, etc.)
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater
+    - Fix hitbox rendering too far away
 Update reload logic and animations:
     - When ammo is empty, slides should lock back/forward
     - Add reload empty animations to all applicable guns

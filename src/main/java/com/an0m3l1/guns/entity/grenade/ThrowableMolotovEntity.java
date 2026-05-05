@@ -35,7 +35,8 @@ import static com.an0m3l1.guns.entity.ProjectileEntity.createFireExplosion;
  */
 public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 {
-	protected final float radius = GunConfig.SERVER.molotovExplosionRadius.get().floatValue();
+	protected final float radius = GunConfig.SERVER.molotovExplosionRadius.get()
+			.floatValue();
 	protected final int fireDuration = GunConfig.SERVER.molotovFireDuration.get();
 	private int bounceCount = 1;
 	private boolean wasInWater = false;
@@ -70,7 +71,8 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 	{
 		super.tick();
 		this.prevRotation = this.rotation;
-		double speed = this.getDeltaMovement().length();
+		double speed = this.getDeltaMovement()
+				.length();
 		if(speed > 0.1)
 		{
 			this.rotation += (float) (speed * 50);
@@ -96,7 +98,10 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 				Direction direction = blockResult.getDirection();
 				BlockPos resultPos = blockResult.getBlockPos();
 				BlockState state = this.level.getBlockState(resultPos);
-				ResourceLocation sound = state.getBlock().getSoundType(state, this.level, resultPos, this).getStepSound().getLocation();
+				ResourceLocation sound = state.getBlock()
+						.getSoundType(state, this.level, resultPos, this)
+						.getStepSound()
+						.getLocation();
 				
 				/* Ignore leaves when checking for collisions */
 				if(state.is(BlockTags.LEAVES))
@@ -123,14 +128,17 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 							sound = bounceSound.getLocation();
 						}
 						
-						double speed = this.getDeltaMovement().length();
+						double speed = this.getDeltaMovement()
+								.length();
 						float x = (float) result.getLocation().x;
 						float y = (float) result.getLocation().y;
 						float z = (float) result.getLocation().z;
 						
 						if(speed > 0.3 && this.level.isClientSide())
 						{
-							Minecraft.getInstance().getSoundManager().play(DistancedSound.grenadeBounce(sound, SoundSource.BLOCKS, x, y, z, 0.85F, 1, level.getRandom()));
+							Minecraft.getInstance()
+									.getSoundManager()
+									.play(DistancedSound.grenadeBounce(sound, SoundSource.BLOCKS, x, y, z, 0.85F, 1, level.getRandom()));
 						}
 					}
 					/* If already bounced, explode */
@@ -148,13 +156,19 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 			{
 				EntityHitResult entityResult = (EntityHitResult) result;
 				Entity entity = entityResult.getEntity();
-				double speed = this.getDeltaMovement().length();
+				double speed = this.getDeltaMovement()
+						.length();
 				if(speed > 0.1)
 				{
 					entity.hurt(DamageSource.thrown(this, this.getOwner()), 1.0F);
 				}
-				this.bounce(Direction.getNearest(this.getDeltaMovement().x(), this.getDeltaMovement().y(), this.getDeltaMovement().z()).getOpposite());
-				this.setDeltaMovement(this.getDeltaMovement().multiply(0.25, 1.0, 0.25));
+				this.bounce(Direction.getNearest(this.getDeltaMovement()
+								.x(), this.getDeltaMovement()
+								.y(), this.getDeltaMovement()
+								.z())
+						.getOpposite());
+				this.setDeltaMovement(this.getDeltaMovement()
+						.multiply(0.25, 1.0, 0.25));
 				break;
 			}
 			default:
@@ -165,7 +179,8 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 	@Override
 	public void onDeath()
 	{
-		double y = this.getY() + this.getType().getDimensions().height * 0.5;
+		double y = this.getY() + this.getType()
+				.getDimensions().height * 0.5;
 		Vec3 center = new Vec3(this.getX(), y, this.getZ());
 		
 		if(this.level.isClientSide)
@@ -175,11 +190,13 @@ public class ThrowableMolotovEntity extends ThrowableGrenadeEntity
 		
 		if(this.isInWater() || this.wasInWater)
 		{
-			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageMolotovUnderwater(this.getX(), y, this.getZ()));
+			PacketHandler.getPlayChannel()
+					.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageMolotovUnderwater(this.getX(), y, this.getZ()));
 		}
 		else
 		{
-			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageMolotov(this.getX(), y, this.getZ()));
+			PacketHandler.getPlayChannel()
+					.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageMolotov(this.getX(), y, this.getZ()));
 			this.createLight(explosionLightValue, explosionLightLife);
 			createFireExplosion(this, radius * 0.6F, false);
 			igniteEntities(level, center, radius * 1.1F, fireDuration);

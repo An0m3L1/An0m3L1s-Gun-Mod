@@ -36,7 +36,8 @@ public class BurstTracker
 	{
 		this.burstTick = player.tickCount - 20;
 		this.slot = player.getInventory().selected;
-		this.stack = player.getInventory().getSelected();
+		this.stack = player.getInventory()
+				.getSelected();
 		this.gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
 	}
 	
@@ -50,7 +51,8 @@ public class BurstTracker
 	 */
 	private boolean isSameWeapon(Player player)
 	{
-		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory().getSelected() == this.stack;
+		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory()
+				.getSelected() == this.stack;
 	}
 	
 	private int getDeltaTicks(Player player)
@@ -73,7 +75,9 @@ public class BurstTracker
 			Player player = event.player;
 			if(!BURST_TRACKER_MAP.containsKey(player))
 			{
-				if(!(player.getInventory().getSelected().getItem() instanceof GunItem))
+				if(!(player.getInventory()
+						.getSelected()
+						.getItem() instanceof GunItem))
 				{
 					ModSyncedDataKeys.BURSTCOUNT.setValue(player, 0);
 					ModSyncedDataKeys.ONBURSTCOOLDOWN.setValue(player, false);
@@ -127,7 +131,8 @@ public class BurstTracker
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity().getServer();
+		MinecraftServer server = event.getEntity()
+				.getServer();
 		if(server != null)
 		{
 			server.execute(() -> BURST_TRACKER_MAP.remove(event.getEntity()));

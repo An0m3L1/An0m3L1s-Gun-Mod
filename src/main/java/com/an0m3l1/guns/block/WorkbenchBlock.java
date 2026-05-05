@@ -37,7 +37,8 @@ public class WorkbenchBlock extends RotatedObjectBlock implements EntityBlock
 	public WorkbenchBlock(Block.Properties properties)
 	{
 		super(properties);
-		this.registerDefaultState(this.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
+		this.registerDefaultState(this.defaultBlockState()
+				.setValue(BlockStateProperties.WATERLOGGED, false));
 	}
 	
 	private VoxelShape getShape(BlockState state)
@@ -117,7 +118,10 @@ public class WorkbenchBlock extends RotatedObjectBlock implements EntityBlock
 	
 	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
-		FluidState ifluidstate = context.getLevel().getFluidState(context.getClickedPos());
-		return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(FACING, context.getHorizontalDirection()).setValue(BlockStateProperties.WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
+		FluidState ifluidstate = context.getLevel()
+				.getFluidState(context.getClickedPos());
+		return Objects.requireNonNull(super.getStateForPlacement(context))
+				.setValue(FACING, context.getHorizontalDirection())
+				.setValue(BlockStateProperties.WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
 	}
 }

@@ -113,7 +113,9 @@ public enum SpecialModels
 	{
 		if(this.cachedModel == null)
 		{
-			this.cachedModel = Minecraft.getInstance().getModelManager().getModel(this.modelLocation);
+			this.cachedModel = Minecraft.getInstance()
+					.getModelManager()
+					.getModel(this.modelLocation);
 		}
 		return this.cachedModel;
 	}

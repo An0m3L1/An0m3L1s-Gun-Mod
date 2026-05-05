@@ -41,14 +41,19 @@ public class MolotovItem extends GrenadeItem
 		int fireDuration = GunConfig.SERVER.molotovFireDuration.get();
 		if(Screen.hasControlDown())
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GOLD));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fire_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(fireRadius)).withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fire_duration", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(fireDuration)).withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explodes_on_impact").withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
+					.withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fire_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(fireRadius))
+					.withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fire_duration", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(fireDuration))
+					.withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explodes_on_impact")
+					.withStyle(ChatFormatting.GRAY));
 		}
 		else
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help").withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help")
+					.withStyle(ChatFormatting.GOLD));
 		}
 	}
 	

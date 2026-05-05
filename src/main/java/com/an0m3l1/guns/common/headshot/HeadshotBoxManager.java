@@ -49,7 +49,8 @@ public class HeadshotBoxManager
 	@SubscribeEvent
 	public static void onAddReloadListener(AddReloadListenerEvent event)
 	{
-		event.addListener((preparationBarrier, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> CompletableFuture.runAsync(() -> loadHeadshotBoxes(resourceManager), backgroundExecutor).thenCompose(preparationBarrier::wait));
+		event.addListener((preparationBarrier, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> CompletableFuture.runAsync(() -> loadHeadshotBoxes(resourceManager), backgroundExecutor)
+				.thenCompose(preparationBarrier::wait));
 	}
 	
 	/**
@@ -77,7 +78,8 @@ public class HeadshotBoxManager
 				Optional<Resource> resource = resourceManager.getResource(jsonLocation);
 				if(resource.isPresent())
 				{
-					try(Reader reader = new InputStreamReader(resource.get().open(), StandardCharsets.UTF_8))
+					try(Reader reader = new InputStreamReader(resource.get()
+							.open(), StandardCharsets.UTF_8))
 					{
 						JsonObject json = GSON.fromJson(reader, JsonObject.class);
 						HeadshotBox box = HeadshotBox.fromJson(json);
@@ -127,7 +129,9 @@ public class HeadshotBoxManager
 				double headY = getPlayerHeadY(isDynamicHeadBox, pitch);
 				
 				headBox = headBox.move(0, headY * 0.0625, 0);
-				Vec3 direction = Vec3.directionFromRotation(pitch, entity.yBodyRot).normalize().scale(headScale);
+				Vec3 direction = Vec3.directionFromRotation(pitch, entity.yBodyRot)
+						.normalize()
+						.scale(headScale);
 				headBox = headBox.move(direction);
 			}
 			else

@@ -64,14 +64,16 @@ public class SmokeCloud extends AreaEffectCloud
 			double dz = pos.getZ() - centerZ;
 			double distSq = dx * dx + dy * dy + dz * dz;
 			
-			if(distSq <= radiusSq && this.level.getBlockState(pos).is(Blocks.FIRE))
+			if(distSq <= radiusSq && this.level.getBlockState(pos)
+					.is(Blocks.FIRE))
 			{
 				this.level.removeBlock(pos, false);
 				extinguishedAny = true;
 			}
 		}
 		
-		for(LivingEntity entity : this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(radius)))
+		for(LivingEntity entity : this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox()
+				.inflate(radius)))
 		{
 			double dx = entity.getX() - this.getX();
 			double dy = entity.getY() - this.getY();

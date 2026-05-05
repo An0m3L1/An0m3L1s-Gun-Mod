@@ -109,9 +109,11 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 		super.containerTick();
 		if(this.minecraft != null && this.minecraft.player != null)
 		{
-			if(!(this.minecraft.player.getMainHandItem().getItem() instanceof GunItem))
+			if(!(this.minecraft.player.getMainHandItem()
+					.getItem() instanceof GunItem))
 			{
-				Minecraft.getInstance().setScreen(null);
+				Minecraft.getInstance()
+						.setScreen(null);
 			}
 		}
 	}
@@ -133,28 +135,33 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			if(RenderUtil.isMouseWithin(mouseX, mouseY, startX + x, startY + y, 18, 18))
 			{
 				IAttachment.Type type = IAttachment.Type.values()[i];
-				if(!this.menu.getSlot(i).isActive())
+				if(!this.menu.getSlot(i)
+						.isActive())
 				{
 					this.renderComponentTooltip(poseStack, Arrays.asList(Component.translatable("slot." + GunMod.MOD_ID + ".attachment." + type.getTranslationKey()), Component.translatable("slot." + GunMod.MOD_ID + ".attachment.not_applicable")), mouseX, mouseY);
 				}
-				else if(this.menu.getSlot(i) instanceof AttachmentSlot slot && slot.getItem().isEmpty() && !this.isCompatible(this.menu.getCarried(), slot))
+				else if(this.menu.getSlot(i) instanceof AttachmentSlot slot && slot.getItem()
+						.isEmpty() && !this.isCompatible(this.menu.getCarried(), slot))
 				{
-					this.renderComponentTooltip(poseStack, List.of(Component.translatable("slot." + GunMod.MOD_ID + ".attachment.incompatible").withStyle(ChatFormatting.YELLOW)), mouseX, mouseY);
+					this.renderComponentTooltip(poseStack, List.of(Component.translatable("slot." + GunMod.MOD_ID + ".attachment.incompatible")
+							.withStyle(ChatFormatting.YELLOW)), mouseX, mouseY);
 				}
-				else if(this.weaponInventory.getItem(i).isEmpty())
+				else if(this.weaponInventory.getItem(i)
+						.isEmpty())
 				{
 					this.renderComponentTooltip(poseStack, Collections.singletonList(Component.translatable("slot." + GunMod.MOD_ID + ".attachment." + type.getTranslationKey())), mouseX, mouseY);
 				}
 			}
 		}
 		
-		this.children().forEach(widget ->
-		{
-			if(widget instanceof Button button && button.isHoveredOrFocused())
-			{
-				button.renderToolTip(poseStack, mouseX, mouseY);
-			}
-		});
+		this.children()
+				.forEach(widget ->
+				{
+					if(widget instanceof Button button && button.isHoveredOrFocused())
+					{
+						button.renderToolTip(poseStack, mouseX, mouseY);
+					}
+				});
 	}
 	
 	@Override
@@ -187,9 +194,11 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			stack.mulPose(Vector3f.YP.rotationDegrees(90F));
 			RenderSystem.applyModelViewMatrix();
 			assert this.minecraft != null;
-			MultiBufferSource.BufferSource buffer = this.minecraft.renderBuffers().bufferSource();
+			MultiBufferSource.BufferSource buffer = this.minecraft.renderBuffers()
+					.bufferSource();
 			assert this.minecraft.player != null;
-			GunRenderingHandler.get().renderWeapon(this.minecraft.player, this.minecraft.player.getMainHandItem(), ItemTransforms.TransformType.GROUND, new PoseStack(), buffer, 15728880, 0F);
+			GunRenderingHandler.get()
+					.renderWeapon(this.minecraft.player, this.minecraft.player.getMainHandItem(), ItemTransforms.TransformType.GROUND, new PoseStack(), buffer, 15728880, 0F);
 			buffer.endBatch();
 		}
 		stack.popPose();
@@ -225,7 +234,8 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			{
 				this.blit(poseStack, left + x, top + y, 194, 0, 16, 16);
 			}
-			else if(this.weaponInventory.getItem(i).isEmpty())
+			else if(this.weaponInventory.getItem(i)
+					.isEmpty())
 			{
 				this.blit(poseStack, left + x, top + y, 194, 16 + i * 16, 16, 16);
 			}
@@ -244,7 +254,8 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			return true;
 		}
 		
-		if(!slot.getItem().isEmpty())
+		if(!slot.getItem()
+				.isEmpty())
 		{
 			return true;
 		}
@@ -259,7 +270,8 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			return true;
 		}
 		
-		if(!s.getType().equals(a.getType()))
+		if(!s.getType()
+				.equals(a.getType()))
 		{
 			return true;
 		}
@@ -279,7 +291,8 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 			return false;
 		}
 		
-		if(!attachment.getType().equals(slot.getType()))
+		if(!attachment.getType()
+				.equals(slot.getType()))
 		{
 			return true;
 		}
@@ -357,21 +370,30 @@ public class AttachmentScreen extends AbstractContainerScreen<AttachmentContaine
 	
 	private void openConfigScreen()
 	{
-		ModList.get().getModContainerById(GunMod.MOD_ID).ifPresent(container ->
-		{
-			Screen screen = container.getCustomExtension(ConfigScreenHandler.ConfigScreenFactory.class).map(function -> function.screenFunction().apply(this.minecraft, null)).orElse(null);
-			if(screen != null)
-			{
-				assert this.minecraft != null;
-				this.minecraft.setScreen(screen);
-			}
-			else if(this.minecraft != null && this.minecraft.player != null)
-			{
-				MutableComponent modName = Component.literal("Configured");
-				modName.setStyle(modName.getStyle().withColor(ChatFormatting.YELLOW).withUnderlined(true).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(GunMod.MOD_ID + ".chat.open_curseforge_page"))).withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/configured")));
-				Component message = Component.translatable(GunMod.MOD_ID + ".chat.install_configured", modName);
-				this.minecraft.player.displayClientMessage(message, false);
-			}
-		});
+		ModList.get()
+				.getModContainerById(GunMod.MOD_ID)
+				.ifPresent(container ->
+				{
+					Screen screen = container.getCustomExtension(ConfigScreenHandler.ConfigScreenFactory.class)
+							.map(function -> function.screenFunction()
+									.apply(this.minecraft, null))
+							.orElse(null);
+					if(screen != null)
+					{
+						assert this.minecraft != null;
+						this.minecraft.setScreen(screen);
+					}
+					else if(this.minecraft != null && this.minecraft.player != null)
+					{
+						MutableComponent modName = Component.literal("Configured");
+						modName.setStyle(modName.getStyle()
+								.withColor(ChatFormatting.YELLOW)
+								.withUnderlined(true)
+								.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(GunMod.MOD_ID + ".chat.open_curseforge_page")))
+								.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/configured")));
+						Component message = Component.translatable(GunMod.MOD_ID + ".chat.install_configured", modName);
+						this.minecraft.player.displayClientMessage(message, false);
+					}
+				});
 	}
 }

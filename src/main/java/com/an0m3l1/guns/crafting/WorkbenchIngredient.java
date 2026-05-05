@@ -99,7 +99,8 @@ public class WorkbenchIngredient extends Ingredient
 		{
 			int itemCount = buffer.readVarInt();
 			int count = buffer.readVarInt();
-			Stream<Ingredient.ItemValue> values = Stream.generate(() -> new ItemValue(buffer.readItem())).limit(itemCount);
+			Stream<Ingredient.ItemValue> values = Stream.generate(() -> new ItemValue(buffer.readItem()))
+					.limit(itemCount);
 			return new WorkbenchIngredient(values, count);
 		}
 		

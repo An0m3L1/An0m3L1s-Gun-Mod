@@ -104,12 +104,15 @@ public class AttachmentContainer extends AbstractContainerMenu
 	{
 		CompoundTag attachments = new CompoundTag();
 		
-		for(int i = 0; i < this.getWeaponInventory().getContainerSize(); i++)
+		for(int i = 0; i < this.getWeaponInventory()
+				.getContainerSize(); i++)
 		{
-			ItemStack attachment = this.getSlot(i).getItem();
+			ItemStack attachment = this.getSlot(i)
+					.getItem();
 			if(attachment.getItem() instanceof IAttachment)
 			{
-				attachments.put(((IAttachment<?>) attachment.getItem()).getType().getTagKey(), attachment.save(new CompoundTag()));
+				attachments.put(((IAttachment<?>) attachment.getItem()).getType()
+						.getTagKey(), attachment.save(new CompoundTag()));
 			}
 		}
 		

@@ -126,9 +126,11 @@ public class AimingHandler
 		ItemStack heldItem = mc.player.getMainHandItem();
 		GunItem gunItem;
 		Gun modifiedGun = null;
-		if(mc.player.getMainHandItem().getItem() instanceof GunItem)
+		if(mc.player.getMainHandItem()
+				.getItem() instanceof GunItem)
 		{
-			gunItem = (GunItem) mc.player.getMainHandItem().getItem();
+			gunItem = (GunItem) mc.player.getMainHandItem()
+					.getItem();
 			modifiedGun = gunItem.getModifiedGun(mc.player.getMainHandItem());
 		}
 		boolean resetPOV = false;
@@ -142,7 +144,8 @@ public class AimingHandler
 			if(!this.aiming)
 			{
 				ModSyncedDataKeys.AIMING.setValue(player, true);
-				PacketHandler.getPlayChannel().sendToServer(new C2SMessageAim(true));
+				PacketHandler.getPlayChannel()
+						.sendToServer(new C2SMessageAim(true));
 				this.aiming = true;
 			}
 			
@@ -151,7 +154,8 @@ public class AimingHandler
 			{
 				if(!this.doTempFirstPerson && modifiedGun != null)
 				{
-					if(modifiedGun.getModules().getZoom() != null && Gun.getFovModifier(heldItem, modifiedGun) <= GunConfig.CLIENT.firstPersonAimZoomThreshold.get())
+					if(modifiedGun.getModules()
+							.getZoom() != null && Gun.getFovModifier(heldItem, modifiedGun) <= GunConfig.CLIENT.firstPersonAimZoomThreshold.get())
 					{
 						if(ShoulderSurfingHelper.isShoulderSurfing())
 						{
@@ -181,7 +185,8 @@ public class AimingHandler
 			if(this.aiming)
 			{
 				ModSyncedDataKeys.AIMING.setValue(player, false);
-				PacketHandler.getPlayChannel().sendToServer(new C2SMessageAim(false));
+				PacketHandler.getPlayChannel()
+						.sendToServer(new C2SMessageAim(false));
 				this.aiming = false;
 			}
 			if(this.speedReductionApplied)
@@ -196,7 +201,8 @@ public class AimingHandler
 			{
 				this.skipThirdPersonSwitch = true;
 			}
-			if(modifiedGun == null || modifiedGun.getModules().getZoom() == null || Gun.getFovModifier(heldItem, modifiedGun) > GunConfig.CLIENT.firstPersonAimZoomThreshold.get())
+			if(modifiedGun == null || modifiedGun.getModules()
+					.getZoom() == null || Gun.getFovModifier(heldItem, modifiedGun) > GunConfig.CLIENT.firstPersonAimZoomThreshold.get())
 			{
 				resetPOV = true;
 			}
@@ -223,7 +229,8 @@ public class AimingHandler
 		}
 		
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.player == null || mc.player.getMainHandItem().isEmpty() || (mc.options.getCameraType() != CameraType.FIRST_PERSON && !ShoulderSurfingHelper.isShoulderSurfing()))
+		if(mc.player == null || mc.player.getMainHandItem()
+				.isEmpty() || (mc.options.getCameraType() != CameraType.FIRST_PERSON && !ShoulderSurfingHelper.isShoulderSurfing()))
 		{
 			return;
 		}
@@ -234,7 +241,8 @@ public class AimingHandler
 			return;
 		}
 		
-		if(AimingHandler.get().getNormalisedAdsProgress() == 0)
+		if(AimingHandler.get()
+				.getNormalisedAdsProgress() == 0)
 		{
 			this.setNewZoomModifier = true;
 			return;
@@ -246,12 +254,15 @@ public class AimingHandler
 		}
 		
 		Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-		if(modifiedGun.getModules().getZoom() == null)
+		if(modifiedGun.getModules()
+				.getZoom() == null)
 		{
 			return;
 		}
 		
-		double time = PropertyHelper.getSightAnimations(heldItem, modifiedGun).getFovCurve().apply(this.normalisedAdsProgress);
+		double time = PropertyHelper.getSightAnimations(heldItem, modifiedGun)
+				.getFovCurve()
+				.apply(this.normalisedAdsProgress);
 		boolean isFirstPerson = (mc.options.getCameraType() == CameraType.FIRST_PERSON);
 		float modifier = this.lastZoomModifier;
 		float newModifier = Gun.getFovModifier(heldItem, modifiedGun);
@@ -325,22 +336,29 @@ public class AimingHandler
 			return false;
 		}
 		
-		if(mc.player.getOffhandItem().getItem() == Items.SHIELD && (gun.getGeneral().getGripType() == GripType.ONE_HANDED_PISTOL || gun.getGeneral().getGripType() == GripType.TWO_HANDED_PISTOL))
+		if(mc.player.getOffhandItem()
+				.getItem() == Items.SHIELD && (gun.getGeneral()
+				.getGripType() == GripType.ONE_HANDED_PISTOL || gun.getGeneral()
+				.getGripType() == GripType.TWO_HANDED_PISTOL))
 		{
 			return false;
 		}
 		
-		if(ModSyncedDataKeys.RELOADING.getValue(mc.player) || ReloadHandler.get().getReloadTimer() != 0)
+		if(ModSyncedDataKeys.RELOADING.getValue(mc.player) || ReloadHandler.get()
+				.getReloadTimer() != 0)
 		{
 			return false;
 		}
 		
-		if(mc.player.tickCount < ShootingHandler.get().getWeaponSwitchTick() + 3 || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick()).equals("draw") && ModSyncedDataKeys.SWITCHTIME.getValue(mc.player) > 0))
+		if(mc.player.tickCount < ShootingHandler.get()
+				.getWeaponSwitchTick() + 3 || (GunAnimationHelper.getSmartAnimationType(heldItem, mc.player, mc.getPartialTick())
+				.equals("draw") && ModSyncedDataKeys.SWITCHTIME.getValue(mc.player) > 0))
 		{
 			return false;
 		}
 		
-		boolean zooming = KeyBinds.getAimMapping().isDown();
+		boolean zooming = KeyBinds.getAimMapping()
+				.isDown();
 		if(GunMod.controllableLoaded)
 		{
 			zooming |= ControllerHandler.isAiming();
@@ -376,7 +394,8 @@ public class AimingHandler
 		
 		private void handleAiming(Player player, ItemStack heldItem)
 		{
-			if(player.tickCount < ShootingHandler.get().getWeaponSwitchTick() + 4)
+			if(player.tickCount < ShootingHandler.get()
+					.getWeaponSwitchTick() + 4)
 			{
 				this.previousAim = this.currentAim = 0;
 				return;

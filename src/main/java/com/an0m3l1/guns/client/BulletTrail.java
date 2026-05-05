@@ -75,7 +75,8 @@ public class BulletTrail
 			world.addAlwaysVisibleParticle(this.particleData, true, this.position.x(), this.position.y(), this.position.z(), this.motion.x, this.motion.y, this.motion.z);
 		}
 		
-		Entity entity = Minecraft.getInstance().getCameraEntity();
+		Entity entity = Minecraft.getInstance()
+				.getCameraEntity();
 		double distance = entity != null ? Math.sqrt(entity.distanceToSqr(this.position)) : Double.MAX_VALUE;
 		if(this.age >= this.maxAge || distance > 256)
 		{
@@ -173,7 +174,8 @@ public class BulletTrail
 	
 	public boolean isTrailVisible()
 	{
-		Entity entity = Minecraft.getInstance().getCameraEntity();
+		Entity entity = Minecraft.getInstance()
+				.getCameraEntity();
 		return entity != null && entity.getId() != this.shooterId;
 	}
 	

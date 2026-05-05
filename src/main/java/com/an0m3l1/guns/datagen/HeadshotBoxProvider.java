@@ -23,7 +23,8 @@ public abstract class HeadshotBoxProvider implements DataProvider
 {
 	
 	private static final Logger LOGGER = LogManager.getLogger();
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting()
+			.create();
 	
 	private final DataGenerator generator;
 	private final Map<ResourceLocation, HeadshotBox> boxes = new HashMap<>();
@@ -53,7 +54,8 @@ public abstract class HeadshotBoxProvider implements DataProvider
 		
 		this.boxes.forEach((entityId, box) ->
 		{
-			Path path = this.generator.getOutputFolder().resolve("data/" + GunMod.MOD_ID + "/head_boxes/" + entityId.getNamespace() + "/" + entityId.getPath() + ".json");
+			Path path = this.generator.getOutputFolder()
+					.resolve("data/" + GunMod.MOD_ID + "/head_boxes/" + entityId.getNamespace() + "/" + entityId.getPath() + ".json");
 			try
 			{
 				JsonObject json = box.toJsonObject();

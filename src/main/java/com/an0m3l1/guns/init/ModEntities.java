@@ -35,14 +35,29 @@ public class ModEntities
 	public static final RegistryObject<EntityType<ThrowableMolotovEntity>> THROWABLE_MOLOTOV = registerBasic("throwable_molotov", ThrowableMolotovEntity::new);
 	public static final RegistryObject<EntityType<LightSourceEntity>> LIGHT_SOURCE = registerLight("light_source", LightSourceEntity::new);
 	
-	public static final RegistryObject<EntityType<BulletEntity>> LIGHT_BULLET = REGISTER.register("light_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("light_bullet"));
-	public static final RegistryObject<EntityType<BulletEntity>> MEDIUM_BULLET = REGISTER.register("medium_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("medium_bullet"));
-	public static final RegistryObject<EntityType<BulletEntity>> HEAVY_BULLET = REGISTER.register("heavy_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("heavy_bullet"));
-	public static final RegistryObject<EntityType<BulletEntity>> BUCKSHOT_SHELL = REGISTER.register("buckshot_shell", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).build("buckshot_shell"));
+	public static final RegistryObject<EntityType<BulletEntity>> LIGHT_BULLET = REGISTER.register("light_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
+			.sized(0.25F, 0.25F)
+			.build("light_bullet"));
+	public static final RegistryObject<EntityType<BulletEntity>> MEDIUM_BULLET = REGISTER.register("medium_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
+			.sized(0.25F, 0.25F)
+			.build("medium_bullet"));
+	public static final RegistryObject<EntityType<BulletEntity>> HEAVY_BULLET = REGISTER.register("heavy_bullet", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
+			.sized(0.25F, 0.25F)
+			.build("heavy_bullet"));
+	public static final RegistryObject<EntityType<BulletEntity>> BUCKSHOT_SHELL = REGISTER.register("buckshot_shell", () -> EntityType.Builder.<BulletEntity>of(BulletEntity::new, MobCategory.MISC)
+			.sized(0.25F, 0.25F)
+			.build("buckshot_shell"));
 	
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerBasic(String id, BiFunction<EntityType<T>, Level, T> function)
 	{
-		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(256).setUpdateInterval(1).noSummon().fireImmune().setShouldReceiveVelocityUpdates(true).build(id));
+		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+				.sized(0.25F, 0.25F)
+				.setTrackingRange(256)
+				.setUpdateInterval(1)
+				.noSummon()
+				.fireImmune()
+				.setShouldReceiveVelocityUpdates(true)
+				.build(id));
 	}
 	
 	/**
@@ -63,11 +78,24 @@ public class ModEntities
 	 */
 	private static <T extends ProjectileEntity> RegistryObject<EntityType<T>> registerProjectile(String id, BiFunction<EntityType<T>, Level, T> function)
 	{
-		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(0).noSummon().fireImmune().setShouldReceiveVelocityUpdates(false).setCustomClientFactory((spawnEntity, world) -> null).build(id));
+		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+				.sized(0.25F, 0.25F)
+				.setTrackingRange(0)
+				.noSummon()
+				.fireImmune()
+				.setShouldReceiveVelocityUpdates(false)
+				.setCustomClientFactory((spawnEntity, world) -> null)
+				.build(id));
 	}
 	
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerLight(String id, BiFunction<EntityType<T>, Level, T> function)
 	{
-		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC).sized(0.01F, 0.01F).setTrackingRange(256).setUpdateInterval(1).noSummon().fireImmune().build(id));
+		return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+				.sized(0.01F, 0.01F)
+				.setTrackingRange(256)
+				.setUpdateInterval(1)
+				.noSummon()
+				.fireImmune()
+				.build(id));
 	}
 }

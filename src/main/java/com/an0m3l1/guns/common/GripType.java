@@ -60,7 +60,8 @@ public record GripType(ResourceLocation id, IHeldAnimation getHeldAnimation)
 	 */
 	public static boolean applyBackTransforms(Player player, PoseStack poseStack)
 	{
-		if(player.getItemBySlot(EquipmentSlot.CHEST).getItem() == Items.ELYTRA)
+		if(player.getItemBySlot(EquipmentSlot.CHEST)
+				.getItem() == Items.ELYTRA)
 		{
 			return false;
 		}
@@ -78,7 +79,8 @@ public record GripType(ResourceLocation id, IHeldAnimation getHeldAnimation)
 			poseStack.translate(0 * 0.0625, -5 * 0.0625, -2 * 0.0625);
 		}
 		
-		if(!player.getItemBySlot(EquipmentSlot.CHEST).isEmpty())
+		if(!player.getItemBySlot(EquipmentSlot.CHEST)
+				.isEmpty())
 		{
 			poseStack.translate(0, 0, -1 * 0.0625);
 		}

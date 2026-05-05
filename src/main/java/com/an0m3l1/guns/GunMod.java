@@ -92,10 +92,14 @@ public class GunMod
 	
 	public GunMod()
 	{
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, GunConfig.clientSpec);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GunConfig.commonSpec);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, GunConfig.serverSpec);
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		ModLoadingContext.get()
+				.registerConfig(ModConfig.Type.CLIENT, GunConfig.clientSpec);
+		ModLoadingContext.get()
+				.registerConfig(ModConfig.Type.COMMON, GunConfig.commonSpec);
+		ModLoadingContext.get()
+				.registerConfig(ModConfig.Type.SERVER, GunConfig.serverSpec);
+		IEventBus bus = FMLJavaModLoadingContext.get()
+				.getModEventBus();
 		ModBlocks.REGISTER.register(bus);
 		ModContainers.REGISTER.register(bus);
 		ModEffects.REGISTER.register(bus);
@@ -119,12 +123,18 @@ public class GunMod
 			bus.addListener(CrosshairHandler::onConfigReload);
 			bus.addListener(ClientHandler::onRegisterReloadListener);
 		});
-		controllableLoaded = ModList.get().isLoaded("controllable");
-		backpackedLoaded = ModList.get().isLoaded("backpacked");
-		playerReviveLoaded = ModList.get().isLoaded("playerrevive");
-		shoulderSurfingLoaded = ModList.get().isLoaded("shouldersurfing");
-		dynamicLightsLoaded = ModList.get().isLoaded("dynamiclightsreforged");
-		dynamicTreesLoaded = ModList.get().isLoaded("dynamictrees");
+		controllableLoaded = ModList.get()
+				.isLoaded("controllable");
+		backpackedLoaded = ModList.get()
+				.isLoaded("backpacked");
+		playerReviveLoaded = ModList.get()
+				.isLoaded("playerrevive");
+		shoulderSurfingLoaded = ModList.get()
+				.isLoaded("shouldersurfing");
+		dynamicLightsLoaded = ModList.get()
+				.isLoaded("dynamiclightsreforged");
+		dynamicTreesLoaded = ModList.get()
+				.isLoaded("dynamictrees");
 	}
 	
 	private void onCommonSetup(FMLCommonSetupEvent event)
@@ -143,13 +153,19 @@ public class GunMod
 			FrameworkAPI.registerLoginData(new ResourceLocation(GunMod.MOD_ID, "custom_gun_manager"), CustomGunManager.LoginData::new);
 			CraftingHelper.register(new ResourceLocation(GunMod.MOD_ID, "workbench_ingredient"), WorkbenchIngredient.Serializer.INSTANCE);
 			
-			ProjectileManager.getInstance().registerFactory(ModItems.LIGHT_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createLight(ModEntities.LIGHT_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
-			ProjectileManager.getInstance().registerFactory(ModItems.MEDIUM_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createMedium(ModEntities.MEDIUM_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
-			ProjectileManager.getInstance().registerFactory(ModItems.HEAVY_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createHeavy(ModEntities.HEAVY_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
-			ProjectileManager.getInstance().registerFactory(ModItems.BUCKSHOT_SHELL.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createBuckshot(ModEntities.BUCKSHOT_SHELL.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.LIGHT_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createLight(ModEntities.LIGHT_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.MEDIUM_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createMedium(ModEntities.MEDIUM_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.HEAVY_BULLET.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createHeavy(ModEntities.HEAVY_BULLET.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.BUCKSHOT_SHELL.get(), (worldIn, entity, weapon, item, modifiedGun) -> BulletEntity.createBuckshot(ModEntities.BUCKSHOT_SHELL.get(), worldIn, entity, weapon, item, modifiedGun));
 			
-			ProjectileManager.getInstance().registerFactory(ModItems.PIPE_GRENADE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new PipeGrenadeEntity(ModEntities.PIPE_GRENADE.get(), worldIn, entity, weapon, item, modifiedGun));
-			ProjectileManager.getInstance().registerFactory(ModItems.ROCKET.get(), (worldIn, entity, weapon, item, modifiedGun) -> new RocketEntity(ModEntities.ROCKET.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.PIPE_GRENADE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new PipeGrenadeEntity(ModEntities.PIPE_GRENADE.get(), worldIn, entity, weapon, item, modifiedGun));
+			ProjectileManager.getInstance()
+					.registerFactory(ModItems.ROCKET.get(), (worldIn, entity, weapon, item, modifiedGun) -> new RocketEntity(ModEntities.ROCKET.get(), worldIn, entity, weapon, item, modifiedGun));
 			
 			MinecraftForge.EVENT_BUS.register(new HeadshotBoxManager());
 		});
@@ -180,9 +196,12 @@ public class GunMod
 		SlotTypePreset[] types = new SlotTypePreset[]{SlotTypePreset.HEAD, SlotTypePreset.BODY};
 		for(SlotTypePreset type : types)
 		{
-			InterModComms.sendTo("curios", "register_type", () -> type.getMessageBuilder().build());
+			InterModComms.sendTo("curios", "register_type", () -> type.getMessageBuilder()
+					.build());
 		}
-		InterModComms.sendTo("curios", "register_type", () -> SlotTypePreset.HANDS.getMessageBuilder().size(2).build());
+		InterModComms.sendTo("curios", "register_type", () -> SlotTypePreset.HANDS.getMessageBuilder()
+				.size(2)
+				.build());
 		//InterModComms.sendTo("curios", "register_type", () -> SlotTypePreset.BELT.getMessageBuilder().size(2).build());
 	}
 }

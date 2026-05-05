@@ -215,13 +215,15 @@ public class ProjectileExplosion extends Explosion
 			{
 				blastDamage = ProtectionEnchantment.getExplosionKnockbackAfterDampener((LivingEntity) entity, rawDamage);
 			}
-			entity.setDeltaMovement(entity.getDeltaMovement().add(deltaX * blastDamage, deltaY * blastDamage, deltaZ * blastDamage));
+			entity.setDeltaMovement(entity.getDeltaMovement()
+					.add(deltaX * blastDamage, deltaY * blastDamage, deltaZ * blastDamage));
 			
 			if(entity instanceof Player player)
 			{
 				if(!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying))
 				{
-					this.getHitPlayers().put(player, new Vec3(deltaX * rawDamage, deltaY * rawDamage, deltaZ * rawDamage));
+					this.getHitPlayers()
+							.put(player, new Vec3(deltaX * rawDamage, deltaY * rawDamage, deltaZ * rawDamage));
 				}
 			}
 		}
@@ -262,26 +264,33 @@ public class ProjectileExplosion extends Explosion
 				if(!blockstate.isAir())
 				{
 					BlockPos blockpos1 = blockpos.immutable();
-					this.world.getProfiler().push("explosion_blocks");
+					this.world.getProfiler()
+							.push("explosion_blocks");
 					if(blockstate.canDropFromExplosion(this.world, blockpos, this))
 					{
 						if(this.world instanceof ServerLevel serverlevel)
 						{
 							BlockEntity blockentity = blockstate.hasBlockEntity() ? this.world.getBlockEntity(blockpos) : null;
-							LootContext.Builder lootcontext$builder = (new LootContext.Builder(serverlevel)).withRandom(this.world.random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockentity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.exploder);
+							LootContext.Builder lootcontext$builder = (new LootContext.Builder(serverlevel)).withRandom(this.world.random)
+									.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos))
+									.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+									.withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockentity)
+									.withOptionalParameter(LootContextParams.THIS_ENTITY, this.exploder);
 							if(this.mode == Explosion.BlockInteraction.DESTROY)
 							{
 								lootcontext$builder.withParameter(LootContextParams.EXPLOSION_RADIUS, this.size);
 							}
 							
 							blockstate.spawnAfterBreak(serverlevel, blockpos, ItemStack.EMPTY, flag1);
-							blockstate.getDrops(lootcontext$builder).forEach((p_46074_) -> addBlockDrops(objectarraylist, p_46074_, blockpos1));
+							blockstate.getDrops(lootcontext$builder)
+									.forEach((p_46074_) -> addBlockDrops(objectarraylist, p_46074_, blockpos1));
 						}
 					}
 					
 					blockstate.onBlockExploded(this.world, blockpos, this);
 					ProjectileEntity.BlockDamageManager.removeDamage(this.world, blockpos);
-					this.world.getProfiler().pop();
+					this.world.getProfiler()
+							.pop();
 				}
 			}
 			
@@ -295,7 +304,8 @@ public class ProjectileExplosion extends Explosion
 		{
 			for(BlockPos blockpos2 : this.toBlow)
 			{
-				if(this.world.getBlockState(blockpos2).isAir())
+				if(this.world.getBlockState(blockpos2)
+						.isAir())
 				{
 					BlockState fireState = BaseFireBlock.getState(this.world, blockpos2);
 					this.world.setBlockAndUpdate(blockpos2, fireState);

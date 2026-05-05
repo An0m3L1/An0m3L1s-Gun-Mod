@@ -25,10 +25,17 @@ public class ModBlocks
 {
 	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, GunMod.MOD_ID);
 	
-	public static final RegistryObject<Block> GUN_WORKBENCH = registerBlock("gun_workbench", () -> new WorkbenchBlock(Block.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0F)), GunMod.MATERIALS, 64);
-	public static final RegistryObject<Block> GUN_REPAIR_KIT = registerBlock("gun_repair_kit", () -> new RepairKitBlock(Block.Properties.of(Material.METAL).strength(0.1F)), GunMod.GUNS, 64);
-	public static final RegistryObject<Block> CAST_IRON_BLOCK = registerBlock("cast_iron_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0F)), GunMod.MATERIALS, 64);
-	public static final RegistryObject<RotatedPillarBlock> STEEL_BLOCK = registerBlock("steel_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(5.0F)), GunMod.MATERIALS, 64);
+	public static final RegistryObject<Block> GUN_WORKBENCH = registerBlock("gun_workbench", () -> new WorkbenchBlock(Block.Properties.of(Material.METAL)
+			.requiresCorrectToolForDrops()
+			.strength(5.0F)), GunMod.MATERIALS, 64);
+	public static final RegistryObject<Block> GUN_REPAIR_KIT = registerBlock("gun_repair_kit", () -> new RepairKitBlock(Block.Properties.of(Material.METAL)
+			.strength(0.1F)), GunMod.GUNS, 64);
+	public static final RegistryObject<Block> CAST_IRON_BLOCK = registerBlock("cast_iron_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
+			.requiresCorrectToolForDrops()
+			.strength(5.0F)), GunMod.MATERIALS, 64);
+	public static final RegistryObject<RotatedPillarBlock> STEEL_BLOCK = registerBlock("steel_block", () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.METAL)
+			.requiresCorrectToolForDrops()
+			.strength(5.0F)), GunMod.MATERIALS, 64);
 	public static final RegistryObject<HempCropBlock> HEMP_CROP_BLOCK = REGISTER.register("hemp_crop", () -> new HempCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT)));
 	
 	private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab, int maxStackSize)
@@ -40,6 +47,7 @@ public class ModBlocks
 	
 	private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> block, CreativeModeTab tab, int maxStackSize)
 	{
-		ModItems.REGISTER.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab).stacksTo(maxStackSize)));
+		ModItems.REGISTER.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)
+				.stacksTo(maxStackSize)));
 	}
 }

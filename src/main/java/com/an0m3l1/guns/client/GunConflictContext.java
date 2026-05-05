@@ -15,7 +15,8 @@ public enum GunConflictContext implements IKeyConflictContext
 				@Override
 				public boolean isActive()
 				{
-					return !KeyConflictContext.GUI.isActive() && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().getItem() instanceof GunItem;
+					return !KeyConflictContext.GUI.isActive() && Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem()
+							.getItem() instanceof GunItem;
 				}
 				
 				@Override

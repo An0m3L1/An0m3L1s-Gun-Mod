@@ -24,7 +24,8 @@ public class DistancedSound extends AbstractSoundInstance
 		LocalPlayer player = Minecraft.getInstance().player;
 		if(player != null)
 		{
-			float distance = distanceSupplier.get().floatValue();
+			float distance = distanceSupplier.get()
+					.floatValue();
 			this.volume = volume * (1.0F - Math.min(1.0F, (float) Math.sqrt(player.distanceToSqr(x, y, z)) / distance));
 			this.volume *= this.volume;
 		}

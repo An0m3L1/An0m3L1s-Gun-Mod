@@ -25,9 +25,11 @@ public class InventoryUtil
 	public static boolean removeItemStack(Player player, ItemStack find)
 	{
 		int amount = find.getCount();
-		for(int i = 0; i < player.getInventory().getContainerSize(); i++)
+		for(int i = 0; i < player.getInventory()
+				.getContainerSize(); i++)
 		{
-			ItemStack stack = player.getInventory().getItem(i);
+			ItemStack stack = player.getInventory()
+					.getItem(i);
 			if(!stack.isEmpty() && areItemStacksEqualIgnoreCount(stack, find))
 			{
 				if(amount - stack.getCount() < 0)
@@ -65,7 +67,8 @@ public class InventoryUtil
 		}
 		else
 		{
-			return (source.getTag() == null || source.getTag().equals(target.getTag())) && source.areCapsCompatible(target);
+			return (source.getTag() == null || source.getTag()
+					.equals(target.getTag())) && source.areCapsCompatible(target);
 		}
 	}
 	
@@ -85,9 +88,11 @@ public class InventoryUtil
 	public static void removeWorkstationIngredient(Player player, WorkbenchIngredient find)
 	{
 		int amount = find.getCount();
-		for(int i = 0; i < player.getInventory().getContainerSize(); i++)
+		for(int i = 0; i < player.getInventory()
+				.getContainerSize(); i++)
 		{
-			ItemStack stack = player.getInventory().getItem(i);
+			ItemStack stack = player.getInventory()
+					.getItem(i);
 			if(!stack.isEmpty() && find.test(stack))
 			{
 				int removeAmount = Math.min(amount, stack.getCount());
@@ -96,7 +101,8 @@ public class InventoryUtil
 				
 				if(stack.isEmpty())
 				{
-					player.getInventory().setItem(i, ItemStack.EMPTY);
+					player.getInventory()
+							.setItem(i, ItemStack.EMPTY);
 				}
 				
 				if(amount == 0)

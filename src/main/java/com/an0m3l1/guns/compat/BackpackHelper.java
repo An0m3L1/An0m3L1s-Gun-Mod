@@ -73,7 +73,8 @@ public class BackpackHelper
 			if(Gun.isAmmo(stack, id))
 			{
 				AmmoContext context = new AmmoContext(stack, player.getInventory());
-				ammoCount += context.stack().getCount();
+				ammoCount += context.stack()
+						.getCount();
 			}
 		}
 		

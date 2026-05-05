@@ -25,15 +25,18 @@ public class MouseHandlerMixin
 	{
 		float additionalAdsSensitivity = 1.0F;
 		Minecraft mc = Minecraft.getInstance();
-		if(mc.player != null && !mc.player.getMainHandItem().isEmpty() && (mc.options.getCameraType() == CameraType.FIRST_PERSON || mc.options.getCameraType() == CameraType.THIRD_PERSON_BACK))
+		if(mc.player != null && !mc.player.getMainHandItem()
+				.isEmpty() && (mc.options.getCameraType() == CameraType.FIRST_PERSON || mc.options.getCameraType() == CameraType.THIRD_PERSON_BACK))
 		{
 			ItemStack heldItem = mc.player.getMainHandItem();
 			if(heldItem.getItem() instanceof GunItem gunItem)
 			{
-				if(AimingHandler.get().isAiming() && !ModSyncedDataKeys.RELOADING.getValue(mc.player))
+				if(AimingHandler.get()
+						.isAiming() && !ModSyncedDataKeys.RELOADING.getValue(mc.player))
 				{
 					Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-					if(modifiedGun.getModules().getZoom() != null)
+					if(modifiedGun.getModules()
+							.getZoom() != null)
 					{
 						boolean isFirstPerson = (mc.options.getCameraType() == CameraType.FIRST_PERSON);
 						float modifier = Gun.getFovModifier(heldItem, modifiedGun);
@@ -44,6 +47,7 @@ public class MouseHandlerMixin
 			}
 		}
 		double adsSensitivity = GunConfig.CLIENT.aimDownSightSensitivity.get();
-		return original * (1.0 - (1.0 - adsSensitivity) * AimingHandler.get().getNormalisedAdsProgress()) * additionalAdsSensitivity;
+		return original * (1.0 - (1.0 - adsSensitivity) * AimingHandler.get()
+				.getNormalisedAdsProgress()) * additionalAdsSensitivity;
 	}
 }

@@ -85,8 +85,10 @@ public class ReloadHandler
 						if(tag.getInt("AmmoCount") > GunCompositeStatHelper.getAmmoCapacity(stack))
 						{
 							this.setReloading(false, true);
-							PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload(true));
-							GunRenderingHandler.get().stageReserveAmmoUpdate(2);
+							PacketHandler.getPlayChannel()
+									.sendToServer(new C2SMessageUnload(true));
+							GunRenderingHandler.get()
+									.stageReserveAmmoUpdate(2);
 						}
 					}
 				}
@@ -127,7 +129,8 @@ public class ReloadHandler
 			KeyBinds.KEY_RELOAD.setDown(false);
 			if(stack.getItem() instanceof GunItem)
 			{
-				GunRenderingHandler.get().updateReserveAmmo(player);
+				GunRenderingHandler.get()
+						.updateReserveAmmo(player);
 			}
 		}
 		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0)
@@ -137,10 +140,12 @@ public class ReloadHandler
 				if(Gun.hasAmmo(stack))
 				{
 					this.setReloading(false, true);
-					PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload(false));
+					PacketHandler.getPlayChannel()
+							.sendToServer(new C2SMessageUnload(false));
 					if(stack.getItem() instanceof GunItem)
 					{
-						GunRenderingHandler.get().stageReserveAmmoUpdate(2);
+						GunRenderingHandler.get()
+								.stageReserveAmmoUpdate(2);
 					}
 				}
 			}
@@ -174,15 +179,18 @@ public class ReloadHandler
 						doMagReload = Gun.usesMagReloads(stack);
 						
 						Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-						if(Gun.findAmmo(player, gun.getProjectile().getItem()) == AmmoContext.NONE && !Gun.hasUnlimitedReloads(stack))
+						if(Gun.findAmmo(player, gun.getProjectile()
+								.getItem()) == AmmoContext.NONE && !Gun.hasUnlimitedReloads(stack))
 						{
 							return;
 						}
 						
 						ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
 						float cooldown;
-						cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
-						if(cooldown > gun.getGeneral().getReloadAllowedCooldown())
+						cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
+								.getFrameTime());
+						if(cooldown > gun.getGeneral()
+								.getReloadAllowedCooldown())
 						{
 							return;
 						}
@@ -195,10 +203,12 @@ public class ReloadHandler
 							return;
 						}
 						ModSyncedDataKeys.RELOADING.setValue(player, true);
-						PacketHandler.getPlayChannel().sendToServer(new C2SMessageReload(true));
+						PacketHandler.getPlayChannel()
+								.sendToServer(new C2SMessageReload(true));
 						this.reloadingSlot = player.getInventory().selected;
 						MinecraftForge.EVENT_BUS.post(new GunReloadEvent.Post(player, stack));
-						GunRenderingHandler.get().updateReserveAmmo(player, gun);
+						GunRenderingHandler.get()
+								.updateReserveAmmo(player, gun);
 						reloadFinish = true;
 						reloadStart = true;
 					}
@@ -218,7 +228,8 @@ public class ReloadHandler
 					ModSyncedDataKeys.SWITCHTIME.setValue(player, storedReloadDelay + 1);
 					ModSyncedDataKeys.RELOADING.setValue(player, false);
 				}
-				PacketHandler.getPlayChannel().sendToServer(new C2SMessageReload(false));
+				PacketHandler.getPlayChannel()
+						.sendToServer(new C2SMessageReload(false));
 				this.reloadingSlot = -1;
 			}
 		}
@@ -235,11 +246,24 @@ public class ReloadHandler
 		int reloadInterruptDelay = 5;
 		int reloadEndDelay = 5;
 		ItemStack stack = player.getMainHandItem();
-		if(player.getMainHandItem().getItem() instanceof GunItem gun)
+		if(player.getMainHandItem()
+				.getItem() instanceof GunItem gun)
 		{
-			reloadStartDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack).getGeneral().getReloadEmptyStartDelay() : gun.getModifiedGun(stack).getGeneral().getReloadStartDelay(), 1);
-			reloadInterruptDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack).getGeneral().getReloadEmptyInterruptDelay() : gun.getModifiedGun(stack).getGeneral().getReloadInterruptDelay(), 5);
-			reloadEndDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack).getGeneral().getReloadEmptyEndDelay() : gun.getModifiedGun(stack).getGeneral().getReloadEndDelay(), 1);
+			reloadStartDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadEmptyStartDelay() : gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadStartDelay(), 1);
+			reloadInterruptDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadEmptyInterruptDelay() : gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadInterruptDelay(), 5);
+			reloadEndDelay = Math.max(reloadFromEmpty ? gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadEmptyEndDelay() : gun.getModifiedGun(stack)
+					.getGeneral()
+					.getReloadEndDelay(), 1);
 		}
 		storedReloadDelay = (reloadFinish && !getReloading(player)) ? reloadEndDelay : ((reloadStart && getReloading(player)) ? reloadStartDelay : reloadInterruptDelay);
 	}

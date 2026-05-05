@@ -62,7 +62,8 @@ public class ReloadTracker
 		this.startTick = player.tickCount;
 		this.delayedStartTick = player.tickCount;
 		this.slot = player.getInventory().selected;
-		this.stack = player.getInventory().getSelected();
+		this.stack = player.getInventory()
+				.getSelected();
 		this.doMagReload = Gun.usesMagReloads(stack);
 		
 		if(stack.getItem() instanceof GunItem)
@@ -78,19 +79,23 @@ public class ReloadTracker
 		this.gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
 		if(reloadFromEmpty)
 		{
-			this.reloadStartDelay = Math.max(gun.getGeneral().getReloadEmptyStartDelay(), 0);
+			this.reloadStartDelay = Math.max(gun.getGeneral()
+					.getReloadEmptyStartDelay(), 0);
 		}
 		else
 		{
-			this.reloadStartDelay = Math.max(gun.getGeneral().getReloadStartDelay(), 0);
+			this.reloadStartDelay = Math.max(gun.getGeneral()
+					.getReloadStartDelay(), 0);
 		}
 		if(reloadFromEmpty)
 		{
-			this.reloadEndDelay = Math.max(gun.getGeneral().getReloadEmptyEndDelay(), 0);
+			this.reloadEndDelay = Math.max(gun.getGeneral()
+					.getReloadEmptyEndDelay(), 0);
 		}
 		else
 		{
-			this.reloadEndDelay = Math.max(gun.getGeneral().getReloadEndDelay(), 0);
+			this.reloadEndDelay = Math.max(gun.getGeneral()
+					.getReloadEndDelay(), 0);
 		}
 	}
 	
@@ -104,7 +109,8 @@ public class ReloadTracker
 	 */
 	private boolean isNotSameWeapon(Player player)
 	{
-		return this.stack.isEmpty() || player.getInventory().selected != this.slot || player.getInventory().getSelected() != this.stack;
+		return this.stack.isEmpty() || player.getInventory().selected != this.slot || player.getInventory()
+				.getSelected() != this.stack;
 	}
 	
 	private boolean isWeaponFull()
@@ -115,7 +121,10 @@ public class ReloadTracker
 	
 	private boolean hasNoAmmo(Player player)
 	{
-		return Gun.findAmmo(player, this.gun.getProjectile().getItem()).stack().isEmpty();
+		return Gun.findAmmo(player, this.gun.getProjectile()
+						.getItem())
+				.stack()
+				.isEmpty();
 	}
 	
 	private boolean canReload(Player player)
@@ -142,20 +151,24 @@ public class ReloadTracker
 	
 	private int getInventoryAmmo(Player player)
 	{
-		return Gun.getReserveAmmoCount(player, this.gun.getProjectile().getItem());
+		return Gun.getReserveAmmoCount(player, this.gun.getProjectile()
+				.getItem());
 	}
 	
 	private void increaseAmmo(Player player)
 	{
 		int ammoLoaded = 0;
-		AmmoContext context = Gun.findAmmo(player, this.gun.getProjectile().getItem());
+		AmmoContext context = Gun.findAmmo(player, this.gun.getProjectile()
+				.getItem());
 		boolean endReload = false;
 		
 		int attempts = 0;
 		int itemsLoaded = 0;
 		int maxAmmo = GunCompositeStatHelper.getAmmoCapacity(this.stack, this.gun);
-		int ammoPerItem = this.gun.getGeneral().getAmmoPerItem();
-		int trueReloadAmount = doMagReload ? maxAmmo : this.gun.getGeneral().getReloadAmount();
+		int ammoPerItem = this.gun.getGeneral()
+				.getAmmoPerItem();
+		int trueReloadAmount = doMagReload ? maxAmmo : this.gun.getGeneral()
+				.getReloadAmount();
 		while(ammoLoaded < trueReloadAmount && attempts < 64 && !endReload)
 		{
 			attempts++;
@@ -194,7 +207,8 @@ public class ReloadTracker
 			
 			if((ammoLoaded < trueReloadAmount || doMagReload) && !endReload)
 			{
-				context = Gun.findAmmo(player, this.gun.getProjectile().getItem());
+				context = Gun.findAmmo(player, this.gun.getProjectile()
+						.getItem());
 			}
 		}
 		
@@ -202,7 +216,8 @@ public class ReloadTracker
 		DelayedTask.runAfter(1, () ->
 		{
 			C2SMessageForceSetReserveAmmo message = new C2SMessageForceSetReserveAmmo(ammoAfterLoad);
-			PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) player, message);
+			PacketHandler.getPlayChannel()
+					.sendToPlayer(() -> (ServerPlayer) player, message);
 		});
 		
 		if(!doMagReload)
@@ -211,16 +226,19 @@ public class ReloadTracker
 			this.resetAnimationSounds();
 		}
 		
-		ResourceLocation reloadSound = this.gun.getSounds().getReload();
+		ResourceLocation reloadSound = this.gun.getSounds()
+				.getReload();
 		
-		if(reloadSound != null && (!gun.getGeneral().usesMagReload() && !Gun.hasExtraReloadSounds(gun)))
+		if(reloadSound != null && (!gun.getGeneral()
+				.usesMagReload() && !Gun.hasExtraReloadSounds(gun)))
 		{
 			double radius = GunConfig.SERVER.reloadSoundDistance.get();
 			double soundX = player.getX();
 			double soundY = player.getY() + 1.0;
 			double soundZ = player.getZ();
 			S2CMessageSound message = new S2CMessageSound(reloadSound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), message);
+			PacketHandler.getPlayChannel()
+					.sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), message);
 		}
 	}
 	
@@ -230,7 +248,9 @@ public class ReloadTracker
 		{
 			if(!RELOAD_TRACKER_MAP.containsKey(player))
 			{
-				if(!(player.getInventory().getSelected().getItem() instanceof GunItem))
+				if(!(player.getInventory()
+						.getSelected()
+						.getItem() instanceof GunItem))
 				{
 					ModSyncedDataKeys.RELOADING.setValue(player, false);
 					return;
@@ -306,13 +326,15 @@ public class ReloadTracker
 				{
 					//if (gun.getSounds().hasExtraReloadSounds() && tracker.getReloadProgress(player)>=gun.getSounds().getReloadClipOutThreshold()
 					ReloadSoundsBase soundObj = Gun.findReloadSoundObj(tracker.gun, "reloadClipOut", tracker.doMagReload, tracker.reloadFromEmpty);
-					if((Gun.hasExtraReloadSounds(gun) && (tracker.getReloadProgress(player) >= Gun.getReloadSoundTimings(gun, soundObj, "reloadClipOut", tracker.doMagReload, tracker.reloadFromEmpty) || tracker.reloadCycleEnd(player))) || (!Gun.hasExtraReloadSounds(gun) && gun.getGeneral().usesMagReload() && tracker.getReloadProgress(player) >= 0.25F))
+					if((Gun.hasExtraReloadSounds(gun) && (tracker.getReloadProgress(player) >= Gun.getReloadSoundTimings(gun, soundObj, "reloadClipOut", tracker.doMagReload, tracker.reloadFromEmpty) || tracker.reloadCycleEnd(player))) || (!Gun.hasExtraReloadSounds(gun) && gun.getGeneral()
+							.usesMagReload() && tracker.getReloadProgress(player) >= 0.25F))
 					{
 						if(Gun.hasExtraReloadSounds(gun))
 						{
 							playReloadSound(player, "reloadClipOut");
 						}
-						else if(gun.getGeneral().usesMagReload())
+						else if(gun.getGeneral()
+								.usesMagReload())
 						{
 							playReloadSound(player, "reload");
 						}
@@ -323,13 +345,15 @@ public class ReloadTracker
 				{
 					//if (gun.getSounds().hasExtraReloadSounds() && tracker.getReloadProgress(player)>=gun.getSounds().getReloadClipInThreshold()
 					ReloadSoundsBase soundObj = Gun.findReloadSoundObj(tracker.gun, "reloadClipIn", tracker.doMagReload, tracker.reloadFromEmpty);
-					if((Gun.hasExtraReloadSounds(gun) && (tracker.getReloadProgress(player) >= Gun.getReloadSoundTimings(gun, soundObj, "reloadClipIn", tracker.doMagReload, tracker.reloadFromEmpty) || tracker.reloadCycleEnd(player))) || (!Gun.hasExtraReloadSounds(gun) && gun.getGeneral().usesMagReload() && tracker.getReloadProgress(player) >= 0.75F))
+					if((Gun.hasExtraReloadSounds(gun) && (tracker.getReloadProgress(player) >= Gun.getReloadSoundTimings(gun, soundObj, "reloadClipIn", tracker.doMagReload, tracker.reloadFromEmpty) || tracker.reloadCycleEnd(player))) || (!Gun.hasExtraReloadSounds(gun) && gun.getGeneral()
+							.usesMagReload() && tracker.getReloadProgress(player) >= 0.75F))
 					{
 						if(Gun.hasExtraReloadSounds(gun))
 						{
 							playReloadSound(player, "reloadClipIn");
 						}
-						else if(gun.getGeneral().usesMagReload())
+						else if(gun.getGeneral()
+								.usesMagReload())
 						{
 							playReloadSound(player, "reload");
 						}
@@ -388,7 +412,8 @@ public class ReloadTracker
 						}
 						else
 						{
-							ResourceLocation finalCockSound = tracker.gun.getSounds().getCock();
+							ResourceLocation finalCockSound = tracker.gun.getSounds()
+									.getCock();
 							DelayedTask.runAfter(4, () -> playReloadSound(finalPlayer, finalCockSound));
 						}
 					}
@@ -425,7 +450,8 @@ public class ReloadTracker
 			double soundZ = player.getZ();
 			double radius = GunConfig.SERVER.reloadSoundDistance.get();
 			S2CMessageSound messageSound = new S2CMessageSound(sound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), messageSound);
+			PacketHandler.getPlayChannel()
+					.sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), messageSound);
 		}
 	}
 	
@@ -465,7 +491,8 @@ public class ReloadTracker
         else*/
 		if(Objects.equals(soundType, "cock"))
 		{
-			sound = tracker.gun.getSounds().getCock();
+			sound = tracker.gun.getSounds()
+					.getCock();
 		}
 		else
 		{
@@ -513,7 +540,8 @@ public class ReloadTracker
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity().getServer();
+		MinecraftServer server = event.getEntity()
+				.getServer();
 		if(server != null)
 		{
 			server.execute(() -> RELOAD_TRACKER_MAP.remove(event.getEntity()));

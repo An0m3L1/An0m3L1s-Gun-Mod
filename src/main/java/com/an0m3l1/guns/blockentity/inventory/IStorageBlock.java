@@ -18,7 +18,8 @@ public interface IStorageBlock extends Container, MenuProvider
 	@Override
 	default int getContainerSize()
 	{
-		return this.getInventory().size();
+		return this.getInventory()
+				.size();
 	}
 	
 	@Override
@@ -37,7 +38,9 @@ public interface IStorageBlock extends Container, MenuProvider
 	@Override
 	default @NotNull ItemStack getItem(int index)
 	{
-		return index >= 0 && index < this.getInventory().size() ? this.getInventory().get(index) : ItemStack.EMPTY;
+		return index >= 0 && index < this.getInventory()
+				.size() ? this.getInventory()
+				.get(index) : ItemStack.EMPTY;
 	}
 	
 	@Override
@@ -54,14 +57,16 @@ public interface IStorageBlock extends Container, MenuProvider
 	@Override
 	default @NotNull ItemStack removeItemNoUpdate(int index)
 	{
-		ItemStack stack = this.getInventory().get(index);
+		ItemStack stack = this.getInventory()
+				.get(index);
 		if(stack.isEmpty())
 		{
 			return ItemStack.EMPTY;
 		}
 		else
 		{
-			this.getInventory().set(index, ItemStack.EMPTY);
+			this.getInventory()
+					.set(index, ItemStack.EMPTY);
 			return stack;
 		}
 	}
@@ -69,7 +74,8 @@ public interface IStorageBlock extends Container, MenuProvider
 	@Override
 	default void setItem(int index, @NotNull ItemStack stack)
 	{
-		this.getInventory().set(index, stack);
+		this.getInventory()
+				.set(index, stack);
 		if(!stack.isEmpty() && stack.getCount() > this.getMaxStackSize())
 		{
 			stack.setCount(this.getMaxStackSize());
@@ -86,6 +92,7 @@ public interface IStorageBlock extends Container, MenuProvider
 	@Override
 	default void clearContent()
 	{
-		this.getInventory().clear();
+		this.getInventory()
+				.clear();
 	}
 }

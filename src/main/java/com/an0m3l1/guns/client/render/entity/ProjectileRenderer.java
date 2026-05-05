@@ -30,25 +30,31 @@ public class ProjectileRenderer extends EntityRenderer<ProjectileEntity>
 	@Override
 	public void render(ProjectileEntity entity, float entityYaw, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource renderTypeBuffer, int light)
 	{
-		if(entity.getProjectile().isInvisible() || entity.tickCount <= 1)
+		if(entity.getProjectile()
+				.isInvisible() || entity.tickCount <= 1)
 		{
 			return;
 		}
 		
 		poseStack.pushPose();
 		
-		if(!RenderUtil.getModel(entity.getItem()).isGui3d())
+		if(!RenderUtil.getModel(entity.getItem())
+				.isGui3d())
 		{
 			poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-			Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemTransforms.TransformType.GROUND, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
+			Minecraft.getInstance()
+					.getItemRenderer()
+					.renderStatic(entity.getItem(), ItemTransforms.TransformType.GROUND, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
 		}
 		else
 		{
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(entityYaw));
 			poseStack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
-			Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
+			Minecraft.getInstance()
+					.getItemRenderer()
+					.renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
 		}
 		
 		poseStack.popPose();

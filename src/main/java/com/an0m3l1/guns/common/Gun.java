@@ -202,7 +202,8 @@ public class Gun implements INBTSerializable<CompoundTag>
 			tag.putInt("Rate", this.rate);
 			tag.putInt("BurstCount", this.burstCount);
 			tag.putInt("BurstCooldown", this.burstCooldown);
-			tag.putString("GripType", this.gripType.id().toString());
+			tag.putString("GripType", this.gripType.id()
+					.toString());
 			tag.putBoolean("OverrideClientGripTyper", this.overrideClientGripType);
 			tag.putInt("DefaultColor", this.defaultColor);
 			tag.putInt("MaxAmmo", this.maxAmmo);
@@ -502,7 +503,8 @@ public class Gun implements INBTSerializable<CompoundTag>
 			{
 				object.addProperty("burstCooldown", this.burstCooldown);
 			}
-			object.addProperty("gripType", this.gripType.id().toString());
+			object.addProperty("gripType", this.gripType.id()
+					.toString());
 			if(this.overrideClientGripType)
 			{
 				object.addProperty("overrideClientGripType", this.overrideClientGripType);
@@ -4220,33 +4222,51 @@ public class Gun implements INBTSerializable<CompoundTag>
 		ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), gunStack);
 		if(!magStack.isEmpty())
 		{
-			if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
+			if(magStack.getItem()
+					.builtInRegistryHolder()
+					.key()
+					.location()
+					.getPath()
+					.equals("light_magazine"))
 			{
-				int magSize = modifiedGun.getGeneral().getLightMagAmmo();
-				return magSize > 0 ? magSize : modifiedGun.getGeneral().getMaxAmmo();
+				int magSize = modifiedGun.getGeneral()
+						.getLightMagAmmo();
+				return magSize > 0 ? magSize : modifiedGun.getGeneral()
+						.getMaxAmmo();
 			}
-			else if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
+			else if(magStack.getItem()
+					.builtInRegistryHolder()
+					.key()
+					.location()
+					.getPath()
+					.equals("extended_magazine"))
 			{
-				int magSize = modifiedGun.getGeneral().getExtendedMagAmmo();
-				return magSize > 0 ? magSize : modifiedGun.getGeneral().getMaxAmmo();
+				int magSize = modifiedGun.getGeneral()
+						.getExtendedMagAmmo();
+				return magSize > 0 ? magSize : modifiedGun.getGeneral()
+						.getMaxAmmo();
 			}
 		}
 		
-		return modifiedGun.getGeneral().getMaxAmmo();
+		return modifiedGun.getGeneral()
+				.getMaxAmmo();
 	}
 	
 	public static AmmoContext findAmmo(Player player, ResourceLocation id)
 	{
-		ItemStack gunStack = player.getInventory().getSelected();
+		ItemStack gunStack = player.getInventory()
+				.getSelected();
 		if(player.isCreative() || hasUnlimitedReloads(gunStack))
 		{
 			Item item = ForgeRegistries.ITEMS.getValue(id);
 			ItemStack ammo = item != null ? new ItemStack(item, Integer.MAX_VALUE) : ItemStack.EMPTY;
 			return new AmmoContext(ammo, null);
 		}
-		for(int i = 0; i < player.getInventory().getContainerSize(); ++i)
+		for(int i = 0; i < player.getInventory()
+				.getContainerSize(); ++i)
 		{
-			ItemStack stack = player.getInventory().getItem(i);
+			ItemStack stack = player.getInventory()
+					.getItem(i);
 			if(isAmmo(stack, id))
 			{
 				return new AmmoContext(stack, player.getInventory());
@@ -4302,13 +4322,16 @@ public class Gun implements INBTSerializable<CompoundTag>
 	public static int getReserveAmmoCount(Player player, ResourceLocation id)
 	{
 		int ammoCount = 0;
-		for(int i = 0; i < player.getInventory().getContainerSize(); ++i)
+		for(int i = 0; i < player.getInventory()
+				.getContainerSize(); ++i)
 		{
-			ItemStack stack = player.getInventory().getItem(i);
+			ItemStack stack = player.getInventory()
+					.getItem(i);
 			if(isAmmo(stack, id))
 			{
 				AmmoContext context = new AmmoContext(stack, player.getInventory());
-				ammoCount += context.stack().getCount();
+				ammoCount += context.stack()
+						.getCount();
 			}
 		}
 		if(GunMod.backpackedLoaded)
@@ -4327,7 +4350,8 @@ public class Gun implements INBTSerializable<CompoundTag>
 	public static boolean hasRampUp(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return modifiedGun.getGeneral().getDoRampUp();
+		return modifiedGun.getGeneral()
+				.getDoRampUp();
 	}
 	
 	public static boolean isAmmo(ItemStack stack, ResourceLocation id)
@@ -4345,58 +4369,76 @@ public class Gun implements INBTSerializable<CompoundTag>
 	{
 		CompoundTag tag = gunStack.getOrCreateTag();
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return tag.getBoolean("IgnoreAmmo") || modifiedGun.getGeneral().getInfiniteAmmo();
+		return tag.getBoolean("IgnoreAmmo") || modifiedGun.getGeneral()
+				.getInfiniteAmmo();
 	}
 	
 	public static boolean cantShoot(ItemStack gunStack)
 	{
 		CompoundTag tag = gunStack.getOrCreateTag();
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return (usesEnergy(gunStack)) && (tag.getInt("Energy") < modifiedGun.getGeneral().getEnergyPerShot());
+		return (usesEnergy(gunStack)) && (tag.getInt("Energy") < modifiedGun.getGeneral()
+				.getEnergyPerShot());
 	}
 	
 	public static boolean usesEnergy(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return modifiedGun.getGeneral().getEnergyPerShot() > 0 && modifiedGun.getGeneral().getEnergyCapacity() > 0;
+		return modifiedGun.getGeneral()
+				.getEnergyPerShot() > 0 && modifiedGun.getGeneral()
+				.getEnergyCapacity() > 0;
 	}
 	
 	public static boolean usesMagReloads(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return (modifiedGun.getGeneral().usesMagReload() || (modifiedGun.getGeneral().hasMagReloadWhenEmpty() && !Gun.hasAmmo(gunStack))) && (!modifiedGun.getGeneral().hasNoMagReloadWithScope() || Gun.getAttachment(IAttachment.Type.SCOPE, gunStack).isEmpty());
+		return (modifiedGun.getGeneral()
+				.usesMagReload() || (modifiedGun.getGeneral()
+				.hasMagReloadWhenEmpty() && !Gun.hasAmmo(gunStack))) && (!modifiedGun.getGeneral()
+				.hasNoMagReloadWithScope() || Gun.getAttachment(IAttachment.Type.SCOPE, gunStack)
+				.isEmpty());
 	}
 	
 	public static int getDefaultFireMode(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
 		
-		if(modifiedGun.getFireModes().usesFireModes() && modifiedGun.getFireModes().hasAnyFireMode())
+		if(modifiedGun.getFireModes()
+				.usesFireModes() && modifiedGun.getFireModes()
+				.hasAnyFireMode())
 		{
-			if(modifiedGun.getFireModes().getDefaultFireMode() >= 0 && modifiedGun.getFireModes().getDefaultFireMode() <= 2)
+			if(modifiedGun.getFireModes()
+					.getDefaultFireMode() >= 0 && modifiedGun.getFireModes()
+					.getDefaultFireMode() <= 2)
 			{
-				return modifiedGun.getFireModes().getDefaultFireMode();
+				return modifiedGun.getFireModes()
+						.getDefaultFireMode();
 			}
-			else if(modifiedGun.getFireModes().hasAutoMode())
+			else if(modifiedGun.getFireModes()
+					.hasAutoMode())
 			{
 				return 1;
 			}
-			else if(modifiedGun.getFireModes().hasBurstMode())
+			else if(modifiedGun.getFireModes()
+					.hasBurstMode())
 			{
 				return 2;
 			}
-			else if(modifiedGun.getFireModes().hasSemiMode())
+			else if(modifiedGun.getFireModes()
+					.hasSemiMode())
 			{
 				return 0;
 			}
 		}
 		else
 		{
-			if(modifiedGun.getGeneral().hasBurstFire())
+			if(modifiedGun.getGeneral()
+					.hasBurstFire())
 			{
 				return 2;
 			}
-			else if(modifiedGun.getGeneral().isAuto())
+			else if(modifiedGun.getGeneral()
+					.isAuto())
 			{
 				return 1;
 			}
@@ -4415,17 +4457,20 @@ public class Gun implements INBTSerializable<CompoundTag>
 			return getDefaultFireMode(gunStack);
 		}
 		
-		if(modifiedGun.getFireModes().usesFireModes())
+		if(modifiedGun.getFireModes()
+				.usesFireModes())
 		{
 			return tag.getInt("FireMode");
 		}
 		else
 		{
-			if(modifiedGun.getGeneral().hasBurstFire())
+			if(modifiedGun.getGeneral()
+					.hasBurstFire())
 			{
 				return 2;
 			}
-			else if(modifiedGun.getGeneral().isAuto())
+			else if(modifiedGun.getGeneral()
+					.isAuto())
 			{
 				return 1;
 			}
@@ -4439,33 +4484,45 @@ public class Gun implements INBTSerializable<CompoundTag>
 	public static boolean isAuto(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return (modifiedGun.getFireModes().usesFireModes() && getFireMode(gunStack) == 1) || (!modifiedGun.getFireModes().usesFireModes() && modifiedGun.getGeneral().isAuto());
+		return (modifiedGun.getFireModes()
+				.usesFireModes() && getFireMode(gunStack) == 1) || (!modifiedGun.getFireModes()
+				.usesFireModes() && modifiedGun.getGeneral()
+				.isAuto());
 	}
 	
 	public static boolean hasBurstFire(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return (modifiedGun.getFireModes().usesFireModes() && getFireMode(gunStack) == 2) || (!modifiedGun.getFireModes().usesFireModes() && modifiedGun.getGeneral().hasBurstFire());
+		return (modifiedGun.getFireModes()
+				.usesFireModes() && getFireMode(gunStack) == 2) || (!modifiedGun.getFireModes()
+				.usesFireModes() && modifiedGun.getGeneral()
+				.hasBurstFire());
 	}
 	
 	public static int getBurstCount(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
 		int finalBurstCount = 3;
-		if(modifiedGun.getFireModes().usesFireModes())
+		if(modifiedGun.getFireModes()
+				.usesFireModes())
 		{
-			if(modifiedGun.getFireModes().getBurstCount() > 1)
+			if(modifiedGun.getFireModes()
+					.getBurstCount() > 1)
 			{
-				finalBurstCount = modifiedGun.getFireModes().getBurstCount();
+				finalBurstCount = modifiedGun.getFireModes()
+						.getBurstCount();
 			}
-			else if(modifiedGun.getGeneral().getBurstCount() > 1)
+			else if(modifiedGun.getGeneral()
+					.getBurstCount() > 1)
 			{
-				finalBurstCount = modifiedGun.getGeneral().getBurstCount();
+				finalBurstCount = modifiedGun.getGeneral()
+						.getBurstCount();
 			}
 		}
 		else
 		{
-			finalBurstCount = modifiedGun.getGeneral().getBurstCount();
+			finalBurstCount = modifiedGun.getGeneral()
+					.getBurstCount();
 		}
 		
 		return finalBurstCount;
@@ -4476,9 +4533,11 @@ public class Gun implements INBTSerializable<CompoundTag>
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
 		int finalBurstCooldown = (hasAutoBurst(gunStack) ? 3 : 1);
 		
-		if(modifiedGun.getGeneral().getBurstCooldown() >= 0)
+		if(modifiedGun.getGeneral()
+				.getBurstCooldown() >= 0)
 		{
-			finalBurstCooldown = modifiedGun.getGeneral().getBurstCooldown();
+			finalBurstCooldown = modifiedGun.getGeneral()
+					.getBurstCooldown();
 		}
 		
 		return finalBurstCooldown;
@@ -4487,20 +4546,28 @@ public class Gun implements INBTSerializable<CompoundTag>
 	public static boolean hasAutoBurst(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		if(modifiedGun.getFireModes().usesFireModes())
+		if(modifiedGun.getFireModes()
+				.usesFireModes())
 		{
-			if(modifiedGun.getFireModes().hasBurstMode() && modifiedGun.getFireModes().usesAutoBurst())
+			if(modifiedGun.getFireModes()
+					.hasBurstMode() && modifiedGun.getFireModes()
+					.usesAutoBurst())
 			{
 				return true;
 			}
 			else
 			{
-				return !modifiedGun.getFireModes().hasAnyFireMode() && modifiedGun.getGeneral().hasBurstFire() && modifiedGun.getGeneral().isAuto();
+				return !modifiedGun.getFireModes()
+						.hasAnyFireMode() && modifiedGun.getGeneral()
+						.hasBurstFire() && modifiedGun.getGeneral()
+						.isAuto();
 			}
 		}
 		else
 		{
-			return modifiedGun.getGeneral().hasBurstFire() && modifiedGun.getGeneral().isAuto();
+			return modifiedGun.getGeneral()
+					.hasBurstFire() && modifiedGun.getGeneral()
+					.isAuto();
 		}
 		//return (modifiedGun.getFireModes().usesFireModes() && modifiedGun.getFireModes().usesAutoBurst()) || (!modifiedGun.getFireModes().hasAnyFireMode() && modifiedGun.getGeneral().isAuto());
 	}
@@ -4508,19 +4575,30 @@ public class Gun implements INBTSerializable<CompoundTag>
 	public static boolean canDoSemiFire(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return modifiedGun.getFireModes().hasSemiMode() || (!modifiedGun.getFireModes().hasAnyFireMode() && !modifiedGun.getGeneral().isAuto() && !modifiedGun.getGeneral().hasBurstFire());
+		return modifiedGun.getFireModes()
+				.hasSemiMode() || (!modifiedGun.getFireModes()
+				.hasAnyFireMode() && !modifiedGun.getGeneral()
+				.isAuto() && !modifiedGun.getGeneral()
+				.hasBurstFire());
 	}
 	
 	public static boolean canDoAutoFire(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return modifiedGun.getFireModes().hasAutoMode() || (!modifiedGun.getFireModes().hasAnyFireMode() && modifiedGun.getGeneral().isAuto() && !modifiedGun.getGeneral().hasBurstFire());
+		return modifiedGun.getFireModes()
+				.hasAutoMode() || (!modifiedGun.getFireModes()
+				.hasAnyFireMode() && modifiedGun.getGeneral()
+				.isAuto() && !modifiedGun.getGeneral()
+				.hasBurstFire());
 	}
 	
 	public static boolean canDoBurstFire(ItemStack gunStack)
 	{
 		Gun modifiedGun = ((GunItem) gunStack.getItem()).getModifiedGun(gunStack);
-		return modifiedGun.getFireModes().hasBurstMode() || (!modifiedGun.getFireModes().hasAnyFireMode() && modifiedGun.getGeneral().hasBurstFire());
+		return modifiedGun.getFireModes()
+				.hasBurstMode() || (!modifiedGun.getFireModes()
+				.hasAnyFireMode() && modifiedGun.getGeneral()
+				.hasBurstFire());
 	}
 	
 	public static float getFovModifier(ItemStack stack, Gun modifiedGun)
@@ -4538,7 +4616,8 @@ public class Gun implements INBTSerializable<CompoundTag>
 				modifier -= scope.getAdditionalZoom();
 			}
 		}
-		Modules.Zoom zoom = modifiedGun.getModules().getZoom();
+		Modules.Zoom zoom = modifiedGun.getModules()
+				.getZoom();
 		return zoom != null ? modifier + zoom.getFovModifier() : 0F;
 	}
 	
@@ -4656,7 +4735,8 @@ public class Gun implements INBTSerializable<CompoundTag>
 		
 		if(!extraSounds)
 		{
-			extraSounds = gun.getSounds().hasExtraReloadSounds();
+			extraSounds = gun.getSounds()
+					.hasExtraReloadSounds();
 		}
 		
 		return extraSounds;

@@ -23,7 +23,11 @@ public class PlayerModelHandler
 		if(!heldItem.isEmpty() && heldItem.getItem() instanceof GunItem)
 		{
 			Gun gun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem);
-			gun.getGeneral().getGripType().getHeldAnimation().applyPlayerPreRender(player, InteractionHand.MAIN_HAND, AimingHandler.get().getAimProgress(event.getEntity(), event.getPartialTick()), event.getPoseStack(), event.getMultiBufferSource());
+			gun.getGeneral()
+					.getGripType()
+					.getHeldAnimation()
+					.applyPlayerPreRender(player, InteractionHand.MAIN_HAND, AimingHandler.get()
+							.getAimProgress(event.getEntity(), event.getPartialTick()), event.getPoseStack(), event.getMultiBufferSource());
 		}
 	}
 	
@@ -31,8 +35,10 @@ public class PlayerModelHandler
 	public void onRenderPlayer(RenderPlayerEvent.Post event)
 	{
 		/* Makes sure the model part positions reset back to original definitions */
-		PlayerModel<AbstractClientPlayer> model = event.getRenderer().getModel();
-		boolean slim = ((AbstractClientPlayer) event.getEntity()).getModelName().equals("slim");
+		PlayerModel<AbstractClientPlayer> model = event.getRenderer()
+				.getModel();
+		boolean slim = ((AbstractClientPlayer) event.getEntity()).getModelName()
+				.equals("slim");
 		model.rightArm.x = -5.0F;
 		model.rightArm.y = slim ? 2.5F : 2.0F;
 		model.rightArm.z = 0.0F;
