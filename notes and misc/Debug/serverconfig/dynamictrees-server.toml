@@ -102,5 +102,5 @@
 #Debug Settings
 [debug]
 	#Enable to mark tree spawn locations with concrete circles.
-	debug = true
+	debug = false
 

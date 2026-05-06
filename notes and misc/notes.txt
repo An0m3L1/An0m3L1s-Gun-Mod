@@ -3,7 +3,7 @@ Fixes and Overhauls
 Add and overhaul animations:
     - Crawling/Swimming
     - Riding entities
-    - Third person reload animation
+    - Third person reload animation (sync to the default one)
     - Grenade throw animation (first person)
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
@@ -25,6 +25,8 @@ Overhaul dependencies:
 Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
+Make projectiles ignore player owned entities
+Make semi weapons queue shots when firing too quickly
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater
     - Fix hitbox rendering too far away
@@ -52,6 +54,7 @@ Add melee class system:
 Add bandits, marauders, zombies
 Add automatic turrets (check scorched guns)
 Add folding and moving targets
+Add stattrack module
 Add ammo pouch curio items:
     - Make guns get ammo from pouches (findAmmo, getReserveAmmoCount in Gun)
 Add custom backpacks
