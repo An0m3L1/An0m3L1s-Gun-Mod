@@ -3,6 +3,7 @@ Fixes and Overhauls
 Add and overhaul animations:
     - Crawling/Swimming
     - Riding entities
+    - First person reload while riding for one handed pistol
     - Third person reload animation (sync to the default one)
     - Grenade throw animation (first person)
 Overhaul items:
@@ -25,7 +26,10 @@ Overhaul dependencies:
 Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
-Make projectiles ignore player owned entities
+Overhaul projectiles:
+    - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
+    - Make projectiles ignore player owned entities (with a config)
+    - Check sniper spread code to be accurate
 Make semi weapons queue shots when firing too quickly
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater

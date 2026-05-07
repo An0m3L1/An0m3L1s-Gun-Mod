@@ -220,8 +220,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			{
 				float aimPosition = (float) Mth.clamp(ServerAimTracker.getAimingTicks((Player) shooter) / (5 / GunCompositeStatHelper.getCompositeAimDownSightSpeed(weapon)), 0, 1);
 				
-				if(modifiedGun.getGeneral()
-						.getUseSniperSpread())
+				if(this.general.getUseSniperSpread())
 				{
 					// For sniper spread reduce only the minSpread value
 					float aimingMinSpread = minSpread * (1.0F - this.general.getSpreadAdsReduction());
