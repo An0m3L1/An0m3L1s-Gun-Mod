@@ -4,6 +4,7 @@ import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;
 import com.an0m3l1.guns.common.DelayedTask;
 import com.an0m3l1.guns.common.Gun;
+import com.an0m3l1.guns.compat.PlayerReviveHelper;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.network.PacketHandler;
@@ -118,7 +119,7 @@ public class SwitchGunTracker
 				doGunSwitch = true;
 			}
 			
-			if(doGunSelect && tracker.playSelectSound)
+			if(doGunSelect && tracker.playSelectSound && !PlayerReviveHelper.isBleeding(player))
 			{
 				tracker.playSelectSound = false;
 				final ItemStack finalStack = player.getInventory()

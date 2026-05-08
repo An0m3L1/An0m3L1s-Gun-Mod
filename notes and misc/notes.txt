@@ -6,6 +6,8 @@ Add and overhaul animations:
     - First person reload while riding for one handed pistol
     - Third person reload animation (sync to the default one)
     - Grenade throw animation (first person)
+    - When ammo is empty, slides should lock back/forward
+    - Add reload empty animations to all applicable guns
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
@@ -26,17 +28,18 @@ Overhaul dependencies:
 Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
-Overhaul projectiles:
+Overhaul gun logic:
     - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
     - Make projectiles ignore player owned entities (with a config)
     - Check sniper spread code to be accurate
-Make semi weapons queue shots when firing too quickly
+    - Move all projectile logic to according classes
+    - Make semi weapons queue shots when firing too quickly
+    - Cancel reload when opening pause menu
+    - Disable weapon firing while swimming underwater (configure to work same as ADSing underwater, where while holding
+    sprint button you can't ADS, but if you release it you can)
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater
     - Fix hitbox rendering too far away
-Update reload logic and animations:
-    - When ammo is empty, slides should lock back/forward
-    - Add reload empty animations to all applicable guns
 Clean up:
     - Gun model files (use automatic pistol as template)
     - Reorganize project files
@@ -59,6 +62,7 @@ Add bandits, marauders, zombies
 Add automatic turrets (check scorched guns)
 Add folding and moving targets
 Add stattrack module
+Add special message to headshot kills
 Add ammo pouch curio items:
     - Make guns get ammo from pouches (findAmmo, getReserveAmmoCount in Gun)
 Add custom backpacks

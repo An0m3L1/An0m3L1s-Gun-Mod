@@ -3,6 +3,7 @@ package com.an0m3l1.guns.client.handler;
 import com.an0m3l1.guns.client.KeyBinds;
 import com.an0m3l1.guns.common.AmmoContext;
 import com.an0m3l1.guns.common.Gun;
+import com.an0m3l1.guns.compat.PlayerReviveHelper;
 import com.an0m3l1.guns.event.GunReloadEvent;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
@@ -109,7 +110,7 @@ public class ReloadHandler
 		
 		ItemStack stack = player.getMainHandItem();
 		
-		if(KeyBinds.KEY_RELOAD.isDown() && event.getAction() == GLFW.GLFW_PRESS)
+		if(KeyBinds.KEY_RELOAD.isDown() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player))
 		{
 			if(reloadTimer <= 0 || reloadTimer >= 1)
 			{
@@ -133,7 +134,7 @@ public class ReloadHandler
 						.updateReserveAmmo(player);
 			}
 		}
-		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0)
+		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && !PlayerReviveHelper.isBleeding(player))
 		{
 			if(stack.getItem() instanceof GunItem)
 			{
@@ -164,6 +165,10 @@ public class ReloadHandler
 		{
 			if(reloading)
 			{
+				if(PlayerReviveHelper.isBleeding(player))
+				{
+					return;
+				}
 				ItemStack stack = player.getMainHandItem();
 				if(stack.getItem() instanceof GunItem)
 				{

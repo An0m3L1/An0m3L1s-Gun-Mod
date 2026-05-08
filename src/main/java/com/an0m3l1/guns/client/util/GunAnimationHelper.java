@@ -6,6 +6,7 @@ import com.an0m3l1.guns.client.AnimationMetaLoader;
 import com.an0m3l1.guns.client.handler.GunRenderingHandler;
 import com.an0m3l1.guns.client.handler.ReloadHandler;
 import com.an0m3l1.guns.client.handler.ShootingHandler;
+import com.an0m3l1.guns.compat.PlayerReviveHelper;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.util.GunCompositeStatHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -96,7 +97,7 @@ public final class GunAnimationHelper
 				}
 			}
 		}
-		if(hasAnimation("draw", weapon) && weaponSwitchTick != -1 && player.tickCount > weaponSwitchTick && reloadTransitionProgress <= 0.0)
+		if(hasAnimation("draw", weapon) && weaponSwitchTick != -1 && player.tickCount > weaponSwitchTick && reloadTransitionProgress <= 0.0 && !PlayerReviveHelper.isBleeding(player))
 		{
 			ResourceLocation weapKey = lookForParentAnimation("draw", getItemLocationKey(weapon));
 			float animationSpeed = (float) getAnimationValue("draw", weapKey, "animationSpeed");

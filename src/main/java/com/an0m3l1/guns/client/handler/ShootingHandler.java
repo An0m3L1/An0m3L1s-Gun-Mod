@@ -65,22 +65,9 @@ public class ShootingHandler
 	{
 	}
 	
-	private boolean isNotInGame()
+	private boolean isNotInGame(Minecraft mc)
 	{
-		Minecraft mc = Minecraft.getInstance();
-		if(mc.getOverlay() != null)
-		{
-			return true;
-		}
-		if(mc.screen != null)
-		{
-			return true;
-		}
-		if(!mc.mouseHandler.isMouseGrabbed())
-		{
-			return true;
-		}
-		return !mc.isWindowActive();
+		return mc.getOverlay() != null || mc.screen != null || !mc.mouseHandler.isMouseGrabbed() || !mc.isWindowActive();
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -99,6 +86,9 @@ public class ShootingHandler
 			return;
 		}
 		
+		ItemStack heldItem = player.getMainHandItem();
+		ItemStack offhandItem = player.getOffhandItem();
+		
 		if(PlayerReviveHelper.isBleeding(player))
 		{
 			return;
@@ -106,7 +96,6 @@ public class ShootingHandler
 		
 		if(event.isAttack())
 		{
-			ItemStack heldItem = player.getMainHandItem();
 			if(heldItem.getItem() instanceof GunItem gunItem)
 			{
 				event.setSwingHand(false);
@@ -115,26 +104,21 @@ public class ShootingHandler
 		}
 		else if(event.isUseItem())
 		{
-			ItemStack heldItem = player.getMainHandItem();
-			if(heldItem.getItem() instanceof GunItem gunItem)
+			if(heldItem.getItem() instanceof GunItem gunItem && event.getHand() == InteractionHand.OFF_HAND)
 			{
-				if(event.getHand() == InteractionHand.OFF_HAND)
+				// Allow shields to be used if weapon is one-handed and isn't reloading
+				if(offhandItem.getItem() instanceof ShieldItem)
 				{
-					// Allow shields to be used if weapon is one-handed and isn't reloading
-					if(player.getOffhandItem()
-							.getItem() instanceof ShieldItem)
+					GripType gripType = gunItem.getModifiedGun(heldItem)
+							.getGeneral()
+							.getGripType();
+					if((gripType == ONE_HANDED_PISTOL || gripType == TWO_HANDED_PISTOL) && !ModSyncedDataKeys.RELOADING.getValue(player))
 					{
-						GripType gripType = gunItem.getModifiedGun(heldItem)
-								.getGeneral()
-								.getGripType();
-						if((gripType == ONE_HANDED_PISTOL || gripType == TWO_HANDED_PISTOL) && !ModSyncedDataKeys.RELOADING.getValue(player))
-						{
-							return;
-						}
+						return;
 					}
-					event.setCanceled(true);
-					event.setSwingHand(false);
 				}
+				event.setCanceled(true);
+				event.setSwingHand(false);
 			}
 		}
 	}
@@ -142,17 +126,12 @@ public class ShootingHandler
 	@SubscribeEvent
 	public void onHandleShooting(TickEvent.ClientTickEvent event)
 	{
-		if(event.phase != TickEvent.Phase.START)
-		{
-			return;
-		}
-		
-		if(this.isNotInGame())
-		{
-			return;
-		}
-		
 		Minecraft mc = Minecraft.getInstance();
+		if(event.phase != TickEvent.Phase.START || this.isNotInGame(mc))
+		{
+			return;
+		}
+		
 		Player player = mc.player;
 		if(player != null)
 		{
@@ -243,12 +222,7 @@ public class ShootingHandler
 					.getItem();
 			slot = player.getInventory().selected;
 			
-			if(isNotInGame())
-			{
-				return;
-			}
-			
-			if(PlayerReviveHelper.isBleeding(player))
+			if(isNotInGame(mc) || PlayerReviveHelper.isBleeding(player))
 			{
 				return;
 			}
@@ -269,46 +243,43 @@ public class ShootingHandler
 			
 			// Handling fire mode switch logic here for convenience.
 			boolean fireModeKeyDown = KeyBinds.KEY_FIRE_MODE.isDown();
-			if(fireModeKeyDown && !fireModeKeyPressed)
+			if(fireModeKeyDown && !fireModeKeyPressed && heldItem.getItem() instanceof GunItem gunItem)
 			{
-				if(heldItem.getItem() instanceof GunItem gunItem)
+				Gun modifiedGun = gunItem.getModifiedGun(heldItem);
+				if(modifiedGun.getFireModes()
+						.usesFireModes() && (!ModSyncedDataKeys.SHOOTING.getValue(player) && !ModSyncedDataKeys.RELOADING.getValue(player) && ModSyncedDataKeys.BURSTCOUNT.getValue(player) <= 0) && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0)
 				{
-					Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-					if(modifiedGun.getFireModes()
-							.usesFireModes() && (!ModSyncedDataKeys.SHOOTING.getValue(player) && !ModSyncedDataKeys.RELOADING.getValue(player) && ModSyncedDataKeys.BURSTCOUNT.getValue(player) <= 0) && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0)
+					CompoundTag tag = heldItem.getOrCreateTag();
+					//Gun.FireModes fireModes = modifiedGun.getFireModes();
+					boolean changedFireMode = false;
+					int newFireMode = 0;
+					
+					if(Gun.canDoAutoFire(heldItem) && (Gun.getFireMode(heldItem) == 0 || !Gun.canDoSemiFire(heldItem) && Gun.getFireMode(heldItem) == 2))
 					{
-						CompoundTag tag = heldItem.getOrCreateTag();
-						//Gun.FireModes fireModes = modifiedGun.getFireModes();
-						boolean changedFireMode = false;
-						int newFireMode = 0;
-						
-						if(Gun.canDoAutoFire(heldItem) && (Gun.getFireMode(heldItem) == 0 || !Gun.canDoSemiFire(heldItem) && Gun.getFireMode(heldItem) == 2))
-						{
-							changedFireMode = true;
-							newFireMode = 1;
-						}
-						else if(Gun.canDoBurstFire(heldItem) && (Gun.getFireMode(heldItem) == 1 || !Gun.canDoAutoFire(heldItem) && Gun.getFireMode(heldItem) == 0))
-						{
-							changedFireMode = true;
-							newFireMode = 2;
-						}
-						else if(Gun.canDoSemiFire(heldItem) && (Gun.getFireMode(heldItem) == 2 || !Gun.canDoBurstFire(heldItem) && Gun.getFireMode(heldItem) == 1))
-						{
-							changedFireMode = true;
-						}
-						
-						if(changedFireMode)
-						{
-							PacketHandler.getPlayChannel()
-									.sendToServer(new C2SMessageFireSwitch(newFireMode));
-							//tag.putInt("FireMode", newFireMode);
-							Minecraft.getInstance()
-									.getSoundManager()
-									.play(new SimpleSoundInstance(Objects.requireNonNull(gunItem.getModifiedGun(heldItem)
-											.getSounds()
-											.getFireSwitch()), SoundSource.PLAYERS, 0.8F, 1.0F, Objects.requireNonNull(Minecraft.getInstance().level)
-											.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
-						}
+						changedFireMode = true;
+						newFireMode = 1;
+					}
+					else if(Gun.canDoBurstFire(heldItem) && (Gun.getFireMode(heldItem) == 1 || !Gun.canDoAutoFire(heldItem) && Gun.getFireMode(heldItem) == 0))
+					{
+						changedFireMode = true;
+						newFireMode = 2;
+					}
+					else if(Gun.canDoSemiFire(heldItem) && (Gun.getFireMode(heldItem) == 2 || !Gun.canDoBurstFire(heldItem) && Gun.getFireMode(heldItem) == 1))
+					{
+						changedFireMode = true;
+					}
+					
+					if(changedFireMode)
+					{
+						PacketHandler.getPlayChannel()
+								.sendToServer(new C2SMessageFireSwitch(newFireMode));
+						//tag.putInt("FireMode", newFireMode);
+						Minecraft.getInstance()
+								.getSoundManager()
+								.play(new SimpleSoundInstance(Objects.requireNonNull(gunItem.getModifiedGun(heldItem)
+										.getSounds()
+										.getFireSwitch()), SoundSource.PLAYERS, 0.8F, 1.0F, Objects.requireNonNull(Minecraft.getInstance().level)
+										.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
 					}
 				}
 			}
@@ -319,12 +290,7 @@ public class ShootingHandler
 	
 	private boolean canFire(Player player, ItemStack heldItem)
 	{
-		if(!(heldItem.getItem() instanceof GunItem))
-		{
-			return false;
-		}
-		
-		if(player.isSpectator())
+		if(!(heldItem.getItem() instanceof GunItem) || player.isSpectator())
 		{
 			return false;
 		}
@@ -345,17 +311,12 @@ public class ShootingHandler
 		
 		if(ReloadHandler.get()
 				.getReloadProgress(Minecraft.getInstance()
-						.getPartialTick()) > 0F)
+						.getPartialTick()) > 0F || ModSyncedDataKeys.SWITCHTIME.getValue(player) > 0)
 		{
 			return false;
 		}
 		
-		if(ModSyncedDataKeys.SWITCHTIME.getValue(player) > 0) //*NEW* Disallow firing during the weapon switch time.
-		{
-			return false;
-		}
-		
-		if(ModSyncedDataKeys.ONBURSTCOOLDOWN.getValue(player)) //*NEW* Disallow firing during the burst cooldown period.
+		if(ModSyncedDataKeys.ONBURSTCOOLDOWN.getValue(player)) // Disallow firing during the burst cooldown period.
 		{
 			//GunItem gunItem = (GunItem) heldItem.getItem();
 			if(Gun.hasBurstFire(heldItem) && ModSyncedDataKeys.BURSTCOUNT.getValue(player) <= 0)
@@ -370,65 +331,17 @@ public class ShootingHandler
 	
 	private boolean isEmpty(Player player, ItemStack heldItem)
 	{
-		if(!(heldItem.getItem() instanceof GunItem))
-		{
-			return false;
-		}
-		
-		if(player.isSpectator())
-		{
-			return false;
-		}
-		
-		return !Gun.hasAmmo(heldItem) || Gun.cantShoot(heldItem);
+		return heldItem.getItem() instanceof GunItem && !player.isSpectator() && (!Gun.hasAmmo(heldItem) || Gun.cantShoot(heldItem));
 	}
 	
 	private boolean isBroken(Player player, ItemStack heldItem)
 	{
-		if(!(heldItem.getItem() instanceof GunItem))
-		{
-			return false;
-		}
-		
-		if(player.isSpectator())
-		{
-			return false;
-		}
-		
-		return heldItem.getDamageValue() >= (heldItem.getMaxDamage() - 1);
+		return heldItem.getItem() instanceof GunItem && !player.isSpectator() && heldItem.getDamageValue() >= (heldItem.getMaxDamage() - 1);
 	}
 	
 	private boolean canUseTrigger(Player player, ItemStack heldItem)
 	{
-		if(!(heldItem.getItem() instanceof GunItem))
-		{
-			return false;
-		}
-		
-		if(player.isSpectator())
-		{
-			return false;
-		}
-		
-		if(ModSyncedDataKeys.RELOADING.getValue(player))
-		{
-			return false;
-		}
-		
-		if(ModSyncedDataKeys.SWITCHTIME.getValue(player) > 0)
-		{
-			return false;
-		}
-		
-		if(ModSyncedDataKeys.ONBURSTCOOLDOWN.getValue(player))
-		{
-			if(Gun.hasBurstFire(heldItem) && ModSyncedDataKeys.BURSTCOUNT.getValue(player) <= 0)
-			{
-				return false;
-			}
-		}
-		
-		return !(player.getUseItem()
+		return heldItem.getItem() instanceof GunItem && !player.isSpectator() && !ModSyncedDataKeys.RELOADING.getValue(player) && ModSyncedDataKeys.SWITCHTIME.getValue(player) <= 0 && (!ModSyncedDataKeys.ONBURSTCOOLDOWN.getValue(player) || !Gun.hasBurstFire(heldItem) || ModSyncedDataKeys.BURSTCOUNT.getValue(player) > 0) && !(player.getUseItem()
 				.getItem() instanceof ShieldItem);
 	}
 	
@@ -443,23 +356,20 @@ public class ShootingHandler
 		if(isEmpty(player, heldItem) || isBroken(player, heldItem))
 		{
 			ItemCooldowns tracker = player.getCooldowns();
-			if(!tracker.isOnCooldown(heldItem.getItem()))
+			if(!tracker.isOnCooldown(heldItem.getItem()) && doEmptyClick && heldItem.getItem() instanceof GunItem gunItem && canUseTrigger(player, heldItem))
 			{
-				if(doEmptyClick && heldItem.getItem() instanceof GunItem gunItem && canUseTrigger(player, heldItem))
+				Minecraft.getInstance()
+						.getSoundManager()
+						.play(new SimpleSoundInstance(Objects.requireNonNull(gun.getModifiedGun(heldItem)
+								.getSounds()
+								.getEmptyClick()), SoundSource.PLAYERS, 0.8F, 1.0F, Objects.requireNonNull(Minecraft.getInstance().level)
+								.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
+				doEmptyClick = false;
+				boolean doAutoFire = Gun.isAuto(heldItem) || (Gun.hasBurstFire(heldItem) && Gun.hasAutoBurst(heldItem));
+				if(!doAutoFire)
 				{
-					Minecraft.getInstance()
-							.getSoundManager()
-							.play(new SimpleSoundInstance(Objects.requireNonNull(gun.getModifiedGun(heldItem)
-									.getSounds()
-									.getEmptyClick()), SoundSource.PLAYERS, 0.8F, 1.0F, Objects.requireNonNull(Minecraft.getInstance().level)
-									.getRandom(), false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true));
-					doEmptyClick = false;
-					boolean doAutoFire = Gun.isAuto(heldItem) || (Gun.hasBurstFire(heldItem) && Gun.hasAutoBurst(heldItem));
-					if(!doAutoFire)
-					{
-						KeyBinds.getShootMapping()
-								.setDown(false);
-					}
+					KeyBinds.getShootMapping()
+							.setDown(false);
 				}
 			}
 			if(ModSyncedDataKeys.BURSTCOUNT.getValue(player) > 0)
@@ -529,17 +439,11 @@ public class ShootingHandler
 		boolean sameItem = (Item.getId(currentItem) == Item.getId(lastItem));
 		
 		return (isSameSlot(player) && sameItem);
-		//return (player.getInventory().selected == slot);
 	}
 	
 	private boolean isSameSlot(Player player)
 	{
-		if(slot == -1)
-		{
-			return true;
-		}
-		
-		return (player.getInventory().selected == slot);
+		return slot == -1 || (player.getInventory().selected == slot);
 	}
 	
 	public int getWeaponSwitchTick()

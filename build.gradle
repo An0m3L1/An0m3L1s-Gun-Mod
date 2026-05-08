@@ -139,8 +139,9 @@ dependencies {
     implementation fg.deobf("curse.maven:inventory-sorter-240633:3963662")
     implementation fg.deobf("curse.maven:chunky-pregenerator-forge-485681:3970964")
     //implementation fg.deobf("curse.maven:explosive-enhancement-reforged-1036246:5554087")
-
     implementation fg.deobf("curse.maven:shoulder-surfing-reloaded-243190:5441683")
+    implementation fg.deobf("curse.maven:creativecore-257814:5491926")
+    implementation fg.deobf("curse.maven:playerrevive-266890:5491953")
 
     // Dependencies for compiling the mod (won't be added to the final jar file)
     compileOnly fg.deobf("curse.maven:controllable-317269:3936915")
