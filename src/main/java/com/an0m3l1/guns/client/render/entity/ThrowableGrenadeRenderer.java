@@ -49,9 +49,7 @@ public class ThrowableGrenadeRenderer extends EntityRenderer<ThrowableGrenadeEnt
 		poseStack.translate(0, -(entity.getDimensions(Pose.STANDING).height * 0.5), 0);
 		poseStack.translate(0, entity.getDimensions(Pose.STANDING).height * 0.5, 0);
 		
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
+		Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, light, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
 		
 		poseStack.popPose();
 	}

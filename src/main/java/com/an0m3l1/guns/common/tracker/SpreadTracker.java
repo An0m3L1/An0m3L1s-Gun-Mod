@@ -84,8 +84,7 @@ public class SpreadTracker
 		Pair<MutableLong, MutableInt> entry = SPREAD_TRACKER_MAP.get(item);
 		if(entry != null)
 		{
-			int currentCount = entry.getRight()
-					.getValue();
+			int currentCount = entry.getRight().getValue();
 			int maxCount = GunConfig.COMMON.maxCount.get();
 			int minCount = getMinCount(maxCount, player);
 			
@@ -104,8 +103,7 @@ public class SpreadTracker
 		Pair<MutableLong, MutableInt> entry = SPREAD_TRACKER_MAP.get(item);
 		if(entry != null)
 		{
-			int currentCount = entry.getRight()
-					.getValue();
+			int currentCount = entry.getRight().getValue();
 			int maxCount = GunConfig.COMMON.maxCount.get();
 			int minCount = getMinCount(maxCount, player);
 			
@@ -123,8 +121,7 @@ public class SpreadTracker
 	@SubscribeEvent
 	public static void onPlayerDisconnect(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity()
-				.getServer();
+		MinecraftServer server = event.getEntity().getServer();
 		if(server != null)
 		{
 			server.execute(() -> TRACKER_MAP.remove(event.getEntity()));

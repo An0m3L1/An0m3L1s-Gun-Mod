@@ -43,9 +43,7 @@ public class AutomaticPistolModel implements IOverrideModel
 	{
 		// Render the base model
 		BakedModel base = SpecialModels.AUTOMATIC_PISTOL_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
 		
 		// Render the top rail model that appears when a scope is attached
 		ItemStack scopeStack = Gun.getAttachment(IAttachment.Type.SCOPE, stack);
@@ -73,8 +71,7 @@ public class AutomaticPistolModel implements IOverrideModel
 			ammoIsFull = ammoCount >= ammoCapacity;
 		}
 		boolean reloading = isPlayer && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
-		boolean reloadFromEmpty = isPlayer && ReloadHandler.get()
-				.isReloadFromEmpty();
+		boolean reloadFromEmpty = isPlayer && ReloadHandler.get().isReloadFromEmpty();
 
         /* Lock the bolt forward if:
             1. Gun has run out of ammo
@@ -111,14 +108,12 @@ public class AutomaticPistolModel implements IOverrideModel
 		// Fire animation for bolt is rendered both first and third person
 		if(isPlayer && correctContext)
 		{
-			float cooldownDivider = Math.max((float) gun.getGeneral()
-					.getRate() / 3F, 1);
+			float cooldownDivider = Math.max((float) gun.getGeneral().getRate() / 3F, 1);
 			float cooldownOffset1 = cooldownDivider - 1.0F;
 			float intensity = 1.0F + 1;
 			
 			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-					.getFrameTime());
+			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 			cooldown *= cooldownDivider;
 			float cooldown_a = cooldown - cooldownOffset1;
 			
@@ -191,21 +186,11 @@ public class AutomaticPistolModel implements IOverrideModel
 			ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
 			if(!magStack.isEmpty())
 			{
-				if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("light_magazine"))
+				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
 				{
 					magModel = SpecialModels.AUTOMATIC_PISTOL_LIGHT_MAG;
 				}
-				else if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("extended_magazine"))
+				else if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
 				{
 					magModel = SpecialModels.AUTOMATIC_PISTOL_EXT_MAG;
 				}

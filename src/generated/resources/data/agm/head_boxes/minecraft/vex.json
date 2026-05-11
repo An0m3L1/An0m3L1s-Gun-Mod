@@ -1,7 +1,7 @@
 {
-  "general": {
-    "headHeight": 4.0,
-    "headWidth": 4.0,
-    "y": 7.5
-  }
+	"general": {
+		"headHeight": 4.0,
+		"headWidth": 4.0,
+		"y": 7.5
+	}
 }

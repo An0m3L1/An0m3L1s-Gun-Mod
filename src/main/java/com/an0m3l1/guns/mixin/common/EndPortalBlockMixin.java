@@ -28,8 +28,7 @@ public class EndPortalBlockMixin
 			if(stack.getItem() instanceof GunItem)
 			{
 				ItemStack gun = stack.copy();
-				gun.getOrCreateTag()
-						.putFloat("Scale", 2.0F);
+				gun.getOrCreateTag().putFloat("Scale", 2.0F);
 				((ItemEntity) entityIn).setItem(gun);
 			}
 		}

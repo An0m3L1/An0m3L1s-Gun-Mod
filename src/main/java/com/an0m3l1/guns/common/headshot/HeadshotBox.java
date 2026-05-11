@@ -175,28 +175,23 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 			Child.Builder childBuilder = Child.builder();
 			if(childJson.has("headWidthScale"))
 			{
-				childBuilder.headWidthScale(childJson.get("headWidthScale")
-						.getAsDouble());
+				childBuilder.headWidthScale(childJson.get("headWidthScale").getAsDouble());
 			}
 			if(childJson.has("headHeightScale"))
 			{
-				childBuilder.headHeightScale(childJson.get("headHeightScale")
-						.getAsDouble());
+				childBuilder.headHeightScale(childJson.get("headHeightScale").getAsDouble());
 			}
 			if(childJson.has("xScale"))
 			{
-				childBuilder.xScale(childJson.get("xScale")
-						.getAsDouble());
+				childBuilder.xScale(childJson.get("xScale").getAsDouble());
 			}
 			if(childJson.has("yScale"))
 			{
-				childBuilder.yScale(childJson.get("yScale")
-						.getAsDouble());
+				childBuilder.yScale(childJson.get("yScale").getAsDouble());
 			}
 			if(childJson.has("zScale"))
 			{
-				childBuilder.zScale(childJson.get("zScale")
-						.getAsDouble());
+				childBuilder.zScale(childJson.get("zScale").getAsDouble());
 			}
 			builder.child(childBuilder.build());
 		}
@@ -347,38 +342,31 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 			Builder builder = builder();
 			if(json.has("headWidth"))
 			{
-				builder.headWidth(json.get("headWidth")
-						.getAsDouble());
+				builder.headWidth(json.get("headWidth").getAsDouble());
 			}
 			if(json.has("headHeight"))
 			{
-				builder.headHeight(json.get("headHeight")
-						.getAsDouble());
+				builder.headHeight(json.get("headHeight").getAsDouble());
 			}
 			if(json.has("x"))
 			{
-				builder.x(json.get("x")
-						.getAsDouble());
+				builder.x(json.get("x").getAsDouble());
 			}
 			if(json.has("y"))
 			{
-				builder.y(json.get("y")
-						.getAsDouble());
+				builder.y(json.get("y").getAsDouble());
 			}
 			if(json.has("z"))
 			{
-				builder.z(json.get("z")
-						.getAsDouble());
+				builder.z(json.get("z").getAsDouble());
 			}
 			if(json.has("rotatePitch"))
 			{
-				builder.rotatePitch(json.get("rotatePitch")
-						.getAsBoolean());
+				builder.rotatePitch(json.get("rotatePitch").getAsBoolean());
 			}
 			if(json.has("rotateYaw"))
 			{
-				builder.rotateYaw(json.get("rotateYaw")
-						.getAsBoolean());
+				builder.rotateYaw(json.get("rotateYaw").getAsBoolean());
 			}
 			return builder.build();
 		}
@@ -476,15 +464,7 @@ public class HeadshotBox implements IHeadshotBox<LivingEntity>, INBTSerializable
 		
 		public Builder general(double headWidth, double headHeight, double x, double y, double z, boolean rotatePitch, boolean rotateYaw)
 		{
-			this.general = General.builder()
-					.headWidth(headWidth)
-					.headHeight(headHeight)
-					.x(x)
-					.y(y)
-					.z(z)
-					.rotatePitch(rotatePitch)
-					.rotateYaw(rotateYaw)
-					.build();
+			this.general = General.builder().headWidth(headWidth).headHeight(headHeight).x(x).y(y).z(z).rotatePitch(rotatePitch).rotateYaw(rotateYaw).build();
 			return this;
 		}
 		

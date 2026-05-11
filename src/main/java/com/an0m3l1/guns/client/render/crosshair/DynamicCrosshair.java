@@ -91,13 +91,10 @@ public class DynamicCrosshair extends Crosshair
 		
 		float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
 		float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
-		minSpread = (modifiedGun.getGeneral()
-				.getRestingSpread() > 0.0F ? minSpread : (modifiedGun.getGeneral()
-				.getAlwaysSpread() ? baseSpread : 0.0F));
+		minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0.0F ? minSpread : (modifiedGun.getGeneral().getAlwaysSpread() ? baseSpread : 0.0F));
 		
 		float smoothPenaltyDisplay = Mth.lerp(partialTicks, this.prevSmoothPenaltyDisplay, this.smoothPenaltyDisplay);
-		boolean alwaysSpread = modifiedGun.getGeneral()
-				.getAlwaysSpread();
+		boolean alwaysSpread = modifiedGun.getGeneral().getAlwaysSpread();
 		
 		float visualMinSpread;
 		if(alwaysSpread)
@@ -111,8 +108,7 @@ public class DynamicCrosshair extends Crosshair
 			visualMinSpread = Math.min(minSpread + currentPenaltyMinSpread, baseSpread);
 		}
 		
-		float aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral()
-				.getSpreadAdsReduction());
+		float aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction());
 		return Math.max(Mth.lerp(spreadModifier, visualMinSpread, baseSpread) * aimingSpreadMultiplier, 0.0F);
 	}
 	
@@ -139,18 +135,15 @@ public class DynamicCrosshair extends Crosshair
 			if(heldItem.getItem() instanceof GunItem gunItem)
 			{
 				modifiedGun = gunItem.getModifiedGun(heldItem);
-				multishot = modifiedGun.getGeneral()
-						.getProjectileAmount() >= 2 && GunConfig.CLIENT.specialCrosshairForShotguns.get();
-				float aiming = (float) AimingHandler.get()
-						.getNormalisedAdsProgress();
+				multishot = modifiedGun.getGeneral().getProjectileAmount() >= 2 && GunConfig.CLIENT.specialCrosshairForShotguns.get();
+				float aiming = (float) AimingHandler.get().getNormalisedAdsProgress();
 				float currentSpread = spreadTracker.getSpread(mc.player, gunItem);
 				
 				spread = calculateSpread(spreadTracker, heldItem, gunItem, modifiedGun, aiming, currentSpread, partialTicks);
 				
 				DotRenderMode dotRenderMode = GunConfig.CLIENT.dynamicCrosshairDotMode.get();
 				boolean penaltyActive = GunConfig.COMMON.doSpreadPenalties.get() && (mc.player.isSprinting() || !mc.player.isOnGround());
-				boolean alwaysSpread = modifiedGun.getGeneral()
-						.getAlwaysSpread();
+				boolean alwaysSpread = modifiedGun.getGeneral().getAlwaysSpread();
 				boolean isAtMinSpread;
 				
 				if(penaltyActive && !alwaysSpread)
@@ -223,29 +216,15 @@ public class DynamicCrosshair extends Crosshair
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 				RenderSystem.setShaderTexture(0, DOT);
-				Matrix4f matrix = stack.last()
-						.pose();
+				Matrix4f matrix = stack.last().pose();
 				stack.translate(windowCenteredX, windowCenteredY, 0.0);
 				stack.translate(-dotSize / 2.0F, -dotSize / 2.0F, 0.0);
-				BufferBuilder buffer = Tesselator.getInstance()
-						.getBuilder();
+				BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 				buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-				buffer.vertex(matrix, 0.0F, dotSize, 0.0F)
-						.uv(0.0F, 1.0F)
-						.color(1.0F, 1.0F, 1.0F, alpha)
-						.endVertex();
-				buffer.vertex(matrix, dotSize, dotSize, 0.0F)
-						.uv(1.0F, 1.0F)
-						.color(1.0F, 1.0F, 1.0F, alpha)
-						.endVertex();
-				buffer.vertex(matrix, dotSize, 0.0F, 0.0F)
-						.uv(1.0F, 0.0F)
-						.color(1.0F, 1.0F, 1.0F, alpha)
-						.endVertex();
-				buffer.vertex(matrix, 0.0F, 0.0F, 0.0F)
-						.uv(0.0F, 0.0F)
-						.color(1.0F, 1.0F, 1.0F, alpha)
-						.endVertex();
+				buffer.vertex(matrix, 0.0F, dotSize, 0.0F).uv(0.0F, 1.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, dotSize, dotSize, 0.0F).uv(1.0F, 1.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, dotSize, 0.0F, 0.0F).uv(1.0F, 0.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+				buffer.vertex(matrix, 0.0F, 0.0F, 0.0F).uv(0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
 				BufferUploader.drawWithShader(buffer.end());
 			}
 			stack.popPose();
@@ -256,8 +235,7 @@ public class DynamicCrosshair extends Crosshair
 	{
 		stack.pushPose();
 		{
-			Matrix4f matrix = stack.last()
-					.pose();
+			Matrix4f matrix = stack.last().pose();
 			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.setShaderTexture(0, texture);
@@ -266,25 +244,12 @@ public class DynamicCrosshair extends Crosshair
 			stack.scale(scaleX, scaleY, 1.0F);
 			stack.translate(offsetX, offsetY, 0.0);
 			
-			BufferBuilder buffer = Tesselator.getInstance()
-					.getBuilder();
+			BufferBuilder buffer = Tesselator.getInstance().getBuilder();
 			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			buffer.vertex(matrix, 0.0F, height, 0.0F)
-					.uv(u0, v1)
-					.color(1.0F, 1.0F, 1.0F, alpha)
-					.endVertex();
-			buffer.vertex(matrix, width, height, 0.0F)
-					.uv(u1, v1)
-					.color(1.0F, 1.0F, 1.0F, alpha)
-					.endVertex();
-			buffer.vertex(matrix, width, 0.0F, 0.0F)
-					.uv(u1, v0)
-					.color(1.0F, 1.0F, 1.0F, alpha)
-					.endVertex();
-			buffer.vertex(matrix, 0.0F, 0.0F, 0.0F)
-					.uv(u0, v0)
-					.color(1.0F, 1.0F, 1.0F, alpha)
-					.endVertex();
+			buffer.vertex(matrix, 0.0F, height, 0.0F).uv(u0, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, height, 0.0F).uv(u1, v1).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, width, 0.0F, 0.0F).uv(u1, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
+			buffer.vertex(matrix, 0.0F, 0.0F, 0.0F).uv(u0, v0).color(1.0F, 1.0F, 1.0F, alpha).endVertex();
 			BufferUploader.drawWithShader(buffer.end());
 		}
 		stack.popPose();

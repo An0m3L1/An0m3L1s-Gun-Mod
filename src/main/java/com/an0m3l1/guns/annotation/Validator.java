@@ -26,8 +26,7 @@ public class Validator
 	 */
 	public static <T> boolean isValidObject(T t) throws IllegalAccessException, InvalidObjectException
 	{
-		Field[] fields = t.getClass()
-				.getDeclaredFields();
+		Field[] fields = t.getClass().getDeclaredFields();
 		for(Field field : fields)
 		{
 			if(field.getDeclaredAnnotation(Optional.class) != null)
@@ -42,9 +41,7 @@ public class Validator
 				throw new InvalidObjectException("Missing required property: " + field.getName());
 			}
 			
-			if(!field.getType()
-					.isPrimitive() && field.getType() != String.class && !field.getType()
-					.isEnum() && field.getDeclaredAnnotation(Ignored.class) == null)
+			if(!field.getType().isPrimitive() && field.getType() != String.class && !field.getType().isEnum() && field.getDeclaredAnnotation(Ignored.class) == null)
 			{
 				return isValidObject(field.get(t));
 			}

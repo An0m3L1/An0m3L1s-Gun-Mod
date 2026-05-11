@@ -72,17 +72,12 @@ public abstract class WeaponPose implements IHeldAnimation
 	public void applyPlayerModelRotation(Player player, ModelPart rightArm, ModelPart leftArm, ModelPart head, InteractionHand hand, float aimProgress)
 	{
 		Minecraft mc = Minecraft.getInstance();
-		boolean right = mc.options.mainHand()
-				.get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+		boolean right = mc.options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
 		ModelPart mainArm = right ? rightArm : leftArm;
 		ModelPart secondaryArm = right ? leftArm : rightArm;
 		
-		float reloadProgress = ReloadHandler.get()
-				.getReloadProgress(Minecraft.getInstance()
-						.getFrameTime());
-		float sprintTransition = GunRenderingHandler.get()
-				.getSprintTransition(Minecraft.getInstance()
-						.getFrameTime());
+		float reloadProgress = ReloadHandler.get().getReloadProgress(Minecraft.getInstance().getFrameTime());
+		float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getFrameTime());
 		float angle = Mth.lerp(sprintTransition, this.getPlayerPitch(player), (doRaiseWhenSprint() ? -0.4F : 0.3F));
 		angle = Mth.lerp(reloadProgress, angle, 0.1F);
 		float angleAbs = Math.abs(angle);
@@ -102,27 +97,17 @@ public abstract class WeaponPose implements IHeldAnimation
 	 */
 	protected float getPlayerPitch(Player player)
 	{
-		if(Minecraft.getInstance()
-				.getCameraEntity() == player && Minecraft.getInstance().screen != null)
+		if(Minecraft.getInstance().getCameraEntity() == player && Minecraft.getInstance().screen != null)
 		{
 			return 0F;
 		}
-		return Mth.lerp(Minecraft.getInstance()
-				.getFrameTime(), player.xRotO, player.getXRot()) / 90F;
+		return Mth.lerp(Minecraft.getInstance().getFrameTime(), player.xRotO, player.getXRot()) / 90F;
 	}
 	
 	private void applyAimPose(AimPose targetPose, ModelPart rightArm, ModelPart leftArm, float partial, float zoom, float offhand, boolean sneaking)
 	{
-		this.applyLimbPoseToModelRenderer(targetPose.getIdle()
-				.getRightArm(), targetPose.getAiming()
-				.getRightArm(), this.forwardPose.getIdle()
-				.getRightArm(), this.forwardPose.getAiming()
-				.getRightArm(), rightArm, partial, zoom, offhand, sneaking);
-		this.applyLimbPoseToModelRenderer(targetPose.getIdle()
-				.getLeftArm(), targetPose.getAiming()
-				.getLeftArm(), this.forwardPose.getIdle()
-				.getLeftArm(), this.forwardPose.getAiming()
-				.getLeftArm(), leftArm, partial, zoom, offhand, sneaking);
+		this.applyLimbPoseToModelRenderer(targetPose.getIdle().getRightArm(), targetPose.getAiming().getRightArm(), this.forwardPose.getIdle().getRightArm(), this.forwardPose.getAiming().getRightArm(), rightArm, partial, zoom, offhand, sneaking);
+		this.applyLimbPoseToModelRenderer(targetPose.getIdle().getLeftArm(), targetPose.getAiming().getLeftArm(), this.forwardPose.getIdle().getLeftArm(), this.forwardPose.getAiming().getLeftArm(), leftArm, partial, zoom, offhand, sneaking);
 	}
 	
 	private void applyLimbPoseToModelRenderer(LimbPose targetIdlePose, LimbPose targetAimingPose, LimbPose idlePose, LimbPose aimingPose, ModelPart renderer, float partial, float zoom, float leftHanded, boolean sneaking)
@@ -150,26 +135,16 @@ public abstract class WeaponPose implements IHeldAnimation
 	@OnlyIn(Dist.CLIENT)
 	public void applyPlayerPreRender(Player player, InteractionHand hand, float aimProgress, PoseStack poseStack, MultiBufferSource buffer)
 	{
-		boolean right = Minecraft.getInstance().options.mainHand()
-				.get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
-		float reloadProgress = ReloadHandler.get()
-				.getReloadProgress(Minecraft.getInstance()
-						.getFrameTime());
-		float sprintTransition = GunRenderingHandler.get()
-				.getSprintTransition(Minecraft.getInstance()
-						.getFrameTime());
+		boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+		float reloadProgress = ReloadHandler.get().getReloadProgress(Minecraft.getInstance().getFrameTime());
+		float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getFrameTime());
 		float angle = Mth.lerp(sprintTransition, this.getPlayerPitch(player), (doRaiseWhenSprint() ? -0.8F : 0.3F));
 		angle = Mth.lerp(reloadProgress, angle, 0.2F);
 		float angleAbs = Math.abs(angle);
 		float zoom = this.hasAimPose() ? aimProgress : 0F;
 		AimPose targetPose = angle > 0.0 ? this.downPose : this.upPose;
-		float rightOffset = this.getValue(targetPose.getIdle()
-				.getRenderYawOffset(), targetPose.getAiming()
-				.getRenderYawOffset(), this.forwardPose.getIdle()
-				.getRenderYawOffset(), this.forwardPose.getAiming()
-				.getRenderYawOffset(), 0F, angleAbs, zoom, right ? 1 : -1);
-		if((!player.isSprinting() || GunRenderingHandler.get()
-				.getSprintCooldown() > 0) && sprintTransition <= 0.8F)
+		float rightOffset = this.getValue(targetPose.getIdle().getRenderYawOffset(), targetPose.getAiming().getRenderYawOffset(), this.forwardPose.getIdle().getRenderYawOffset(), this.forwardPose.getAiming().getRenderYawOffset(), 0F, angleAbs, zoom, right ? 1 : -1);
+		if((!player.isSprinting() || GunRenderingHandler.get().getSprintCooldown() > 0) && sprintTransition <= 0.8F)
 		{
 			player.yBodyRot = player.getYRot() + rightOffset;
 		}
@@ -181,79 +156,26 @@ public abstract class WeaponPose implements IHeldAnimation
 	{
 		if(hand == InteractionHand.MAIN_HAND)
 		{
-			boolean right = Minecraft.getInstance().options.mainHand()
-					.get() == HumanoidArm.RIGHT;
+			boolean right = Minecraft.getInstance().options.mainHand().get() == HumanoidArm.RIGHT;
 			float leftHanded = right ? 1 : -1;
 			poseStack.translate(0, 0, 0.05);
 			
-			float reloadProgress = ReloadHandler.get()
-					.getReloadProgress(Minecraft.getInstance()
-							.getFrameTime());
-			float sprintTransition = GunRenderingHandler.get()
-					.getSprintTransition(Minecraft.getInstance()
-							.getFrameTime());
+			float reloadProgress = ReloadHandler.get().getReloadProgress(Minecraft.getInstance().getFrameTime());
+			float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getFrameTime());
 			float angle = Mth.lerp(sprintTransition, this.getPlayerPitch(player), (doRaiseWhenSprint() ? 0.0F : 0.3F));
 			angle = Mth.lerp(reloadProgress, angle, -1.0F);
 			float angleAbs = Math.abs(angle);
 			float zoom = this.hasAimPose() ? aimProgress : 0F;
 			AimPose targetPose = angle > 0.0 ? this.downPose : this.upPose;
 			
-			float translateX = this.getValue(targetPose.getIdle()
-					.getItemTranslate()
-					.x(), targetPose.getAiming()
-					.getItemTranslate()
-					.x(), this.forwardPose.getIdle()
-					.getItemTranslate()
-					.x(), this.forwardPose.getAiming()
-					.getItemTranslate()
-					.x(), 0F, angleAbs, zoom, 1F);
-			float translateY = this.getValue(targetPose.getIdle()
-					.getItemTranslate()
-					.y(), targetPose.getAiming()
-					.getItemTranslate()
-					.y(), this.forwardPose.getIdle()
-					.getItemTranslate()
-					.y(), this.forwardPose.getAiming()
-					.getItemTranslate()
-					.y(), 0F, angleAbs, zoom, 1F);
-			float translateZ = this.getValue(targetPose.getIdle()
-					.getItemTranslate()
-					.z(), targetPose.getAiming()
-					.getItemTranslate()
-					.z(), this.forwardPose.getIdle()
-					.getItemTranslate()
-					.z(), this.forwardPose.getAiming()
-					.getItemTranslate()
-					.z(), 0F, angleAbs, zoom, 1F);
+			float translateX = this.getValue(targetPose.getIdle().getItemTranslate().x(), targetPose.getAiming().getItemTranslate().x(), this.forwardPose.getIdle().getItemTranslate().x(), this.forwardPose.getAiming().getItemTranslate().x(), 0F, angleAbs, zoom, 1F);
+			float translateY = this.getValue(targetPose.getIdle().getItemTranslate().y(), targetPose.getAiming().getItemTranslate().y(), this.forwardPose.getIdle().getItemTranslate().y(), this.forwardPose.getAiming().getItemTranslate().y(), 0F, angleAbs, zoom, 1F);
+			float translateZ = this.getValue(targetPose.getIdle().getItemTranslate().z(), targetPose.getAiming().getItemTranslate().z(), this.forwardPose.getIdle().getItemTranslate().z(), this.forwardPose.getAiming().getItemTranslate().z(), 0F, angleAbs, zoom, 1F);
 			poseStack.translate(translateX * 0.0625 * leftHanded, translateY * 0.0625, translateZ * 0.0625);
 			
-			float rotateX = this.getValue(targetPose.getIdle()
-					.getItemRotation()
-					.x(), targetPose.getAiming()
-					.getItemRotation()
-					.x(), this.forwardPose.getIdle()
-					.getItemRotation()
-					.x(), this.forwardPose.getAiming()
-					.getItemRotation()
-					.x(), 0F, angleAbs, zoom, 1F);
-			float rotateY = this.getValue(targetPose.getIdle()
-					.getItemRotation()
-					.y(), targetPose.getAiming()
-					.getItemRotation()
-					.y(), this.forwardPose.getIdle()
-					.getItemRotation()
-					.y(), this.forwardPose.getAiming()
-					.getItemRotation()
-					.y(), 0F, angleAbs, zoom, 1F);
-			float rotateZ = this.getValue(targetPose.getIdle()
-					.getItemRotation()
-					.z(), targetPose.getAiming()
-					.getItemRotation()
-					.z(), this.forwardPose.getIdle()
-					.getItemRotation()
-					.z(), this.forwardPose.getAiming()
-					.getItemRotation()
-					.z(), 0F, angleAbs, zoom, 1F);
+			float rotateX = this.getValue(targetPose.getIdle().getItemRotation().x(), targetPose.getAiming().getItemRotation().x(), this.forwardPose.getIdle().getItemRotation().x(), this.forwardPose.getAiming().getItemRotation().x(), 0F, angleAbs, zoom, 1F);
+			float rotateY = this.getValue(targetPose.getIdle().getItemRotation().y(), targetPose.getAiming().getItemRotation().y(), this.forwardPose.getIdle().getItemRotation().y(), this.forwardPose.getAiming().getItemRotation().y(), 0F, angleAbs, zoom, 1F);
+			float rotateZ = this.getValue(targetPose.getIdle().getItemRotation().z(), targetPose.getAiming().getItemRotation().z(), this.forwardPose.getIdle().getItemRotation().z(), this.forwardPose.getAiming().getItemRotation().z(), 0F, angleAbs, zoom, 1F);
 			poseStack.mulPose(Vector3f.XP.rotationDegrees(rotateX));
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(rotateY * leftHanded));
 			poseStack.mulPose(Vector3f.ZP.rotationDegrees(rotateZ * leftHanded));

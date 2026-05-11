@@ -21,8 +21,7 @@ import static com.an0m3l1.guns.entity.ProjectileEntity.createFireExplosion;
  */
 public class ThrowableIncendiaryGrenadeEntity extends ThrowableGrenadeEntity
 {
-	protected final float radius = GunConfig.SERVER.incendiaryGrenadeExplosionRadius.get()
-			.floatValue();
+	protected final float radius = GunConfig.SERVER.incendiaryGrenadeExplosionRadius.get().floatValue();
 	protected final int fireDuration = GunConfig.SERVER.incendiaryGrenadeFireDuration.get();
 	
 	public ThrowableIncendiaryGrenadeEntity(EntityType<? extends ThrowableGrenadeEntity> entityType, Level world)
@@ -54,8 +53,7 @@ public class ThrowableIncendiaryGrenadeEntity extends ThrowableGrenadeEntity
 	{
 		super.tick();
 		this.prevRotation = this.rotation;
-		double speed = this.getDeltaMovement()
-				.length();
+		double speed = this.getDeltaMovement().length();
 		if(speed > 0.1)
 		{
 			this.rotation += (float) (speed * 50);
@@ -65,8 +63,7 @@ public class ThrowableIncendiaryGrenadeEntity extends ThrowableGrenadeEntity
 	@Override
 	public void onDeath()
 	{
-		double y = this.getY() + this.getType()
-				.getDimensions().height * 0.5;
+		double y = this.getY() + this.getType().getDimensions().height * 0.5;
 		Vec3 center = new Vec3(this.getX(), y, this.getZ());
 		
 		if(this.level.isClientSide)
@@ -76,16 +73,14 @@ public class ThrowableIncendiaryGrenadeEntity extends ThrowableGrenadeEntity
 		
 		if(!this.isInWater())
 		{
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageIncendiaryGrenade(this.getX(), y, this.getZ()));
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageIncendiaryGrenade(this.getX(), y, this.getZ()));
 			this.createLight(explosionLightValue, explosionLightLife);
 			createFireExplosion(this, radius * 0.6F, false);
 			igniteEntities(level, center, radius * 1.1F, fireDuration);
 		}
 		else
 		{
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageIncendiaryGrenadeUnderwater(this.getX(), y, this.getZ()));
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageIncendiaryGrenadeUnderwater(this.getX(), y, this.getZ()));
 		}
 	}
 }

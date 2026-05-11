@@ -60,8 +60,7 @@ public class GunEventBus
 			if(!level.isClientSide() && // Checks if world is on server-side
 					GunConfig.COMMON.enableDynamicLights.get() && // Checks config
 					GunMod.dynamicLightsLoaded && // Checks loaded dynamic lights mod
-					modifiedGun.getGeneral()
-							.shouldEmitLight()) // Checks if this gun should emit light while shooting
+					modifiedGun.getGeneral().shouldEmitLight()) // Checks if this gun should emit light while shooting
 			{
 				Vec3 lookVec = player.getLookAngle();
 				double forwardOffset = 2.0;
@@ -97,8 +96,7 @@ public class GunEventBus
 		Player player = (Player) livingEntity;
 		ItemStack heldItem = player.getMainHandItem();
 		Gun modifiedGun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem);
-		GripType gripType = modifiedGun.getGeneral()
-				.getGripType();
+		GripType gripType = modifiedGun.getGeneral().getGripType();
 		
 		Vec3 lookVec = player.getLookAngle();
 		Vec3 rightVec = new Vec3(-lookVec.z, 0, lookVec.x).normalize();
@@ -132,15 +130,13 @@ public class GunEventBus
 		double offsetY = (player.getEyeHeight() + verticalOffset) + lookVec.y * 0.5;
 		double offsetZ = rightVec.z * horizontalOffset + forwardVec.z * forwardOffset;
 		
-		Vec3 particlePos = player.getPosition(1)
-				.add(offsetX, offsetY, offsetZ); //Add the offsets to the player's position
+		Vec3 particlePos = player.getPosition(1).add(offsetX, offsetY, offsetZ); //Add the offsets to the player's position
 		
 		ResourceLocation light = ModItems.LIGHT_BULLET.getId();
 		ResourceLocation medium = ModItems.MEDIUM_BULLET.getId();
 		ResourceLocation heavy = ModItems.HEAVY_BULLET.getId();
 		ResourceLocation shell = ModItems.BUCKSHOT_SHELL.getId();
-		ResourceLocation projectile = modifiedGun.getProjectile()
-				.getItem();
+		ResourceLocation projectile = modifiedGun.getProjectile().getItem();
 		
 		SimpleParticleType casingType = ModParticleTypes.CASING.get();
 		

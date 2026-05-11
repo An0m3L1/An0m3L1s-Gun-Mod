@@ -65,10 +65,7 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 		this.dyeSlot = helper.createDrawable(BACKGROUND, 7, 101, 18, 18);
 		this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.GUN_WORKBENCH.get()));
 		this.title = Component.translatable(TITLE_KEY);
-		this.dyes = ForgeRegistries.ITEMS.getValues()
-				.stream()
-				.filter(item -> item instanceof DyeItem)
-				.toArray(Item[]::new);
+		this.dyes = ForgeRegistries.ITEMS.getValues().stream().filter(item -> item instanceof DyeItem).toArray(Item[]::new);
 	}
 	
 	@Override
@@ -101,19 +98,13 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 		ItemStack output = recipe.getItem();
 		if(IColored.isDyeable(output))
 		{
-			builder.addSlot(RecipeIngredientRole.INPUT, 141, 52)
-					.addItemStacks(Stream.of(this.dyes)
-							.map(ItemStack::new)
-							.collect(Collectors.toList()));
+			builder.addSlot(RecipeIngredientRole.INPUT, 141, 52).addItemStacks(Stream.of(this.dyes).map(ItemStack::new).collect(Collectors.toList()));
 		}
-		for(int i = 0; i < recipe.getMaterials()
-				.size(); i++)
+		for(int i = 0; i < recipe.getMaterials().size(); i++)
 		{
-			builder.addSlot(RecipeIngredientRole.INPUT, (i % 8) * 18 + 1, 88 + (i / 8) * 18)
-					.addIngredients(recipe.getSpecificMaterial(i));
+			builder.addSlot(RecipeIngredientRole.INPUT, (i % 8) * 18 + 1, 88 + (i / 8) * 18).addIngredients(recipe.getSpecificMaterial(i));
 		}
-		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT)
-				.addItemStack(output);
+		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(output);
 	}
 	
 	@Override
@@ -126,28 +117,21 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 		Minecraft.getInstance().font.draw(poseStack, I18n.get(MATERIALS_KEY), 0, 78, 0x7E7E7E);
 		
 		ItemStack output = recipe.getItem();
-		MutableComponent displayName = output.getHoverName()
-				.copy();
+		MutableComponent displayName = output.getHoverName().copy();
 		if(output.getCount() > 1)
 		{
-			displayName.append(Component.literal(" x " + output.getCount())
-					.withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+			displayName.append(Component.literal(" x " + output.getCount()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
 		}
 		int titleX = this.window.getWidth() / 2;
 		GuiComponent.drawCenteredString(poseStack, Minecraft.getInstance().font, displayName, titleX, 5, 0xFFFFFFFF);
 		
-		for(int i = 0; i < recipe.getMaterials()
-				.size(); i++)
+		for(int i = 0; i < recipe.getMaterials().size(); i++)
 		{
 			poseStack.pushPose();
 			poseStack.translate(0.0D, 0.0D, +192.0D);
-			String materialCount = recipe.getMaterials()
-					.get(i)
-					.getCount() + "";
+			String materialCount = recipe.getMaterials().get(i).getCount() + "";
 			int stringX = (((i % 8) * 18 + 1) + 19 - 2 - Minecraft.getInstance().font.width(materialCount));
-			if(recipe.getMaterials()
-					.get(i)
-					.getCount() > 1)
+			if(recipe.getMaterials().get(i).getCount() > 1)
 			{
 				GuiComponent.drawString(poseStack, Minecraft.getInstance().font, materialCount, stringX, 97 + (i / 8) * 18, 0xFFFFFFFF);
 			}
@@ -157,13 +141,11 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 		PoseStack stack = RenderSystem.getModelViewStack();
 		stack.pushPose();
 		{
-			stack.mulPoseMatrix(poseStack.last()
-					.pose());
+			stack.mulPoseMatrix(poseStack.last().pose());
 			stack.translate(81, 40, -512);
 			stack.scale(40F, 40F, 40F);
 			stack.mulPose(Vector3f.XP.rotationDegrees(-5F));
-			float partialTicks = Minecraft.getInstance()
-					.getFrameTime();
+			float partialTicks = Minecraft.getInstance().getFrameTime();
 			assert Minecraft.getInstance().player != null;
 			stack.mulPose(Vector3f.YP.rotationDegrees(Minecraft.getInstance().player.tickCount + partialTicks));
 			stack.scale(-1, -1, -1);
@@ -172,12 +154,8 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 			BakedModel model = RenderUtil.getModel(output);
 			Lighting.setupFor3DItems();
 			
-			MultiBufferSource.BufferSource buffer = Minecraft.getInstance()
-					.renderBuffers()
-					.bufferSource();
-			Minecraft.getInstance()
-					.getItemRenderer()
-					.render(output, ItemTransforms.TransformType.FIXED, false, new PoseStack(), buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
+			MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+			Minecraft.getInstance().getItemRenderer().render(output, ItemTransforms.TransformType.FIXED, false, new PoseStack(), buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
 			buffer.endBatch();
 		}
 		stack.popPose();

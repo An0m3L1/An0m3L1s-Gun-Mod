@@ -13,8 +13,7 @@ public class AttachmentItem extends Item implements IMeta
 {
 	public AttachmentItem(Properties properties)
 	{
-		super(properties.stacksTo(1)
-				.tab(GunMod.GUNS));
+		super(properties.stacksTo(1).tab(GunMod.GUNS));
 	}
 	
 	@Override

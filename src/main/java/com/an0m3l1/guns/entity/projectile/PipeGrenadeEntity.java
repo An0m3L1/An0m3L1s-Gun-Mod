@@ -57,8 +57,7 @@ public class PipeGrenadeEntity extends ProjectileEntity
 		 * We check for explosion griefing so the projectile doesn't just disappear */
 		if(this.getProjectile() != null && state.is(ModTags.Blocks.HARDNESS_NONE))
 		{
-			if(!GunConfig.COMMON.universalExplosionGriefing.get() && GunConfig.COMMON.projectileGriefing.get() && this.getProjectile()
-					.isGriefing())
+			if(!GunConfig.COMMON.universalExplosionGriefing.get() && GunConfig.COMMON.projectileGriefing.get() && this.getProjectile().isGriefing())
 			{
 				this.level.destroyBlock(pos, GunConfig.COMMON.projectileGriefingBlockDrops.get());
 			}
@@ -86,10 +85,8 @@ public class PipeGrenadeEntity extends ProjectileEntity
 		
 		if(this.getProjectile() != null)
 		{
-			radius = this.getProjectile()
-					.getExplosionRadius();
-			griefing = this.getProjectile()
-					.isGriefing();
+			radius = this.getProjectile().getExplosionRadius();
+			griefing = this.getProjectile().isGriefing();
 		}
 		
 		createExplosion(this, radius, griefing);
@@ -100,7 +97,6 @@ public class PipeGrenadeEntity extends ProjectileEntity
 		
 		LightSourceEntity light = new LightSourceEntity(level, this.getX(), this.getY(), this.getZ(), explosionLightValue, explosionLightLife);
 		level.addFreshEntity(light);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), this.getY(), this.getZ(), 256), new S2CMessagePipeGrenade(this.getX(), this.getY(), this.getZ(), radius));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), this.getY(), this.getZ(), 256), new S2CMessagePipeGrenade(this.getX(), this.getY(), this.getZ(), radius));
 	}
 }

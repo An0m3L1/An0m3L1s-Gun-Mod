@@ -47,17 +47,12 @@ public final class MetaLoader implements IDataLoader<MetaLoader.ItemResource>
 	public List<ItemResource> getResourceSuppliers()
 	{
 		List<ItemResource> resources = new ArrayList<>();
-		ForgeRegistries.ITEMS.getValues()
-				.stream()
-				.filter(item -> item instanceof IMeta)
-				.forEach(item ->
-				{
-					ResourceLocation key = item.builtInRegistryHolder()
-							.key()
-							.location();
-					ResourceLocation location = new ResourceLocation(key.getNamespace(), "models/item/" + key.getPath() + GunMod.META_EXTENSION);
-					resources.add(new ItemResource(item, location));
-				});
+		ForgeRegistries.ITEMS.getValues().stream().filter(item -> item instanceof IMeta).forEach(item ->
+		{
+			ResourceLocation key = item.builtInRegistryHolder().key().location();
+			ResourceLocation location = new ResourceLocation(key.getNamespace(), "models/item/" + key.getPath() + GunMod.META_EXTENSION);
+			resources.add(new ItemResource(item, location));
+		});
 		return resources;
 	}
 	

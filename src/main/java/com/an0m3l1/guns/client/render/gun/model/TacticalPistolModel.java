@@ -38,9 +38,7 @@ public class TacticalPistolModel implements IOverrideModel
 	{
 		// Render the item's BakedModel, which will serve as the core of our custom model.
 		BakedModel bakedModel = SpecialModels.TACTICAL_PISTOL_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
 		
 		// Render the top rail element that appears when a scope is attached.
 		// We have to grab the gun's scope attachment slot and check whether it is empty or not.
@@ -92,14 +90,12 @@ public class TacticalPistolModel implements IOverrideModel
 		Gun gun = gunStack.getModifiedGun(stack);
 		if(isPlayer && correctContext)
 		{
-			float cooldownDivider = Math.max((float) gun.getGeneral()
-					.getRate() / 2F, 1);
+			float cooldownDivider = Math.max((float) gun.getGeneral().getRate() / 2F, 1);
 			float cooldownOffset1 = cooldownDivider - 1.0F;
 			float intensity = 1.0F + 1;
 			
 			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-					.getFrameTime());
+			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 			cooldown *= cooldownDivider;
 			float cooldown_a = cooldown - cooldownOffset1;
 			
@@ -143,21 +139,11 @@ public class TacticalPistolModel implements IOverrideModel
 			ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
 			if(!magStack.isEmpty())
 			{
-				if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("light_magazine"))
+				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
 				{
 					magModel = SpecialModels.TACTICAL_PISTOL_LIGHT_MAG;
 				}
-				if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("extended_magazine"))
+				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
 				{
 					magModel = SpecialModels.TACTICAL_PISTOL_EXT_MAG;
 				}

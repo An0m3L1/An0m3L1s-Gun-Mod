@@ -30,8 +30,7 @@ public enum Easings implements StringRepresentable
 	HALF_EASE_IN("half_ease_in", t -> t > 0.5F ? EASE_IN_QUAD.apply((t - 0.5F) / 0.5F) : 0.0F),
 	ZERO("zero", t -> 0F);
 	
-	private static final Map<String, Easings> BY_NAME = Arrays.stream(values())
-			.collect(Collectors.toMap((easing) -> easing.name, (easing) -> easing));
+	private static final Map<String, Easings> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap((easing) -> easing.name, (easing) -> easing));
 	
 	private final String name;
 	private final Function<Float, Float> function;

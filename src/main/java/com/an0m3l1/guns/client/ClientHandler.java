@@ -89,32 +89,25 @@ public class ClientHandler
 			{
 				return -1;
 			}
-			if(index == 0 && stack.hasTag() && Objects.requireNonNull(stack.getTag())
-					.contains("Color", Tag.TAG_INT))
+			if(index == 0 && stack.hasTag() && Objects.requireNonNull(stack.getTag()).contains("Color", Tag.TAG_INT))
 			{
-				return stack.getTag()
-						.getInt("Color");
+				return stack.getTag().getInt("Color");
 			}
 			if(index == 0 && stack.getItem() instanceof GunItem)
 			{
-				ItemStack renderingWeapon = GunRenderingHandler.get()
-						.getRenderingWeapon();
+				ItemStack renderingWeapon = GunRenderingHandler.get().getRenderingWeapon();
 				if(renderingWeapon != null)
 				{
 					Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-					return gun.getGeneral()
-							.getDefaultColor();
+					return gun.getGeneral().getDefaultColor();
 				}
 			}
 			if(index == 0 && stack.getItem() instanceof IAttachment)
 			{
-				ItemStack renderingWeapon = GunRenderingHandler.get()
-						.getRenderingWeapon();
+				ItemStack renderingWeapon = GunRenderingHandler.get().getRenderingWeapon();
 				if(renderingWeapon != null)
 				{
-					return Minecraft.getInstance()
-							.getItemColors()
-							.getColor(renderingWeapon, index);
+					return Minecraft.getInstance().getItemColors().getColor(renderingWeapon, index);
 				}
 			}
 			if(index == 2) // Reticle colour
@@ -127,9 +120,7 @@ public class ClientHandler
 		{
 			if(item instanceof IColored)
 			{
-				Minecraft.getInstance()
-						.getItemColors()
-						.register(color, item);
+				Minecraft.getInstance().getItemColors().register(color, item);
 			}
 		});
 	}
@@ -186,8 +177,7 @@ public class ClientHandler
 		{
 			if(KeyBinds.KEY_ATTACHMENTS.isDown())
 			{
-				PacketHandler.getPlayChannel()
-						.sendToServer(new C2SMessageAttachments());
+				PacketHandler.getPlayChannel().sendToServer(new C2SMessageAttachments());
 			}
 		}
 	}

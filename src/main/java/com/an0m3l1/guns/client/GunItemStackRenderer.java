@@ -16,9 +16,7 @@ public class GunItemStackRenderer extends BlockEntityWithoutLevelRenderer
 {
 	public GunItemStackRenderer()
 	{
-		super(Minecraft.getInstance()
-				.getBlockEntityRenderDispatcher(), Minecraft.getInstance()
-				.getEntityModels());
+		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 	}
 	
 	@Override
@@ -32,12 +30,9 @@ public class GunItemStackRenderer extends BlockEntityWithoutLevelRenderer
 			Minecraft mc = Minecraft.getInstance();
 			if(transform == ItemTransforms.TransformType.GROUND)
 			{
-				GunRenderingHandler.get()
-						.applyWeaponScale(stack, poseStack);
+				GunRenderingHandler.get().applyWeaponScale(stack, poseStack);
 			}
-			GunRenderingHandler.get()
-					.renderWeapon(mc.player, stack, transform, poseStack, source, light, Minecraft.getInstance()
-							.getDeltaFrameTime());
+			GunRenderingHandler.get().renderWeapon(mc.player, stack, transform, poseStack, source, light, Minecraft.getInstance().getDeltaFrameTime());
 		}
 		poseStack.popPose();
 		

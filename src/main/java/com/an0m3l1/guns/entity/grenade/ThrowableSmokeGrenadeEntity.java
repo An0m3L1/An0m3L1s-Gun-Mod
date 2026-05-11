@@ -55,8 +55,7 @@ public class ThrowableSmokeGrenadeEntity extends ThrowableGrenadeEntity
 	{
 		super.tick();
 		this.prevRotation = this.rotation;
-		double speed = this.getDeltaMovement()
-				.length();
+		double speed = this.getDeltaMovement().length();
 		if(speed > 0.1)
 		{
 			this.rotation += (float) (speed * 50);
@@ -89,8 +88,7 @@ public class ThrowableSmokeGrenadeEntity extends ThrowableGrenadeEntity
 							for(int y = -2; y <= 2; y++)
 							{
 								BlockPos checkPos = grenadePos.offset(x, y, z);
-								if(this.level.getBlockState(checkPos)
-										.is(BlockTags.FIRE))
+								if(this.level.getBlockState(checkPos).is(BlockTags.FIRE))
 								{
 									foundFire = true;
 									break;
@@ -122,8 +120,7 @@ public class ThrowableSmokeGrenadeEntity extends ThrowableGrenadeEntity
 	@Override
 	public void onDeath()
 	{
-		double y = this.getY() + this.getType()
-				.getDimensions().height * 0.5;
+		double y = this.getY() + this.getType().getDimensions().height * 0.5;
 		double radius = GunConfig.SERVER.smokeGrenadeCloudRadius.get();
 		double duration = ((GunConfig.SERVER.smokeGrenadeCloudDuration.get() - 3) * 20);
 		@NotNull SimpleParticleType particle = ModParticleTypes.SMOKE_EFFECT.get();
@@ -138,7 +135,6 @@ public class ThrowableSmokeGrenadeEntity extends ThrowableGrenadeEntity
 			SmokeCloud cloudHigh = new SmokeCloud(this.level, this.getX(), this.getY() + 1.5, this.getZ(), particle, (float) radius, (int) duration);
 			this.level.addFreshEntity(cloudHigh);
 		}
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageSmokeGrenade(this.getX(), y, this.getZ()));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageSmokeGrenade(this.getX(), y, this.getZ()));
 	}
 }

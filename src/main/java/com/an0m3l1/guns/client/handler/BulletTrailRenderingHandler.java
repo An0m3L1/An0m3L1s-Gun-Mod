@@ -82,10 +82,8 @@ public class BulletTrailRenderingHandler
 		{
 			if(event.phase == TickEvent.Phase.END)
 			{
-				this.bullets.values()
-						.forEach(BulletTrail::tick);
-				this.bullets.values()
-						.removeIf(BulletTrail::isDead);
+				this.bullets.values().forEach(BulletTrail::tick);
+				this.bullets.values().removeIf(BulletTrail::isDead);
 			}
 		}
 		else if(!this.bullets.isEmpty())
@@ -125,8 +123,7 @@ public class BulletTrailRenderingHandler
 		
 		poseStack.pushPose();
 		
-		Vec3 view = mc.gameRenderer.getMainCamera()
-				.getPosition();
+		Vec3 view = mc.gameRenderer.getMainCamera().getPosition();
 		Vec3 position = trail.getPosition();
 		Vec3 motion = trail.getMotion();
 		double bulletX = position.x + motion.x * deltaTicks;
@@ -148,59 +145,28 @@ public class BulletTrailRenderingHandler
 		Entity shooter = trail.getShooter();
 		if(shooter != null)
 		{
-			trailLength = (float) Math.min(trailLength, shooter.getEyePosition(deltaTicks)
-					.distanceTo(new Vec3(bulletX, bulletY, bulletZ)));
+			trailLength = (float) Math.min(trailLength, shooter.getEyePosition(deltaTicks).distanceTo(new Vec3(bulletX, bulletY, bulletZ)));
 		}
 		
-		Matrix4f matrix4f = poseStack.last()
-				.pose();
-		MultiBufferSource.BufferSource renderTypeBuffer = mc.renderBuffers()
-				.bufferSource();
+		Matrix4f matrix4f = poseStack.last().pose();
+		MultiBufferSource.BufferSource renderTypeBuffer = mc.renderBuffers().bufferSource();
 		
 		if(trail.isTrailVisible())
 		{
 			RenderType bulletType = GunRenderType.getBulletTrail();
 			VertexConsumer builder = renderTypeBuffer.getBuffer(bulletType);
-			builder.vertex(matrix4f, 0, 0, -0.035F)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0, 0, 0.035F)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0, -trailLength, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0, -trailLength, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, -0.035F, 0, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0.035F, 0, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0, -trailLength, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			builder.vertex(matrix4f, 0, -trailLength, 0)
-					.color(red, green, blue, alpha)
-					.uv2(15728880)
-					.endVertex();
-			Minecraft.getInstance()
-					.renderBuffers()
-					.bufferSource()
-					.endBatch(bulletType);
+			builder.vertex(matrix4f, 0, 0, -0.035F).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0, 0, 0.035F).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0, -trailLength, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0, -trailLength, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, -0.035F, 0, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0.035F, 0, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0, -trailLength, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			builder.vertex(matrix4f, 0, -trailLength, 0).color(red, green, blue, alpha).uv2(15728880).endVertex();
+			Minecraft.getInstance().renderBuffers().bufferSource().endBatch(bulletType);
 		}
 		
-		if(!trail.getItem()
-				.isEmpty())
+		if(!trail.getItem().isEmpty())
 		{
 			poseStack.mulPose(Vector3f.YP.rotationDegrees((trail.getAge() + deltaTicks) * (float) 50));
 			poseStack.scale(0.275F, 0.275F, 0.275F);

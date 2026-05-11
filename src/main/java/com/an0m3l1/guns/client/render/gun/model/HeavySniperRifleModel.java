@@ -33,9 +33,7 @@ public class HeavySniperRifleModel implements IOverrideModel
 	                   LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay)
 	{
 		BakedModel bakedModel = SpecialModels.HEAVY_SNIPER_RIFLE_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
 		
 		ItemStack attachmentStack = Gun.getAttachment(IAttachment.Type.SCOPE, stack);
 		if(attachmentStack.isEmpty())
@@ -69,8 +67,7 @@ public class HeavySniperRifleModel implements IOverrideModel
 				magRotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "magazine");
 				magRotOffset = GunAnimationHelper.getSmartAnimationRotOffset(stack, player, partialTicks, "magazine");
 				
-				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks)
-						.equals("fire"))
+				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks).equals("fire"))
 				{
 					useFallbackAnimation = true;
 				}
@@ -97,8 +94,7 @@ public class HeavySniperRifleModel implements IOverrideModel
 				float boltLeadTime = 0.4F;
 				
 				ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-				float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-						.getFrameTime());
+				float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 				cooldown *= cooldownDivider;
 				float cooldown_a = cooldown - cooldownOffset1;
 				

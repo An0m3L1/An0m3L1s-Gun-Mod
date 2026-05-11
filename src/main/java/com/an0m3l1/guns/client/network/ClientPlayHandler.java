@@ -54,8 +54,7 @@ public class ClientPlayHandler
 		
 		if(message.showMuzzleFlash())
 		{
-			GunRenderingHandler.get()
-					.showMuzzleFlashForPlayer(message.getShooterId());
+			GunRenderingHandler.get().showMuzzleFlashForPlayer(message.getShooterId());
 		}
 		
 		if(message.getShooterId() == mc.player.getId())
@@ -122,8 +121,7 @@ public class ClientPlayHandler
 			ParticleOptions data = message.getParticleData();
 			for(int i = 0; i < message.getCount(); i++)
 			{
-				BulletTrailRenderingHandler.get()
-						.add(new BulletTrail(entityIds[i], positions[i], motions[i], item, trailColor, trailLengthMultiplier, life, gravity, shooterId, data));
+				BulletTrailRenderingHandler.get().add(new BulletTrail(entityIds[i], positions[i], motions[i], item, trailColor, trailLengthMultiplier, life, gravity, shooterId, data));
 			}
 		}
 	}
@@ -134,8 +132,7 @@ public class ClientPlayHandler
 		SoundManager soundManager = mc.getSoundManager();
 		ParticleEngine particleManager = mc.particleEngine;
 		Level level = Objects.requireNonNull(mc.level);
-		float size = GunConfig.SERVER.grenadeExplosionRadius.get()
-				.floatValue();
+		float size = GunConfig.SERVER.grenadeExplosionRadius.get().floatValue();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -168,8 +165,7 @@ public class ClientPlayHandler
 		SoundManager soundManager = mc.getSoundManager();
 		ParticleEngine particleManager = mc.particleEngine;
 		Level level = Objects.requireNonNull(mc.level);
-		float size = GunConfig.SERVER.impactGrenadeExplosionRadius.get()
-				.floatValue();
+		float size = GunConfig.SERVER.impactGrenadeExplosionRadius.get().floatValue();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -268,8 +264,7 @@ public class ClientPlayHandler
 		SoundManager soundManager = mc.getSoundManager();
 		ParticleEngine particleManager = mc.particleEngine;
 		Level level = Objects.requireNonNull(mc.level);
-		float size = GunConfig.SERVER.incendiaryGrenadeExplosionRadius.get()
-				.floatValue();
+		float size = GunConfig.SERVER.incendiaryGrenadeExplosionRadius.get().floatValue();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -300,8 +295,7 @@ public class ClientPlayHandler
 		double z = message.getZ();
 		
 		//Play explosion sound
-		mc.getSoundManager()
-				.play(DistancedSound.incendiaryGrenadeExtinguish(ModSounds.INCENDIARY_EXTINGUISH.getId(), SoundSource.BLOCKS, (float) x, (float) y, (float) z, 1, 0.9F + level.random.nextFloat() * 0.1F, level.getRandom()));
+		mc.getSoundManager().play(DistancedSound.incendiaryGrenadeExtinguish(ModSounds.INCENDIARY_EXTINGUISH.getId(), SoundSource.BLOCKS, (float) x, (float) y, (float) z, 1, 0.9F + level.random.nextFloat() * 0.1F, level.getRandom()));
 		
 		//Spawn lingering smoke and bubble particles
 		for(int i = 0; i < 60; i++)
@@ -316,8 +310,7 @@ public class ClientPlayHandler
 		SoundManager soundManager = mc.getSoundManager();
 		ParticleEngine particleManager = mc.particleEngine;
 		Level level = Objects.requireNonNull(mc.level);
-		float size = GunConfig.SERVER.molotovExplosionRadius.get()
-				.floatValue();
+		float size = GunConfig.SERVER.molotovExplosionRadius.get().floatValue();
 		double x = message.getX();
 		double y = message.getY();
 		double z = message.getZ();
@@ -430,20 +423,16 @@ public class ClientPlayHandler
 			List<Vec3> currentTickHits = projectileHitsPerTick.computeIfAbsent(currentTick, k -> new ArrayList<>());
 			
 			BlockState state = world.getBlockState(message.getPos());
-			double holeX = message.getX() + 0.005 * message.getFace()
-					.getStepX();
-			double holeY = message.getY() + 0.005 * message.getFace()
-					.getStepY();
-			double holeZ = message.getZ() + 0.005 * message.getFace()
-					.getStepZ();
+			double holeX = message.getX() + 0.005 * message.getFace().getStepX();
+			double holeY = message.getY() + 0.005 * message.getFace().getStepY();
+			double holeZ = message.getZ() + 0.005 * message.getFace().getStepZ();
 			double distance = Math.sqrt(mc.player.distanceToSqr(message.getX(), message.getY(), message.getZ()));
 			world.addParticle(new BulletHoleData(message.getFace(), message.getPos()), true, holeX, holeY, holeZ, 0, 0, 0);
 			if(distance < GunConfig.CLIENT.impactParticleDistance.get())
 			{
 				for(int i = 0; i < 4; i++)
 				{
-					Vec3i normal = message.getFace()
-							.getNormal();
+					Vec3i normal = message.getFace().getNormal();
 					Vec3 motion = new Vec3(normal.getX(), normal.getY(), normal.getZ());
 					motion.add(getRandomDir(world.random), getRandomDir(world.random), getRandomDir(world.random));
 					world.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, state), true, message.getX(), message.getY(), message.getZ(), motion.x, motion.y, motion.z);
@@ -463,8 +452,7 @@ public class ClientPlayHandler
 			
 			if(!hasNearbyHit && distance <= GunConfig.SERVER.projectileImpactSoundDistance.get())
 			{
-				world.playLocalSound(message.getX(), message.getY(), message.getZ(), state.getSoundType()
-						.getBreakSound(), SoundSource.BLOCKS, 1.0F, 2.0F, false);
+				world.playLocalSound(message.getX(), message.getY(), message.getZ(), state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 2.0F, false);
 			}
 			currentTickHits.add(currentHit);
 		}
@@ -484,8 +472,7 @@ public class ClientPlayHandler
 			return;
 		}
 		
-		GunRenderingHandler.get()
-				.playHitMarker(message.isCritical() || message.isHeadshot());
+		GunRenderingHandler.get().playHitMarker(message.isCritical() || message.isHeadshot());
 		
 		SoundEvent event = getHitSound(message.isCritical(), message.isHeadshot(), message.isPlayer());
 		if(event == null)
@@ -493,8 +480,7 @@ public class ClientPlayHandler
 			return;
 		}
 		
-		mc.getSoundManager()
-				.play(SimpleSoundInstance.forUI(event, 1.0F, 1.0F + world.random.nextFloat() * 0.2F));
+		mc.getSoundManager().play(SimpleSoundInstance.forUI(event, 1.0F, 1.0F + world.random.nextFloat() * 0.2F));
 	}
 	
 	@Nullable
@@ -529,14 +515,12 @@ public class ClientPlayHandler
 	
 	public static void handleRemoveProjectile(S2CMessageRemoveProjectile message)
 	{
-		BulletTrailRenderingHandler.get()
-				.remove(message.getEntityId());
+		BulletTrailRenderingHandler.get().remove(message.getEntityId());
 	}
 	
 	public static void handleForceSetReserveAmmo(C2SMessageForceSetReserveAmmo message)
 	{
-		GunRenderingHandler.get()
-				.forceSetReserveAmmo(message.getAmmoAfterLoad());
+		GunRenderingHandler.get().forceSetReserveAmmo(message.getAmmoAfterLoad());
 	}
 	
 	public static void handleUpdateGuns(S2CMessageUpdateGuns message)

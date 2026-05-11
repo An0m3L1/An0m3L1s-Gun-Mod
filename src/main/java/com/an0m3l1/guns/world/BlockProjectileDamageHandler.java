@@ -28,8 +28,7 @@ public class BlockProjectileDamageHandler
 	@SubscribeEvent
 	public static void onBlockBreak(BlockEvent.BreakEvent event)
 	{
-		if(!event.getLevel()
-				.isClientSide())
+		if(!event.getLevel().isClientSide())
 		{
 			ProjectileEntity.BlockDamageManager.removeDamage((Level) event.getLevel(), event.getPos());
 		}
@@ -38,11 +37,9 @@ public class BlockProjectileDamageHandler
 	@SubscribeEvent
 	public static void onExplosionDetonate(ExplosionEvent.Detonate event)
 	{
-		if(!event.getLevel()
-				.isClientSide())
+		if(!event.getLevel().isClientSide())
 		{
-			for(BlockPos pos : event.getExplosion()
-					.getToBlow())
+			for(BlockPos pos : event.getExplosion().getToBlow())
 			{
 				ProjectileEntity.BlockDamageManager.removeDamage(event.getLevel(), pos);
 			}

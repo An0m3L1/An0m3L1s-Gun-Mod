@@ -36,8 +36,7 @@ public class RampUpTracker
 	{
 		this.rampdownTick = player.tickCount;
 		this.slot = player.getInventory().selected;
-		this.stack = player.getInventory()
-				.getSelected();
+		this.stack = player.getInventory().getSelected();
 		this.gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
 	}
 	
@@ -51,8 +50,7 @@ public class RampUpTracker
 	 */
 	private boolean isSameWeapon(Player player)
 	{
-		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory()
-				.getSelected() == this.stack;
+		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory().getSelected() == this.stack;
 	}
 	
 	private boolean shouldDoRampdown(Player player)
@@ -70,9 +68,7 @@ public class RampUpTracker
 			Player player = event.player;
 			if(!RAMPUP_TRACKER_MAP.containsKey(player))
 			{
-				if(!(player.getInventory()
-						.getSelected()
-						.getItem() instanceof GunItem))
+				if(!(player.getInventory().getSelected().getItem() instanceof GunItem))
 				{
 					ModSyncedDataKeys.RAMPUPSHOT.setValue(player, 0);
 					return;
@@ -86,9 +82,7 @@ public class RampUpTracker
 			}
 			boolean resetRampdown = false;
 			
-			if(player.getInventory()
-					.getSelected()
-					.getItem() instanceof GunItem)
+			if(player.getInventory().getSelected().getItem() instanceof GunItem)
 			{
 				if(tracker.isSameWeapon(player))
 				{
@@ -128,8 +122,7 @@ public class RampUpTracker
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity()
-				.getServer();
+		MinecraftServer server = event.getEntity().getServer();
 		if(server != null)
 		{
 			server.execute(() -> RAMPUP_TRACKER_MAP.remove(event.getEntity()));

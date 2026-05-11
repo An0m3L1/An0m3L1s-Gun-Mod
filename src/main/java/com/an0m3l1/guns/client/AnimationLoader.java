@@ -54,14 +54,10 @@ public final class AnimationLoader implements IDataLoader<AnimationLoader.AnimRe
 	public List<AnimResource> getResourceSuppliers()
 	{
 		List<AnimResource> resources = new ArrayList<>();
-		ResourceManager manager = Minecraft.getInstance()
-				.getResourceManager();
-		for(var resource : manager.listResources("animations", location -> location.getPath()
-						.endsWith(GunMod.ANIM_EXTENSION))
-				.entrySet())
+		ResourceManager manager = Minecraft.getInstance().getResourceManager();
+		for(var resource : manager.listResources("animations", location -> location.getPath().endsWith(GunMod.ANIM_EXTENSION)).entrySet())
 		{
-			try(var input = resource.getValue()
-					.open())
+			try(var input = resource.getValue().open())
 			{
 				ResourceLocation key = resource.getKey();
 				ResourceLocation location = new ResourceLocation(key.getNamespace(), key.getPath());

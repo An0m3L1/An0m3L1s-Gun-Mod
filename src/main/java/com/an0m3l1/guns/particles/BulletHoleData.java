@@ -18,10 +18,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public record BulletHoleData(Direction direction, BlockPos pos) implements ParticleOptions
 {
-	public static final Codec<BulletHoleData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(Codec.INT.fieldOf("dir")
-					.forGetter((data) -> data.direction.ordinal()), Codec.LONG.fieldOf("pos")
-					.forGetter((p_239806_0_) -> p_239806_0_.pos.asLong()))
-			.apply(builder, BulletHoleData::new));
+	public static final Codec<BulletHoleData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(Codec.INT.fieldOf("dir").forGetter((data) -> data.direction.ordinal()), Codec.LONG.fieldOf("pos").forGetter((p_239806_0_) -> p_239806_0_.pos.asLong())).apply(builder, BulletHoleData::new));
 	
 	public static final Deserializer<BulletHoleData> DESERIALIZER = new Deserializer<>()
 	{

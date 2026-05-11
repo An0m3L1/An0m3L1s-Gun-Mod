@@ -80,8 +80,7 @@ public class RecoilHandler
 		Gun modifiedGun = gunItem.getModifiedGun(heldItem);
 		float recoilModifier = 1.0F - GunModifierHelper.getRecoilModifier(heldItem);
 		recoilModifier *= (float) this.getAdsRecoilReduction(modifiedGun);
-		this.cameraRecoil = modifiedGun.getGeneral()
-				.getRecoilAngle() * recoilModifier;
+		this.cameraRecoil = modifiedGun.getGeneral().getRecoilAngle() * recoilModifier;
 		this.gunRecoilRandom = random.nextFloat();
 		this.gunVRecoilRandom = random.nextFloat();
 		
@@ -216,12 +215,8 @@ public class RecoilHandler
 		Gun modifiedGun = gunItem.getModifiedGun(heldItem);
 		assert Minecraft.getInstance().player != null;
 		ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-		float cooldown = tracker.getCooldownPercent(gunItem, Minecraft.getInstance()
-				.getFrameTime());
-		cooldown = cooldown >= modifiedGun.getGeneral()
-				.getRecoilDurationOffset() ? (cooldown - modifiedGun.getGeneral()
-				.getRecoilDurationOffset()) / (1.0F - modifiedGun.getGeneral()
-				.getRecoilDurationOffset()) : 0.0F;
+		float cooldown = tracker.getCooldownPercent(gunItem, Minecraft.getInstance().getFrameTime());
+		cooldown = cooldown >= modifiedGun.getGeneral().getRecoilDurationOffset() ? (cooldown - modifiedGun.getGeneral().getRecoilDurationOffset()) / (1.0F - modifiedGun.getGeneral().getRecoilDurationOffset()) : 0.0F;
 		if(cooldown >= 0.85)
 		{
 			float amount = ((1.0F - (cooldown * 0.98F)) / 0.2F);
@@ -233,15 +228,12 @@ public class RecoilHandler
 			this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
 		}
 		
-		this.gunRecoilAngle = modifiedGun.getGeneral()
-				.getRecoilAngle();
+		this.gunRecoilAngle = modifiedGun.getGeneral().getRecoilAngle();
 	}
 	
 	public double getAdsRecoilReduction(Gun gun)
 	{
-		return 1.0 - gun.getGeneral()
-				.getRecoilAdsReduction() * AimingHandler.get()
-				.getNormalisedAdsProgress();
+		return 1.0 - gun.getGeneral().getRecoilAdsReduction() * AimingHandler.get().getNormalisedAdsProgress();
 	}
 	
 	public double getRecoilBuildup()

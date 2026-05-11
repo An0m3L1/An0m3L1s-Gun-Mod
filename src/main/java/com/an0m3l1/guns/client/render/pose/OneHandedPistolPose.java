@@ -43,14 +43,12 @@ public class OneHandedPistolPose implements IHeldAnimation
 	public void applyPlayerModelRotation(Player player, ModelPart rightArm, ModelPart leftArm, ModelPart head, InteractionHand hand, float aimProgress)
 	{
 		Minecraft mc = Minecraft.getInstance();
-		boolean right = mc.options.mainHand()
-				.get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+		boolean right = mc.options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
 		ModelPart arm = right ? rightArm : leftArm;
 		IHeldAnimation.copyModelAngles(head, arm);
 		arm.xRot += (float) Math.toRadians(-70F - (aimProgress * 25));
 		
-		if(player.getUseItem()
-				.getItem() == Items.SHIELD)
+		if(player.getUseItem().getItem() == Items.SHIELD)
 		{
 			arm.xRot = (float) Math.toRadians(-105F);
 		}
@@ -60,9 +58,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 		}
 		else
 		{
-			float sprintTransition = GunRenderingHandler.get()
-					.getSprintTransition(Minecraft.getInstance()
-							.getFrameTime());
+			float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getFrameTime());
 			float targetSprintRot = (float) Math.toRadians(-105F - (aimProgress * 25));
 			arm.xRot = Mth.lerp(sprintTransition, arm.xRot, targetSprintRot);
 		}
@@ -85,9 +81,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 	{
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
 		
-		BakedModel model = Minecraft.getInstance()
-				.getItemRenderer()
-				.getModel(stack, player.level, player, 0);
+		BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(stack, player.level, player, 0);
 		float translateX = model.getTransforms().firstPersonRightHand.translation.x();
 		float translateZ = model.getTransforms().firstPersonRightHand.translation.z();
 		int side = hand.getOpposite() == HumanoidArm.RIGHT ? 1 : -1;
@@ -95,9 +89,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 		float handScale = 1 / (handDiv == 0 ? 1 : handDiv);
 		poseStack.translate(translateX * side, 0, -translateZ);
 		
-		boolean slim = Objects.requireNonNull(Minecraft.getInstance().player)
-				.getModelName()
-				.equals("slim");
+		boolean slim = Objects.requireNonNull(Minecraft.getInstance().player).getModelName().equals("slim");
 		float armWidth = slim ? 3.0F : 4.0F;
 		
 		if(!(stack.getItem() instanceof GunItem gunStack))
@@ -105,8 +97,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 			return;
 		}
 		Gun gun = gunStack.getModifiedGun(stack);
-		RearHandPos posHandDisplay = gun.getDisplay()
-				.getRearHand();
+		RearHandPos posHandDisplay = gun.getDisplay().getRearHand();
 		double xOffset = (posHandDisplay != null ? posHandDisplay.getXOffset() : 0);
 		double yOffset = (posHandDisplay != null ? posHandDisplay.getYOffset() : 0);
 		double zOffset = (posHandDisplay != null ? posHandDisplay.getZOffset() : 0);
@@ -120,18 +111,15 @@ public class OneHandedPistolPose implements IHeldAnimation
 				
 				Vec3 translations = GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "forwardHand");
 				Vec3 rotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "forwardHand");
-				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks)
-						.equals("fire"))
+				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks).equals("fire"))
 				{
 					ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-					float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-							.getFrameTime());
+					float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 					translations = GunLegacyAnimationHelper.getHandTranslation(stack, false, cooldown);
 				}
 				if(!GunAnimationHelper.hasAnimation("reload", stack))
 				{
-					float reloadProg = ReloadHandler.get()
-							.getReloadProgress(partialTicks);
+					float reloadProg = ReloadHandler.get().getReloadProgress(partialTicks);
 					poseStack.translate(0, (-24 * reloadProg) * 0.0625, (-6 * reloadProg) * 0.0625);
 				}
 				
@@ -148,8 +136,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 				poseStack.mulPose(Vector3f.XP.rotationDegrees(75F));
 				poseStack.mulPose(Vector3f.ZP.rotationDegrees(25F * -side));
 				
-				if(GunAnimationHelper.hasAnimation("reload", stack) || ReloadHandler.get()
-						.getReloadProgress(partialTicks) < 1)
+				if(GunAnimationHelper.hasAnimation("reload", stack) || ReloadHandler.get().getReloadProgress(partialTicks) < 1)
 				{
 					RenderUtil.renderFirstPersonArm((LocalPlayer) player, hand.getOpposite(), poseStack, buffer, light);
 				}
@@ -190,8 +177,7 @@ public class OneHandedPistolPose implements IHeldAnimation
 		{
 			poseStack.translate(-4.5 * 0.0625, -15 * 0.0625, -4 * 0.0625);
 		}
-		else if(!player.getItemBySlot(EquipmentSlot.LEGS)
-				.isEmpty())
+		else if(!player.getItemBySlot(EquipmentSlot.LEGS).isEmpty())
 		{
 			poseStack.translate(-4.0 * 0.0625, -13 * 0.0625, 1 * 0.0625);
 		}

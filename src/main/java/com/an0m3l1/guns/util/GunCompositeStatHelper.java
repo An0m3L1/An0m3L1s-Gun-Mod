@@ -15,8 +15,7 @@ public class GunCompositeStatHelper
 	
 	public static int getCompositeRate(ItemStack weapon, Gun modifiedGun, Player player)
 	{
-		int a = modifiedGun.getGeneral()
-				.getRate();
+		int a = modifiedGun.getGeneral().getRate();
 		int b = GunModifierHelper.getModifiedRate(weapon, a);
 		return GunModifierHelper.getRampUpRate(player, weapon, b);
 	}
@@ -25,16 +24,14 @@ public class GunCompositeStatHelper
 	{
 		// Version of getCompositeRate that only requires an ItemStack and Player input
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		int a = modifiedGun.getGeneral()
-				.getRate();
+		int a = modifiedGun.getGeneral().getRate();
 		int b = GunModifierHelper.getModifiedRate(weapon, a);
 		return GunModifierHelper.getRampUpRate(player, weapon, b);
 	}
 	
 	public static int getCompositeBaseRate(ItemStack weapon, Gun modifiedGun)
 	{
-		int a = modifiedGun.getGeneral()
-				.getRate();
+		int a = modifiedGun.getGeneral().getRate();
 		return GunModifierHelper.getModifiedRate(weapon, a);
 	}
 	
@@ -42,21 +39,18 @@ public class GunCompositeStatHelper
 	{
 		// Version of getCompositeBaseRate that only requires an ItemStack input
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		int a = modifiedGun.getGeneral()
-				.getRate();
+		int a = modifiedGun.getGeneral().getRate();
 		return GunModifierHelper.getModifiedRate(weapon, a);
 	}
 	
 	public static float getCompositeSpread(ItemStack weapon, Gun modifiedGun)
 	{
-		return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral()
-				.getSpread());
+		return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral().getSpread());
 	}
 	
 	public static float getCompositeMinSpread(ItemStack weapon, Gun modifiedGun)
 	{
-		return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral()
-				.getRestingSpread());
+		return GunModifierHelper.getModifiedSpread(weapon, modifiedGun.getGeneral().getRestingSpread());
 	}
 	
 	public static int getAmmoCapacity(ItemStack weapon)
@@ -89,25 +83,21 @@ public class GunCompositeStatHelper
 	public static int getReloadInterval(ItemStack weapon, boolean reloadFromEmpty)
 	{
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		int baseInterval = modifiedGun.getGeneral()
-				.getReloadRate();
-		int interval = modifiedGun.getGeneral()
-				.getReloadRate();
+		int baseInterval = modifiedGun.getGeneral().getReloadRate();
+		int interval = modifiedGun.getGeneral().getReloadRate();
 		return Math.max(interval, 1);
 	}
 	
 	public static int getMagReloadSpeed(ItemStack weapon, boolean reloadFromEmpty)
 	{
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		int baseSpeed = modifiedGun.getGeneral()
-				.getMagReloadTime();
+		int baseSpeed = modifiedGun.getGeneral().getMagReloadTime();
 		double reloadSpeedModifier = GunModifierHelper.getReloadSpeedModifier(weapon);
 		
 		int speed = (int) Math.round((baseSpeed) * reloadSpeedModifier);
 		if(reloadFromEmpty)
 		{
-			baseSpeed = modifiedGun.getGeneral()
-					.getMagReloadFromEmptyTime();
+			baseSpeed = modifiedGun.getGeneral().getMagReloadFromEmptyTime();
 			speed = (int) Math.round((baseSpeed) * reloadSpeedModifier);
 		}
 		return Math.max(speed, 4);
@@ -129,30 +119,23 @@ public class GunCompositeStatHelper
 	public static float getHeadshotDamage(ItemStack weapon)
 	{
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		float damage = modifiedGun.getProjectile()
-				.getDamage(); // Get base damage of the gun
+		float damage = modifiedGun.getProjectile().getDamage(); // Get base damage of the gun
 		damage = GunModifierHelper.getModifiedProjectileDamage(weapon, damage); // Get modified damage of the gun
 		
-		if(modifiedGun.getProjectile()
-				.getHeadshotMultiplierOverride() != 0)
+		if(modifiedGun.getProjectile().getHeadshotMultiplierOverride() != 0)
 		{
-			damage *= modifiedGun.getProjectile()
-					.getHeadshotMultiplierOverride();
+			damage *= modifiedGun.getProjectile().getHeadshotMultiplierOverride();
 		}
 		else
 		{
 			double hm = GunConfig.COMMON.headShotDamageMultiplier.get();
-			float headshotMultiplier = (float) Math.max(hm, modifiedGun.getProjectile()
-					.getHeadshotMultiplierMin());
-			damage *= headshotMultiplier + modifiedGun.getProjectile()
-					.getHeadshotMultiplierBonus();
+			float headshotMultiplier = (float) Math.max(hm, modifiedGun.getProjectile().getHeadshotMultiplierMin());
+			damage *= headshotMultiplier + modifiedGun.getProjectile().getHeadshotMultiplierBonus();
 		}
 		
-		if(modifiedGun.getProjectile()
-				.getHeadshotExtraDamage() > 0)
+		if(modifiedGun.getProjectile().getHeadshotExtraDamage() > 0)
 		{
-			damage += modifiedGun.getProjectile()
-					.getHeadshotExtraDamage();
+			damage += modifiedGun.getProjectile().getHeadshotExtraDamage();
 		}
 		
 		return damage;

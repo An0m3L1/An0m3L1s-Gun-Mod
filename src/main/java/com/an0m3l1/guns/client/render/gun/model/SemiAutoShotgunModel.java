@@ -38,9 +38,7 @@ public class SemiAutoShotgunModel implements IOverrideModel
 	{
 		// Render the item's BakedModel, which will serve as the core of our custom model.
 		BakedModel bakedModel = SpecialModels.SEMI_AUTO_SHOTGUN_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
 		
 		// Render the iron sights element, which is only present when a scope is not attached.
 		// We have to grab the gun's scope attachment slot and check whether it is empty or not.
@@ -112,14 +110,12 @@ public class SemiAutoShotgunModel implements IOverrideModel
 		Gun gun = gunStack.getModifiedGun(stack);
 		if(isPlayer && correctContext)
 		{
-			float cooldownDivider = Math.max((float) gun.getGeneral()
-					.getRate() / 3F, 1);
+			float cooldownDivider = Math.max((float) gun.getGeneral().getRate() / 3F, 1);
 			float cooldownOffset1 = cooldownDivider - 1.0F;
 			float intensity = 1.0F + 1;
 			
 			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-					.getFrameTime());
+			float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 			cooldown *= cooldownDivider;
 			float cooldown_a = cooldown - cooldownOffset1;
 			

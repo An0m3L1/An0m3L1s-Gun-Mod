@@ -67,8 +67,7 @@ public class ServerAimTracker
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity()
-				.getServer();
+		MinecraftServer server = event.getEntity().getServer();
 		if(server != null)
 		{
 			server.execute(() -> AIM_TRACKER_MAP.remove(event.getEntity()));

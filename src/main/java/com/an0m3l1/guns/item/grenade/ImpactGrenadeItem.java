@@ -42,19 +42,14 @@ public class ImpactGrenadeItem extends GrenadeItem
 		double explosionRadius = (GunConfig.SERVER.impactGrenadeExplosionRadius.get());
 		if(Screen.hasControlDown())
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
-					.withStyle(ChatFormatting.GOLD));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explosion_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(explosionRadius))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explodes_on_impact")
-					.withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explosion_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(explosionRadius)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explodes_on_impact").withStyle(ChatFormatting.GRAY));
 		}
 		else
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help")
-					.withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help").withStyle(ChatFormatting.GOLD));
 		}
 	}
 	

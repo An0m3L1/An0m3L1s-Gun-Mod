@@ -36,8 +36,7 @@ public class GunModPlugin implements IModPlugin
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration)
 	{
-		IGuiHelper helper = registration.getJeiHelpers()
-				.getGuiHelper();
+		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 		registration.addRecipeCategories(new WorkbenchCategory(helper));
 	}
 	

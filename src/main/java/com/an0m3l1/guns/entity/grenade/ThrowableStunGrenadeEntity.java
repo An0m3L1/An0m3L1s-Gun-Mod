@@ -64,8 +64,7 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 	@SubscribeEvent
 	public static void blindMobs(LivingSetAttackTargetEvent event)
 	{
-		if(GunConfig.COMMON.blindMobs.get() && event.getTarget() != null && event.getEntity() instanceof Mob && event.getEntity()
-				.hasEffect(ModEffects.BLINDED.get()))
+		if(GunConfig.COMMON.blindMobs.get() && event.getTarget() != null && event.getEntity() instanceof Mob && event.getEntity().hasEffect(ModEffects.BLINDED.get()))
 		{
 			((Mob) event.getEntity()).setTarget(null);
 		}
@@ -74,15 +73,13 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 	@Override
 	public void onDeath()
 	{
-		double y = this.getY() + this.getType()
-				.getDimensions().height * 0.5;
+		double y = this.getY() + this.getType().getDimensions().height * 0.5;
 		if(this.level.isClientSide)
 		{
 			return;
 		}
 		this.createLight(explosionLightValue, explosionLightLife);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageStunGrenade(this.getX(), y, this.getZ()));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageStunGrenade(this.getX(), y, this.getZ()));
 		
 		// Calculate bounds of area where potentially effected players may be
 		double diameter = Math.max(GunConfig.SERVER.stunCriteria.radius.get(), GunConfig.SERVER.blindCriteria.radius.get()) * 2 + 1;
@@ -109,8 +106,7 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 			distance = directionGrenade.length();
 			
 			// Calculate angle between eye-gaze line and eye-grenade line
-			double angle = Math.toDegrees(Math.acos(entity.getViewVector(1.0F)
-					.dot(directionGrenade.normalize())));
+			double angle = Math.toDegrees(Math.acos(entity.getViewVector(1.0F).dot(directionGrenade.normalize())));
 			
 			// Apply effects as determined by their criteria
 			if(this.calculateAndApplyEffect(ModEffects.STUNNED.get(), GunConfig.SERVER.stunCriteria, entity, grenade, eyes, distance, angle) && GunConfig.COMMON.panicMobs.get())
@@ -131,10 +127,8 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 		
 		if(debug)
 		{
-			String entityName = entity.getName()
-					.getString();
-			String effectName = effect.getDisplayName()
-					.getString();
+			String entityName = entity.getName().getString();
+			String effectName = effect.getDisplayName().getString();
 			GunMod.LOGGER.debug("[StunGrenade] Checking effect {} for {}", effectName, entityName);
 			GunMod.LOGGER.debug("[StunGrenade]   Distance: {} (radius: {})", String.format("%.2f", distance), criteria.radius.get());
 			GunMod.LOGGER.debug("[StunGrenade]   Angle: {} (max angle: {})", String.format("%.2f", angle), angleMax);
@@ -184,9 +178,7 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 			entity.addEffect(new MobEffectInstance(effect, duration, 0, false, false));
 			if(debug)
 			{
-				GunMod.LOGGER.debug("[StunGrenade]   Effect {} successfully applied to {}", effect.getDisplayName()
-						.getString(), entity.getName()
-						.getString());
+				GunMod.LOGGER.debug("[StunGrenade]   Effect {} successfully applied to {}", effect.getDisplayName().getString(), entity.getName().getString());
 			}
 			
 			boolean isMob = !(entity instanceof Player);

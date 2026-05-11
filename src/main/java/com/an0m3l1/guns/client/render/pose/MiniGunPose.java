@@ -21,17 +21,7 @@ public class MiniGunPose extends WeaponPose
 	protected AimPose getUpPose()
 	{
 		AimPose pose = new AimPose();
-		pose.getIdle()
-				.setRenderYawOffset(45F)
-				.setItemRotation(new Vector3f(10F, 0F, 0F))
-				.setRightArm(new LimbPose().setRotationAngleX(-100F)
-						.setRotationAngleY(-45F)
-						.setRotationAngleZ(0F)
-						.setRotationPointY(2))
-				.setLeftArm(new LimbPose().setRotationAngleX(-150F)
-						.setRotationAngleY(40F)
-						.setRotationAngleZ(-10F)
-						.setRotationPointY(1));
+		pose.getIdle().setRenderYawOffset(45F).setItemRotation(new Vector3f(10F, 0F, 0F)).setRightArm(new LimbPose().setRotationAngleX(-100F).setRotationAngleY(-45F).setRotationAngleZ(0F).setRotationPointY(2)).setLeftArm(new LimbPose().setRotationAngleX(-150F).setRotationAngleY(40F).setRotationAngleZ(-10F).setRotationPointY(1));
 		return pose;
 	}
 	
@@ -39,16 +29,7 @@ public class MiniGunPose extends WeaponPose
 	protected AimPose getForwardPose()
 	{
 		AimPose pose = new AimPose();
-		pose.getIdle()
-				.setRenderYawOffset(45F)
-				.setRightArm(new LimbPose().setRotationAngleX(-15F)
-						.setRotationAngleY(-45F)
-						.setRotationAngleZ(0F)
-						.setRotationPointY(2))
-				.setLeftArm(new LimbPose().setRotationAngleX(-45F)
-						.setRotationAngleY(30F)
-						.setRotationAngleZ(0F)
-						.setRotationPointY(2));
+		pose.getIdle().setRenderYawOffset(45F).setRightArm(new LimbPose().setRotationAngleX(-15F).setRotationAngleY(-45F).setRotationAngleZ(0F).setRotationPointY(2)).setLeftArm(new LimbPose().setRotationAngleX(-45F).setRotationAngleY(30F).setRotationAngleZ(0F).setRotationPointY(2));
 		return pose;
 	}
 	
@@ -56,18 +37,7 @@ public class MiniGunPose extends WeaponPose
 	protected AimPose getDownPose()
 	{
 		AimPose pose = new AimPose();
-		pose.getIdle()
-				.setRenderYawOffset(45F)
-				.setItemRotation(new Vector3f(-50F, 0F, 0F))
-				.setItemTranslate(new Vector3f(0F, 0F, 1F))
-				.setRightArm(new LimbPose().setRotationAngleX(0F)
-						.setRotationAngleY(-45F)
-						.setRotationAngleZ(0F)
-						.setRotationPointY(1))
-				.setLeftArm(new LimbPose().setRotationAngleX(-25F)
-						.setRotationAngleY(30F)
-						.setRotationAngleZ(15F)
-						.setRotationPointY(4));
+		pose.getIdle().setRenderYawOffset(45F).setItemRotation(new Vector3f(-50F, 0F, 0F)).setItemTranslate(new Vector3f(0F, 0F, 1F)).setRightArm(new LimbPose().setRotationAngleX(0F).setRotationAngleY(-45F).setRotationAngleZ(0F).setRotationPointY(1)).setLeftArm(new LimbPose().setRotationAngleX(-25F).setRotationAngleY(30F).setRotationAngleZ(15F).setRotationPointY(4));
 		return pose;
 	}
 	

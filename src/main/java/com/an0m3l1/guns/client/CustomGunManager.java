@@ -48,14 +48,10 @@ public class CustomGunManager
 				ItemStack stack = new ItemStack(ModItems.TACTICAL_PISTOL.get());
 				stack.setHoverName(Component.translatable("item." + id.getNamespace() + "." + id.getPath() + ".name"));
 				CompoundTag tag = stack.getOrCreateTag();
-				tag.put("Model", gun.getModel()
-						.save(new CompoundTag()));
-				tag.put("Gun", gun.getGun()
-						.serializeNBT());
+				tag.put("Model", gun.getModel().save(new CompoundTag()));
+				tag.put("Gun", gun.getGun().serializeNBT());
 				tag.putBoolean("Custom", true);
-				tag.putInt("AmmoCount", gun.getGun()
-						.getGeneral()
-						.getMaxAmmo());
+				tag.putInt("AmmoCount", gun.getGun().getGeneral().getMaxAmmo());
 				tag.putInt("Energy", 0);
 				items.add(stack);
 			});
@@ -74,8 +70,7 @@ public class CustomGunManager
 		public void writeData(FriendlyByteBuf buffer)
 		{
 			Validate.notNull(CustomGunLoader.get());
-			CustomGunLoader.get()
-					.writeCustomGuns(buffer);
+			CustomGunLoader.get().writeCustomGuns(buffer);
 		}
 		
 		@Override

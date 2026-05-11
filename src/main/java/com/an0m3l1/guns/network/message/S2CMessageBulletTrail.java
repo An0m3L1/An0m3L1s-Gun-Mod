@@ -126,8 +126,7 @@ public class S2CMessageBulletTrail extends PlayMessage<S2CMessageBulletTrail>
 	
 	private <T extends ParticleOptions> T readParticle(FriendlyByteBuf buffer, ParticleType<T> type)
 	{
-		return type.getDeserializer()
-				.fromNetwork(type, buffer);
+		return type.getDeserializer().fromNetwork(type, buffer);
 	}
 	
 	public int getCount()

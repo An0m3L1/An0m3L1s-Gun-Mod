@@ -1,9 +1,9 @@
 {
-  "general": {
-    "headHeight": 10.0,
-    "headWidth": 8.0,
-    "rotateYaw": true,
-    "y": 33.0,
-    "z": 3.5
-  }
+	"general": {
+		"headHeight": 10.0,
+		"headWidth": 8.0,
+		"rotateYaw": true,
+		"y": 33.0,
+		"z": 3.5
+	}
 }

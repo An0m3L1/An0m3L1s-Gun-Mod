@@ -29,8 +29,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 {
 	public float rotation;
 	public float prevRotation;
-	protected final float radius = GunConfig.SERVER.grenadeExplosionRadius.get()
-			.floatValue();
+	protected final float radius = GunConfig.SERVER.grenadeExplosionRadius.get().floatValue();
 	protected final boolean griefing = GunConfig.SERVER.grenadeExplosionGriefing.get();
 	public final int explosionLightValue = 12;
 	public final int explosionLightLife = 6;
@@ -74,8 +73,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 	{
 		super.tick();
 		this.prevRotation = this.rotation;
-		double speed = this.getDeltaMovement()
-				.length();
+		double speed = this.getDeltaMovement().length();
 		if(speed > 0.1)
 		{
 			this.rotation += (float) (speed * 50);
@@ -90,15 +88,13 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 	public void onDeath()
 	{
 		createExplosion(this, radius, griefing);
-		double y = this.getY() + this.getType()
-				.getDimensions().height * 0.5;
+		double y = this.getY() + this.getType().getDimensions().height * 0.5;
 		if(this.level.isClientSide)
 		{
 			return;
 		}
 		this.createLight(this.explosionLightValue, this.explosionLightLife);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageGrenade(this.getX(), y, this.getZ()));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageGrenade(this.getX(), y, this.getZ()));
 	}
 	
 	public void createLight(int lightValue, int lightLife)
@@ -125,8 +121,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 				continue;
 			}
 			
-			Vec3 entityPos = entity.getBoundingBox()
-					.getCenter();
+			Vec3 entityPos = entity.getBoundingBox().getCenter();
 			double distanceSq = center.distanceToSqr(entityPos);
 			
 			if(distanceSq > radiusSq)
@@ -136,8 +131,7 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
 			
 			ClipContext context = new ClipContext(center, entityPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null);
 			
-			if(level.clip(context)
-					.getType() == HitResult.Type.MISS)
+			if(level.clip(context).getType() == HitResult.Type.MISS)
 			{
 				entity.setSecondsOnFire(fireDuration);
 			}

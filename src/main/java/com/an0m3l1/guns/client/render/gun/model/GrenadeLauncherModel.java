@@ -27,9 +27,7 @@ public class GrenadeLauncherModel implements IOverrideModel
 	                   LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay)
 	{
 		BakedModel bakedModel = SpecialModels.GRENADE_LAUNCHER_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
 		
 		float cooldown = 0F;
 		boolean isPlayer = (entity != null && entity.equals(Minecraft.getInstance().player));
@@ -37,8 +35,7 @@ public class GrenadeLauncherModel implements IOverrideModel
 		if(isPlayer && correctContext)
 		{
 			ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-			cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-					.getFrameTime());
+			cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 			cooldown = (float) easeInOutBack(cooldown);
 		}
 		

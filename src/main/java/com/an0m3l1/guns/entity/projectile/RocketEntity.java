@@ -48,10 +48,7 @@ public class RocketEntity extends ProjectileEntity
 		{
 			for(int i = 5; i > 0; i--)
 			{
-				this.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, this.getX() - (this.getDeltaMovement()
-						.x() / i), this.getY() - (this.getDeltaMovement()
-						.y() / i), this.getZ() - (this.getDeltaMovement()
-						.z() / i), 0, 0, 0);
+				this.level.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
 			}
 			if(this.level.random.nextInt(2) == 0)
 			{
@@ -74,8 +71,7 @@ public class RocketEntity extends ProjectileEntity
 		 * We check for explosion griefing so the projectile doesn't just disappear */
 		if(this.getProjectile() != null && state.is(ModTags.Blocks.HARDNESS_NONE))
 		{
-			if(!GunConfig.COMMON.universalExplosionGriefing.get() && GunConfig.COMMON.projectileGriefing.get() && this.getProjectile()
-					.isGriefing())
+			if(!GunConfig.COMMON.universalExplosionGriefing.get() && GunConfig.COMMON.projectileGriefing.get() && this.getProjectile().isGriefing())
 			{
 				this.level.destroyBlock(pos, GunConfig.COMMON.projectileGriefingBlockDrops.get());
 			}
@@ -103,10 +99,8 @@ public class RocketEntity extends ProjectileEntity
 		
 		if(this.getProjectile() != null)
 		{
-			radius = this.getProjectile()
-					.getExplosionRadius();
-			griefing = this.getProjectile()
-					.isGriefing();
+			radius = this.getProjectile().getExplosionRadius();
+			griefing = this.getProjectile().isGriefing();
 		}
 		
 		createExplosion(this, radius, griefing);
@@ -117,7 +111,6 @@ public class RocketEntity extends ProjectileEntity
 		
 		LightSourceEntity light = new LightSourceEntity(level, this.getX(), this.getY(), this.getZ(), explosionLightValue, explosionLightLife);
 		level.addFreshEntity(light);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), this.getY(), this.getZ(), 256), new S2CMessageRocket(this.getX(), this.getY(), this.getZ(), radius));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), this.getY(), this.getZ(), 256), new S2CMessageRocket(this.getX(), this.getY(), this.getZ(), radius));
 	}
 }

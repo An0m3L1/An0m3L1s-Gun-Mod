@@ -52,14 +52,10 @@ public class SightAnimation implements INBTSerializable<CompoundTag>
 	public CompoundTag serializeNBT()
 	{
 		CompoundTag tag = new CompoundTag();
-		tag.putString("ViewportCurve", this.viewportCurve.name()
-				.toLowerCase(Locale.ROOT));
-		tag.putString("SightCurve", this.sightCurve.name()
-				.toLowerCase(Locale.ROOT));
-		tag.putString("FovCurve", this.fovCurve.name()
-				.toLowerCase(Locale.ROOT));
-		tag.putString("AimTransformCurve", this.aimTransformCurve.name()
-				.toLowerCase(Locale.ROOT));
+		tag.putString("ViewportCurve", this.viewportCurve.name().toLowerCase(Locale.ROOT));
+		tag.putString("SightCurve", this.sightCurve.name().toLowerCase(Locale.ROOT));
+		tag.putString("FovCurve", this.fovCurve.name().toLowerCase(Locale.ROOT));
+		tag.putString("AimTransformCurve", this.aimTransformCurve.name().toLowerCase(Locale.ROOT));
 		return tag;
 	}
 	

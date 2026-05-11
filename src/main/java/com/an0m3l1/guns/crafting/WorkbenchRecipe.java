@@ -118,8 +118,7 @@ public class WorkbenchRecipe implements Recipe<WorkbenchBlockEntity>
 		for(ItemStack returnItem : this.returnItems)
 		{
 			ItemStack returnItemCopy = returnItem.copy();
-			if(!player.getInventory()
-					.add(returnItemCopy))
+			if(!player.getInventory().add(returnItemCopy))
 			{
 				player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), returnItemCopy));
 			}

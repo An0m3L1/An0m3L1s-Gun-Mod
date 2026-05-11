@@ -13,34 +13,7 @@ public class PacketHandler
 	
 	public static void init()
 	{
-		playChannel = FrameworkAPI.createNetworkBuilder(new ResourceLocation(GunMod.MOD_ID, "play"), 1)
-				.registerPlayMessage(C2SMessageAim.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(C2SMessageReload.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(C2SMessageShoot.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(C2SMessageUnload.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(S2CMessageGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageImpactGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageRocket.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessagePipeGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageIncendiaryGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageIncendiaryGrenadeUnderwater.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageMolotov.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageMolotovUnderwater.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageStunGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageSmokeGrenade.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(C2SMessageCraft.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(S2CMessageBulletTrail.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(C2SMessageAttachments.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(S2CMessageUpdateGuns.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageBlood.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(C2SMessageShooting.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(S2CMessageSound.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageProjectileHitBlock.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageProjectileHitEntity.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(S2CMessageRemoveProjectile.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.registerPlayMessage(C2SMessageFireSwitch.class, MessageDirection.PLAY_SERVER_BOUND)
-				.registerPlayMessage(C2SMessageForceSetReserveAmmo.class, MessageDirection.PLAY_CLIENT_BOUND)
-				.build();
+		playChannel = FrameworkAPI.createNetworkBuilder(new ResourceLocation(GunMod.MOD_ID, "play"), 1).registerPlayMessage(C2SMessageAim.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(C2SMessageReload.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(C2SMessageShoot.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(C2SMessageUnload.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(S2CMessageGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageImpactGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageRocket.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessagePipeGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageIncendiaryGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageIncendiaryGrenadeUnderwater.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageMolotov.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageMolotovUnderwater.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageStunGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageSmokeGrenade.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(C2SMessageCraft.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(S2CMessageBulletTrail.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(C2SMessageAttachments.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(S2CMessageUpdateGuns.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageBlood.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(C2SMessageShooting.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(S2CMessageSound.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageProjectileHitBlock.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageProjectileHitEntity.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(S2CMessageRemoveProjectile.class, MessageDirection.PLAY_CLIENT_BOUND).registerPlayMessage(C2SMessageFireSwitch.class, MessageDirection.PLAY_SERVER_BOUND).registerPlayMessage(C2SMessageForceSetReserveAmmo.class, MessageDirection.PLAY_CLIENT_BOUND).build();
 	}
 	
 	/**

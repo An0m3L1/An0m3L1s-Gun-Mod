@@ -19,8 +19,7 @@ import static com.an0m3l1.guns.entity.ProjectileEntity.createExplosion;
  */
 public class ThrowableImpactGrenadeEntity extends ThrowableGrenadeEntity
 {
-	protected final float radius = GunConfig.SERVER.impactGrenadeExplosionRadius.get()
-			.floatValue();
+	protected final float radius = GunConfig.SERVER.impactGrenadeExplosionRadius.get().floatValue();
 	protected final boolean griefing = GunConfig.SERVER.impactGrenadeExplosionGriefing.get();
 	
 	public ThrowableImpactGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, Level worldIn)
@@ -47,14 +46,12 @@ public class ThrowableImpactGrenadeEntity extends ThrowableGrenadeEntity
 	public void onDeath()
 	{
 		createExplosion(this, radius, griefing);
-		double y = this.getY() + this.getType()
-				.getDimensions().height * 0.5;
+		double y = this.getY() + this.getType().getDimensions().height * 0.5;
 		if(this.level.isClientSide)
 		{
 			return;
 		}
 		this.createLight(explosionLightValue, explosionLightLife);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageImpactGrenade(this.getX(), y, this.getZ()));
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(this.level, this.getX(), y, this.getZ(), 256), new S2CMessageImpactGrenade(this.getX(), y, this.getZ()));
 	}
 }

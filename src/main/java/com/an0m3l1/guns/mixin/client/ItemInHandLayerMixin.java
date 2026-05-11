@@ -36,8 +36,7 @@ public class ItemInHandLayerMixin
 	{
 		if(entity.getType() == EntityType.PLAYER)
 		{
-			InteractionHand hand = Minecraft.getInstance().options.mainHand()
-					.get() == arm ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+			InteractionHand hand = Minecraft.getInstance().options.mainHand().get() == arm ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
 			if(hand == InteractionHand.OFF_HAND)
 			{
 				if(stack.getItem() instanceof GunItem)
@@ -46,15 +45,10 @@ public class ItemInHandLayerMixin
 					return;
 				}
 				
-				if(entity.getMainHandItem()
-						.getItem() instanceof GunItem gunItem)
+				if(entity.getMainHandItem().getItem() instanceof GunItem gunItem)
 				{
 					Gun modifiedGun = gunItem.getModifiedGun(entity.getMainHandItem());
-					if(modifiedGun.getGeneral()
-							.getGripType()
-							.getHeldAnimation()
-							.cantRenderOffhandItem() || ReloadHandler.get()
-							.getReloadTimer() > 0)
+					if(modifiedGun.getGeneral().getGripType().getHeldAnimation().cantRenderOffhandItem() || ReloadHandler.get().getReloadTimer() > 0)
 					{
 						ci.cancel();
 						return;
@@ -65,8 +59,7 @@ public class ItemInHandLayerMixin
 			{
 				ci.cancel();
 				PlayerItemInHandLayer<?, ?> layer = (PlayerItemInHandLayer<?, ?>) (Object) this;
-				mrCrayfishGunMod$renderArmWithGun(layer, (Player) entity, stack, gunItem, display, hand, arm, poseStack, source, light, Minecraft.getInstance()
-						.getFrameTime());
+				mrCrayfishGunMod$renderArmWithGun(layer, (Player) entity, stack, gunItem, display, hand, arm, poseStack, source, light, Minecraft.getInstance().getFrameTime());
 			}
 		}
 	}
@@ -75,21 +68,14 @@ public class ItemInHandLayerMixin
 	private static void mrCrayfishGunMod$renderArmWithGun(PlayerItemInHandLayer<?, ?> layer, Player player, ItemStack stack, GunItem item, ItemTransforms.TransformType display, InteractionHand hand, HumanoidArm arm, PoseStack poseStack, MultiBufferSource source, int light, float deltaTicks)
 	{
 		poseStack.pushPose();
-		layer.getParentModel()
-				.translateToHand(arm, poseStack);
+		layer.getParentModel().translateToHand(arm, poseStack);
 		poseStack.mulPose(Vector3f.XP.rotationDegrees(-90F));
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
 		poseStack.translate(((float) (arm == HumanoidArm.LEFT ? -1 : 1) / 16F), 0.125, -0.625);
-		GunRenderingHandler.get()
-				.applyWeaponScale(stack, poseStack);
+		GunRenderingHandler.get().applyWeaponScale(stack, poseStack);
 		Gun gun = item.getModifiedGun(stack);
-		gun.getGeneral()
-				.getGripType()
-				.getHeldAnimation()
-				.applyHeldItemTransforms(player, hand, AimingHandler.get()
-						.getAimProgress(player, deltaTicks), poseStack, source);
-		GunRenderingHandler.get()
-				.renderWeapon(player, stack, display, poseStack, source, light, deltaTicks);
+		gun.getGeneral().getGripType().getHeldAnimation().applyHeldItemTransforms(player, hand, AimingHandler.get().getAimProgress(player, deltaTicks), poseStack, source);
+		GunRenderingHandler.get().renderWeapon(player, stack, display, poseStack, source, light, deltaTicks);
 		poseStack.popPose();
 	}
 }

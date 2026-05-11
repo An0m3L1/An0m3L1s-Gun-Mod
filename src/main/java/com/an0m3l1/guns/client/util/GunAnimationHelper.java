@@ -47,25 +47,18 @@ public final class GunAnimationHelper
 			return "none";
 		}
 		
-		double reloadTransitionProgress = ReloadHandler.get()
-				.getReloadProgress(partialTicks);
-		int weaponSwitchTick = ShootingHandler.get()
-				.getWeaponSwitchTick();
+		double reloadTransitionProgress = ReloadHandler.get().getReloadProgress(partialTicks);
+		int weaponSwitchTick = ShootingHandler.get().getWeaponSwitchTick();
 		if(reloadTransitionProgress > 0.0 && hasAnimation("reload", weapon))
 		{
 			if(reloadTransitionProgress < 1.0)
 			{
-				float delta = GunRenderingHandler.get()
-						.getReloadDeltaTime(weapon);
-				if(hasAnimation("reloadStart", weapon) && ReloadHandler.get()
-						.getReloading(player) && delta < 0.4F && ReloadHandler.get()
-						.doReloadStartAnimation())
+				float delta = GunRenderingHandler.get().getReloadDeltaTime(weapon);
+				if(hasAnimation("reloadStart", weapon) && ReloadHandler.get().getReloading(player) && delta < 0.4F && ReloadHandler.get().doReloadStartAnimation())
 				{
 					return "reloadStart";
 				}
-				else if(hasAnimation("reloadEnd", weapon) && !ReloadHandler.get()
-						.getReloading(player) && ReloadHandler.get()
-						.doReloadFinishAnimation())
+				else if(hasAnimation("reloadEnd", weapon) && !ReloadHandler.get().getReloading(player) && ReloadHandler.get().doReloadFinishAnimation())
 				{
 					return "reloadEnd";
 				}
@@ -78,8 +71,7 @@ public final class GunAnimationHelper
 			ResourceLocation weapKey = lookForParentAnimation("fire", getItemLocationKey(weapon));
 			if(getAnimationBoolean("fire", weapKey, "syncToCooldown", true))
 			{
-				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance()
-						.getFrameTime());
+				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
 				if(cooldown > 0 && weaponSwitchTick == -1)
 				{
 					return "fire";
@@ -87,8 +79,7 @@ public final class GunAnimationHelper
 			}
 			{
 				float animationSpeed = (float) getAnimationValue("fire", weapKey, "animationSpeed");
-				int lastFiretick = GunRenderingHandler.get()
-						.getLastFireTick();
+				int lastFiretick = GunRenderingHandler.get().getLastFireTick();
 				float fireProgress = ((player.tickCount - lastFiretick) + partialTicks) * animationSpeed;
 				int totalFrames = Math.max(getAnimationFrames("fire", weapKey), 1);
 				if(fireProgress < totalFrames && weaponSwitchTick == -1)
@@ -162,14 +153,12 @@ public final class GunAnimationHelper
 		}
 		if(animType.equals("reload") && hasAnimation("reload", weapon))
 		{
-			float reloadTransitionProgress = ReloadHandler.get()
-					.getReloadProgress(partialTicks);
+			float reloadTransitionProgress = ReloadHandler.get().getReloadProgress(partialTicks);
 			Vec3 transforms = getAnimationTrans("reload", weapon, progress, component).scale(reloadTransitionProgress);
 			
 			Easings easing = GunReloadAnimationHelper.getReloadStartEasing(weapKey, component);
 			float finalReloadTransition = (float) getEaseFactor(easing, reloadTransitionProgress);
-			if(!ReloadHandler.get()
-					.getReloading(player))
+			if(!ReloadHandler.get().getReloading(player))
 			{
 				easing = GunReloadAnimationHelper.getReloadEndEasing(weapKey, component);
 				finalReloadTransition = (float) getReversedEaseFactor(easing, reloadTransitionProgress);
@@ -216,14 +205,12 @@ public final class GunAnimationHelper
 		}
 		if(animType.equals("reload") && hasAnimation("reload", weapon))
 		{
-			float reloadTransitionProgress = ReloadHandler.get()
-					.getReloadProgress(partialTicks);
+			float reloadTransitionProgress = ReloadHandler.get().getReloadProgress(partialTicks);
 			Vec3 transforms = getAnimationRot("reload", weapon, progress, component);
 			
 			Easings easing = GunReloadAnimationHelper.getReloadStartEasing(weapKey, component);
 			float finalReloadTransition = (float) getEaseFactor(easing, reloadTransitionProgress);
-			if(!ReloadHandler.get()
-					.getReloading(player))
+			if(!ReloadHandler.get().getReloading(player))
 			{
 				easing = GunReloadAnimationHelper.getReloadEndEasing(weapKey, component);
 				finalReloadTransition = (float) getReversedEaseFactor(easing, reloadTransitionProgress);
@@ -258,39 +245,31 @@ public final class GunAnimationHelper
 			case "draw" ->
 			{
 				float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
-				int weaponSwitchTick = ShootingHandler.get()
-						.getWeaponSwitchTick();
+				int weaponSwitchTick = ShootingHandler.get().getWeaponSwitchTick();
 				float drawProgress = ((player.tickCount - weaponSwitchTick) + partialTicks) * animationSpeed;
 				int totalFrames = Math.max(getAnimationFrames(animType, weapKey), 1);
 				return drawProgress / totalFrames;
 			}
 			case "reloadStart" ->
 			{
-				return ReloadHandler.get()
-						.getReloadProgress(partialTicks);
+				return ReloadHandler.get().getReloadProgress(partialTicks);
 			}
 			case "reloadEnd" ->
 			{
-				float reloadTransitionProgress = ReloadHandler.get()
-						.getReloadProgress(partialTicks);
+				float reloadTransitionProgress = ReloadHandler.get().getReloadProgress(partialTicks);
 				return 1 - reloadTransitionProgress;
 			}
 		}
 		if(animType.equals("reload") && hasAnimation("reload", weapon))
 		{
-			return ((GunItem) (weapon.getItem())).getModifiedGun(weapon)
-					.getGeneral()
-					.usesMagReload() ? GunRenderingHandler.get()
-					.getReloadDeltaTime(weapon) : GunRenderingHandler.get()
-					.getReloadCycleProgress(weapon);
+			return ((GunItem) (weapon.getItem())).getModifiedGun(weapon).getGeneral().usesMagReload() ? GunRenderingHandler.get().getReloadDeltaTime(weapon) : GunRenderingHandler.get().getReloadCycleProgress(weapon);
 		}
 		if(animType.equals("fire") && hasAnimation("fire", weapon))
 		{
 			if(getAnimationBoolean(animType, weapKey, "syncToCooldown", true))
 			{
 				ItemCooldowns tracker = player.getCooldowns();
-				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance()
-						.getFrameTime());
+				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
 				float fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
 				float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
 				if(maxRate > 1)
@@ -308,8 +287,7 @@ public final class GunAnimationHelper
 			else
 			{
 				float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
-				int lastFiretick = GunRenderingHandler.get()
-						.getLastFireTick();
+				int lastFiretick = GunRenderingHandler.get().getLastFireTick();
 				float fireProgress = ((player.tickCount - lastFiretick) + partialTicks) * animationSpeed;
 				int totalFrames = Math.max(getAnimationFrames(animType, weapKey), 1);
 				return fireProgress / totalFrames;
@@ -320,8 +298,7 @@ public final class GunAnimationHelper
 			if(!getAnimationBoolean(animType, weapKey, "syncToCooldown"))
 			{
 				float animationSpeed = (float) getAnimationValue(animType, weapKey, "animationSpeed");
-				int lastFiretick = GunRenderingHandler.get()
-						.getLastFireTick();
+				int lastFiretick = GunRenderingHandler.get().getLastFireTick();
 				float recoilProgress = ((player.tickCount - lastFiretick) + partialTicks) * animationSpeed;
 				int totalFrames = Math.max(getAnimationFrames(animType, weapKey), 1);
 				return recoilProgress / totalFrames;
@@ -329,8 +306,7 @@ public final class GunAnimationHelper
 			else
 			{
 				ItemCooldowns tracker = player.getCooldowns();
-				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance()
-						.getFrameTime());
+				float cooldown = tracker.getCooldownPercent(weapon.getItem(), Minecraft.getInstance().getFrameTime());
 				float fireRate = GunCompositeStatHelper.getCompositeRate(weapon, player);
 				float maxRate = getAnimationValueFloat(animType, weapKey, "maxRate");
 				if(maxRate > 1)
@@ -403,8 +379,7 @@ public final class GunAnimationHelper
 		}
 		if(animationType.equals("reload") || animationType.contains("reload_"))
 		{
-			float delta = GunRenderingHandler.get()
-					.getReloadDeltaTime(weapon);
+			float delta = GunRenderingHandler.get().getReloadDeltaTime(weapon);
 			if(priorFrame == 0 && delta > 0.8F)
 			{
 				priorFrame = GunAnimationHelper.getAnimationFrames(animationType, weapKey);
@@ -421,9 +396,7 @@ public final class GunAnimationHelper
 		if(component.equals("viewModel") /*|| component.equals("gunModel")*/)
 		{
 			Minecraft mc = Minecraft.getInstance();
-			boolean rightHand = mc.options.mainHand()
-					.get()
-					.equals(HumanoidArm.RIGHT);
+			boolean rightHand = mc.options.mainHand().get().equals(HumanoidArm.RIGHT);
 			
 			if(!rightHand)
 			{
@@ -485,8 +458,7 @@ public final class GunAnimationHelper
 		}
 		if(animationType.equals("reload") || animationType.contains("reload_"))
 		{
-			float delta = GunRenderingHandler.get()
-					.getReloadDeltaTime(weapon);
+			float delta = GunRenderingHandler.get().getReloadDeltaTime(weapon);
 			if(priorFrame == 0 && delta > 0.8F)
 			{
 				priorFrame = GunAnimationHelper.getAnimationFrames(animationType, weapKey);
@@ -503,9 +475,7 @@ public final class GunAnimationHelper
 		if(component.equals("viewModel") /*|| component.equals("gunModel")*/)
 		{
 			Minecraft mc = Minecraft.getInstance();
-			boolean rightHand = mc.options.mainHand()
-					.get()
-					.equals(HumanoidArm.RIGHT);
+			boolean rightHand = mc.options.mainHand().get().equals(HumanoidArm.RIGHT);
 			
 			if(!rightHand)
 			{
@@ -537,10 +507,8 @@ public final class GunAnimationHelper
 	/* Reload animation suffix calculators */
 	public static String getReloadAnimSuffix(String animationType, ResourceLocation weapKey)
 	{
-		boolean magReload = ReloadHandler.get()
-				.isDoMagReload();
-		boolean emptyReload = ReloadHandler.get()
-				.isReloadFromEmpty();
+		boolean magReload = ReloadHandler.get().isDoMagReload();
+		boolean emptyReload = ReloadHandler.get().isReloadFromEmpty();
 		String animSuffix = "";
 		if(animationType.contains("reload") && (magReload || emptyReload))
 		{
@@ -719,8 +687,7 @@ public final class GunAnimationHelper
 		{
 			DataString parent = animObject.getDataString("parent");
 			assert parent != null;
-			String[] splitString = parent.asString()
-					.split(":");
+			String[] splitString = parent.asString().split(":");
 			if(doParentMessage1)
 			{
 				GunMod.LOGGER.info("Animation System (1): Successfully detected the parent object of {}. Parent object is {}", weapKey, new ResourceLocation(splitString[0], splitString[1]).toString());
@@ -735,8 +702,7 @@ public final class GunAnimationHelper
 			{
 				DataString parent = animObject.getDataString("parent");
 				assert parent != null;
-				String[] splitString = parent.asString()
-						.split(":");
+				String[] splitString = parent.asString().split(":");
 				if(doParentMessage2)
 				{
 					GunMod.LOGGER.info("Animation System (2): Successfully detected the parent object of {}. Parent object is {}", weapKey, new ResourceLocation(splitString[0], splitString[1]).toString());
@@ -1140,10 +1106,7 @@ public final class GunAnimationHelper
 	@SuppressWarnings("deprecation")
 	public static ResourceLocation getItemLocationKey(ItemStack stack)
 	{
-		return stack.getItem()
-				.builtInRegistryHolder()
-				.key()
-				.location();
+		return stack.getItem().builtInRegistryHolder().key().location();
 	}
 	
 	// Copies of methods from PropertyHelper, reworked to support animations.
@@ -1177,10 +1140,8 @@ public final class GunAnimationHelper
 		}
 		if(useLegacyLoader)
 		{
-			return AnimationMetaLoader.getInstance()
-					.getData(location);
+			return AnimationMetaLoader.getInstance().getData(location);
 		}
-		return AnimationLoader.getInstance()
-				.getData(location);
+		return AnimationLoader.getInstance().getData(location);
 	}
 }

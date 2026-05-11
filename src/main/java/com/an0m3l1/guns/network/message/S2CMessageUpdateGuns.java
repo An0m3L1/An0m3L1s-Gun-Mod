@@ -29,10 +29,8 @@ public class S2CMessageUpdateGuns extends PlayMessage<S2CMessageUpdateGuns>
 	{
 		Validate.notNull(NetworkGunManager.get());
 		Validate.notNull(CustomGunLoader.get());
-		NetworkGunManager.get()
-				.writeRegisteredGuns(buffer);
-		CustomGunLoader.get()
-				.writeCustomGuns(buffer);
+		NetworkGunManager.get().writeRegisteredGuns(buffer);
+		CustomGunLoader.get().writeCustomGuns(buffer);
 	}
 	
 	@Override

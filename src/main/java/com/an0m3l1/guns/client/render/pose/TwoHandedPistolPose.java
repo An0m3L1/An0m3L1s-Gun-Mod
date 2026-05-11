@@ -41,36 +41,8 @@ public class TwoHandedPistolPose extends WeaponPose
 	protected AimPose getUpPose()
 	{
 		AimPose upPose = new AimPose();
-		upPose.getIdle()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(7.5F, -5F, 15F))
-				.setItemTranslate(new Vector3f(0, 0, -0.7F))
-				.setRightArm(new LimbPose().setRotationAngleX(-150F)
-						.setRotationAngleY(-30F)
-						.setRotationPointX(-5)
-						.setRotationPointY(3)
-						.setRotationPointZ(0))
-				.setLeftArm(new LimbPose().setRotationAngleX(-130F)
-						.setRotationAngleY(64F)
-						.setRotationAngleZ(-20F)
-						.setRotationPointX(-10)
-						.setRotationPointY(1.0F)
-						.setRotationPointZ(-1));
-		upPose.getAiming()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(-12.5F, -10F, 25F))
-				.setItemTranslate(new Vector3f(-1, 0, -0.8F))
-				.setRightArm(new LimbPose().setRotationAngleX(-170F)
-						.setRotationAngleY(-35F)
-						.setRotationPointX(-5)
-						.setRotationPointY(3)
-						.setRotationPointZ(0))
-				.setLeftArm(new LimbPose().setRotationAngleX(-145F)
-						.setRotationAngleY(80F)
-						.setRotationAngleZ(-35F)
-						.setRotationPointX(-10)
-						.setRotationPointY(0.0F)
-						.setRotationPointZ(-1));
+		upPose.getIdle().setRenderYawOffset(15F).setItemRotation(new Vector3f(7.5F, -5F, 15F)).setItemTranslate(new Vector3f(0, 0, -0.7F)).setRightArm(new LimbPose().setRotationAngleX(-150F).setRotationAngleY(-30F).setRotationPointX(-5).setRotationPointY(3).setRotationPointZ(0)).setLeftArm(new LimbPose().setRotationAngleX(-130F).setRotationAngleY(64F).setRotationAngleZ(-20F).setRotationPointX(-10).setRotationPointY(1.0F).setRotationPointZ(-1));
+		upPose.getAiming().setRenderYawOffset(15F).setItemRotation(new Vector3f(-12.5F, -10F, 25F)).setItemTranslate(new Vector3f(-1, 0, -0.8F)).setRightArm(new LimbPose().setRotationAngleX(-170F).setRotationAngleY(-35F).setRotationPointX(-5).setRotationPointY(3).setRotationPointZ(0)).setLeftArm(new LimbPose().setRotationAngleX(-145F).setRotationAngleY(80F).setRotationAngleZ(-35F).setRotationPointX(-10).setRotationPointY(0.0F).setRotationPointZ(-1));
 		return upPose;
 	}
 	
@@ -78,35 +50,8 @@ public class TwoHandedPistolPose extends WeaponPose
 	protected AimPose getForwardPose()
 	{
 		AimPose forwardPose = new AimPose();
-		forwardPose.getIdle()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(-7.5F, -13.5F, -5F))
-				.setItemTranslate(new Vector3f(0.4F, 0, -1))
-				.setRightArm(new LimbPose().setRotationAngleX(-75F)
-						.setRotationAngleY(-30F)
-						.setRotationAngleZ(0F)
-						.setRotationPointX(-5)
-						.setRotationPointY(2)
-						.setRotationPointZ(1))
-				.setLeftArm(new LimbPose().setRotationAngleX(-61F)
-						.setRotationAngleY(45F)
-						.setRotationAngleZ(10F)
-						.setRotationPointY(2.1F)
-						.setRotationPointZ(-1));
-		forwardPose.getAiming()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(-25F, -18F, -5.5F))
-				.setItemTranslate(new Vector3f(0.4F, 0, -1))
-				.setRightArm(new LimbPose().setRotationAngleX(-92F)
-						.setRotationAngleY(-35F)
-						.setRotationAngleZ(0F)
-						.setRotationPointX(-5)
-						.setRotationPointY(2))
-				.setLeftArm(new LimbPose().setRotationAngleX(-81F)
-						.setRotationAngleY(42F)
-						.setRotationAngleZ(5F)
-						.setRotationPointY(2.1F)
-						.setRotationPointZ(0));
+		forwardPose.getIdle().setRenderYawOffset(15F).setItemRotation(new Vector3f(-7.5F, -13.5F, -5F)).setItemTranslate(new Vector3f(0.4F, 0, -1)).setRightArm(new LimbPose().setRotationAngleX(-75F).setRotationAngleY(-30F).setRotationAngleZ(0F).setRotationPointX(-5).setRotationPointY(2).setRotationPointZ(1)).setLeftArm(new LimbPose().setRotationAngleX(-61F).setRotationAngleY(45F).setRotationAngleZ(10F).setRotationPointY(2.1F).setRotationPointZ(-1));
+		forwardPose.getAiming().setRenderYawOffset(15F).setItemRotation(new Vector3f(-25F, -18F, -5.5F)).setItemTranslate(new Vector3f(0.4F, 0, -1)).setRightArm(new LimbPose().setRotationAngleX(-92F).setRotationAngleY(-35F).setRotationAngleZ(0F).setRotationPointX(-5).setRotationPointY(2)).setLeftArm(new LimbPose().setRotationAngleX(-81F).setRotationAngleY(42F).setRotationAngleZ(5F).setRotationPointY(2.1F).setRotationPointZ(0));
 		return forwardPose;
 	}
 	
@@ -114,34 +59,8 @@ public class TwoHandedPistolPose extends WeaponPose
 	protected AimPose getDownPose()
 	{
 		AimPose downPose = new AimPose();
-		downPose.getIdle()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(-37.5F, -2F, 0F))
-				.setItemTranslate(new Vector3f(0, -0.5F, -1.5F))
-				.setRightArm(new LimbPose().setRotationAngleX(-22F)
-						.setRotationAngleY(-30F)
-						.setRotationAngleZ(0F)
-						.setRotationPointX(-5)
-						.setRotationPointY(2))
-				.setLeftArm(new LimbPose().setRotationAngleX(-10F)
-						.setRotationAngleY(35F)
-						.setRotationAngleZ(50F)
-						.setRotationPointY(2.5F)
-						.setRotationPointZ(0));
-		downPose.getAiming()
-				.setRenderYawOffset(15F)
-				.setItemRotation(new Vector3f(-42.5F, -2F, -10F))
-				.setItemTranslate(new Vector3f(0, -0.5F, -1F))
-				.setRightArm(new LimbPose().setRotationAngleX(-22F)
-						.setRotationAngleY(-30F)
-						.setRotationAngleZ(0F)
-						.setRotationPointX(-5)
-						.setRotationPointY(1))
-				.setLeftArm(new LimbPose().setRotationAngleX(-10F)
-						.setRotationAngleY(35F)
-						.setRotationAngleZ(55F)
-						.setRotationPointY(2.5F)
-						.setRotationPointZ(0));
+		downPose.getIdle().setRenderYawOffset(15F).setItemRotation(new Vector3f(-37.5F, -2F, 0F)).setItemTranslate(new Vector3f(0, -0.5F, -1.5F)).setRightArm(new LimbPose().setRotationAngleX(-22F).setRotationAngleY(-30F).setRotationAngleZ(0F).setRotationPointX(-5).setRotationPointY(2)).setLeftArm(new LimbPose().setRotationAngleX(-10F).setRotationAngleY(35F).setRotationAngleZ(50F).setRotationPointY(2.5F).setRotationPointZ(0));
+		downPose.getAiming().setRenderYawOffset(15F).setItemRotation(new Vector3f(-42.5F, -2F, -10F)).setItemTranslate(new Vector3f(0, -0.5F, -1F)).setRightArm(new LimbPose().setRotationAngleX(-22F).setRotationAngleY(-30F).setRotationAngleZ(0F).setRotationPointX(-5).setRotationPointY(1)).setLeftArm(new LimbPose().setRotationAngleX(-10F).setRotationAngleY(35F).setRotationAngleZ(55F).setRotationPointY(2.5F).setRotationPointZ(0));
 		return downPose;
 	}
 	
@@ -150,17 +69,14 @@ public class TwoHandedPistolPose extends WeaponPose
 	public void applyPlayerModelRotation(Player player, ModelPart rightArm, ModelPart leftArm, ModelPart head, InteractionHand hand, float aimProgress)
 	{
 		Minecraft mc = Minecraft.getInstance();
-		if(!player.getOffhandItem()
-				.isEmpty())
+		if(!player.getOffhandItem().isEmpty())
 		{
-			boolean right = mc.options.mainHand()
-					.get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
+			boolean right = mc.options.mainHand().get() == HumanoidArm.RIGHT ? hand == InteractionHand.MAIN_HAND : hand == InteractionHand.OFF_HAND;
 			ModelPart arm = right ? rightArm : leftArm;
 			IHeldAnimation.copyModelAngles(head, arm);
 			arm.xRot += (float) Math.toRadians(-70F - (aimProgress * 25));
 			
-			if(player.getUseItem()
-					.getItem() == Items.SHIELD)
+			if(player.getUseItem().getItem() == Items.SHIELD)
 			{
 				arm.xRot = (float) Math.toRadians(-105F);
 			}
@@ -170,9 +86,7 @@ public class TwoHandedPistolPose extends WeaponPose
 			}
 			else
 			{
-				float sprintTransition = GunRenderingHandler.get()
-						.getSprintTransition(Minecraft.getInstance()
-								.getFrameTime());
+				float sprintTransition = GunRenderingHandler.get().getSprintTransition(Minecraft.getInstance().getFrameTime());
 				float targetSprintRot = (float) Math.toRadians(-105F - (aimProgress * 25));
 				arm.xRot = Mth.lerp(sprintTransition, arm.xRot, targetSprintRot);
 			}
@@ -189,8 +103,7 @@ public class TwoHandedPistolPose extends WeaponPose
 	@OnlyIn(Dist.CLIENT)
 	public void applyPlayerPreRender(Player player, InteractionHand hand, float aimProgress, PoseStack poseStack, MultiBufferSource buffer)
 	{
-		if(!player.getOffhandItem()
-				.isEmpty())
+		if(!player.getOffhandItem().isEmpty())
 		{
 			return;
 		}
@@ -201,8 +114,7 @@ public class TwoHandedPistolPose extends WeaponPose
 	@OnlyIn(Dist.CLIENT)
 	public void applyHeldItemTransforms(Player player, InteractionHand hand, float aimProgress, PoseStack poseStack, MultiBufferSource buffer)
 	{
-		if(!player.getOffhandItem()
-				.isEmpty())
+		if(!player.getOffhandItem().isEmpty())
 		{
 			if(hand == InteractionHand.MAIN_HAND)
 			{
@@ -221,18 +133,14 @@ public class TwoHandedPistolPose extends WeaponPose
 	{
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
 		
-		BakedModel model = Minecraft.getInstance()
-				.getItemRenderer()
-				.getModel(stack, player.level, player, 0);
+		BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(stack, player.level, player, 0);
 		float translateX = model.getTransforms().firstPersonRightHand.translation.x();
 		int side = hand.getOpposite() == HumanoidArm.RIGHT ? 1 : -1;
 		float handDiv = (float) GunAnimationHelper.getAnimationValuePublic(GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks), GunAnimationHelper.getItemLocationKey(stack), "handScale");
 		float handScale = 1 / (handDiv == 0 ? 1 : handDiv);
 		poseStack.translate(translateX * side, 0, 0);
 		
-		boolean slim = Objects.requireNonNull(Minecraft.getInstance().player)
-				.getModelName()
-				.equals("slim");
+		boolean slim = Objects.requireNonNull(Minecraft.getInstance().player).getModelName().equals("slim");
 		float armWidth = slim ? 3.0F : 4.0F;
 		
 		if(!(stack.getItem() instanceof GunItem gunStack))
@@ -242,27 +150,23 @@ public class TwoHandedPistolPose extends WeaponPose
 		Gun gun = gunStack.getModifiedGun(stack);
 		
 		ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-		float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-				.getFrameTime());
+		float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 		
 		// Off-hand arm
 		poseStack.pushPose();
-		if(player.getOffhandItem()
-				.isEmpty() || ModSyncedDataKeys.RELOADING.getValue(player))
+		if(player.getOffhandItem().isEmpty() || ModSyncedDataKeys.RELOADING.getValue(player))
 		{
 			Vec3 posHand = PropertyHelper.getHandPosition(stack, gun, false);
 			
 			Vec3 translations = GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "forwardHand");
 			Vec3 rotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "forwardHand");
-			if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks)
-					.equals("fire"))
+			if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks).equals("fire"))
 			{
 				translations = GunLegacyAnimationHelper.getHandTranslation(stack, false, cooldown);
 			}
 			if(!GunAnimationHelper.hasAnimation("reload", stack))
 			{
-				float reloadProg = ReloadHandler.get()
-						.getReloadProgress(partialTicks);
+				float reloadProg = ReloadHandler.get().getReloadProgress(partialTicks);
 				poseStack.translate(0, (-24 * reloadProg) * 0.0625, (-6 * reloadProg) * 0.0625);
 			}
 			
@@ -278,8 +182,7 @@ public class TwoHandedPistolPose extends WeaponPose
 			poseStack.mulPose(Vector3f.XP.rotationDegrees(75F));
 			poseStack.mulPose(Vector3f.ZP.rotationDegrees(25F * -side));
 			
-			if(GunAnimationHelper.hasAnimation("reload", stack) || ReloadHandler.get()
-					.getReloadProgress(partialTicks) < 1)
+			if(GunAnimationHelper.hasAnimation("reload", stack) || ReloadHandler.get().getReloadProgress(partialTicks) < 1)
 			{
 				RenderUtil.renderFirstPersonArm((LocalPlayer) player, hand.getOpposite(), poseStack, buffer, light);
 			}
@@ -293,8 +196,7 @@ public class TwoHandedPistolPose extends WeaponPose
 			
 			Vec3 translations = GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "rearHand");
 			Vec3 rotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "rearHand");
-			if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks)
-					.equals("fire"))
+			if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks).equals("fire"))
 			{
 				translations = GunLegacyAnimationHelper.getHandTranslation(stack, true, cooldown);
 			}
@@ -327,8 +229,7 @@ public class TwoHandedPistolPose extends WeaponPose
 		{
 			poseStack.translate(-4.5 * 0.0625, -15 * 0.0625, -4 * 0.0625);
 		}
-		else if(!player.getItemBySlot(EquipmentSlot.LEGS)
-				.isEmpty())
+		else if(!player.getItemBySlot(EquipmentSlot.LEGS).isEmpty())
 		{
 			poseStack.translate(-4.0 * 0.0625, -13 * 0.0625, 1 * 0.0625);
 		}

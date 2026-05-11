@@ -42,8 +42,7 @@ public class SwitchGunTracker
 	private SwitchGunTracker(Player player)
 	{
 		this.slot = player.getInventory().selected;
-		this.stack = player.getInventory()
-				.getSelected();
+		this.stack = player.getInventory().getSelected();
 		this.item = stack.getItem();
 		this.gun = ((GunItem) item).getModifiedGun(stack);
 		this.playSelectSound = true;
@@ -59,15 +58,12 @@ public class SwitchGunTracker
 	 */
 	private boolean isSameWeapon(Player player)
 	{
-		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory()
-				.getSelected()
-				.getItem() == this.item;
+		return !this.stack.isEmpty() && player.getInventory().selected == this.slot && player.getInventory().getSelected().getItem() == this.item;
 	}
 	
 	private int getInventoryAmmo(Player player, Gun gun)
 	{
-		return Gun.getReserveAmmoCount(player, gun.getProjectile()
-				.getItem());
+		return Gun.getReserveAmmoCount(player, gun.getProjectile().getItem());
 	}
 	
 	@SubscribeEvent
@@ -80,9 +76,7 @@ public class SwitchGunTracker
 			boolean doGunSelect = false;
 			if(!SWITCHGUN_TRACKER_MAP.containsKey(player))
 			{
-				if(!(player.getInventory()
-						.getSelected()
-						.getItem() instanceof GunItem))
+				if(!(player.getInventory().getSelected().getItem() instanceof GunItem))
 				{
 					ModSyncedDataKeys.SWITCHTIME.setValue(player, 1);
 					return;
@@ -93,9 +87,7 @@ public class SwitchGunTracker
 			SwitchGunTracker tracker = SWITCHGUN_TRACKER_MAP.get(player);
 			
 			//Reload and weapon switch cooldown logic
-			if(player.getInventory()
-					.getSelected()
-					.getItem() instanceof GunItem)
+			if(player.getInventory().getSelected().getItem() instanceof GunItem)
 			{
 				if(tracker.isSameWeapon(player))
 				{
@@ -122,21 +114,15 @@ public class SwitchGunTracker
 			if(doGunSelect && tracker.playSelectSound && !PlayerReviveHelper.isBleeding(player))
 			{
 				tracker.playSelectSound = false;
-				final ItemStack finalStack = player.getInventory()
-						.getSelected();
-				ModSyncedDataKeys.SWITCHTIME.setValue(player, tracker.gun.getGeneral()
-						.getDrawTime());
-				ResourceLocation selectSound = tracker.gun.getSounds()
-						.getWeaponSelect();
+				final ItemStack finalStack = player.getInventory().getSelected();
+				ModSyncedDataKeys.SWITCHTIME.setValue(player, tracker.gun.getGeneral().getDrawTime());
+				ResourceLocation selectSound = tracker.gun.getSounds().getWeaponSelect();
 				final Player finalPlayer = player;
-				if(tracker.gun.getSounds()
-						.getWeaponSelectDelay() >= 0)
+				if(tracker.gun.getSounds().getWeaponSelectDelay() >= 0)
 				{
-					DelayedTask.runAfter(tracker.gun.getSounds()
-							.getWeaponSelectDelay(), () ->
+					DelayedTask.runAfter(tracker.gun.getSounds().getWeaponSelectDelay(), () ->
 					{
-						if(finalStack == finalPlayer.getInventory()
-								.getSelected())
+						if(finalStack == finalPlayer.getInventory().getSelected())
 						{
 							playSelectSound(finalPlayer, selectSound);
 						}
@@ -145,19 +131,14 @@ public class SwitchGunTracker
 			}
 			if(doGunSwitch)
 			{
-				if(!(player.getInventory()
-						.getSelected()
-						.getItem() instanceof GunItem) || (Item.getId(player.getInventory()
-						.getSelected()
-						.getItem()) != Item.getId(tracker.stack.getItem()) || player.getInventory().selected != tracker.slot))
+				if(!(player.getInventory().getSelected().getItem() instanceof GunItem) || (Item.getId(player.getInventory().getSelected().getItem()) != Item.getId(tracker.stack.getItem()) || player.getInventory().selected != tracker.slot))
 				{
 					ModSyncedDataKeys.SWITCHTIME.setValue(player, 5);
 					SWITCHGUN_TRACKER_MAP.remove(player);
 				}
 				else
 				{
-					tracker.stack = player.getInventory()
-							.getSelected();
+					tracker.stack = player.getInventory().getSelected();
 					tracker.gun = ((GunItem) tracker.stack.getItem()).getModifiedGun(tracker.stack);
 				}
 			}
@@ -173,16 +154,14 @@ public class SwitchGunTracker
 			double soundZ = player.getZ();
 			double radius = GunConfig.SERVER.switchSoundDistance.get();
 			S2CMessageSound messageSound = new S2CMessageSound(sound, SoundSource.PLAYERS, (float) soundX, (float) soundY, (float) soundZ, 1.0F, 1.0F, player.getId(), false, true);
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), messageSound);
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, soundX, soundY, soundZ, radius), messageSound);
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerEvent.PlayerLoggedOutEvent event)
 	{
-		MinecraftServer server = event.getEntity()
-				.getServer();
+		MinecraftServer server = event.getEntity().getServer();
 		if(server != null)
 		{
 			server.execute(() -> SWITCHGUN_TRACKER_MAP.remove(event.getEntity()));

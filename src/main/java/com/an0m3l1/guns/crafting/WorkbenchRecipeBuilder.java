@@ -84,13 +84,9 @@ public class WorkbenchRecipeBuilder
 	public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id)
 	{
 		this.validate(id);
-		this.advancementBuilder.parent(new ResourceLocation("recipes/root"))
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-				.rewards(AdvancementRewards.Builder.recipe(id))
-				.requirements(RequirementsStrategy.OR);
+		this.advancementBuilder.parent(new ResourceLocation("recipes/root")).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		assert this.result.getItemCategory() != null;
-		consumer.accept(new WorkbenchRecipeBuilder.Result(id, this.result, this.count, this.ingredients, this.conditions, this.advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItemCategory()
-				.getRecipeFolderName() + "/" + id.getPath())));
+		consumer.accept(new WorkbenchRecipeBuilder.Result(id, this.result, this.count, this.ingredients, this.conditions, this.advancementBuilder, new ResourceLocation(id.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + id.getPath())));
 	}
 	
 	/**
@@ -98,8 +94,7 @@ public class WorkbenchRecipeBuilder
 	 */
 	private void validate(ResourceLocation id)
 	{
-		if(this.advancementBuilder.getCriteria()
-				.isEmpty())
+		if(this.advancementBuilder.getCriteria().isEmpty())
 		{
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		}
@@ -141,8 +136,7 @@ public class WorkbenchRecipeBuilder
 			json.add("materials", materials);
 			
 			JsonObject resultObject = new JsonObject();
-			resultObject.addProperty("item", Registry.ITEM.getKey(this.item)
-					.toString());
+			resultObject.addProperty("item", Registry.ITEM.getKey(this.item).toString());
 			if(this.count > 1)
 			{
 				resultObject.addProperty("count", this.count);

@@ -58,29 +58,22 @@ public abstract class Attachment
 		ItemStack stack = event.getItemStack();
 		if(stack.getItem() instanceof IAttachment<?> attachment)
 		{
-			List<Component> perks = attachment.getProperties()
-					.getPerks();
+			List<Component> perks = attachment.getProperties().getPerks();
 			if(perks != null && !perks.isEmpty())
 			{
 				if(Screen.hasControlDown())
 				{
-					event.getToolTip()
-							.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
-									.withStyle(ChatFormatting.GOLD));
-					event.getToolTip()
-							.addAll(perks);
+					event.getToolTip().add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GOLD));
+					event.getToolTip().addAll(perks);
 				}
 				else
 				{
-					event.getToolTip()
-							.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help")
-									.withStyle(ChatFormatting.GOLD));
+					event.getToolTip().add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help").withStyle(ChatFormatting.GOLD));
 				}
 				return;
 			}
 			
-			IGunModifier[] modifiers = attachment.getProperties()
-					.getModifiers();
+			IGunModifier[] modifiers = attachment.getProperties().getModifiers();
 			float thisOutput;
 			float thisInput;
 			List<Component> positivePerks = new ArrayList<>();
@@ -320,15 +313,11 @@ public abstract class Attachment
 			}
 			
 			positivePerks.addAll(negativePerks);
-			attachment.getProperties()
-					.setPerks(positivePerks);
+			attachment.getProperties().setPerks(positivePerks);
 			if(!positivePerks.isEmpty())
 			{
-				event.getToolTip()
-						.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
-								.withStyle(ChatFormatting.GRAY, ChatFormatting.BOLD));
-				event.getToolTip()
-						.addAll(positivePerks);
+				event.getToolTip().add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GRAY, ChatFormatting.BOLD));
+				event.getToolTip().addAll(positivePerks);
 			}
 		}
 	}
@@ -340,26 +329,17 @@ public abstract class Attachment
 	
 	private static void addPerk(List<Component> components, boolean positive, String id, Object... params)
 	{
-		components.add(Component.translatable(positive ? "perk." + GunMod.MOD_ID + ".entry.positive" : "perk." + GunMod.MOD_ID + ".entry.negative", Component.translatable(id, params)
-						.withStyle(ChatFormatting.GRAY))
-				.withStyle(positive ? ChatFormatting.GREEN : ChatFormatting.RED));
+		components.add(Component.translatable(positive ? "perk." + GunMod.MOD_ID + ".entry.positive" : "perk." + GunMod.MOD_ID + ".entry.negative", Component.translatable(id, params).withStyle(ChatFormatting.GRAY)).withStyle(positive ? ChatFormatting.GREEN : ChatFormatting.RED));
 	}
 	
 	private static void addPerk(List<Component> components, boolean positive, float value, String id, Object... params)
 	{
-		components.add(Component.translatable(positive ? "perk." + GunMod.MOD_ID + ".entry.positive" : "perk." + GunMod.MOD_ID + ".entry.negative", Component.translatable(id, params)
-						.withStyle(ChatFormatting.GRAY)
-						.append(Component.literal(" (" + Math.abs(value) + "%)")
-								.withStyle(ChatFormatting.GRAY)))
-				.withStyle(positive ? ChatFormatting.DARK_AQUA : ChatFormatting.GOLD));
+		components.add(Component.translatable(positive ? "perk." + GunMod.MOD_ID + ".entry.positive" : "perk." + GunMod.MOD_ID + ".entry.negative", Component.translatable(id, params).withStyle(ChatFormatting.GRAY).append(Component.literal(" (" + Math.abs(value) + "%)").withStyle(ChatFormatting.GRAY))).withStyle(positive ? ChatFormatting.DARK_AQUA : ChatFormatting.GOLD));
 	}
 	
 	private static void addPerk(List<Component> components, boolean positive, boolean invert, float value, String id, Object... params)
 	{
 		boolean truePositive = (invert != positive);
-		components.add(Component.literal((truePositive ? "+" : "-") + Math.abs(value) + "% ")
-				.withStyle(positive ? ChatFormatting.GREEN : ChatFormatting.RED)
-				.append(Component.translatable(id, params)
-						.withStyle(ChatFormatting.GRAY)));
+		components.add(Component.literal((truePositive ? "+" : "-") + Math.abs(value) + "% ").withStyle(positive ? ChatFormatting.GREEN : ChatFormatting.RED).append(Component.translatable(id, params).withStyle(ChatFormatting.GRAY)));
 	}
 }

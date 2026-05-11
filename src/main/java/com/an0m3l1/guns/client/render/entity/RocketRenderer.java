@@ -34,8 +34,7 @@ public class RocketRenderer extends EntityRenderer<RocketEntity>
 	@Override
 	public void render(RocketEntity entity, float entityYaw, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource renderTypeBuffer, int light)
 	{
-		if(entity.getProjectile()
-				.isInvisible() || entity.tickCount <= 1)
+		if(entity.getProjectile().isInvisible() || entity.tickCount <= 1)
 		{
 			return;
 		}
@@ -44,9 +43,7 @@ public class RocketRenderer extends EntityRenderer<RocketEntity>
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(entityYaw));
 		poseStack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot() - 90));
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, 15728880, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
+		Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemTransforms.TransformType.NONE, 15728880, OverlayTexture.NO_OVERLAY, poseStack, renderTypeBuffer, 0);
 		poseStack.translate(0, -1, 0);
 		RenderUtil.renderModel(SpecialModels.FLAME.getModel(), entity.getItem(), poseStack, renderTypeBuffer, 15728880, OverlayTexture.NO_OVERLAY);
 		poseStack.popPose();

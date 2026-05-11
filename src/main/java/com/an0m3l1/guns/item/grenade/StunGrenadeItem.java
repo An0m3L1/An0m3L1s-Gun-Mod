@@ -39,23 +39,16 @@ public class StunGrenadeItem extends GrenadeItem
 		float cookTime = (float) maxCookTime / 20;
 		if(Screen.hasControlDown())
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
-					.withStyle(ChatFormatting.GOLD));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".blind_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(blindRadius))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".blind", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxBlindDuration))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stun_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(stunRadius))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stun", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxStunDuration))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fuse", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(cookTime))
-					.withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".blind_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(blindRadius)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".blind", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxBlindDuration)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stun_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(stunRadius)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stun", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxStunDuration)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fuse", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(cookTime)).withStyle(ChatFormatting.GRAY));
 		}
 		else
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help")
-					.withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help").withStyle(ChatFormatting.GOLD));
 		}
 	}
 	

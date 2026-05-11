@@ -38,8 +38,7 @@ public class GrenadeItem extends Item implements IGrenade
 	
 	public GrenadeItem(Properties properties, int maxCookTime, SoundEvent throwSound, SoundEvent pinSound)
 	{
-		super(properties.stacksTo(8)
-				.tab(GunMod.GUNS));
+		super(properties.stacksTo(8).tab(GunMod.GUNS));
 		this.maxCookTime = maxCookTime;
 		this.throwSound = throwSound;
 		this.pinSound = pinSound;
@@ -55,19 +54,14 @@ public class GrenadeItem extends Item implements IGrenade
 		float cookTime = (float) maxCookTime / 20;
 		if(Screen.hasControlDown())
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats")
-					.withStyle(ChatFormatting.GOLD));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explosion_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(explosionRadius))
-					.withStyle(ChatFormatting.GRAY));
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fuse", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(cookTime))
-					.withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats").withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".damage", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(damage)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".explosion_radius", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(explosionRadius)).withStyle(ChatFormatting.GRAY));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".fuse", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(cookTime)).withStyle(ChatFormatting.GRAY));
 		}
 		else
 		{
-			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help")
-					.withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".stats_help").withStyle(ChatFormatting.GOLD));
 		}
 	}
 	
@@ -97,8 +91,7 @@ public class GrenadeItem extends Item implements IGrenade
 			double radius = GunConfig.SERVER.grenadePinSoundDistance.get();
 			
 			S2CMessageSound messageSound = new S2CMessageSound(soundId, SoundSource.PLAYERS, posX, posY, posZ, 1.0F, 1.0F, player.getId(), false, false);
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
 		}
 	}
 	
@@ -173,8 +166,7 @@ public class GrenadeItem extends Item implements IGrenade
 	{
 		if(!world.isClientSide)
 		{
-			int shooterId = entity.getOwner() != null ? entity.getOwner()
-					.getId() : -1;
+			int shooterId = entity.getOwner() != null ? entity.getOwner().getId() : -1;
 			float posX = (float) entity.getX();
 			float posY = (float) entity.getY();
 			float posZ = (float) entity.getZ();
@@ -185,16 +177,14 @@ public class GrenadeItem extends Item implements IGrenade
 			if(throwSoundId != null)
 			{
 				S2CMessageSound throwMessageSound = new S2CMessageSound(throwSoundId, SoundSource.PLAYERS, posX, posY, posZ, 0.5F, 1.0F, shooterId, false, false);
-				PacketHandler.getPlayChannel()
-						.sendToNearbyPlayers(() -> LevelLocation.create(world, posX, posY, posZ, radius), throwMessageSound);
+				PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(world, posX, posY, posZ, radius), throwMessageSound);
 			}
 			
 			// Grenade specific throw sound
 			ResourceLocation grenadeThrowSoundId = this.throwSound.getLocation();
 			
 			S2CMessageSound grenadeThrowMessageSound = new S2CMessageSound(grenadeThrowSoundId, SoundSource.PLAYERS, posX, posY, posZ, 1.0F, 1.0F, shooterId, false, false);
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(() -> LevelLocation.create(world, posX, posY, posZ, radius), grenadeThrowMessageSound);
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(world, posX, posY, posZ, radius), grenadeThrowMessageSound);
 		}
 	}
 }

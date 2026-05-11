@@ -53,17 +53,12 @@ public final class AnimationMetaLoader implements IDataLoader<AnimationMetaLoade
 	public List<AnimResource> getResourceSuppliers()
 	{
 		List<AnimResource> resources = new ArrayList<>();
-		ForgeRegistries.ITEMS.getValues()
-				.stream()
-				.filter(item -> item instanceof IMeta)
-				.forEach(item ->
-				{
-					ResourceLocation key = item.builtInRegistryHolder()
-							.key()
-							.location();
-					ResourceLocation location = new ResourceLocation(key.getNamespace(), "animations/" + key.getPath() + GunMod.ANIM_EXTENSION);
-					resources.add(new AnimResource(key, location));
-				});
+		ForgeRegistries.ITEMS.getValues().stream().filter(item -> item instanceof IMeta).forEach(item ->
+		{
+			ResourceLocation key = item.builtInRegistryHolder().key().location();
+			ResourceLocation location = new ResourceLocation(key.getNamespace(), "animations/" + key.getPath() + GunMod.ANIM_EXTENSION);
+			resources.add(new AnimResource(key, location));
+		});
 		return resources;
 	}
 	
@@ -78,8 +73,7 @@ public final class AnimationMetaLoader implements IDataLoader<AnimationMetaLoade
 			{
 				AnimResource resource = pair.getLeft();
 				this.resourceToData.put(resource.key(), object);
-				GunMod.LOGGER.info("LEGACY LOADER: Loaded animation {} at file location {}", resource.key()
-						.toString(), resource.location());
+				GunMod.LOGGER.info("LEGACY LOADER: Loaded animation {} at file location {}", resource.key().toString(), resource.location());
 			}
 		});
 	}

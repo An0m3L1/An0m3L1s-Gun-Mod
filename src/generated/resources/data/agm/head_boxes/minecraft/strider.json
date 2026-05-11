@@ -1,14 +1,14 @@
 {
-  "child": {
-    "headHeightScale": 0.5,
-    "headWidthScale": 0.5,
-    "xScale": 1.0,
-    "yScale": 0.5,
-    "zScale": 1.0
-  },
-  "general": {
-    "headHeight": 14.0,
-    "headWidth": 16.0,
-    "y": 14.0
-  }
+	"child": {
+		"headHeightScale": 0.5,
+		"headWidthScale": 0.5,
+		"xScale": 1.0,
+		"yScale": 0.5,
+		"zScale": 1.0
+	},
+	"general": {
+		"headHeight": 14.0,
+		"headWidth": 16.0,
+		"y": 14.0
+	}
 }

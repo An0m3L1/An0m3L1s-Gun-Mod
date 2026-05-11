@@ -75,22 +75,16 @@ minecraft {
 processResources {
     filteringCharset = "UTF-8"
     filesMatching("META-INF/mods.toml") {
-        expand(
-                modId: modId,
+        expand(modId: modId,
                 modVersion: modVersion,
-                modName: modName
-        )
+                modName: modName)
     }
     filesMatching("${modId}.mixins.json") {
-        expand(
-                modId: modId,
-                modGroup: modGroup
-        )
+        expand(modId: modId,
+                modGroup: modGroup)
     }
     filesMatching("pack.mcmeta") {
-        expand(
-                modName: modName
-        )
+        expand(modName: modName)
     }
 }
 
@@ -162,16 +156,14 @@ afterEvaluate {
 // Setup main file manifest
 jar {
     manifest {
-        attributes([
-                "Specification-Title"     : archivesBaseName,
-                "Specification-Vendor"    : "An0m3L1",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : modName,
-                "Implementation-Vendor"   : "An0m3L1",
-                "Implementation-Version"  : modVersion,
-                "Implementation-Timestamp": new Date().format("yyyy-dd-MM'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "${modId}.mixins.json"
-        ])
+        attributes(["Specification-Title"     : archivesBaseName,
+                    "Specification-Vendor"    : "An0m3L1",
+                    "Specification-Version"   : "1",
+                    "Implementation-Title"    : modName,
+                    "Implementation-Vendor"   : "An0m3L1",
+                    "Implementation-Version"  : modVersion,
+                    "Implementation-Timestamp": new Date().format("yyyy-dd-MM'T'HH:mm:ssZ"),
+                    "MixinConfigs"            : "${modId}.mixins.json"])
     }
 }
 

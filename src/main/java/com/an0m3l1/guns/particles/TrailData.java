@@ -16,9 +16,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public record TrailData(boolean enchanted) implements ParticleOptions
 {
-	public static final Codec<TrailData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(Codec.BOOL.fieldOf("enchanted")
-					.forGetter((data) -> data.enchanted))
-			.apply(builder, TrailData::new));
+	public static final Codec<TrailData> CODEC = RecordCodecBuilder.create((builder) -> builder.group(Codec.BOOL.fieldOf("enchanted").forGetter((data) -> data.enchanted)).apply(builder, TrailData::new));
 	
 	public static final Deserializer<TrailData> DESERIALIZER = new Deserializer<>()
 	{

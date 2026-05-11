@@ -21,8 +21,7 @@ public abstract class Crosshair implements IResourceLocation
 	
 	static
 	{
-		CrosshairHandler.get()
-				.register(DEFAULT);
+		CrosshairHandler.get().register(DEFAULT);
 	}
 	
 	private final ResourceLocation id;
@@ -106,8 +105,7 @@ public abstract class Crosshair implements IResourceLocation
 		if(heldItem.getItem() instanceof GunItem gunItem)
 		{
 			Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-			return modifiedGun.getGeneral()
-					.getUseSniperSpread() && GunConfig.CLIENT.noCrosshairForSnipers.get();
+			return modifiedGun.getGeneral().getUseSniperSpread() && GunConfig.CLIENT.noCrosshairForSnipers.get();
 		}
 		return false;
 	}

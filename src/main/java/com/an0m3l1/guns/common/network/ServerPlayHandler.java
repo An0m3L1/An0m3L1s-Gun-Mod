@@ -64,9 +64,7 @@ import java.util.function.Predicate;
  */
 public class ServerPlayHandler
 {
-	private static final Predicate<LivingEntity> HOSTILE_ENTITIES = entity -> entity.getSoundSource() == SoundSource.HOSTILE && !(entity instanceof NeutralMob) && !GunConfig.COMMON.exemptEntities.get()
-			.contains(EntityType.getKey(entity.getType())
-					.toString());
+	private static final Predicate<LivingEntity> HOSTILE_ENTITIES = entity -> entity.getSoundSource() == SoundSource.HOSTILE && !(entity instanceof NeutralMob) && !GunConfig.COMMON.exemptEntities.get().contains(EntityType.getKey(entity.getType()).toString());
 	
 	/**
 	 * Fires the weapon the player is currently holding.
@@ -82,8 +80,7 @@ public class ServerPlayHandler
 			return;
 		}
 		
-		if(player.getUseItem()
-				.getItem() == Items.SHIELD)
+		if(player.getUseItem().getItem() == Items.SHIELD)
 		{
 			return;
 		}
@@ -112,8 +109,7 @@ public class ServerPlayHandler
 				ShootTracker tracker = ShootTracker.getShootTracker(player);
 				if(tracker.hasCooldown(item) && tracker.getRemaining(item) > GunConfig.SERVER.cooldownThreshold.get())
 				{
-					GunMod.LOGGER.warn("{}({}) tried to fire before cooldown finished! Is the server lagging? Remaining milliseconds: {}", player.getName()
-							.getContents(), player.getUUID(), tracker.getRemaining(item));
+					GunMod.LOGGER.warn("{}({}) tried to fire before cooldown finished! Is the server lagging? Remaining milliseconds: {}", player.getName().getContents(), player.getUUID(), tracker.getRemaining(item));
 					return;
 				}
 				tracker.putCooldown(player, heldItem, item, modifiedGun);
@@ -123,26 +119,19 @@ public class ServerPlayHandler
 					ModSyncedDataKeys.RELOADING.setValue(player, false);
 				}
 				
-				if((!modifiedGun.getGeneral()
-						.getAlwaysSpread() && modifiedGun.getGeneral()
-						.getSpread() > 0.0F) || modifiedGun.getGeneral()
-						.getRestingSpread() > 0F)
+				if((!modifiedGun.getGeneral().getAlwaysSpread() && modifiedGun.getGeneral().getSpread() > 0.0F) || modifiedGun.getGeneral().getRestingSpread() > 0F)
 				{
-					SpreadTracker.get(player)
-							.update(player, item);
+					SpreadTracker.get(player).update(player, item);
 				}
 				
-				int count = modifiedGun.getGeneral()
-						.getProjectileAmount();
+				int count = modifiedGun.getGeneral().getProjectileAmount();
 				Gun.Projectile projectileProps = modifiedGun.getProjectile();
 				ResourceLocation projectileItem = (projectileProps.getProjectileItem());
 				ProjectileEntity[] spawnedProjectiles = new ProjectileEntity[count];
 				for(int i = 0; i < count; i++)
 				{
-					IProjectileFactory factory = ProjectileManager.getInstance()
-							.getFactory(projectileItem);
-					IProjectileFactory override = (projectileProps.getProjectileOverride() != null ? ProjectileManager.getInstance()
-							.getOverride(projectileProps.getProjectileOverride()) : null);
+					IProjectileFactory factory = ProjectileManager.getInstance().getFactory(projectileItem);
+					IProjectileFactory override = (projectileProps.getProjectileOverride() != null ? ProjectileManager.getInstance().getOverride(projectileProps.getProjectileOverride()) : null);
 					if(override != null)
 					{
 						factory = override;
@@ -167,8 +156,7 @@ public class ServerPlayHandler
 					double radius = GunConfig.COMMON.projectileTrackingRange.get();
 					ParticleOptions data = new TrailData(heldItem.isEnchanted());
 					S2CMessageBulletTrail messageBulletTrail = new S2CMessageBulletTrail(spawnedProjectiles, projectileProps, player.getId(), data);
-					PacketHandler.getPlayChannel()
-							.sendToNearbyPlayers(() -> LevelLocation.create(player.level, spawnX, spawnY, spawnZ, radius), messageBulletTrail);
+					PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, spawnX, spawnY, spawnZ, radius), messageBulletTrail);
 				}
 				
 				MinecraftForge.EVENT_BUS.post(new GunFireEvent.Post(player, heldItem));
@@ -203,23 +191,18 @@ public class ServerPlayHandler
 					float volume = GunModifierHelper.getFireSoundVolume(heldItem);
 					float pitch = 0.9F + world.random.nextFloat() * 0.2F;
 					double radius = GunModifierHelper.getModifiedFireSoundRadius(heldItem, GunConfig.SERVER.gunShotSoundDistance.get());
-					boolean muzzle = modifiedGun.getDisplay()
-							.getFlash() != null;
+					boolean muzzle = modifiedGun.getDisplay().getFlash() != null;
 					S2CMessageSound messageSound = new S2CMessageSound(fireSound, SoundSource.PLAYERS, (float) posX, (float) posY, (float) posZ, volume, pitch, player.getId(), muzzle, false);
-					PacketHandler.getPlayChannel()
-							.sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
+					PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
 				}
 				
 				ResourceLocation cycleSound = getGunSound(modifiedGun, "cycle", false, false);
-				if(cycleSound != null || modifiedGun.getSounds()
-						.getCycleDelay() >= 0)
+				if(cycleSound != null || modifiedGun.getSounds().getCycleDelay() >= 0)
 				{
 					final ResourceLocation finalSound = (cycleSound != null ? cycleSound : getGunSound(modifiedGun, "cock", false, false));
 					
-					double modifiedCycleDelay = modifiedGun.getSounds()
-							.getCycleDelay();
-					modifiedCycleDelay = modifiedCycleDelay * (GunCompositeStatHelper.getCompositeRate(heldItem, modifiedGun, player) / Math.max(modifiedGun.getGeneral()
-							.getRate(), 1.0));
+					double modifiedCycleDelay = modifiedGun.getSounds().getCycleDelay();
+					modifiedCycleDelay = modifiedCycleDelay * (GunCompositeStatHelper.getCompositeRate(heldItem, modifiedGun, player) / Math.max(modifiedGun.getGeneral().getRate(), 1.0));
 					final int trueCycleDelay = (int) Math.round(modifiedCycleDelay);
 					if(trueCycleDelay > 0)
 					{
@@ -233,8 +216,7 @@ public class ServerPlayHandler
 								double posZ = finalPlayer.getZ();
 								double radius = GunConfig.SERVER.reloadSoundDistance.get();
 								S2CMessageSound messageSound = new S2CMessageSound(finalSound, SoundSource.PLAYERS, (float) posX, (float) posY, (float) posZ, 1.0F, 1.0F, player.getId(), false, true);
-								PacketHandler.getPlayChannel()
-										.sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
+								PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
 							}
 						});
 					}
@@ -245,8 +227,7 @@ public class ServerPlayHandler
 						double posZ = player.getZ();
 						double radius = GunConfig.SERVER.reloadSoundDistance.get();
 						S2CMessageSound messageSound = new S2CMessageSound(finalSound, SoundSource.PLAYERS, (float) posX, (float) posY, (float) posZ, 1.0F, 1.0F, player.getId(), false, true);
-						PacketHandler.getPlayChannel()
-								.sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
+						PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
 					}
 				}
 				
@@ -257,8 +238,7 @@ public class ServerPlayHandler
 				}
 				if(Gun.usesEnergy(heldItem))
 				{
-					tag.putInt("Energy", Math.max(0, tag.getInt("Energy") - modifiedGun.getGeneral()
-							.getEnergyPerShot()));
+					tag.putInt("Energy", Math.max(0, tag.getInt("Energy") - modifiedGun.getGeneral().getEnergyPerShot()));
 				}
 				
 				player.awardStat(Stats.ITEM_USED.get(item));
@@ -286,20 +266,17 @@ public class ServerPlayHandler
 		ResourceLocation fireSound = null;
 		if(GunModifierHelper.isSilencedFire(stack))
 		{
-			fireSound = modifiedGun.getSounds()
-					.getSilencedFireEx();
+			fireSound = modifiedGun.getSounds().getSilencedFireEx();
 		}
 		else if(stack.isEnchanted())
 		{
-			fireSound = modifiedGun.getSounds()
-					.getEnchantedFireEx();
+			fireSound = modifiedGun.getSounds().getEnchantedFireEx();
 		}
 		if(fireSound != null)
 		{
 			return fireSound;
 		}
-		return modifiedGun.getSounds()
-				.getFireEx();
+		return modifiedGun.getSounds().getFireEx();
 	}
 	
 	/**
@@ -342,13 +319,11 @@ public class ServerPlayHandler
 		
 		if(soundType.equals("cycle"))
 		{
-			sound = modifiedGun.getSounds()
-					.getCycle();
+			sound = modifiedGun.getSounds().getCycle();
 		}
 		else if(soundType.equals("cock"))
 		{
-			sound = modifiedGun.getSounds()
-					.getCock();
+			sound = modifiedGun.getSounds().getCock();
 		}
 		
 		return sound;
@@ -374,8 +349,7 @@ public class ServerPlayHandler
 		double posZ = player.getZ();
 		double radius = GunConfig.SERVER.reloadSoundDistance.get();
 		S2CMessageSound messageSound = new S2CMessageSound(sound, SoundSource.PLAYERS, (float) posX, (float) posY, (float) posZ, 1.0F, 1.0F, player.getId(), false, true);
-		PacketHandler.getPlayChannel()
-				.sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
+		PacketHandler.getPlayChannel().sendToNearbyPlayers(() -> LevelLocation.create(player.level, posX, posY, posZ, radius), messageSound);
 	}
 	
 	/**
@@ -395,8 +369,7 @@ public class ServerPlayHandler
 		
 		if(player.containerMenu instanceof WorkbenchContainer workbench)
 		{
-			if(workbench.getPos()
-					.equals(pos))
+			if(workbench.getPos().equals(pos))
 			{
 				WorkbenchRecipe recipe = WorkbenchRecipes.getRecipeById(world, id);
 				if(recipe == null || !recipe.hasMaterials(player))
@@ -410,24 +383,20 @@ public class ServerPlayHandler
 				
 				/* Gets the color based on the dye */
 				ItemStack stack = recipe.getItem();
-				ItemStack dyeStack = workbenchBlockEntity.getInventory()
-						.get(0);
+				ItemStack dyeStack = workbenchBlockEntity.getInventory().get(0);
 				if(dyeStack.getItem() instanceof DyeItem dyeItem)
 				{
-					int color = dyeItem.getDyeColor()
-							.getTextColor();
+					int color = dyeItem.getDyeColor().getTextColor();
 					
 					if(IColored.isDyeable(stack))
 					{
 						IColored colored = (IColored) stack.getItem();
 						colored.setColor(stack, color);
-						workbenchBlockEntity.getInventory()
-								.set(0, ItemStack.EMPTY);
+						workbenchBlockEntity.getInventory().set(0, ItemStack.EMPTY);
 					}
 				}
 				
-				if(!player.getInventory()
-						.add(stack))
+				if(!player.getInventory().add(stack))
 				{
 					Containers.dropItemStack(world, pos.getX() + 0.5, pos.getY() + 1.125, pos.getZ() + 0.5, stack);
 				}
@@ -450,8 +419,7 @@ public class ServerPlayHandler
 					tag.putInt("AmmoCount", partial ? Math.min(GunCompositeStatHelper.getAmmoCapacity(stack), ammoStored) : 0);
 					
 					Gun modifiedGun = gunItem.getModifiedGun(stack);
-					ResourceLocation id = modifiedGun.getProjectile()
-							.getItem();
+					ResourceLocation id = modifiedGun.getProjectile().getItem();
 					
 					Item item = ForgeRegistries.ITEMS.getValue(id);
 					if(item == null)
@@ -488,8 +456,7 @@ public class ServerPlayHandler
 	
 	private static void spawnAmmo(ServerPlayer player, ItemStack stack)
 	{
-		player.getInventory()
-				.add(stack);
+		player.getInventory().add(stack);
 		if(stack.getCount() > 0)
 		{
 			player.level.addFreshEntity(new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack.copy()));

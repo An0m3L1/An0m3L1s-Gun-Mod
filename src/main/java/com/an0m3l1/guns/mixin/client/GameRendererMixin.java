@@ -32,16 +32,14 @@ public class GameRendererMixin
 		
 		if(smokeEffect != null)
 		{
-			Window window = Minecraft.getInstance()
-					.getWindow();
+			Window window = Minecraft.getInstance().getWindow();
 			float percent = Math.min((smokeEffect.getDuration() / (float) GunConfig.SERVER.alphaFadeThreshold.get()), 1);
 			GuiComponent.fill(new PoseStack(), 0, 0, window.getScreenWidth(), window.getScreenHeight(), ((int) (percent * 248 + 0.5) << 24) | 8156784);
 		}
 		if(blindEffect != null)
 		{
 			float percent = Math.min((blindEffect.getDuration() / (float) GunConfig.SERVER.alphaFadeThreshold.get()), 1);
-			Window window = Minecraft.getInstance()
-					.getWindow();
+			Window window = Minecraft.getInstance().getWindow();
 			GuiComponent.fill(new PoseStack(), 0, 0, window.getScreenWidth(), window.getScreenHeight(), ((int) (percent * GunConfig.SERVER.alphaOverlay.get() + 0.5) << 24) | 16777215);
 		}
 	}

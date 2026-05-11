@@ -21,8 +21,7 @@ public class GunModifierHelper
 		ItemStack stack = Gun.getAttachment(type, weapon);
 		if(!stack.isEmpty() && stack.getItem() instanceof IAttachment<?> attachment)
 		{
-			return attachment.getProperties()
-					.getModifiers();
+			return attachment.getProperties().getModifiers();
 		}
 		return EMPTY;
 	}
@@ -75,8 +74,7 @@ public class GunModifierHelper
 			IAttachment.Type attachType = getType(IAttachment.Type.values()[i]);
 			for(IGunModifier modifier : modifiers)
 			{
-				if(!modifiedGun.getGeneral()
-						.getUseShotgunSpread())
+				if(!modifiedGun.getGeneral().getUseShotgunSpread())
 				{
 					spread = modifier.modifyProjectileSpread(spread);
 				}
@@ -263,8 +261,7 @@ public class GunModifierHelper
 		}
 		
 		Gun modifiedGun = ((GunItem) weapon.getItem()).getModifiedGun(weapon);
-		double speed = modifiedGun.getGeneral()
-				.getADSSpeed();
+		double speed = modifiedGun.getGeneral().getADSSpeed();
 		return Math.max(speed, 0.01);
 	}
 	
@@ -320,25 +317,13 @@ public class GunModifierHelper
 		double reloadSpeedModifier = 1;
 		if(!magStack.isEmpty())
 		{
-			if(magStack.getItem()
-					.builtInRegistryHolder()
-					.key()
-					.location()
-					.getPath()
-					.equals("light_magazine"))
+			if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
 			{
-				reloadSpeedModifier = modifiedGun.getGeneral()
-						.getLightMagReloadTimeModifier();
+				reloadSpeedModifier = modifiedGun.getGeneral().getLightMagReloadTimeModifier();
 			}
-			else if(magStack.getItem()
-					.builtInRegistryHolder()
-					.key()
-					.location()
-					.getPath()
-					.equals("extended_magazine"))
+			else if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
 			{
-				reloadSpeedModifier = modifiedGun.getGeneral()
-						.getExtendedMagReloadTimeModifier();
+				reloadSpeedModifier = modifiedGun.getGeneral().getExtendedMagReloadTimeModifier();
 			}
 		}
 		return reloadSpeedModifier;
@@ -351,8 +336,7 @@ public class GunModifierHelper
 		int minRate = getRampUpMinRate(maxRate);
 		int newRate = baseRate;
 		
-		if(modifiedGun.getGeneral()
-				.getDoRampUp())
+		if(modifiedGun.getGeneral().getDoRampUp())
 		{
 			int rampUpShot = ModSyncedDataKeys.RAMPUPSHOT.getValue(player);
 			float rampFactor = (float) (Math.log((float) rampUpShot + 1) / Math.log((float) getRampUpMaxShots(modifiedGun)));
@@ -364,8 +348,7 @@ public class GunModifierHelper
 	
 	public static int getRampUpMaxShots(Gun gun)
 	{
-		return gun.getGeneral()
-				.getRampUpShotsNeeded();
+		return gun.getGeneral().getRampUpShotsNeeded();
 	}
 	
 	public static int getRampUpMinRate(int rate)
@@ -380,7 +363,6 @@ public class GunModifierHelper
 	
 	public static int getRampUpMaxRate(ItemStack weapon, Gun modifiedGun)
 	{
-		return modifiedGun.getGeneral()
-				.getRate();
+		return modifiedGun.getGeneral().getRate();
 	}
 }

@@ -18,15 +18,10 @@ public class GunButtonBindings
 	
 	public static void register()
 	{
-		BindingRegistry.getInstance()
-				.register(SHOOT);
-		BindingRegistry.getInstance()
-				.register(AIM);
-		BindingRegistry.getInstance()
-				.register(RELOAD);
-		BindingRegistry.getInstance()
-				.register(OPEN_ATTACHMENTS);
-		BindingRegistry.getInstance()
-				.register(STEADY_AIM);
+		BindingRegistry.getInstance().register(SHOOT);
+		BindingRegistry.getInstance().register(AIM);
+		BindingRegistry.getInstance().register(RELOAD);
+		BindingRegistry.getInstance().register(OPEN_ATTACHMENTS);
+		BindingRegistry.getInstance().register(STEADY_AIM);
 	}
 }

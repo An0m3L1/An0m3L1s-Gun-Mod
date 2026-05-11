@@ -16,8 +16,7 @@ public class MixinPlugin implements IMixinConfigPlugin
 	{
 		try
 		{
-			Class.forName("com.mrcrayfish.framework.FrameworkForge", false, this.getClass()
-					.getClassLoader());
+			Class.forName("com.mrcrayfish.framework.FrameworkForge", false, this.getClass().getClassLoader());
 			isFrameworkInstalled = true;
 		}
 		catch(Exception e)

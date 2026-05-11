@@ -15,33 +15,17 @@ public class WorkbenchRecipes
 {
 	public static boolean isEmpty(Level world)
 	{
-		return world.getRecipeManager()
-				.getRecipes()
-				.stream()
-				.noneMatch(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get());
+		return world.getRecipeManager().getRecipes().stream().noneMatch(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get());
 	}
 	
 	public static NonNullList<WorkbenchRecipe> getAll(Level world)
 	{
-		return world.getRecipeManager()
-				.getRecipes()
-				.stream()
-				.filter(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get())
-				.map(recipe -> (WorkbenchRecipe) recipe)
-				.collect(Collectors.toCollection(NonNullList::create));
+		return world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get()).map(recipe -> (WorkbenchRecipe) recipe).collect(Collectors.toCollection(NonNullList::create));
 	}
 	
 	@Nullable
 	public static WorkbenchRecipe getRecipeById(Level world, ResourceLocation id)
 	{
-		return world.getRecipeManager()
-				.getRecipes()
-				.stream()
-				.filter(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get())
-				.map(recipe -> (WorkbenchRecipe) recipe)
-				.filter(recipe -> recipe.getId()
-						.equals(id))
-				.findFirst()
-				.orElse(null);
+		return world.getRecipeManager().getRecipes().stream().filter(recipe -> recipe.getType() == ModRecipeTypes.WORKBENCH.get()).map(recipe -> (WorkbenchRecipe) recipe).filter(recipe -> recipe.getId().equals(id)).findFirst().orElse(null);
 	}
 }

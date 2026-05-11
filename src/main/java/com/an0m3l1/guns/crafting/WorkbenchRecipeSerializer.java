@@ -29,8 +29,7 @@ public class WorkbenchRecipeSerializer implements RecipeSerializer<WorkbenchReci
 		JsonArray input = GsonHelper.getAsJsonArray(parent, "materials");
 		for(int i = 0; i < input.size(); i++)
 		{
-			JsonObject object = input.get(i)
-					.getAsJsonObject();
+			JsonObject object = input.get(i).getAsJsonObject();
 			builder.add(WorkbenchIngredient.fromJson(object));
 		}
 		if(!parent.has("result"))
@@ -46,8 +45,7 @@ public class WorkbenchRecipeSerializer implements RecipeSerializer<WorkbenchReci
 			JsonArray returnItemsArray = GsonHelper.getAsJsonArray(parent, "return_items");
 			for(int i = 0; i < returnItemsArray.size(); i++)
 			{
-				JsonObject returnItemObject = returnItemsArray.get(i)
-						.getAsJsonObject();
+				JsonObject returnItemObject = returnItemsArray.get(i).getAsJsonObject();
 				ItemStack returnItem = ShapedRecipe.itemStackFromJson(returnItemObject);
 				returnItems.add(returnItem);
 			}
@@ -82,8 +80,7 @@ public class WorkbenchRecipeSerializer implements RecipeSerializer<WorkbenchReci
 	public void toNetwork(FriendlyByteBuf buffer, WorkbenchRecipe recipe)
 	{
 		buffer.writeItem(recipe.getItem());
-		buffer.writeVarInt(recipe.getMaterials()
-				.size());
+		buffer.writeVarInt(recipe.getMaterials().size());
 		for(WorkbenchIngredient ingredient : recipe.getMaterials())
 		{
 			ingredient.toNetwork(buffer);

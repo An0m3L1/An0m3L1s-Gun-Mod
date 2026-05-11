@@ -135,9 +135,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		this.projectile = modifiedGun.getProjectile();
 		this.maxPierceCount = this.projectile.getMaxPierceCount();
 		this.entitySize = new EntityDimensions(this.projectile.getSize(), this.projectile.getSize(), false);
-		this.modifiedGravity = modifiedGun.getProjectile()
-				.isGravity() ? GunModifierHelper.getModifiedProjectileGravity(weapon, -0.04 * modifiedGun.getProjectile()
-				.getGravity()) : 0.0;
+		this.modifiedGravity = modifiedGun.getProjectile().isGravity() ? GunModifierHelper.getModifiedProjectileGravity(weapon, -0.04 * modifiedGun.getProjectile().getGravity()) : 0.0;
 		this.life = GunModifierHelper.getModifiedProjectileLife(weapon, this.projectile.getLife());
 		this.waterDamagePenalty = 1.0F - projectile.getWaterDamagePenalty();
 		this.infinitePiercing = this.maxPierceCount == -1;
@@ -161,24 +159,19 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			int customModelData = -1;
 			if(weapon.getTag() != null)
 			{
-				if(weapon.getTag()
-						.contains("Model", Tag.TAG_COMPOUND))
+				if(weapon.getTag().contains("Model", Tag.TAG_COMPOUND))
 				{
-					ItemStack model = ItemStack.of(weapon.getTag()
-							.getCompound("Model"));
-					if(model.getTag() != null && model.getTag()
-							.contains("CustomModelData"))
+					ItemStack model = ItemStack.of(weapon.getTag().getCompound("Model"));
+					if(model.getTag() != null && model.getTag().contains("CustomModelData"))
 					{
-						customModelData = model.getTag()
-								.getInt("CustomModelData");
+						customModelData = model.getTag().getInt("CustomModelData");
 					}
 				}
 			}
 			ItemStack ammoStack = new ItemStack(ammo);
 			if(customModelData != -1)
 			{
-				ammoStack.getOrCreateTag()
-						.putInt("CustomModelData", customModelData);
+				ammoStack.getOrCreateTag().putInt("CustomModelData", customModelData);
 			}
 			this.item = ammoStack;
 		}
@@ -208,8 +201,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		if(shooter instanceof Player)
 		{
-			float initialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter)
-					.getSpread((Player) shooter, item), minSpread, gunSpread);
+			float initialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter).getSpread((Player) shooter, item), minSpread, gunSpread);
 			
 			if(!this.general.getAlwaysSpread() || minSpread > 0)
 			{
@@ -224,8 +216,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				{
 					// For sniper spread reduce only the minSpread value
 					float aimingMinSpread = minSpread * (1.0F - this.general.getSpreadAdsReduction());
-					float aimingInitialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter)
-							.getSpread((Player) shooter, item), aimingMinSpread, gunSpread);
+					float aimingInitialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter).getSpread((Player) shooter, item), aimingMinSpread, gunSpread);
 					gunSpread = Mth.lerp(aimPosition, initialGunSpread, aimingInitialGunSpread);
 				}
 				else
@@ -251,9 +242,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		float a1 = Mth.cos(theta) * r;
 		float a2 = Mth.sin(theta) * r;
 		
-		return vecForwards.add(vecSideways.scale(a1))
-				.add(vecUpwards.scale(a2))
-				.normalize();
+		return vecForwards.add(vecSideways.scale(a1)).add(vecUpwards.scale(a2)).normalize();
 	}
 	
 	public void setWeapon(ItemStack weapon)
@@ -295,8 +284,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		// Spin projectile around itself
 		this.prevRotation = this.rotation;
-		double speed = this.getDeltaMovement()
-				.length();
+		double speed = this.getDeltaMovement().length();
 		if(speed > 0.1)
 		{
 			this.rotation += (float) (speed * 50);
@@ -332,8 +320,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 					players.removeIf(player -> player.equals(this.shooter));
 				}
 				
-				float volume = 0.5F + this.level.getRandom()
-						.nextFloat() * 0.4F;
+				float volume = 0.5F + this.level.getRandom().nextFloat() * 0.4F;
 				boolean multishot = general.getProjectileAmount() >= 2;
 				if(!players.isEmpty() && this.tickCount > 3 && soundTime < this.tickCount - 3)
 				{
@@ -342,8 +329,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 					{
 						volume = volume / general.getProjectileAmount();
 					}
-					this.level.playSound(null, startVec.x, startVec.y, startVec.z, ModSounds.FLYBY.get(), SoundSource.NEUTRAL, volume, 0.8F + this.level.getRandom()
-							.nextFloat() * 0.4F);
+					this.level.playSound(null, startVec.x, startVec.y, startVec.z, ModSounds.FLYBY.get(), SoundSource.NEUTRAL, volume, 0.8F + this.level.getRandom().nextFloat() * 0.4F);
 					this.soundTime = this.tickCount;
 				}
 			}
@@ -425,8 +411,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		// Apply gravity to projectile
 		if(this.projectile.isGravity())
 		{
-			this.setDeltaMovement(this.getDeltaMovement()
-					.add(0, this.modifiedGravity, 0));
+			this.setDeltaMovement(this.getDeltaMovement().add(0, this.modifiedGravity, 0));
 		}
 		
 		// Take into account skipped ticks and destroy projectile after it expires
@@ -471,15 +456,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		Vec3 hitVec = null;
 		Entity hitEntity = null;
 		boolean headshot = false;
-		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox()
-				.expandTowards(this.getDeltaMovement())
-				.inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
+		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
 		double closestDistance = Double.MAX_VALUE;
 		for(Entity entity : entities)
 		{
 			boolean isDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
-			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType()
-					.is(IMMUNE);
+			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
 			if(!entity.equals(this.shooter) && !isImmune && !this.hitEntities.contains(entity.getUUID()))
 			{
 				EntityResult result = this.getHitResult(entity, startVec, endVec);
@@ -505,14 +487,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	protected List<EntityResult> findEntitiesOnPath(Vec3 startVec, Vec3 endVec)
 	{
 		List<EntityResult> hitEntities = new ArrayList<>();
-		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox()
-				.expandTowards(this.getDeltaMovement())
-				.inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
+		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
 		for(Entity entity : entities)
 		{
 			boolean isDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
-			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType()
-					.is(IMMUNE);
+			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
 			if(this.hitEntities.contains(entity.getUUID()))
 			{
 				continue;
@@ -544,11 +523,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		}
 		boundingBox = boundingBox.expandTowards(0, expandHeight, 0);
 		
-		Vec3 hitPos = boundingBox.clip(startVec, endVec)
-				.orElse(null);
-		Vec3 grownHitPos = boundingBox.inflate(GunConfig.COMMON.growBoundingBoxAmount.get(), 0, GunConfig.COMMON.growBoundingBoxAmount.get())
-				.clip(startVec, endVec)
-				.orElse(null);
+		Vec3 hitPos = boundingBox.clip(startVec, endVec).orElse(null);
+		Vec3 grownHitPos = boundingBox.inflate(GunConfig.COMMON.growBoundingBoxAmount.get(), 0, GunConfig.COMMON.growBoundingBoxAmount.get()).clip(startVec, endVec).orElse(null);
 		if(hitPos == null && grownHitPos != null)
 		{
 			HitResult raytraceresult = rayTraceBlocks(this.level, new ClipContext(startVec, grownHitPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_BLOCKS);
@@ -576,8 +552,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 						box = box.inflate(GunConfig.COMMON.growBoundingBoxAmount.get(), 0, GunConfig.COMMON.growBoundingBoxAmount.get());
 						headshotHitPos = box.clip(startVec, endVec);
 					}
-					if(headshotHitPos.isPresent() && (hitPos == null || headshotHitPos.get()
-							.distanceTo(hitPos) < 0.5))
+					if(headshotHitPos.isPresent() && (hitPos == null || headshotHitPos.get().distanceTo(hitPos) < 0.5))
 					{
 						hitPos = headshotHitPos.get();
 						headshot = true;
@@ -637,8 +612,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			boolean projectileIsGriefing = false;
 			if(this.modifiedGun != null)
 			{
-				projectileIsGriefing = GunConfig.COMMON.projectileGriefing.get() && this.modifiedGun.getProjectile()
-						.isGriefing();
+				projectileIsGriefing = GunConfig.COMMON.projectileGriefing.get() && this.modifiedGun.getProjectile().isGriefing();
 			}
 			// Handle target blocks
 			if(block instanceof TargetBlock targetBlock)
@@ -680,8 +654,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			if(!blockCanBeDestroyed)
 			{
 				// Check if hit block isn't grass, crop, etc. and kill the projectile
-				if(!state.getMaterial()
-						.isReplaceable())
+				if(!state.getMaterial().isReplaceable())
 				{
 					this.remove(RemovalReason.KILLED);
 					this.deadProjectile = true;
@@ -772,10 +745,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				if(blockDestroyed && !this.infinitePiercing)
 				{
 					this.pierceCounter += blockCurrentHardness;
-					float penalty = this.modifiedGun.getProjectile()
-							.getPierceDamagePenalty();
-					float maxPenalty = this.modifiedGun.getProjectile()
-							.getPierceDamageMaxPenalty();
+					float penalty = this.modifiedGun.getProjectile().getPierceDamagePenalty();
+					float maxPenalty = this.modifiedGun.getProjectile().getPierceDamageMaxPenalty();
 					this.pierceDamageFraction -= blockCurrentHardness * penalty;
 					this.pierceDamageFraction = Mth.clamp(this.pierceDamageFraction, 1F - maxPenalty, 1.0F);
 				}
@@ -796,8 +767,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			Entity entity = entityHitResult.getEntity();
 			
 			// If projectile hit an immune entity or player hit themselves, ignore the hit
-			boolean entityIsImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType()
-					.is(IMMUNE);
+			boolean entityIsImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
 			if(entity.getId() == this.shooterId || entityIsImmune)
 			{
 				return false;
@@ -832,10 +802,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				else
 				{
 					this.pierceCounter++;
-					this.pierceDamageFraction -= this.modifiedGun.getProjectile()
-							.getPierceDamagePenalty();
-					this.pierceDamageFraction = Mth.clamp(this.pierceDamageFraction, 1F - this.modifiedGun.getProjectile()
-							.getPierceDamageMaxPenalty(), 1.0F);
+					this.pierceDamageFraction -= this.modifiedGun.getProjectile().getPierceDamagePenalty();
+					this.pierceDamageFraction = Mth.clamp(this.pierceDamageFraction, 1F - this.modifiedGun.getProjectile().getPierceDamageMaxPenalty(), 1.0F);
 				}
 			}
 			
@@ -864,10 +832,8 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		float newDamage = this.getCriticalDamage(this.weapon, this.random, damage);
 		boolean critical = damage != newDamage;
 		damage = newDamage;
-		boolean entityIsImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType()
-				.is(IMMUNE);
-		boolean entityIsResistant = GunConfig.COMMON.enableResistantEntities.get() && entity.getType()
-				.is(RESISTANT);
+		boolean entityIsImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
+		boolean entityIsResistant = GunConfig.COMMON.enableResistantEntities.get() && entity.getType().is(RESISTANT);
 		boolean entityIsDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
 		
 		// If projectile hit a resistant entity, apply damage penalty and kill the projectile (no piercing)
@@ -881,26 +847,20 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		// Calculate headshot damage
 		if(headshot && modifiedGun != null)
 		{
-			if(this.modifiedGun.getProjectile()
-					.getHeadshotMultiplierOverride() != 0)
+			if(this.modifiedGun.getProjectile().getHeadshotMultiplierOverride() != 0)
 			{
-				damage *= this.modifiedGun.getProjectile()
-						.getHeadshotMultiplierOverride();
+				damage *= this.modifiedGun.getProjectile().getHeadshotMultiplierOverride();
 			}
 			else
 			{
 				double hm = GunConfig.COMMON.headShotDamageMultiplier.get();
-				float headshotMultiplier = (float) Math.max(hm, this.modifiedGun.getProjectile()
-						.getHeadshotMultiplierMin());
-				damage *= headshotMultiplier + this.modifiedGun.getProjectile()
-						.getHeadshotMultiplierBonus();
+				float headshotMultiplier = (float) Math.max(hm, this.modifiedGun.getProjectile().getHeadshotMultiplierMin());
+				damage *= headshotMultiplier + this.modifiedGun.getProjectile().getHeadshotMultiplierBonus();
 			}
 			
-			if(this.modifiedGun.getProjectile()
-					.getHeadshotExtraDamage() > 0)
+			if(this.modifiedGun.getProjectile().getHeadshotExtraDamage() > 0)
 			{
-				damage += this.modifiedGun.getProjectile()
-						.getHeadshotExtraDamage();
+				damage += this.modifiedGun.getProjectile().getHeadshotExtraDamage();
 			}
 		}
 		
@@ -932,13 +892,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			if(headshot)
 			// The damage input gets divided by 4, hence why we're multiplying the durability damage value.
 			{
-				player.getInventory()
-						.hurtArmor(source, 4 * 4, Inventory.HELMET_SLOT_ONLY);
+				player.getInventory().hurtArmor(source, 4 * 4, Inventory.HELMET_SLOT_ONLY);
 			}
 			else
 			{
-				player.getInventory()
-						.hurtArmor(source, 1, Inventory.ALL_ARMOR_SLOTS);
+				player.getInventory().hurtArmor(source, 1, Inventory.ALL_ARMOR_SLOTS);
 			}
 		}
 		
@@ -947,21 +905,18 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		if(!entityIsImmune && !entityIsDead && !entityIsEnderman)
 		{
-			PacketHandler.getPlayChannel()
-					.sendToTracking(() -> entity, new S2CMessageBlood(hitVec.x, hitVec.y, hitVec.z, entity instanceof LivingEntity, headshot));
+			PacketHandler.getPlayChannel().sendToTracking(() -> entity, new S2CMessageBlood(hitVec.x, hitVec.y, hitVec.z, entity instanceof LivingEntity, headshot));
 			if(this.shooter instanceof Player)
 			{
 				int hitType = critical ? S2CMessageProjectileHitEntity.HitType.CRITICAL : headshot ? S2CMessageProjectileHitEntity.HitType.HEADSHOT : S2CMessageProjectileHitEntity.HitType.NORMAL;
-				PacketHandler.getPlayChannel()
-						.sendToPlayer(() -> (ServerPlayer) this.shooter, new S2CMessageProjectileHitEntity(hitVec.x, hitVec.y, hitVec.z, hitType, entity instanceof Player));
+				PacketHandler.getPlayChannel().sendToPlayer(() -> (ServerPlayer) this.shooter, new S2CMessageProjectileHitEntity(hitVec.x, hitVec.y, hitVec.z, hitType, entity instanceof Player));
 			}
 		}
 	}
 	
 	protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
 	{
-		PacketHandler.getPlayChannel()
-				.sendToTrackingChunk(() -> this.level.getChunkAt(pos), new S2CMessageProjectileHitBlock(x, y, z, pos, face));
+		PacketHandler.getPlayChannel().sendToTrackingChunk(() -> this.level.getChunkAt(pos), new S2CMessageProjectileHitBlock(x, y, z, pos, face));
 	}
 	
 	@Override
@@ -1053,13 +1008,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	
 	public void updateHeading()
 	{
-		double horizontalDistance = this.getDeltaMovement()
-				.horizontalDistance();
-		this.setYRot((float) (Mth.atan2(this.getDeltaMovement()
-				.x(), this.getDeltaMovement()
-				.z()) * (180D / Math.PI)));
-		this.setXRot((float) (Mth.atan2(this.getDeltaMovement()
-				.y(), horizontalDistance) * (180D / Math.PI)));
+		double horizontalDistance = this.getDeltaMovement().horizontalDistance();
+		this.setYRot((float) (Mth.atan2(this.getDeltaMovement().x(), this.getDeltaMovement().z()) * (180D / Math.PI)));
+		this.setXRot((float) (Mth.atan2(this.getDeltaMovement().y(), horizontalDistance) * (180D / Math.PI)));
 		this.yRotO = this.getYRot();
 		this.xRotO = this.getXRot();
 	}
@@ -1138,8 +1089,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	{
 		if(!this.level.isClientSide)
 		{
-			PacketHandler.getPlayChannel()
-					.sendToNearbyPlayers(this::getDeathTargetPoint, new S2CMessageRemoveProjectile(this.getId()));
+			PacketHandler.getPlayChannel().sendToNearbyPlayers(this::getDeathTargetPoint, new S2CMessageRemoveProjectile(this.getId()));
 		}
 	}
 	
@@ -1183,15 +1133,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			BlockHitResult blockResult = world.clipWithInteractionOverride(startVec, endVec, blockPos, blockShape, blockState);
 			VoxelShape fluidShape = rayTraceContext.getFluidShape(fluidState, world, blockPos);
 			BlockHitResult fluidResult = fluidShape.clip(startVec, endVec, blockPos);
-			double blockDistance = blockResult == null ? Double.MAX_VALUE : rayTraceContext.getFrom()
-					.distanceToSqr(blockResult.getLocation());
-			double fluidDistance = fluidResult == null ? Double.MAX_VALUE : rayTraceContext.getFrom()
-					.distanceToSqr(fluidResult.getLocation());
+			double blockDistance = blockResult == null ? Double.MAX_VALUE : rayTraceContext.getFrom().distanceToSqr(blockResult.getLocation());
+			double fluidDistance = fluidResult == null ? Double.MAX_VALUE : rayTraceContext.getFrom().distanceToSqr(fluidResult.getLocation());
 			return blockDistance <= fluidDistance ? blockResult : fluidResult;
 		}, (rayTraceContext) ->
 		{
-			Vec3 Vector3d = rayTraceContext.getFrom()
-					.subtract(rayTraceContext.getTo());
+			Vec3 Vector3d = rayTraceContext.getFrom().subtract(rayTraceContext.getTo());
 			return BlockHitResult.miss(rayTraceContext.getTo(), Direction.getNearest(Vector3d.x, Vector3d.y, Vector3d.z), new BlockPos(rayTraceContext.getTo()));
 		});
 	}
@@ -1365,17 +1312,16 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				return;
 			}
 			long currentTime = level.getGameTime();
-			map.entrySet()
-					.removeIf(entry ->
-					{
-						BlockDamageData data = entry.getValue();
-						if(currentTime - data.lastHitTime > GunConfig.COMMON.blockDamageResetThreshold.get())
-						{
-							level.destroyBlockProgress(getBreakerId(entry.getKey()), entry.getKey(), -1);
-							return true;
-						}
-						return false;
-					});
+			map.entrySet().removeIf(entry ->
+			{
+				BlockDamageData data = entry.getValue();
+				if(currentTime - data.lastHitTime > GunConfig.COMMON.blockDamageResetThreshold.get())
+				{
+					level.destroyBlockProgress(getBreakerId(entry.getKey()), entry.getKey(), -1);
+					return true;
+				}
+				return false;
+			});
 		}
 		
 		private static int getBreakerId(BlockPos pos)
@@ -1410,9 +1356,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		DamageSource source = isProjectile ? DamageSource.explosion(((ProjectileEntity) entity).getShooter()) : null;
 		
-		float damage = isGunProjectile ? ((ProjectileEntity) entity).getDamage() : isImpactGrenade ? GunConfig.SERVER.impactGrenadeExplosionDamage.getDefault()
-				.floatValue() : isGrenade ? GunConfig.SERVER.grenadeExplosionDamage.getDefault()
-				.floatValue() : 20F;
+		float damage = isGunProjectile ? ((ProjectileEntity) entity).getDamage() : isImpactGrenade ? GunConfig.SERVER.impactGrenadeExplosionDamage.getDefault().floatValue() : isGrenade ? GunConfig.SERVER.grenadeExplosionDamage.getDefault().floatValue() : 20F;
 		
 		boolean universalGriefing = griefing && GunConfig.COMMON.universalExplosionGriefing.get();
 		
@@ -1425,8 +1369,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		{
 			if(isGunProjectile)
 			{
-				damage *= (1.0F - ((ProjectileEntity) entity).getProjectile()
-						.getWaterDamagePenalty());
+				damage *= (1.0F - ((ProjectileEntity) entity).getProjectile().getWaterDamagePenalty());
 			}
 			else
 			{
@@ -1447,8 +1390,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		// Handle dynamic trees
 		if(GunMod.dynamicTreesLoaded)
 		{
-			Iterator<BlockPos> iterator = explosion.getToBlow()
-					.iterator();
+			Iterator<BlockPos> iterator = explosion.getToBlow().iterator();
 			while(iterator.hasNext())
 			{
 				BlockPos pos = iterator.next();
@@ -1468,8 +1410,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 					{
 						Vec3 explosionCenter = new Vec3(entity.getX(), entity.getY(), entity.getZ());
 						Vec3 blockCenter = new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-						Direction fallDir = Direction.getNearest(blockCenter.x - explosionCenter.x, blockCenter.y - explosionCenter.y, blockCenter.z - explosionCenter.z)
-								.getOpposite();
+						Direction fallDir = Direction.getNearest(blockCenter.x - explosionCenter.x, blockCenter.y - explosionCenter.y, blockCenter.z - explosionCenter.z).getOpposite();
 						LivingEntity shooter = entity instanceof ProjectileEntity ? ((ProjectileEntity) entity).getShooter() : null;
 						BranchDestructionData destructionData = branch.destroyBranchFromNode(world, pos, fallDir, false, shooter);
 						if(destructionData.getNumBranches() > 0)
@@ -1656,8 +1597,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		float reducedDamage = CombatRules.getDamageAfterAbsorb(damage, (float) entity.getArmorValue(), (float) entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
 		
-		float bypassLevel = Mth.clamp(bullet.getProjectile()
-				.getArmorBypass(), 0, 1);
+		float bypassLevel = Mth.clamp(bullet.getProjectile().getArmorBypass(), 0, 1);
 		return Mth.lerp(bypassLevel, reducedDamage, damage);
 	}
 	
@@ -1673,8 +1613,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		float damageReductionFactor = reducedDamage / damage;
 		float finalDamage = damage / damageReductionFactor;
 		
-		float bypassLevel = Mth.clamp(bullet.getProjectile()
-				.getProtectionBypass(), 0, 1);
+		float bypassLevel = Mth.clamp(bullet.getProjectile().getProtectionBypass(), 0, 1);
 		return (finalDamage - damage) * bypassLevel;
 	}
 	

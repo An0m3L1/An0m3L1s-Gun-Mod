@@ -33,9 +33,7 @@ public class SniperRifleModel implements IOverrideModel
 	                   LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay)
 	{
 		BakedModel bakedModel = SpecialModels.SNIPER_RIFLE_BASE.getModel();
-		Minecraft.getInstance()
-				.getItemRenderer()
-				.render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
 		
 		ItemStack attachmentStack = Gun.getAttachment(IAttachment.Type.SCOPE, stack);
 		if(attachmentStack.isEmpty())
@@ -69,8 +67,7 @@ public class SniperRifleModel implements IOverrideModel
 				magRotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "magazine");
 				magRotOffset = GunAnimationHelper.getSmartAnimationRotOffset(stack, player, partialTicks, "magazine");
 				
-				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks)
-						.equals("fire"))
+				if(!GunAnimationHelper.hasAnimation("fire", stack) && GunAnimationHelper.getSmartAnimationType(stack, player, partialTicks).equals("fire"))
 				{
 					useFallbackAnimation = true;
 				}
@@ -97,8 +94,7 @@ public class SniperRifleModel implements IOverrideModel
 				float boltLeadTime = 0.4F;
 				
 				ItemCooldowns tracker = Minecraft.getInstance().player.getCooldowns();
-				float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance()
-						.getFrameTime());
+				float cooldown = tracker.getCooldownPercent(stack.getItem(), Minecraft.getInstance().getFrameTime());
 				cooldown *= cooldownDivider;
 				float cooldown_a = cooldown - cooldownOffset1;
 				
@@ -168,21 +164,11 @@ public class SniperRifleModel implements IOverrideModel
 			ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
 			if(!magStack.isEmpty())
 			{
-				if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("light_magazine"))
+				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("light_magazine"))
 				{
 					magModel = SpecialModels.SNIPER_RIFLE_LIGHT_MAG;
 				}
-				if(magStack.getItem()
-						.builtInRegistryHolder()
-						.key()
-						.location()
-						.getPath()
-						.equals("extended_magazine"))
+				if(magStack.getItem().builtInRegistryHolder().key().location().getPath().equals("extended_magazine"))
 				{
 					magModel = SpecialModels.SNIPER_RIFLE_EXT_MAG;
 				}
