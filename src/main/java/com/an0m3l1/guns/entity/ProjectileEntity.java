@@ -91,7 +91,7 @@ import static com.an0m3l1.guns.init.ModTags.Entities.RESISTANT;
 public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnData
 {
 	private static final Predicate<Entity> PROJECTILE_TARGETS = input -> input != null && input.isPickable() && !input.isSpectator();
-	private static final Predicate<BlockState> IGNORE_BLOCKS = input -> input != null && GunConfig.COMMON.projectileGriefing.get() && input.is(ModTags.Blocks.IGNORED);
+	private static final Predicate<BlockState> IGNORED_BLOCKS = input -> input != null && input.is(ModTags.Blocks.IGNORED);
 	private static final Method updateRedstoneOutputMethod = ObfuscationReflectionHelper.findMethod(TargetBlock.class, "m_57391_", LevelAccessor.class, BlockState.class, BlockHitResult.class, Entity.class);
 	
 	protected int shooterId;
@@ -305,7 +305,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		{
 			Vec3 startVec = this.position();
 			Vec3 endVec = startVec.add(this.getDeltaMovement());
-			HitResult result = rayTraceBlocks(this.level, new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_BLOCKS);
+			HitResult result = rayTraceBlocks(this.level, new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORED_BLOCKS);
 			
 			// Projectile flyby sound
 			boolean isBullet = this instanceof BulletEntity;
@@ -345,16 +345,16 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 			// Destroy projectile after projectile has run out of pierces
 			if(this.maxPierceCount == 0)
 			{
-				EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
-				if(entityResult != null)
+				List<EntityResult> hitList = getEntitiesOnPath(startVec, endVec, false, 1);
+				if(hitList != null && !hitList.isEmpty())
 				{
-					hitEntities = Collections.singletonList(entityResult);
+					hitEntities = hitList;
 				}
 			}
 			// Find all entities that will be affected by the projectile
 			else
 			{
-				hitEntities = this.findEntitiesOnPath(startVec, endVec);
+				hitEntities = getEntitiesOnPath(startVec, endVec, true, Integer.MAX_VALUE);
 			}
 			
 			// Check if we found any entities on the way of projectile
@@ -451,64 +451,42 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	}
 	
 	@Nullable
-	protected EntityResult findEntityOnPath(Vec3 startVec, Vec3 endVec)
+	private List<EntityResult> getEntitiesOnPath(Vec3 startVec, Vec3 endVec, boolean includeHitEntities, int maxResults)
 	{
-		Vec3 hitVec = null;
-		Entity hitEntity = null;
-		boolean headshot = false;
+		List<EntityResult> hitEntitiesList = new ArrayList<>();
 		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
-		double closestDistance = Double.MAX_VALUE;
+		
 		for(Entity entity : entities)
 		{
 			boolean isDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
 			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
-			if(!entity.equals(this.shooter) && !isImmune && !this.hitEntities.contains(entity.getUUID()))
-			{
-				EntityResult result = this.getHitResult(entity, startVec, endVec);
-				if(result == null || isDead)
-				{
-					continue;
-				}
-				Vec3 hitPos = result.getHitPos();
-				double distanceToHit = startVec.distanceTo(hitPos);
-				if(distanceToHit < closestDistance)
-				{
-					hitVec = hitPos;
-					hitEntity = entity;
-					closestDistance = distanceToHit;
-					headshot = result.isHeadshot();
-				}
-			}
-		}
-		return hitEntity != null ? new EntityResult(hitEntity, startVec, hitVec, headshot) : null;
-	}
-	
-	@Nullable
-	protected List<EntityResult> findEntitiesOnPath(Vec3 startVec, Vec3 endVec)
-	{
-		List<EntityResult> hitEntities = new ArrayList<>();
-		List<Entity> entities = this.level.getEntities(this, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0 + this.projectile.getSize()), PROJECTILE_TARGETS);
-		for(Entity entity : entities)
-		{
-			boolean isDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
-			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
-			if(this.hitEntities.contains(entity.getUUID()))
+			
+			if(entity.equals(this.shooter) || isImmune || includeHitEntities && this.hitEntities.contains(entity.getUUID()) || isDead)
 			{
 				continue;
 			}
-			if(!entity.equals(this.shooter) && !isImmune)
+			
+			EntityResult result = this.getHitResult(entity, startVec, endVec);
+			if(result == null)
 			{
-				EntityResult result = this.getHitResult(entity, startVec, endVec);
-				// Ignore dead entities so they don't eat up our piercing
-				if(result == null || isDead)
-				{
-					continue;
-				}
-				hitEntities.add(result);
+				continue;
+			}
+			
+			hitEntitiesList.add(result);
+			
+			if(maxResults > 0 && hitEntitiesList.size() >= maxResults)
+			{
+				break;
 			}
 		}
-		hitEntities.sort(new HitComparator());
-		return hitEntities;
+		
+		if(hitEntitiesList.isEmpty())
+		{
+			return null;
+		}
+		
+		hitEntitiesList.sort(new HitComparator());
+		return hitEntitiesList;
 	}
 	
 	@Nullable
@@ -527,7 +505,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		Vec3 grownHitPos = boundingBox.inflate(GunConfig.COMMON.growBoundingBoxAmount.get(), 0, GunConfig.COMMON.growBoundingBoxAmount.get()).clip(startVec, endVec).orElse(null);
 		if(hitPos == null && grownHitPos != null)
 		{
-			HitResult raytraceresult = rayTraceBlocks(this.level, new ClipContext(startVec, grownHitPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORE_BLOCKS);
+			HitResult raytraceresult = rayTraceBlocks(this.level, new ClipContext(startVec, grownHitPos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this), IGNORED_BLOCKS);
 			if(raytraceresult.getType() == HitResult.Type.BLOCK)
 			{
 				return null;

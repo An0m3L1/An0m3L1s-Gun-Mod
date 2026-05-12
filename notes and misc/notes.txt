@@ -29,6 +29,7 @@ Overhaul repair kit recipe
 Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
 Improve mod integration checks
+Make hemp crops 2 blocks tall
 Overhaul gun logic:
     - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
     - Overhaul block hit code to use raytracing
@@ -36,7 +37,8 @@ Overhaul gun logic:
     - Check sniper spread code to be accurate
     - Move all projectile logic to according classes
     - Make semi weapons queue shots when firing too quickly
-    - Cancel reload when opening pause menu/starting to bleed out
+    - Fix crosshair spread for sniper weapons
+    - Invert aiming while sprinting logic (make it more in line with PlayerHandler)
     - Disable weapon firing while swimming underwater (configure to work same as ADSing underwater, where while holding sprint button you can't ADS, but if you release it you can)
 Overhaul head hitboxes:
     - Fix hitbox not rendering underwater
@@ -72,7 +74,6 @@ Add a modifier for draw time to attachments and make it correspond to the draw a
 Add a modifier to pierce count
 Add a downside to thumb grip (draw time?)
 Add debug lines and functions
-Make hemp crops 2 blocks tall
 Add casing particles (or integrate casings into the animation itself)
 Add potion effects:
     - Focused: obtained through energy drinks, adrenaline shots, etc. Increases reload, ADS and draw speed of guns

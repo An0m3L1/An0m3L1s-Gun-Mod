@@ -11,6 +11,11 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
+/**
+ * Controls Player behavior (sprinting, crouching, using items, etc.)
+ * <p>
+ * Author: An0m3L1
+ */
 public class PlayerHandler
 {
 	private static PlayerHandler instance;
@@ -50,89 +55,82 @@ public class PlayerHandler
 		
 		ItemStack heldItem = player.getMainHandItem();
 		
+		boolean keySprintDown = isKeyDown(mc.options.keySprint.getKey());
+		boolean keyCrouchDown = isKeyDown(mc.options.keyShift.getKey());
+		boolean keyUseDown = isKeyDown(mc.options.keyUse.getKey());
+		
 		boolean restrictSprint = heldItem.is(ModTags.Items.HEAVY) || player.isVisuallyCrawling() || player.isCrouching() || player.isBlocking() || ModSyncedDataKeys.RELOADING.getValue(player);
 		boolean restrictCrouch = player.isVisuallyCrawling() || (player.isInWater() && player.getPose() == Pose.SWIMMING && !player.isSwimming());
 		boolean restrictUse = ModSyncedDataKeys.RELOADING.getValue(player) && player.isBlocking();
 		
 		// Sprinting restrictions
+		if(restrictSprint)
 		{
-			boolean keySprintDown = isKeyDown(mc.options.keySprint.getKey());
-			if(restrictSprint)
+			if(keySprintDown)
 			{
-				if(keySprintDown)
-				{
-					wasSprintDown = true;
-					mc.options.keySprint.setDown(false);
-				}
-				if(player.isSprinting())
-				{
-					player.setSprinting(false);
-				}
+				wasSprintDown = true;
+				mc.options.keySprint.setDown(false);
 			}
-			else if(wasSprintDown)
+			if(player.isSprinting())
 			{
-				if(keySprintDown)
-				{
-					mc.options.keySprint.setDown(true);
-				}
-				wasSprintDown = false;
+				player.setSprinting(false);
 			}
+		}
+		else if(wasSprintDown)
+		{
+			if(keySprintDown)
+			{
+				mc.options.keySprint.setDown(true);
+			}
+			wasSprintDown = false;
 		}
 		
 		// Crouching restrictions
+		if(restrictCrouch)
 		{
-			boolean keyCrouchDown = isKeyDown(mc.options.keyShift.getKey());
-			
-			if(restrictCrouch)
+			if(keyCrouchDown)
 			{
-				if(keyCrouchDown)
-				{
-					wasCrouchDown = true;
-					mc.options.keyShift.setDown(false);
-				}
-				if(player.isShiftKeyDown())
-				{
-					player.setShiftKeyDown(false);
-				}
+				wasCrouchDown = true;
+				mc.options.keyShift.setDown(false);
 			}
-			else if(wasCrouchDown)
+			if(player.isShiftKeyDown())
 			{
-				if(keyCrouchDown)
-				{
-					mc.options.keyShift.setDown(true);
-				}
-				wasCrouchDown = false;
+				player.setShiftKeyDown(false);
 			}
+		}
+		else if(wasCrouchDown)
+		{
+			if(keyCrouchDown)
+			{
+				mc.options.keyShift.setDown(true);
+			}
+			wasCrouchDown = false;
 		}
 		
 		// Use restrictions
+		if(restrictUse)
 		{
-			boolean keyUseDown = isKeyDown(mc.options.keyUse.getKey());
-			
-			if(restrictUse)
+			if(keyUseDown)
 			{
-				if(keyUseDown)
-				{
-					wasUseDown = true;
-					mc.options.keyUse.setDown(false);
-				}
-				if(player.isUsingItem())
-				{
-					player.stopUsingItem();
-				}
+				wasUseDown = true;
+				mc.options.keyUse.setDown(false);
 			}
-			else if(wasUseDown)
+			if(player.isUsingItem())
 			{
-				if(keyUseDown)
-				{
-					mc.options.keyUse.setDown(true);
-				}
-				wasUseDown = false;
+				player.stopUsingItem();
 			}
+		}
+		else if(wasUseDown)
+		{
+			if(keyUseDown)
+			{
+				mc.options.keyUse.setDown(true);
+			}
+			wasUseDown = false;
 		}
 	}
 	
-	public boolean isKeyDown(InputConstants.Key key)
+	public static boolean isKeyDown(InputConstants.Key key)
 	{
 		if(key.getType() == InputConstants.Type.KEYSYM)
 		{

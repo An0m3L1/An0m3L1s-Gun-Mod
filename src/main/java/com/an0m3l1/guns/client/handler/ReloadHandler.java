@@ -67,6 +67,11 @@ public class ReloadHandler
 		Player player = Minecraft.getInstance().player;
 		if(player != null)
 		{
+			if(PlayerReviveHelper.isBleeding(player) && ModSyncedDataKeys.RELOADING.getValue(player))
+			{
+				this.setReloading(false, true);
+			}
+			
 			this.updateReloadDelay(player);
 			if(ModSyncedDataKeys.RELOADING.getValue(player))
 			{

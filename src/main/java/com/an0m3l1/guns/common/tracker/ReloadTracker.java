@@ -6,6 +6,7 @@ import com.an0m3l1.guns.common.AmmoContext;
 import com.an0m3l1.guns.common.DelayedTask;
 import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.common.Gun.ReloadSoundsBase;
+import com.an0m3l1.guns.compat.PlayerReviveHelper;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.network.PacketHandler;
@@ -226,6 +227,16 @@ public class ReloadTracker
 	
 	public static void handleReload(Player player)
 	{
+		if(PlayerReviveHelper.isBleeding(player))
+		{
+			if(ModSyncedDataKeys.RELOADING.getValue(player))
+			{
+				ModSyncedDataKeys.RELOADING.setValue(player, false);
+				RELOAD_TRACKER_MAP.remove(player);
+			}
+			return;
+		}
+		
 		if(ModSyncedDataKeys.RELOADING.getValue(player))
 		{
 			if(!RELOAD_TRACKER_MAP.containsKey(player))
