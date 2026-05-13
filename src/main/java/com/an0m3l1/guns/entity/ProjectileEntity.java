@@ -458,7 +458,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		
 		for(Entity entity : entities)
 		{
-			boolean isDead = (entity instanceof LivingEntity && ((LivingEntity) entity).isDeadOrDying());
+			boolean isDead = entity instanceof LivingEntity living && living.isDeadOrDying();
 			boolean isImmune = GunConfig.COMMON.enableImmuneEntities.get() && entity.getType().is(IMMUNE);
 			
 			if(entity.equals(this.shooter) || isImmune || includeHitEntities && this.hitEntities.contains(entity.getUUID()) || isDead)

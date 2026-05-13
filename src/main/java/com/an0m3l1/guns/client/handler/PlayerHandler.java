@@ -3,6 +3,7 @@ package com.an0m3l1.guns.client.handler;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.init.ModTags;
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +20,9 @@ import org.lwjgl.glfw.GLFW;
 public class PlayerHandler
 {
 	private static PlayerHandler instance;
+	private boolean wasSprintDown = false;
+	private boolean wasCrouchDown = false;
+	private boolean wasUseDown = false;
 	
 	public static PlayerHandler get()
 	{
@@ -28,10 +32,6 @@ public class PlayerHandler
 		}
 		return instance;
 	}
-	
-	private boolean wasSprintDown = false;
-	private boolean wasCrouchDown = false;
-	private boolean wasUseDown = false;
 	
 	private PlayerHandler()
 	{
@@ -55,79 +55,42 @@ public class PlayerHandler
 		
 		ItemStack heldItem = player.getMainHandItem();
 		
-		boolean keySprintDown = isKeyDown(mc.options.keySprint.getKey());
-		boolean keyCrouchDown = isKeyDown(mc.options.keyShift.getKey());
-		boolean keyUseDown = isKeyDown(mc.options.keyUse.getKey());
-		
-		boolean restrictSprint = heldItem.is(ModTags.Items.HEAVY) || player.isVisuallyCrawling() || player.isCrouching() || player.isBlocking() || ModSyncedDataKeys.RELOADING.getValue(player);
-		boolean restrictCrouch = player.isVisuallyCrawling() || (player.isInWater() && player.getPose() == Pose.SWIMMING && !player.isSwimming());
-		boolean restrictUse = ModSyncedDataKeys.RELOADING.getValue(player) && player.isBlocking();
-		
 		// Sprinting restrictions
-		if(restrictSprint)
-		{
-			if(keySprintDown)
-			{
-				wasSprintDown = true;
-				mc.options.keySprint.setDown(false);
-			}
-			if(player.isSprinting())
-			{
-				player.setSprinting(false);
-			}
-		}
-		else if(wasSprintDown)
-		{
-			if(keySprintDown)
-			{
-				mc.options.keySprint.setDown(true);
-			}
-			wasSprintDown = false;
-		}
+		boolean keySprintDown = isKeyDown(mc.options.keySprint.getKey());
+		boolean restrictSprint = heldItem.is(ModTags.Items.HEAVY) || player.isVisuallyCrawling() || player.isCrouching() || player.isBlocking() || ModSyncedDataKeys.RELOADING.getValue(player);
+		wasSprintDown = handleRestriction(restrictSprint, wasSprintDown, keySprintDown, mc.options.keySprint, () -> player.setSprinting(false));
 		
 		// Crouching restrictions
-		if(restrictCrouch)
-		{
-			if(keyCrouchDown)
-			{
-				wasCrouchDown = true;
-				mc.options.keyShift.setDown(false);
-			}
-			if(player.isShiftKeyDown())
-			{
-				player.setShiftKeyDown(false);
-			}
-		}
-		else if(wasCrouchDown)
-		{
-			if(keyCrouchDown)
-			{
-				mc.options.keyShift.setDown(true);
-			}
-			wasCrouchDown = false;
-		}
+		boolean keyCrouchDown = isKeyDown(mc.options.keyShift.getKey());
+		boolean restrictCrouch = player.isVisuallyCrawling() || (player.isInWater() && player.getPose() == Pose.SWIMMING && !player.isSwimming());
+		wasCrouchDown = handleRestriction(restrictCrouch, wasCrouchDown, keyCrouchDown, mc.options.keyShift, () -> player.setShiftKeyDown(false));
 		
 		// Use restrictions
-		if(restrictUse)
+		boolean keyUseDown = isKeyDown(mc.options.keyUse.getKey());
+		boolean restrictUse = ModSyncedDataKeys.RELOADING.getValue(player) && player.isBlocking();
+		wasUseDown = handleRestriction(restrictUse, wasUseDown, keyUseDown, mc.options.keyUse, player::stopUsingItem);
+	}
+	
+	private boolean handleRestriction(boolean shouldRestrict, boolean wasKeyDown, boolean keyDown, KeyMapping key, Runnable stopAction)
+	{
+		if(shouldRestrict)
 		{
-			if(keyUseDown)
+			if(keyDown)
 			{
-				wasUseDown = true;
-				mc.options.keyUse.setDown(false);
+				wasKeyDown = true;
+				key.setDown(false);
 			}
-			if(player.isUsingItem())
-			{
-				player.stopUsingItem();
-			}
+			stopAction.run();
 		}
-		else if(wasUseDown)
+		else if(wasKeyDown)
 		{
-			if(keyUseDown)
+			if(keyDown)
 			{
-				mc.options.keyUse.setDown(true);
+				key.setDown(true);
 			}
-			wasUseDown = false;
+			wasKeyDown = false;
 		}
+		return wasKeyDown;
 	}
 	
 	public static boolean isKeyDown(InputConstants.Key key)
