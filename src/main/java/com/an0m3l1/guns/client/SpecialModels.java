@@ -68,6 +68,8 @@ public enum SpecialModels
 	TACTICAL_PISTOL_EXT_MAG("tactical_pistol/ext_mag"),
 	
 	AUTOMATIC_PISTOL_BASE("automatic_pistol/base"),
+	AUTOMATIC_PISTOL_BODY("automatic_pistol/body"),
+	AUTOMATIC_PISTOL_BODY_COLORED("automatic_pistol/body_colored"),
 	AUTOMATIC_PISTOL_BOLT("automatic_pistol/bolt"),
 	AUTOMATIC_PISTOL_MAG("automatic_pistol/mag"),
 	AUTOMATIC_PISTOL_LIGHT_MAG("automatic_pistol/light_mag"),

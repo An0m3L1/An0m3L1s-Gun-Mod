@@ -158,13 +158,13 @@
 					"translation": [0, -1, 0.0]
 				},
 				"9": {
-					"translation": [0, -10, 3]
+					"translation": [0, -10, 3.0]
 				},
 				"10": {
-					"translation": [0, -10, 3]
+					"translation": [0, -10, 3.0]
 				},
 				"14": {
-					"translation": [0, -0.5, 0.0]
+					"translation": [0, -1.0, 0.0]
 				},
 				"15": {
 					"translation": [0, 0, 0]
@@ -180,7 +180,7 @@
 			}
 		},
 		"reload": {
-			"frames": 29,
+			"frames": 22,
 			"progressOffset": 0.0,
 			"viewModel": {
 				"rotOffset": [0, 0.0, 3.0],
@@ -216,10 +216,10 @@
 					"rotEasing": "ease_out_quad"
 				},
 				"22": {
-					"translation": [-1.4, 0.2, -0.2],
-					"transEasing": "ease_in_out_cubic",
-					"rotation": [40.0, 2.0, -2],
-					"rotEasing": "ease_in_quad"
+					"translation": [0, 0, 0],
+					"transEasing": "ease_in_out_quad",
+					"rotation": [0, 0, 0],
+					"rotEasing": "ease_in_out_cubic"
 				},
 				"23": {
 					"translation": [-1.4, -0.3, -0.1],
@@ -268,43 +268,12 @@
 					"rotation": [0.0, 0.0, 0.0],
 					"rotEasing": "linear"
 				},
-				"16": {
-					"rotation": [0.0, 0.0, 0.0]
-				},
-				"17": {
-					"translation": [0.4, -1.9, -2.7],
-					"easing": "ease_out_cubic"
-				},
 				"20": {
-					"translation": [-0.4, 5.4, -3.0],
-					"easing": "ease_in_quad"
+					"translation": [0.6, -1.9, -2.6],
+					"rotation": [0.0, 0.0, 0.0],
+					"rotEasing": "linear"
 				},
 				"22": {
-					"translation": [-0.1, 5.5, -3.5],
-					"transEasing": "ease_out_cubic",
-					"rotation": [15.0, 5.0, 0.0],
-					"rotEasing": "ease_in_out_quad"
-				},
-				"23": {
-					"translation": [-0.1, 5.5, -1.2],
-					"rotation": [20.0, 3.0, 0.0],
-					"easing": "linear"
-				},
-				"24": {
-					"translation": [-0.1, 5.5, -1.2],
-					"rotation": [20.0, 3.0, 0.0],
-					"easing": "linear"
-				},
-				"25": {
-					"translation": [-0.2, 6.2, 3.0],
-					"rotation": [15.0, 5.0, 0.0],
-					"easing": "ease_out_quad"
-				},
-				"27": {
-					"translation": [-1.4, 3.2, 1.0],
-					"transEasing": "ease_in_quad"
-				},
-				"29": {
 					"translation": [0, 0, 0],
 					"transEasing": "ease_out_quad",
 					"rotation": [0, 0, 0],
@@ -337,13 +306,13 @@
 					"translation": [0, -1, 0.0]
 				},
 				"9": {
-					"translation": [0, -10, 3]
+					"translation": [0, -10, 3.0]
 				},
 				"10": {
-					"translation": [0, -10, 3]
+					"translation": [0, -10, 3.0]
 				},
 				"14": {
-					"translation": [0, -0.5, 0.0]
+					"translation": [0, -1.0, 0.0]
 				},
 				"15": {
 					"translation": [0, 0, 0]
@@ -408,52 +377,36 @@
 			}
 		},
 		"recoil": {
-			"frames": 24,
+			"frames": 27,
 			"animationSpeed": 2.6,
 			"progressOffset": 0.0,
 			"viewModel": {
-				"rotOffset": [0, -0.2, 3.0],
+				"rotOffset": [0, 0.0, 2.0],
 				"0": {
-					"translation": [0.0, 0.0, 0.0],
-					"rotation": [0, 0, 0]
+					"translation": [0.0, 0.0, 0.3],
+					"rotation": [0.8, 0, 0]
 				},
-				"4": {
-					"translation": [0.0, 0.0, 1.0],
-					"easing": "ease_out_quad"
+				"2": {
+					"translation": [0.0, -0.06, 0.9],
+					"tranEasing": "ease_out_sin",
+					"rotation": [2.5, 0, 0],
+					"rotEasing": "ease_out_quad"
 				},
-				"5": {
-					"rotation": [6.0, 0, 0],
-					"easing": "ease_in_out_quad"
+				"9": {
+					"translation": [0.0, -0.03, 0.4],
+					"easing": "ease_in_sin"
 				},
-				"15": {
-					"rotation": [-0.6, 0, 0],
-					"rotEasing": "ease_in_out_sin"
-				},
-				"18": {
-					"translation": [0.0, 0.0, 0.0],
-					"easing": "ease_out_quad"
+				"10": {
+					"rotation": [-0.7, 0, 0],
+					"rotEasing": "ease_in_out_quad"
 				},
 				"22": {
 					"rotation": [0.0, 0, 0],
-					"rotEasing": "ease_in_out_sin"
-				}
-			},
-			"gunModel": {
-				"rotOffset": [-2, -11.0, 3.6],
-				"0": {
-					"rotation": [1, 0, 0]
+					"easing": "ease_in_out_sin"
 				},
-				"3": {
-					"rotation": [1.0, -0.1, -0.3],
-					"easing": "ease_out_sin"
-				},
-				"10": {
-					"rotation": [-0.7, 0, 0.0],
-					"rotEasing": "ease_in_out_sin"
-				},
-				"18": {
-					"rotation": [0.0, 0, 0],
-					"rotEasing": "ease_in_out_sin"
+				"26": {
+					"translation": [0.0, 0.0, 0.0],
+					"easing": "ease_out_cubic"
 				}
 			}
 		}

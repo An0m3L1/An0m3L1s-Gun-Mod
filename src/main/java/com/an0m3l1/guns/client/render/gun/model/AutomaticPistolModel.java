@@ -45,6 +45,29 @@ public class AutomaticPistolModel implements IOverrideModel
 		BakedModel base = SpecialModels.AUTOMATIC_PISTOL_BASE.getModel();
 		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
 		
+		GunItem gunStack = (GunItem) stack.getItem();
+		Gun gun = gunStack.getModifiedGun(stack);
+		CompoundTag tag = stack.getTag();
+		boolean ammoIsEmpty = false;
+		boolean ammoIsFull = false;
+		
+		BakedModel body = SpecialModels.AUTOMATIC_PISTOL_BODY.getModel();
+		
+		if(tag != null)
+		{
+			int ammoCount = tag.getInt("AmmoCount");
+			int ammoCapacity = GunCompositeStatHelper.getAmmoCapacity(stack);
+			ammoIsEmpty = ammoCount <= 0;
+			ammoIsFull = ammoCount >= ammoCapacity;
+			if(tag.contains("Color"))
+			{
+				body = SpecialModels.AUTOMATIC_PISTOL_BODY_COLORED.getModel();
+			}
+		}
+		
+		// Render the body model that changes if a gun is colored
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(body));
+		
 		// Render the top rail model that appears when a scope is attached
 		ItemStack scopeStack = Gun.getAttachment(IAttachment.Type.SCOPE, stack);
 		if(!scopeStack.isEmpty())
@@ -57,19 +80,6 @@ public class AutomaticPistolModel implements IOverrideModel
 		boolean isFirstPerson = transformType.firstPerson();
 		boolean correctContext = (transformType.firstPerson() || transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND || transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
 		
-		GunItem gunStack = (GunItem) stack.getItem();
-		Gun gun = gunStack.getModifiedGun(stack);
-		CompoundTag tag = stack.getTag();
-		
-		boolean ammoIsEmpty = false;
-		boolean ammoIsFull = false;
-		if(tag != null)
-		{
-			int ammoCount = tag.getInt("AmmoCount");
-			int ammoCapacity = GunCompositeStatHelper.getAmmoCapacity(stack);
-			ammoIsEmpty = ammoCount <= 0;
-			ammoIsFull = ammoCount >= ammoCapacity;
-		}
 		boolean reloading = isPlayer && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
 		boolean reloadFromEmpty = isPlayer && ReloadHandler.get().isReloadFromEmpty();
 

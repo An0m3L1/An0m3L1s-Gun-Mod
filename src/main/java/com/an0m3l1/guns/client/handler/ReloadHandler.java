@@ -113,7 +113,7 @@ public class ReloadHandler
 		
 		ItemStack stack = player.getMainHandItem();
 		
-		if(KeyBinds.KEY_RELOAD.isDown() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player))
+		if(KeyBinds.KEY_RELOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player) && ModSyncedDataKeys.RELOADING.getValue(player) != true)
 		{
 			if(reloadTimer <= 0 || reloadTimer >= 1)
 			{
@@ -130,13 +130,12 @@ public class ReloadHandler
 					}
 				}
 			}
-			KeyBinds.KEY_RELOAD.setDown(false);
 			if(stack.getItem() instanceof GunItem)
 			{
 				GunRenderingHandler.get().updateReserveAmmo(player);
 			}
 		}
-		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && !PlayerReviveHelper.isBleeding(player))
+		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0 && !PlayerReviveHelper.isBleeding(player))
 		{
 			if(stack.getItem() instanceof GunItem)
 			{

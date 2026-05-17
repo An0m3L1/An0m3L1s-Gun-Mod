@@ -13,7 +13,6 @@ Overhaul items:
     - Heavy Sniper Rifle (overhaul internals)
     - Sniper Rifle (overhaul internals)
     - Tactical Pistol/Pistol (add locking slide and overhaul internals)
-    - Automatic Pistol (finish texturing)
     - Semi Auto Shotgun (overhaul internals)
     - Grenade Launcher (full overhaul)
     - Rocket Launcher (full overhaul)
@@ -30,6 +29,7 @@ Return coloring weapons (if a weapon has a dye applied to it, change the texture
 Improve explosion VFX
 Improve mod integration checks
 Make hemp crops 2 blocks tall
+Add reload from empty tooltip
 Overhaul gun logic:
     - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
     - Overhaul block hit code to use raytracing
@@ -66,6 +66,7 @@ Add automatic turrets (check scorched guns)
 Add folding and moving targets
 Add StatTrack module
 Add custom dye items
+Add paint remover item (removes "Color" tag from items)
 Add special message to headshot kills
 Add ammo pouch curio items:
     - Make guns get ammo from pouches (findAmmo, getReserveAmmoCount in Gun)
