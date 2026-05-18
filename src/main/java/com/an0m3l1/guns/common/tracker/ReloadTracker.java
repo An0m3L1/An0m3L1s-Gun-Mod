@@ -88,6 +88,7 @@ public class ReloadTracker
 		{
 			this.reloadEndDelay = Math.max(gun.getGeneral().getReloadEndDelay(), 0);
 		}
+		ModSyncedDataKeys.MAGLOADED.setValue(player, false);
 	}
 	
 	/**

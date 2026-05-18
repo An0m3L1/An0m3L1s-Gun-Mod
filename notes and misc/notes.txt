@@ -18,14 +18,11 @@ Overhaul items:
     - Rocket Launcher (full overhaul)
     - Minigun (full overhaul)
     - Muzzle brake
-Fix recoil not working in third person (shoulder surfing)
-    - Crosshair stays in 1 place when looking directly at a block/entity
 Overhaul dependencies:
     - Test dependency mod versions to figure out the lowest version where everything works correctly
     - Remove redundant dependencies
     - Make dependencies optional where applicable
 Overhaul repair kit recipe
-Return coloring weapons (if a weapon has a dye applied to it, change the texture of a model to white adjacent)
 Improve explosion VFX
 Improve mod integration checks
 Make hemp crops 2 blocks tall
