@@ -228,12 +228,21 @@ public class GunItem extends Item implements IColored, IMeta
 				if(modifiedGun.getGeneral().usesMagReload())
 				{
 					reloadTimeSeconds = (float) GunCompositeStatHelper.getMagReloadSpeed(stack, false) / 20;
+					double emptyReloadTimeSeconds = (float) GunCompositeStatHelper.getMagReloadSpeed(stack, true) / 20;
+					if(reloadTimeSeconds != emptyReloadTimeSeconds)
+					{
+						tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".reload_rate", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(reloadTimeSeconds) + ChatFormatting.GRAY + " (" + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(emptyReloadTimeSeconds) + ")").withStyle(ChatFormatting.GRAY));
+					}
+					else
+					{
+						tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".reload_rate", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(reloadTimeSeconds)).withStyle(ChatFormatting.GRAY));
+					}
 				}
 				else
 				{
 					reloadTimeSeconds = (float) GunCompositeStatHelper.getReloadInterval(stack, false) / 20;
+					tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".reload_rate", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(reloadTimeSeconds)).withStyle(ChatFormatting.GRAY));
 				}
-				tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".reload_rate", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(reloadTimeSeconds)).withStyle(ChatFormatting.GRAY));
 			}
 			/* ADS Time */
 			{

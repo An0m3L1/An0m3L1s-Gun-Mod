@@ -24,9 +24,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
-/**
- * Author: MrCrayfish
- */
 public class ReloadHandler
 {
 	private static ReloadHandler instance;
@@ -113,20 +110,24 @@ public class ReloadHandler
 		
 		ItemStack stack = player.getMainHandItem();
 		
-		if(KeyBinds.KEY_RELOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player) && ModSyncedDataKeys.RELOADING.getValue(player) != true)
+		if(KeyBinds.KEY_RELOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player))
 		{
-			if(reloadTimer <= 0 || reloadTimer >= 1)
+			if((reloadTimer <= 0 || reloadTimer >= 1) && stack.getItem() instanceof GunItem)
 			{
-				if(stack.getItem() instanceof GunItem)
+				CompoundTag tag = stack.getTag();
+				if(tag != null && !tag.contains("IgnoreAmmo", Tag.TAG_BYTE))
 				{
-					CompoundTag tag = stack.getTag();
-					if(tag != null && !tag.contains("IgnoreAmmo", Tag.TAG_BYTE))
+					Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
+					int currentAmmo = tag.getInt("AmmoCount");
+					int maxAmmo = GunCompositeStatHelper.getAmmoCapacity(stack, gun);
+					if(currentAmmo < maxAmmo)
 					{
-						Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-						if(tag.getInt("AmmoCount") < GunCompositeStatHelper.getAmmoCapacity(stack, gun))
+						boolean isReloading = ModSyncedDataKeys.RELOADING.getValue(player);
+						if(isReloading && ModSyncedDataKeys.MAGLOADED.getValue(player))
 						{
-							this.setReloading(!ModSyncedDataKeys.RELOADING.getValue(player), true);
+							return;
 						}
+						this.setReloading(!isReloading, true);
 					}
 				}
 			}
@@ -137,16 +138,13 @@ public class ReloadHandler
 		}
 		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0 && !PlayerReviveHelper.isBleeding(player))
 		{
-			if(stack.getItem() instanceof GunItem)
+			if(stack.getItem() instanceof GunItem && Gun.hasAmmo(stack))
 			{
-				if(Gun.hasAmmo(stack))
+				this.setReloading(false, true);
+				PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload(false));
+				if(stack.getItem() instanceof GunItem)
 				{
-					this.setReloading(false, true);
-					PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload(false));
-					if(stack.getItem() instanceof GunItem)
-					{
-						GunRenderingHandler.get().stageReserveAmmoUpdate(2);
-					}
+					GunRenderingHandler.get().stageReserveAmmoUpdate(2);
 				}
 			}
 		}
@@ -302,7 +300,6 @@ public class ReloadHandler
 	public float getReloadProgress(float partialTicks)
 	{
 		return (float) Mth.lerp(partialTicks, this.prevReloadTimer, this.reloadTimer);
-		//return (this.prevReloadTimer + (this.reloadTimer - this.prevReloadTimer) * partialTicks) / 5;
 	}
 	
 	public boolean doReloadStartAnimation()

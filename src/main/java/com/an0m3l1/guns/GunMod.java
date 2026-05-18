@@ -145,6 +145,7 @@ public class GunMod
 			FrameworkAPI.registerSyncedDataKey(ModSyncedDataKeys.RELOADING);
 			FrameworkAPI.registerSyncedDataKey(ModSyncedDataKeys.SHOOTING);
 			FrameworkAPI.registerSyncedDataKey(ModSyncedDataKeys.SWITCHTIME);
+			FrameworkAPI.registerSyncedDataKey(ModSyncedDataKeys.MAGLOADED);
 			FrameworkAPI.registerLoginData(new ResourceLocation(GunMod.MOD_ID, "network_gun_manager"), NetworkGunManager.LoginData::new);
 			FrameworkAPI.registerLoginData(new ResourceLocation(GunMod.MOD_ID, "custom_gun_manager"), CustomGunManager.LoginData::new);
 			CraftingHelper.register(new ResourceLocation(GunMod.MOD_ID, "workbench_ingredient"), WorkbenchIngredient.Serializer.INSTANCE);

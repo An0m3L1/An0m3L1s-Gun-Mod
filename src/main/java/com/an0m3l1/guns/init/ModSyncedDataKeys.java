@@ -25,4 +25,6 @@ public class ModSyncedDataKeys
 	public static final SyncedDataKey<Player, Boolean> SHOOTING = SyncedDataKey.builder(SyncedClassKey.PLAYER, Serializers.BOOLEAN).id(new ResourceLocation(GunMod.MOD_ID, "shooting")).defaultValueSupplier(() -> false).resetOnDeath().build();
 	
 	public static final SyncedDataKey<Player, Integer> SWITCHTIME = SyncedDataKey.builder(SyncedClassKey.PLAYER, Serializers.INTEGER).id(new ResourceLocation(GunMod.MOD_ID, "switchtime")).defaultValueSupplier(() -> 0).resetOnDeath().build();
+	
+	public static final SyncedDataKey<Player, Boolean> MAGLOADED = SyncedDataKey.builder(SyncedClassKey.PLAYER, Serializers.BOOLEAN).id(new ResourceLocation(GunMod.MOD_ID, "magloaded")).defaultValueSupplier(() -> false).resetOnDeath().build();
 }

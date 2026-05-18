@@ -29,7 +29,6 @@ Return coloring weapons (if a weapon has a dye applied to it, change the texture
 Improve explosion VFX
 Improve mod integration checks
 Make hemp crops 2 blocks tall
-Add reload from empty tooltip
 Overhaul gun logic:
     - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
     - Overhaul block hit code to use raytracing
