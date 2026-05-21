@@ -26,10 +26,10 @@ public class SpreadTracker
 	private static final Map<Player, SpreadTracker> TRACKER_MAP = new WeakHashMap<>();
 	private final Map<GunItem, Pair<MutableLong, MutableInt>> SPREAD_TRACKER_MAP = new HashMap<>();
 	
-	private int getMinCount(int minCount, Player player)
+	private int getMinCount(int maxCount, Player player)
 	{
 		boolean isPenaltyActive = GunConfig.COMMON.doSpreadPenalties.get() && (player.isSprinting() || !player.isOnGround());
-		return isPenaltyActive ? Math.round(minCount * 0.5F) : 0;
+		return isPenaltyActive ? Math.round(maxCount * 0.5F) : 0;
 	}
 	
 	public void update(Player player, GunItem item)

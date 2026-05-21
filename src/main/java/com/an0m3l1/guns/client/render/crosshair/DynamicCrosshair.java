@@ -91,13 +91,24 @@ public class DynamicCrosshair extends Crosshair
 		
 		float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
 		float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
-		minSpread = (modifiedGun.getGeneral().getRestingSpread() > 0.0F ? minSpread : (modifiedGun.getGeneral().getAlwaysSpread() ? baseSpread : 0.0F));
+		boolean isAlwaysSpread = modifiedGun.getGeneral().getAlwaysSpread();
+		
+		if(modifiedGun.getGeneral().getRestingSpread() == 0.0F)
+		{
+			if(isAlwaysSpread)
+			{
+				minSpread = baseSpread;
+			}
+			else
+			{
+				minSpread = 0.0F;
+			}
+		}
 		
 		float smoothPenaltyDisplay = Mth.lerp(partialTicks, this.prevSmoothPenaltyDisplay, this.smoothPenaltyDisplay);
-		boolean alwaysSpread = modifiedGun.getGeneral().getAlwaysSpread();
-		
 		float visualMinSpread;
-		if(alwaysSpread)
+		
+		if(isAlwaysSpread)
 		{
 			visualMinSpread = minSpread;
 		}

@@ -109,43 +109,36 @@ public class ReloadHandler
 		}
 		
 		ItemStack stack = player.getMainHandItem();
-		
-		if(KeyBinds.KEY_RELOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player))
+		if(stack.getItem() instanceof GunItem)
 		{
-			if((reloadTimer <= 0 || reloadTimer >= 1) && stack.getItem() instanceof GunItem)
+			if(KeyBinds.KEY_RELOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && !PlayerReviveHelper.isBleeding(player))
 			{
-				CompoundTag tag = stack.getTag();
-				if(tag != null && !tag.contains("IgnoreAmmo", Tag.TAG_BYTE))
+				if((reloadTimer <= 0 || reloadTimer >= 1))
 				{
-					Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-					int currentAmmo = tag.getInt("AmmoCount");
-					int maxAmmo = GunCompositeStatHelper.getAmmoCapacity(stack, gun);
-					if(currentAmmo < maxAmmo)
+					CompoundTag tag = stack.getTag();
+					if(tag != null && !tag.contains("IgnoreAmmo", Tag.TAG_BYTE))
 					{
-						boolean isReloading = ModSyncedDataKeys.RELOADING.getValue(player);
-						if(isReloading && ModSyncedDataKeys.MAGLOADED.getValue(player))
+						Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
+						int currentAmmo = tag.getInt("AmmoCount");
+						int maxAmmo = GunCompositeStatHelper.getAmmoCapacity(stack, gun);
+						if(currentAmmo < maxAmmo)
 						{
-							return;
+							boolean isReloading = ModSyncedDataKeys.RELOADING.getValue(player);
+							if(isReloading && ModSyncedDataKeys.MAGLOADED.getValue(player))
+							{
+								return;
+							}
+							this.setReloading(!isReloading, true);
 						}
-						this.setReloading(!isReloading, true);
 					}
 				}
-			}
-			if(stack.getItem() instanceof GunItem)
-			{
 				GunRenderingHandler.get().updateReserveAmmo(player);
 			}
-		}
-		if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0 && !PlayerReviveHelper.isBleeding(player))
-		{
-			if(stack.getItem() instanceof GunItem && Gun.hasAmmo(stack))
+			if(KeyBinds.KEY_UNLOAD.consumeClick() && event.getAction() == GLFW.GLFW_PRESS && reloadTimer <= 0 && ModSyncedDataKeys.SWITCHTIME.getValue(player) == 0 && !PlayerReviveHelper.isBleeding(player) && Gun.hasAmmo(stack))
 			{
 				this.setReloading(false, true);
 				PacketHandler.getPlayChannel().sendToServer(new C2SMessageUnload(false));
-				if(stack.getItem() instanceof GunItem)
-				{
-					GunRenderingHandler.get().stageReserveAmmoUpdate(2);
-				}
+				GunRenderingHandler.get().stageReserveAmmoUpdate(2);
 			}
 		}
 	}
