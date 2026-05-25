@@ -130,11 +130,6 @@ public class DynamicCrosshair extends Crosshair
 	@Override
 	public void render(Minecraft mc, PoseStack stack, int windowWidth, int windowHeight, float partialTicks)
 	{
-		if(disableSniperCrosshair(mc))
-		{
-			return;
-		}
-		
 		float alpha = 1.0F;
 		float size1 = 7.0F;
 		float size2 = 1.0F;
@@ -168,19 +163,18 @@ public class DynamicCrosshair extends Crosshair
 				}
 				else
 				{
-					isAtMinSpread = (currentSpread == 0.0F && spread <= GunConfig.CLIENT.dynamicCrosshairDotThreshold.get());
+					isAtMinSpread = currentSpread == 0.0F;
 				}
 				
-				renderDot = (dotRenderMode == DotRenderMode.ALWAYS) || (dotRenderMode == DotRenderMode.AT_MIN_SPREAD && isAtMinSpread) || (dotRenderMode == DotRenderMode.THRESHOLD && spread <= GunConfig.CLIENT.dynamicCrosshairDotThreshold.get()) && (!GunConfig.CLIENT.onlyRenderDotWhileAiming.get() || aiming > 0.9F);
+				renderDot = (dotRenderMode == DotRenderMode.ALWAYS) || (dotRenderMode == DotRenderMode.AT_MIN_SPREAD && isAtMinSpread) && (!GunConfig.CLIENT.onlyRenderDotWhileAiming.get() || aiming > 0.9F);
 			}
 		}
 		
 		double windowCenteredX = Math.round((windowWidth) / 2.0F) - 0.5;
 		double windowCenteredY = Math.round((windowHeight) / 2.0F) - 0.5;
 		
-		boolean blend = GunConfig.CLIENT.blendCrosshair.get();
 		RenderSystem.enableBlend();
-		if(blend)
+		if(GunConfig.CLIENT.blendCrosshair.get())
 		{
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		}
@@ -227,7 +221,7 @@ public class DynamicCrosshair extends Crosshair
 		}
 		
 		// Center dot
-		if(renderDot)
+		if(renderDot && !multishot)
 		{
 			stack.pushPose();
 			{

@@ -1,14 +1,10 @@
 package com.an0m3l1.guns.client.render.crosshair;
 
-import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.client.handler.CrosshairHandler;
-import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.interfaces.IResourceLocation;
-import com.an0m3l1.guns.item.GunItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 
 /**
  * Author: MrCrayfish
@@ -85,29 +81,6 @@ public abstract class Crosshair implements IResourceLocation
 	public final boolean isDefault()
 	{
 		return this == DEFAULT;
-	}
-	
-	/**
-	 * Checks if rendering crosshairs for sniper weapons is disabled.
-	 *
-	 * @param mc
-	 * 		a minecraft instance
-	 *
-	 * @return true if held gun is a sniper and corresponding config is enabled
-	 */
-	protected boolean disableSniperCrosshair(Minecraft mc)
-	{
-		if(mc.player == null)
-		{
-			return false;
-		}
-		ItemStack heldItem = mc.player.getMainHandItem();
-		if(heldItem.getItem() instanceof GunItem gunItem)
-		{
-			Gun modifiedGun = gunItem.getModifiedGun(heldItem);
-			return modifiedGun.getGeneral().getUseSniperSpread() && GunConfig.CLIENT.noCrosshairForSnipers.get();
-		}
-		return false;
 	}
 	
 	/**

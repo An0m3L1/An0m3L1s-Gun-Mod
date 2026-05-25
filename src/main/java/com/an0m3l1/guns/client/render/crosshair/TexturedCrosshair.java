@@ -50,11 +50,6 @@ public class TexturedCrosshair extends Crosshair
 	@Override
 	public void render(Minecraft mc, PoseStack stack, int windowWidth, int windowHeight, float partialTicks)
 	{
-		if(disableSniperCrosshair(mc))
-		{
-			return;
-		}
-		
 		stack.pushPose();
 		
 		float alpha = 1.0F;// - (float) AimingHandler.get().getNormalisedAdsProgress();

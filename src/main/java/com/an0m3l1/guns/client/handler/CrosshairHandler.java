@@ -3,6 +3,7 @@ package com.an0m3l1.guns.client.handler;
 import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;
 import com.an0m3l1.guns.client.render.crosshair.*;
+import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.compat.ShoulderSurfingHelper;
 import com.an0m3l1.guns.event.GunFireEvent;
 import com.an0m3l1.guns.item.GunItem;
@@ -125,10 +126,13 @@ public class CrosshairHandler
 		}
 		
 		ItemStack heldItem = mc.player.getMainHandItem();
-		if(!(heldItem.getItem() instanceof GunItem))
+		Gun modifiedGun;
+		if(!(heldItem.getItem() instanceof GunItem gunItem))
 		{
 			return;
 		}
+		
+		modifiedGun = gunItem.getModifiedGun(heldItem);
 		
 		PoseStack stack = event.getPoseStack();
 		stack.pushPose();
@@ -143,6 +147,12 @@ public class CrosshairHandler
 		
 		Crosshair crosshair = this.getCurrentCrosshair();
 		if(AimingHandler.get().getNormalisedAdsProgress() > 0.5 && (mc.options.getCameraType().isFirstPerson()))
+		{
+			event.setCanceled(true);
+			return;
+		}
+		
+		if(modifiedGun.getGeneral().getUseSniperSpread() && GunConfig.CLIENT.noCrosshairForSnipers.get())
 		{
 			event.setCanceled(true);
 			return;

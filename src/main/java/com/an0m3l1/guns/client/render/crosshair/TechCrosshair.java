@@ -49,11 +49,6 @@ public class TechCrosshair extends Crosshair
 	@Override
 	public void render(Minecraft mc, PoseStack stack, int windowWidth, int windowHeight, float partialTicks)
 	{
-		if(disableSniperCrosshair(mc))
-		{
-			return;
-		}
-		
 		float alpha = 1.0F;// - (float) AimingHandler.get().getNormalisedAdsProgress();
 		float size = 8.0F;
 		

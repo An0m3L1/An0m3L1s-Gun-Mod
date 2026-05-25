@@ -208,7 +208,14 @@ public class GunItem extends Item implements IColored, IMeta
 			{
 				if(maxPierceCount > 0)
 				{
-					tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".penetration_power", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxPierceCount)).withStyle(ChatFormatting.GRAY));
+					if(projectileAmount >= 2)
+					{
+						tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".penetration_power", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format((long) maxPierceCount * projectileAmount) + ChatFormatting.GRAY + " (" + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxPierceCount) + "*" + projectileAmount + ")").withStyle(ChatFormatting.GRAY));
+					}
+					else
+					{
+						tooltip.add(Component.translatable("info." + GunMod.MOD_ID + ".penetration_power", ChatFormatting.WHITE + ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(maxPierceCount)).withStyle(ChatFormatting.GRAY));
+					}
 				}
 				if(maxPierceCount == -1)
 				{
