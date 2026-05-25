@@ -24,13 +24,13 @@
 		"extendedMagAmmo": 50,
 		
 		"useMagReload": true,
-		"magReloadTime": 40,
-		"magReloadFromEmptyTime": 40,
-		"lightMagReloadTimeModifier": 0.85,
-		"extendedMagReloadTimeModifier": 1.15,
+		"magReloadTime": 33,
+		"magReloadFromEmptyTime": 44,
+		"lightMagReloadTimeModifier": 0.9,
+		"extendedMagReloadTimeModifier": 1.1,
 		
 		"drawTime": 8,
-		"reloadStartDelay": 1,
+		"reloadStartDelay": 2,
 		"reloadInterruptDelay": 6,
 		"reloadEndDelay": 1,
 		"reloadAllowedCooldown": 0.0
@@ -72,7 +72,7 @@
 		"silencedFire": "agm:item.automatic_pistol.silenced_fire",
 		"weaponSelect": "agm:item.draw",
 		
-		"reloadFrames": 29,
+		"reloadFrames": 22,
 		"reloadClipOut": "agm:item.automatic_pistol.mag_out",
 		"reloadClipOutThreshold": 3.5,
 		"reloadLate": "agm:item.automatic_pistol.mag_in",

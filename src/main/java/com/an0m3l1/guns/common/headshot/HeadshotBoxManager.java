@@ -82,7 +82,7 @@ public class HeadshotBoxManager
 						JsonObject json = GSON.fromJson(reader, JsonObject.class);
 						HeadshotBox box = HeadshotBox.fromJson(json);
 						headshotBoxes.put(entityType, box);
-						if(GunConfig.COMMON.showDebugMessages.get())
+						if(GunConfig.COMMON.enableDebug.get())
 						{
 							GunMod.LOGGER.debug("Loaded head box for {} from {}", entityId, jsonLocation);
 						}
@@ -91,7 +91,7 @@ public class HeadshotBoxManager
 			}
 			catch(Exception e)
 			{
-				if(GunConfig.COMMON.showDebugMessages.get())
+				if(GunConfig.COMMON.enableDebug.get())
 				{
 					GunMod.LOGGER.error("Failed to load head box for {} from {}", entityId, jsonLocation, e);
 				}

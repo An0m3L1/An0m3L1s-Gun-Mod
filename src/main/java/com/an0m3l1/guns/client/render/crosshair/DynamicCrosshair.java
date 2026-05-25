@@ -35,6 +35,10 @@ public class DynamicCrosshair extends Crosshair
 	private float prevSmoothPenaltyDisplay = 0.0F;
 	private boolean lastPenaltyState = false;
 	
+	public static float currentCrosshairSpread = 0.0F;
+	public static float currentFinalSpreadTranslate = 0.0F;
+	public static float currentScaleSize = 0.0F;
+	
 	public DynamicCrosshair()
 	{
 		super(new ResourceLocation(GunMod.MOD_ID, "dynamic"));
@@ -86,8 +90,8 @@ public class DynamicCrosshair extends Crosshair
 	
 	private float calculateSpread(SpreadTracker spreadTracker, ItemStack heldItem, GunItem gunItem, Gun modifiedGun, float aiming, float currentSpread, float partialTicks)
 	{
-		float nextSpreadIncrement = (GunConfig.COMMON.doSpreadPenalties.get() ? 1.0F + aiming : 1.0F) / (float) GunConfig.COMMON.maxCount.get();
-		float spreadModifier = (currentSpread + nextSpreadIncrement) * Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom), 1.0F);
+		float rawProgress = Math.min(currentSpread + (GunConfig.COMMON.doSpreadPenalties.get() ? 1.0F + aiming : 1.0F) / (float) GunConfig.COMMON.maxCount.get(), 1.0F);
+		float spreadModifier = rawProgress * Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom), 1.0F);
 		
 		float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
 		float minSpread = GunCompositeStatHelper.getCompositeMinSpread(heldItem, modifiedGun);
@@ -114,7 +118,7 @@ public class DynamicCrosshair extends Crosshair
 		}
 		else
 		{
-			float penaltyMinSpread = baseSpread * 0.5F;
+			float penaltyMinSpread = (baseSpread - minSpread) * 0.5F;
 			float currentPenaltyMinSpread = penaltyMinSpread * smoothPenaltyDisplay;
 			visualMinSpread = Math.min(minSpread + currentPenaltyMinSpread, baseSpread);
 		}
@@ -182,12 +186,16 @@ public class DynamicCrosshair extends Crosshair
 		}
 		
 		// Common spread calculation
-		float scaleMultiplier = (float) (GunConfig.CLIENT.dynamicCrosshairReactivity.get() * 1.0F);
-		float baseScale = 1.0F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * scaleMultiplier);
-		float scale = (float) (baseScale + (spread * (2.0F * GunConfig.CLIENT.dynamicCrosshairSpreadMultiplier.get())));
+		float baseScale = 1.0F + (Mth.lerp(partialTicks, this.prevScale, this.scale) * 2.0F);
+		float scale = baseScale + (spread * 2.0F);
 		float scaleSize = (scale / 6.0F) + 1.15F;
-		float crosshairBaseTightness = (float) (0.8 - (GunConfig.CLIENT.dynamicCrosshairBaseSpread.get() / 2.0F));
+		float crosshairBaseTightness = 0.3F;
 		float finalSpreadTranslate = (float) ((Mth.lerp(0.95, scaleSize - 1.0F, Math.log(scaleSize))) * (2.8F));
+		
+		// Values used for debugging
+		currentCrosshairSpread = spread;
+		currentFinalSpreadTranslate = finalSpreadTranslate;
+		currentScaleSize = scaleSize;
 		
 		// Offsets for shotgun crosshair
 		float rawOffset = (size1 / 2.0F + finalSpreadTranslate - crosshairBaseTightness) * 0.5F;

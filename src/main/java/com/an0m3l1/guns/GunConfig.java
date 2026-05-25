@@ -18,8 +18,6 @@ public class GunConfig
 	{
 		/* Crosshair */
 		public final ForgeConfigSpec.ConfigValue<String> crosshair;
-		public final ForgeConfigSpec.DoubleValue dynamicCrosshairBaseSpread;
-		public final ForgeConfigSpec.DoubleValue dynamicCrosshairSpreadMultiplier;
 		public final ForgeConfigSpec.DoubleValue dynamicCrosshairReactivity;
 		public final ForgeConfigSpec.EnumValue<DotRenderMode> dynamicCrosshairDotMode;
 		public final ForgeConfigSpec.BooleanValue onlyRenderDotWhileAiming;
@@ -73,8 +71,6 @@ public class GunConfig
 			builder.push("crosshair");
 			{
 				this.crosshair = builder.comment("A custom crosshair to use for weapons. Available options: arrow, better_default, box, circle, dot, dynamic, filled_circle, hit_marker, line, round, smiley, square, t, tech.").define("crosshair", GunMod.MOD_ID + ":dynamic");
-				this.dynamicCrosshairBaseSpread = builder.comment("Resting size of Dynamic Crosshair when spread is zero.").defineInRange("dynamicCrosshairBaseSpread", 1.0, 0, 5);
-				this.dynamicCrosshairSpreadMultiplier = builder.comment("Bloom factor of Dynamic Crosshair when spread increases.").defineInRange("dynamicCrosshairSpreadMultiplier", 1.0, 1.0, 1.5);
 				this.dynamicCrosshairReactivity = builder.comment("How reactive Dynamic Crosshair is to shooting.").defineInRange("dynamicCrosshairReactivity", 2.0, 0, 10);
 				this.dynamicCrosshairDotMode = builder.comment("Rendering mode used for center dot of Dynamic Crosshair.").defineEnum("dynamicCrosshairDotMode", DotRenderMode.ALWAYS);
 				this.onlyRenderDotWhileAiming = builder.comment("If enabled, center dot of Dynamic Crosshair will only render while aiming. Obeys dynamicCrosshairDotMode, and has no effect when mode is set to Never.").define("onlyRenderDotWhileAiming", true);
@@ -177,7 +173,7 @@ public class GunConfig
 		public final ForgeConfigSpec.DoubleValue knockbackStrength;
 		
 		/* Debug */
-		public final ForgeConfigSpec.BooleanValue showDebugMessages;
+		public final ForgeConfigSpec.BooleanValue enableDebug;
 		
 		public Common(ForgeConfigSpec.Builder builder)
 		{
@@ -225,7 +221,7 @@ public class GunConfig
 				this.enableDurability = builder.comment("If true, weapons will decrease in durability and break.").define("enableDurability", true);
 			}
 			builder.pop();
-			this.showDebugMessages = builder.comment("Enables debug logging. May affect performance negatively.").define("showDebugMessages", false);
+			this.enableDebug = builder.comment("Enables debug functions. May affect performance negatively.").define("enableDebug", false);
 		}
 	}
 	

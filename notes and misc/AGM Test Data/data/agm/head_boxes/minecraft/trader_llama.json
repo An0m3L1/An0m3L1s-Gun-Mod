@@ -1,16 +1,16 @@
 {
-  "child": {
-    "headHeightScale": 0.75,
-    "headWidthScale": 0.75,
-    "xScale": 1.0,
-    "yScale": 0.45,
-    "zScale": 0.5
-  },
-  "general": {
-    "headHeight": 8.0,
-    "headWidth": 8.0,
-    "rotateYaw": true,
-    "y": 26.0,
-    "z": 10.0
-  }
+	"child": {
+		"headHeightScale": 0.75,
+		"headWidthScale": 0.75,
+		"xScale": 1.0,
+		"yScale": 0.45,
+		"zScale": 0.5
+	},
+	"general": {
+		"headHeight": 8.0,
+		"headWidth": 8.0,
+		"rotateYaw": true,
+		"y": 26.0,
+		"z": 10.0
+	}
 }

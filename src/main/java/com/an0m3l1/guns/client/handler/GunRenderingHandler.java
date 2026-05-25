@@ -4,12 +4,14 @@ import com.an0m3l1.guns.GunConfig;
 import com.an0m3l1.guns.GunMod;
 import com.an0m3l1.guns.client.GunModel;
 import com.an0m3l1.guns.client.GunRenderType;
+import com.an0m3l1.guns.client.render.crosshair.DynamicCrosshair;
 import com.an0m3l1.guns.client.render.gun.IOverrideModel;
 import com.an0m3l1.guns.client.render.gun.ModelOverrides;
 import com.an0m3l1.guns.client.util.*;
 import com.an0m3l1.guns.common.GripType;
 import com.an0m3l1.guns.common.Gun;
 import com.an0m3l1.guns.common.properties.SightAnimation;
+import com.an0m3l1.guns.entity.ProjectileEntity;
 import com.an0m3l1.guns.event.GunFireEvent;
 import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
@@ -1010,6 +1012,23 @@ public class GunRenderingHandler
 				}
 				
 				GuiComponent.drawString(poseStack, mc.font, reserveAmmoValue, ammoPosX + 5, ammoPosY + 10, color);
+			}
+			
+			int debugPosX = (int) (window.getGuiScaledWidth() * 0.05);
+			int debugPosY = (int) (window.getGuiScaledHeight() * 0.8 - 20);
+			
+			// Debug
+			if(GunConfig.COMMON.enableDebug.get())
+			{
+				String crosshairSpread = String.format("Crosshair Spread: %.2f", DynamicCrosshair.currentCrosshairSpread);
+				String translate = String.format("Crosshair Translate: %.2f", DynamicCrosshair.currentFinalSpreadTranslate);
+				String scaleSize = String.format("Crosshair Scale Size: %.2f", DynamicCrosshair.currentScaleSize);
+				String gunSpread = String.format("Last Gun Spread: %.2f", ProjectileEntity.currentGunSpread);
+				
+				GuiComponent.drawString(poseStack, mc.font, crosshairSpread, debugPosX, debugPosY, 0xFFFFFF);
+				GuiComponent.drawString(poseStack, mc.font, translate, debugPosX, debugPosY + 10, 0xFFFFFF);
+				GuiComponent.drawString(poseStack, mc.font, scaleSize, debugPosX, debugPosY + 20, 0xFFFFFF);
+				GuiComponent.drawString(poseStack, mc.font, gunSpread, debugPosX, debugPosY + 30, 0xFFFFFF);
 			}
 			
 			RenderSystem.disableBlend();

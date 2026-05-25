@@ -30,10 +30,11 @@ Overhaul gun logic:
     - Refactor code in ProjectileEntity to be more coherent and have less repeating logic
     - Overhaul block hit code to use raytracing
     - Make projectiles ignore player owned entities (with a config)
-    - Check sniper spread code to be accurate
+    - Streamline sniper spread calculations
     - Move all projectile logic to according classes
     - Make semi weapons queue shots when firing too quickly
-    - Fix crosshair spread for sniper weapons
+    - Fix crosshair spread calculations for aiming snipers
+    - Improve projectile penetration tooltip (shotguns)
     - Invert aiming while sprinting logic (make it more in line with PlayerHandler)
     - Disable weapon firing while swimming underwater (configure to work same as ADSing underwater, where while holding sprint button you can't ADS, but if you release it you can)
 Overhaul head hitboxes:

@@ -123,7 +123,7 @@ public class ThrowableStunGrenadeEntity extends ThrowableGrenadeEntity
 	private boolean calculateAndApplyEffect(MobEffect effect, EffectCriteria criteria, LivingEntity entity, Vec3 grenade, Vec3 eyes, double distance, double angle)
 	{
 		double angleMax = criteria.angleEffect.get() * 0.5;
-		boolean debug = GunConfig.COMMON.showDebugMessages.get();
+		boolean debug = GunConfig.COMMON.enableDebug.get();
 		
 		if(debug)
 		{
