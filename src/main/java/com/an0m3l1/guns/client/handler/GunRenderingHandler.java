@@ -1021,14 +1021,10 @@ public class GunRenderingHandler
 			if(GunConfig.COMMON.enableDebug.get())
 			{
 				String crosshairSpread = String.format("Crosshair Spread: %.2f", DynamicCrosshair.currentCrosshairSpread);
-				String translate = String.format("Crosshair Translate: %.2f", DynamicCrosshair.currentFinalSpreadTranslate);
-				String scaleSize = String.format("Crosshair Scale Size: %.2f", DynamicCrosshair.currentScaleSize);
-				String gunSpread = String.format("Last Gun Spread: %.2f", ProjectileEntity.currentGunSpread);
+				String lastGunSpread = String.format("Last Gun Spread: %.2f", ProjectileEntity.lastGunSpread);
 				
 				GuiComponent.drawString(poseStack, mc.font, crosshairSpread, debugPosX, debugPosY, 0xFFFFFF);
-				GuiComponent.drawString(poseStack, mc.font, translate, debugPosX, debugPosY + 10, 0xFFFFFF);
-				GuiComponent.drawString(poseStack, mc.font, scaleSize, debugPosX, debugPosY + 20, 0xFFFFFF);
-				GuiComponent.drawString(poseStack, mc.font, gunSpread, debugPosX, debugPosY + 30, 0xFFFFFF);
+				GuiComponent.drawString(poseStack, mc.font, lastGunSpread, debugPosX, debugPosY + 10, 0xFFFFFF);
 			}
 			
 			RenderSystem.disableBlend();

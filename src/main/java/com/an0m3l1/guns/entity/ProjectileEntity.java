@@ -119,7 +119,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 	public final int explosionLightLife = 6;
 	protected int ticksToSkip = 0;
 	protected final Set<UUID> hitEntities = new HashSet<>();
-	public static float currentGunSpread = 0.0F;
+	public static float lastGunSpread = 0.0F;
 	
 	public ProjectileEntity(EntityType<? extends Entity> entityType, Level worldIn)
 	{
@@ -229,7 +229,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 		}
 		
 		// Values used for debugging
-		currentGunSpread = gunSpread;
+		lastGunSpread = gunSpread;
 		
 		// New spread vector code provided by Poly-1810 and used with permission.
 		// This fix was figured out by unze2unze4 and implemented by Poly into their CGM Refined fork.

@@ -4,14 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="---&#10;&#10;Updated recoil animation for assault rifles.&#10;Updated automatic pistol.">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/GunConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/DotRenderMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/DotRenderMode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/handler/CrosshairHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/handler/CrosshairHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/Crosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/Crosshair.java" afterDir="false" />
+    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="Small tweaks.&#10;&#10;Reverted automatic pistol GUI model changes.&#10;Removed some debug HUD elements.&#10;Updated test resources.">
+      <change afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/minecraft/textures/item/iron_nugget.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/assault_rifle.cgmanim" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/assault_rifle.cgmanim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/automatic_pistol.cgmanim" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/automatic_pistol.cgmanim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/combat_rifle.cgmanim" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/combat_rifle.cgmanim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/tactical_rifle.cgmanim" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/animations/tactical_rifle.cgmanim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/item/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/base.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/base.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/body.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/body.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/body_colored.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/automatic_pistol/body_colored.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/z_gun/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/models/special/z_gun/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol.png" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol_colored.png" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Resources/assets/agm/textures/item/automatic_pistol_colored.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/handler/GunRenderingHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/handler/GunRenderingHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/TechCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/TechCrosshair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/TexturedCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/TexturedCrosshair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/z_gun/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/z_gun/automatic_pistol.json" afterDir="false" />
     </list>
     <list id="e22d67f2-48d1-4a82-bc4a-3d7fb8628620" name="Local" comment="Local" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,67 +130,67 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [downloadAssets].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [downloadMCMeta].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [downloadMcpConfig].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [generateModInfo].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [init].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [jarJarRelease].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.An0m3L1s-Gun-Mod [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build Mod.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/An0m3L1/Documents/GitHub/CGM-plus [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [genIntellijRuns].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [prepareRunClientKanye].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [runClient --warning-mode'none'].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.CGM-plus [runClient].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Client An0m3L1.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Client Dev.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Client Kanye.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Generate Data.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Generate Head Data.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Kanye West.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Kanye.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Run Kanye.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Run Minecraft 2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Run Minecraft.executor&quot;: &quot;Run&quot;,
-    &quot;JavaClassFindUsagesOptions.isSearchForTextOccurrences&quot;: &quot;false&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-Build sync orphan modules&quot;: &quot;Modules no longer referenced by external system&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-gradle.notifications.sources.download.failed&quot;: &quot;Sources download failed&quot;,
-    &quot;Notification.DoNotAsk-Build sync orphan modules&quot;: &quot;true&quot;,
-    &quot;Notification.DoNotAsk-gradle.notifications.sources.download.failed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/run/saves/Debug/datapacks&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3411514&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Gradle.An0m3L1s-Gun-Mod [createMcpToSrg].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [dependencies].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [downloadAssets].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [downloadMCMeta].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [downloadMcpConfig].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [generateModInfo].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [init].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [jarJarRelease].executor": "Run",
+    "Gradle.An0m3L1s-Gun-Mod [jar].executor": "Run",
+    "Gradle.Build Mod.executor": "Run",
+    "Gradle.Build.executor": "Run",
+    "Gradle.C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod [createMcpToSrg].executor": "Run",
+    "Gradle.C:/Users/An0m3L1/Documents/GitHub/CGM-plus [createMcpToSrg].executor": "Run",
+    "Gradle.CGM-plus [build].executor": "Run",
+    "Gradle.CGM-plus [createMcpToSrg].executor": "Run",
+    "Gradle.CGM-plus [genIntellijRuns].executor": "Run",
+    "Gradle.CGM-plus [prepareRunClientKanye].executor": "Run",
+    "Gradle.CGM-plus [runClient --warning-mode'none'].executor": "Run",
+    "Gradle.CGM-plus [runClient].executor": "Run",
+    "Gradle.Client An0m3L1.executor": "Run",
+    "Gradle.Client Dev.executor": "Run",
+    "Gradle.Client Kanye.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.Generate Data.executor": "Run",
+    "Gradle.Generate Head Data.executor": "Run",
+    "Gradle.Kanye West.executor": "Run",
+    "Gradle.Kanye.executor": "Run",
+    "Gradle.Run Kanye.executor": "Run",
+    "Gradle.Run Minecraft 2.executor": "Run",
+    "Gradle.Run Minecraft.executor": "Run",
+    "JavaClassFindUsagesOptions.isSearchForTextOccurrences": "false",
+    "Notification.DisplayName-DoNotAsk-Build sync orphan modules": "Modules no longer referenced by external system",
+    "Notification.DisplayName-DoNotAsk-gradle.notifications.sources.download.failed": "Sources download failed",
+    "Notification.DoNotAsk-Build sync orphan modules": "true",
+    "Notification.DoNotAsk-gradle.notifications.sources.download.failed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/notes and misc/AGM Test Resources",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3411514",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "settings.sync"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Resources" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves\Debug\datapacks" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Data\data" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves\Debug world\datapacks" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc" />
@@ -213,9 +224,9 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Gradle.Client Dev (offline)" />
       <item itemvalue="Gradle.Client An0m3L1" />
       <item itemvalue="Gradle.Generate Head Data" />
+      <item itemvalue="Gradle.Client Dev (offline)" />
       <item itemvalue="Gradle.Build" />
     </list>
   </component>

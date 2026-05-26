@@ -36,8 +36,6 @@ public class DynamicCrosshair extends Crosshair
 	private boolean lastPenaltyState = false;
 	
 	public static float currentCrosshairSpread = 0.0F;
-	public static float currentFinalSpreadTranslate = 0.0F;
-	public static float currentScaleSize = 0.0F;
 	
 	public DynamicCrosshair()
 	{
@@ -188,8 +186,6 @@ public class DynamicCrosshair extends Crosshair
 		
 		// Values used for debugging
 		currentCrosshairSpread = spread;
-		currentFinalSpreadTranslate = finalSpreadTranslate;
-		currentScaleSize = scaleSize;
 		
 		// Offsets for shotgun crosshair
 		float rawOffset = (size1 / 2.0F + finalSpreadTranslate - crosshairBaseTightness) * 0.5F;
