@@ -215,10 +215,18 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 				
 				if(this.general.getUseSniperSpread())
 				{
-					// For sniper spread reduce only the minSpread value
-					float aimingMinSpread = minSpread * (1.0F - this.general.getSpreadAdsReduction());
-					float aimingInitialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter).getSpread((Player) shooter, item), aimingMinSpread, gunSpread);
-					gunSpread = Mth.lerp(aimPosition, initialGunSpread, aimingInitialGunSpread);
+					if(GunConfig.COMMON.doSpreadPenalties.get() && (shooter.isSprinting() || !shooter.isOnGround()))
+					{
+						// No aiming bonus while penalized
+						gunSpread = initialGunSpread;
+					}
+					else
+					{
+						// Reduce only the minSpread value
+						float aimingMinSpread = minSpread * (1.0F - this.general.getSpreadAdsReduction());
+						float aimingInitialGunSpread = Mth.lerp(SpreadTracker.get((Player) shooter).getSpread((Player) shooter, item), aimingMinSpread, gunSpread);
+						gunSpread = Mth.lerp(aimPosition, initialGunSpread, aimingInitialGunSpread);
+					}
 				}
 				else
 				{

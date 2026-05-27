@@ -30,7 +30,6 @@ Overhaul gun logic:
     - Overhaul block hit code to use raytracing
     - Make projectiles ignore player owned entities (with a config)
     - Make semi weapons queue shots when firing too quickly
-    - Fix crosshair spread calculations for aiming snipers
     - Invert aiming while sprinting logic (make it more in line with PlayerHandler)
     - Disable weapon firing while swimming underwater (configure to work same as ADSing underwater, where while holding sprint button you can't ADS, but if you release it you can)
 Overhaul head hitboxes:

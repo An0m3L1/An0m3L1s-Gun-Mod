@@ -88,7 +88,7 @@ public class DynamicCrosshair extends Crosshair
 	
 	private float calculateSpread(SpreadTracker spreadTracker, ItemStack heldItem, GunItem gunItem, Gun modifiedGun, float aiming, float currentSpread, float partialTicks)
 	{
-		float rawProgress = Math.min(currentSpread + (GunConfig.COMMON.doSpreadPenalties.get() ? 1.0F + aiming : 1.0F) / (float) GunConfig.COMMON.maxCount.get(), 1.0F);
+		float rawProgress = Math.min(currentSpread + 1.0F / (float) GunConfig.COMMON.maxCount.get(), 1.0F);
 		float spreadModifier = rawProgress * Math.min(Mth.lerp(partialTicks, this.prevFireBloom, this.fireBloom), 1.0F);
 		
 		float baseSpread = GunCompositeStatHelper.getCompositeSpread(heldItem, modifiedGun);
@@ -121,7 +121,17 @@ public class DynamicCrosshair extends Crosshair
 			visualMinSpread = Math.min(minSpread + currentPenaltyMinSpread, baseSpread);
 		}
 		
-		float aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction());
+		float aimingSpreadMultiplier;
+		if(modifiedGun.getGeneral().getUseSniperSpread())
+		{
+			float adsReduction = modifiedGun.getGeneral().getSpreadAdsReduction();
+			float effectiveReduction = adsReduction * (1.0F - smoothPenaltyDisplay);
+			aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - effectiveReduction);
+		}
+		else
+		{
+			aimingSpreadMultiplier = Mth.lerp(aiming, 1.0F, 1.0F - modifiedGun.getGeneral().getSpreadAdsReduction());
+		}
 		return Math.max(Mth.lerp(spreadModifier, visualMinSpread, baseSpread) * aimingSpreadMultiplier, 0.0F);
 	}
 	
