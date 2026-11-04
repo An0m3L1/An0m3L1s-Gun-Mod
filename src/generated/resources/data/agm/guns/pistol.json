@@ -36,9 +36,7 @@
 	},
 	"modules": {
 		"attachments": {
-			"barrel": {
-				"scale": 0.5
-			},
+			"barrel": {},
 			"magazine": {}
 		},
 		"zoom": {

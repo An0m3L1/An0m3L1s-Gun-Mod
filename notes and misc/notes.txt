@@ -26,6 +26,7 @@ Overhaul repair kit recipe
 Improve explosion VFX
 Improve mod integration checks
 Make hemp crops 2 blocks tall
+Fix sound bug when clicking empty attachment slots
 Overhaul gun logic:
     - Overhaul block hit code to use raytracing
     - Make projectiles ignore player owned entities (with a config)
@@ -45,6 +46,9 @@ Complete hardness tag lists:
     - Medium (planks, logs, iron doors, iron trapdoors, iron bars)
     - High (stone bricks, walls)
 Port animation changes from CGM Expander
+Optimize textures:
+    - Combine attachment textures
+    - Combine common weapon textures into a single common file
 
 New Content
 
@@ -58,8 +62,11 @@ Add automatic turrets (check scorched guns)
 Add folding and moving targets
 Add StatTrack module
 Add custom dye items
-Add paint remover item (removes "Color" tag from items)
-Add special message to headshot kills
+Add cosmetic gun workbench:
+    - Remove applied paint
+    - Select paint presets (FDE, Olive, etc.)
+    - Choose between cosmetic variants of handguards, grips, receivers etc.
+Add special message for headshot kills
 Add ammo pouch curio items:
     - Make guns get ammo from pouches (findAmmo, getReserveAmmoCount in Gun)
 Add custom backpacks
@@ -73,3 +80,6 @@ Add potion effects:
 Add configs:
     - Choose between hold or toggle mode for aiming
     - Add ammo HUD position presets
+
+Decimal color codes
+FDE - 12956570

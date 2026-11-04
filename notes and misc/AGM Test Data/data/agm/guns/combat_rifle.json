@@ -80,10 +80,10 @@
 		
 		"reloadFrames": 70,
 		"reloadClipOut": "agm:item.assault_rifle.mag_out",
-		"reloadClipOutThreshold": 10,
+		"reloadClipOutThreshold": 8,
 		"reloadClipIn": "agm:item.assault_rifle.mag_in",
-		"reloadClipInThreshold": 32,
+		"reloadClipInThreshold": 30,
 		"reloadLate": "agm:item.assault_rifle.slap",
-		"reloadLateThreshold": 52
+		"reloadLateThreshold": 50
 	}
 }

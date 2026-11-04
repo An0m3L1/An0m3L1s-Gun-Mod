@@ -30,7 +30,7 @@
 		"extendedMagReloadTimeModifier": 1.1,
 		
 		"drawTime": 8,
-		"reloadStartDelay": 2,
+		"reloadStartDelay": 0,
 		"reloadInterruptDelay": 6,
 		"reloadEndDelay": 1,
 		"reloadAllowedCooldown": 0.0
@@ -38,7 +38,7 @@
 	"modules": {
 		"attachments": {
 			"barrel": {
-				"scale": 0.5335
+				"scale": 1.067
 			},
 			"scope": {},
 			"magazine": {}

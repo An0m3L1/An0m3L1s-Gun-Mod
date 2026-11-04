@@ -38,7 +38,7 @@
 	"modules": {
 		"attachments": {
 			"barrel": {
-				"scale": 0.6
+				"scale": 1.2
 			},
 			"scope": {},
 			"magazine": {},

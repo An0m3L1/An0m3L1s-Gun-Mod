@@ -4,11 +4,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="Small tweaks.&#10;&#10;Reverted automatic pistol GUI model changes.&#10;Removed some debug HUD elements.&#10;Updated test resources.">
+    <list default="true" id="0f653117-e108-4ce8-ba99-c7c5a06c5e00" name="Changes" comment="Attachment visual update.&#10;&#10;Tweaked reload sound timings for AR guns.&#10;Overhauled grips and barrel attachments.&#10;Removed unused thumb grip.&#10;Fixed automatic pistol mag textures.">
+      <change afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/example/example.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/grips.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/assault_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/assault_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/combat_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/combat_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/tactical_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/guns/tactical_rifle.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notes and misc/notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/notes.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/client/render/crosshair/DynamicCrosshair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/entity/ProjectileEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/assault_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/assault_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/combat_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/combat_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/sniper_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/sniper_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/tactical_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/tactical_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/tactical_rifle.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/generated/resources/data/agm/guns/tactical_rifle.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/generated/resources/data/agm/head_boxes/create/villager.json" beforeDir="false" afterPath="$PROJECT_DIR$/notes and misc/AGM Test Data/data/agm/head_boxes/example/example.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/init/ModItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/an0m3l1/guns/init/ModItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/lang/ru_ru.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/lang/ru_ru.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/angled_grip.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/angled_grip.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/compensator.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/compensator.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/compensator.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/compensator.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/flash_hider.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/flash_hider.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/flash_hider.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/flash_hider.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/heavy_silencer.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/heavy_silencer.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/heavy_silencer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/heavy_silencer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/horizontal_grip.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/horizontal_grip.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/muzzle_brake.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/muzzle_brake.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/muzzle_brake.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/muzzle_brake.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/silencer.cgmmeta" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/silencer.cgmmeta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/silencer.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/silencer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/thumb_grip.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/vertical_grip.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/item/vertical_grip.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/ext_mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/ext_mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/light_mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/light_mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/mag.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/automatic_pistol/mag.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/z_gun/automatic_pistol.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/models/special/z_gun/automatic_pistol.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/angled_grip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/barrel.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/barrels.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/bullet.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/bullet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/grenade.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/grenade.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/horizontal_grip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/muzzle_brake.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/silencer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/thumb_grip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/agm/textures/item/vertical_grip.png" beforeDir="false" />
     </list>
     <list id="e22d67f2-48d1-4a82-bc4a-3d7fb8628620" name="Local" comment="Local" />
     <option name="SHOW_DIALOG" value="false" />
@@ -162,21 +204,21 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/run/saves/Debug world/datapacks",
+    "last_opened_file_path": "C:/Users/An0m3L1/Documents/GitHub/An0m3L1s-Gun-Mod/run/resourcepacks/AGM Test Resources/assets",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3411514",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "settings.sync"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves\Debug world\datapacks" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Resources" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\saves\Debug\datapacks" />
-      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Data\data" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Test Resources\assets" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\main\resources\assets" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\src\main\resources\assets\agm\models\item" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc\AGM Test Data\data\agm\head_boxes" />
+      <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\run\resourcepacks\AGM Test Resources\assets\agm\models\item" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\An0m3L1\Documents\GitHub\An0m3L1s-Gun-Mod\notes and misc" />
