@@ -8,11 +8,12 @@ Add and overhaul animations:
     - Grenade throw animation (first person)
     - When ammo is empty, slides should lock back/forward
     - Add reload empty animations to all applicable guns
+    - Add normal reload animation to pistol
 Overhaul items:
     - Assault/Tactical/Combat Rifle (overhaul internals)
     - Heavy Sniper Rifle (overhaul internals)
     - Sniper Rifle (overhaul internals)
-    - Tactical Pistol/Pistol (add locking slide and overhaul internals)
+    - Tactical Pistol (add locking slide and overhaul internals)
     - Semi Auto Shotgun (overhaul internals)
     - Grenade Launcher (full overhaul)
     - Rocket Launcher (full overhaul)

@@ -44,9 +44,7 @@
 	},
 	"modules": {
 		"attachments": {
-			"barrel": {
-				"scale": 0.5
-			},
+			"barrel": {},
 			"scope": {},
 			"stock": {},
 			"underBarrel": {},

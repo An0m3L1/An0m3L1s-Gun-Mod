@@ -13,6 +13,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
+import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -30,12 +31,14 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -117,6 +120,25 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 		Minecraft.getInstance().font.draw(poseStack, I18n.get(MATERIALS_KEY), 0, 78, 0x7E7E7E);
 		
 		ItemStack output = recipe.getItem();
+		ItemStack renderStack = output.copy();
+		if(IColored.isDyeable(renderStack))
+		{
+			IColored colored = (IColored) renderStack.getItem();
+			List<IRecipeSlotView> inputSlots = recipeSlotsView.getSlotViews(RecipeIngredientRole.INPUT);
+			if(!inputSlots.isEmpty())
+			{
+				inputSlots.get(0).getDisplayedIngredient(VanillaTypes.ITEM_STACK).filter(dyeStack -> dyeStack.getItem() instanceof DyeItem).ifPresent(dyeStack ->
+				{
+					DyeColor dyeColor = ((DyeItem) dyeStack.getItem()).getDyeColor();
+					float[] components = dyeColor.getTextureDiffuseColors();
+					int red = (int) (components[0] * 255F);
+					int green = (int) (components[1] * 255F);
+					int blue = (int) (components[2] * 255F);
+					colored.setColor(renderStack, ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF));
+				});
+			}
+		}
+		
 		MutableComponent displayName = output.getHoverName().copy();
 		if(output.getCount() > 1)
 		{
@@ -151,11 +173,11 @@ public class WorkbenchCategory implements IRecipeCategory<WorkbenchRecipe>
 			stack.scale(-1, -1, -1);
 			RenderSystem.applyModelViewMatrix();
 			
-			BakedModel model = RenderUtil.getModel(output);
+			BakedModel model = RenderUtil.getModel(renderStack);
 			Lighting.setupFor3DItems();
 			
 			MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-			Minecraft.getInstance().getItemRenderer().render(output, ItemTransforms.TransformType.FIXED, false, new PoseStack(), buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
+			Minecraft.getInstance().getItemRenderer().render(renderStack, ItemTransforms.TransformType.FIXED, false, new PoseStack(), buffer, 15728880, OverlayTexture.NO_OVERLAY, model);
 			buffer.endBatch();
 		}
 		stack.popPose();

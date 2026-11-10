@@ -3,17 +3,21 @@ package com.an0m3l1.guns.client.render.gun.model;
 import com.an0m3l1.guns.GunMod;
 import com.an0m3l1.guns.client.GunModel;
 import com.an0m3l1.guns.client.SpecialModels;
+import com.an0m3l1.guns.client.handler.ReloadHandler;
 import com.an0m3l1.guns.client.render.gun.IOverrideModel;
 import com.an0m3l1.guns.client.util.GunAnimationHelper;
 import com.an0m3l1.guns.client.util.RenderUtil;
 import com.an0m3l1.guns.common.Gun;
+import com.an0m3l1.guns.init.ModSyncedDataKeys;
 import com.an0m3l1.guns.item.GunItem;
 import com.an0m3l1.guns.item.attachment.impl.IAttachment;
+import com.an0m3l1.guns.util.GunCompositeStatHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemCooldowns;
@@ -21,38 +25,61 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 /** Author: An0m3L1 */
 public class PistolModel implements IOverrideModel
 {
 	private boolean disableAnimations = false;
+	private static final Map<ItemStack, Boolean> PREV_SLIDE_LOCKED = new IdentityHashMap<>();
+	private static final Map<ItemStack, Integer> SLIDE_LOCK_TIMER = new IdentityHashMap<>();
 	
 	@Override
-	// This class renders a multipart model that supports animations and removable parts.
-	// We'll render the non-moving/static parts first, then render the animated parts.
-	
-	// We start by declaring our render function that will handle rendering the core baked model (which is a non-moving part).
 	public void render(float partialTicks, ItemTransforms.TransformType transformType, ItemStack stack, ItemStack parent,
 	                   @Nullable
 	                   LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay)
 	{
-		// Render the item's BakedModel, which will serve as the core of our custom model.
-		BakedModel bakedModel = SpecialModels.PISTOL_BASE.getModel();
-		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(bakedModel));
+		BakedModel base = SpecialModels.PISTOL_BASE.getModel();
+		BakedModel slide = SpecialModels.PISTOL_SLIDE.getModel();
 		
-		// Render the top rail element that appears when a scope is attached.
-		// We have to grab the gun's scope attachment slot and check whether it is empty or not.
-		// If the isEmpty function returns false, then we render the attachment rail.
+		GunItem gunStack = (GunItem) stack.getItem();
+		Gun gun = gunStack.getModifiedGun(stack);
+		CompoundTag tag = stack.getTag();
+		boolean ammoIsEmpty = false;
+		boolean ammoIsFull = false;
 		
-		// Special animated segment for compat with the CGM Expanded fork.
-		// First, some variables for animation building
-		Player player = Minecraft.getInstance().player;
-		boolean isPlayer = entity != null && entity.equals(player);
-		boolean isFirstPerson = (transformType.firstPerson());
+		if(tag != null)
+		{
+			int ammoCount = tag.getInt("AmmoCount");
+			int ammoCapacity = GunCompositeStatHelper.getAmmoCapacity(stack);
+			ammoIsEmpty = ammoCount <= 0;
+			ammoIsFull = ammoCount >= ammoCapacity;
+			if(tag.contains("Color"))
+			{
+				base = SpecialModels.PISTOL_BASE_COLORED.getModel();
+				slide = SpecialModels.PISTOL_SLIDE_COLORED.getModel();
+			}
+		}
+		
+		// Render the base model that changes if a gun is colored
+		Minecraft.getInstance().getItemRenderer().render(stack, ItemTransforms.TransformType.NONE, false, poseStack, buffer, light, overlay, GunModel.wrap(base));
+		
+		// Variables for animations
+		boolean isPlayer = entity != null && entity.equals(Minecraft.getInstance().player);
+		boolean isFirstPerson = transformType.firstPerson();
 		boolean correctContext = (transformType.firstPerson() || transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND || transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
+		boolean isMainHand = isPlayer && stack == entity.getMainHandItem();
+		
+		boolean reloading = isMainHand && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
+		boolean reloadFromEmpty = isMainHand && ReloadHandler.get().isReloadFromEmpty();
+		
+		/* Lock the slide if:
+            1. Gun has run out of ammo
+            2. Gun is already loaded, but still playing the reload animation (to properly play animations) */
+		boolean lockSlide = ammoIsEmpty || (reloadFromEmpty && reloading && ammoIsFull);
 		
 		Vec3 slideTranslations = Vec3.ZERO;
-		
 		Vec3 magTranslations = Vec3.ZERO;
 		Vec3 magRotations = Vec3.ZERO;
 		Vec3 magRotOffset = Vec3.ZERO;
@@ -61,8 +88,8 @@ public class PistolModel implements IOverrideModel
 		{
 			try
 			{
+				Player player = (Player) entity;
 				slideTranslations = GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "slide");
-				
 				magTranslations = GunAnimationHelper.getSmartAnimationTrans(stack, player, partialTicks, "magazine");
 				magRotations = GunAnimationHelper.getSmartAnimationRot(stack, player, partialTicks, "magazine");
 				magRotOffset = GunAnimationHelper.getSmartAnimationRotOffset(stack, player, partialTicks, "magazine");
@@ -79,9 +106,7 @@ public class PistolModel implements IOverrideModel
 			}
 		}
 		
-		// Fire animation is done the old way, and added onto the existing animation.
-		GunItem gunStack = (GunItem) stack.getItem();
-		Gun gun = gunStack.getModifiedGun(stack);
+		// Fire animation for slide is rendered both first and third person
 		if(isPlayer && correctContext)
 		{
 			float cooldownDivider = Math.max((float) gun.getGeneral().getRate() / 2F, 1);
@@ -100,21 +125,51 @@ public class PistolModel implements IOverrideModel
 			slideTranslations = slideTranslations.add(0, 0, cooldown_d * 1);
 		}
 		
-		// Pistol slide. This animated part kicks backward on firing, then moves back to its resting position.
+		// Render the slide model that moves back and forth when firing and is locked when gun is emptied
 		poseStack.pushPose();
-		// Apply transformations to this part.
 		if(isPlayer)
 		{
-			poseStack.translate(0, 0, slideTranslations.z * 0.0625);
+			double slideZ = slideTranslations.z;
+			// Special check to render item in workbench as full
+			if(transformType.equals(ItemTransforms.TransformType.FIXED))
+			{
+				slideZ = slideTranslations.z;
+			}
+			else
+			{
+				Player player = (Player) entity;
+				boolean prevEmpty = PREV_SLIDE_LOCKED.getOrDefault(stack, false);
+			
+				/* Lock slide movement for 1 second after lockSlide switches from true to false.
+                This prevents slide jitter when transitioning from reload animation to base state */
+				if(prevEmpty && !lockSlide)
+				{
+					SLIDE_LOCK_TIMER.put(stack, 20);
+				}
+				PREV_SLIDE_LOCKED.put(stack, lockSlide);
+				
+				int transition = SLIDE_LOCK_TIMER.getOrDefault(stack, 0);
+				if(transition > 0)
+				{
+					// Lock the slide
+					slideZ = 0.0;
+					SLIDE_LOCK_TIMER.put(stack, transition - 1);
+				}
+				// Move slide 2 pixels backward
+				else if(lockSlide)
+				{
+					slideZ = slideZ + 1;
+				}
+			}
+			
+			poseStack.translate(0, 0, slideZ * 0.0625);
 		}
-		// Render the transformed model.
-		RenderUtil.renderModel(SpecialModels.PISTOL_SLIDE.getModel(), transformType, null, stack, parent, poseStack, buffer, light, overlay);
-		// Pop pose to compile everything in the render matrix.
+		// Render the slide model that changes if a gun is colored
+		RenderUtil.renderModel(slide, transformType, null, stack, parent, poseStack, buffer, light, overlay);
 		poseStack.popPose();
 		
-		// Magazine for Pistol
+		// Render the magazine model
 		poseStack.pushPose();
-		// Apply transformations to this part.
 		if(isPlayer && isFirstPerson && !disableAnimations)
 		{
 			if(magTranslations != Vec3.ZERO)
@@ -126,10 +181,10 @@ public class PistolModel implements IOverrideModel
 				GunAnimationHelper.rotateAroundOffset(poseStack, magRotations, magRotOffset);
 			}
 		}
-		// Render the transformed model.
 		SpecialModels magModel = SpecialModels.PISTOL_MAG;
 		try
 		{
+			// Use different magazine models for magazine attachments
 			ItemStack magStack = Gun.getAttachment(IAttachment.Type.byTagKey("Magazine"), stack);
 			if(!magStack.isEmpty())
 			{
@@ -148,7 +203,6 @@ public class PistolModel implements IOverrideModel
 		}
 		
 		RenderUtil.renderModel(magModel.getModel(), transformType, null, stack, parent, poseStack, buffer, light, overlay);
-		// Pop pose to compile everything in the render matrix.
 		poseStack.popPose();
 	}
 }

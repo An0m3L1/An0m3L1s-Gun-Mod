@@ -4,15 +4,15 @@
 			"barrel": {
 				"translation": [
 					8.0,
-					2.9,
-					10.75
+					2.95,
+					11.1
 				]
 			}
 		},
 		"ironSight": {
 			"camera": [
 				8,
-				3.525,
+				3.5288,
 				25
 			],
 			"viewportFov": 60.0
@@ -20,8 +20,8 @@
 		"muzzleFlash": {
 			"translation": [
 				8.0,
-				2.9,
-				10.725
+				2.95,
+				11.075
 			],
 			"scale": [
 				0.75,

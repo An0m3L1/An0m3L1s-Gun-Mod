@@ -4596,7 +4596,6 @@ public class Gun implements INBTSerializable<CompoundTag>
 			soundEvent = getReloadSoundEventDynamic(soundObject, soundType);
 		}
 		
-		//GunMod.LOGGER.info("Sound event for sound type " + soundType + " is " + (soundEvent != null ? soundEvent.toString() : "null"));
 		return soundEvent;
 	}
 	
@@ -4613,7 +4612,6 @@ public class Gun implements INBTSerializable<CompoundTag>
 			soundTiming = getReloadSoundTimingDynamic(soundObject, soundType);
 		}
 		
-		//GunMod.LOGGER.info("Sound timing for sound type " + soundType + " is " + soundTiming);
 		return soundTiming;
 	}
 	

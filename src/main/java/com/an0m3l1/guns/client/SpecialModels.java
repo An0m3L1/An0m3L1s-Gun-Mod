@@ -55,7 +55,9 @@ public enum SpecialModels
 	SNIPER_RIFLE_EXT_MAG("sniper_rifle/ext_mag"),
 	
 	PISTOL_BASE("pistol/base"),
+	PISTOL_BASE_COLORED("pistol/base_colored"),
 	PISTOL_SLIDE("pistol/slide"),
+	PISTOL_SLIDE_COLORED("pistol/slide_colored"),
 	PISTOL_MAG("pistol/mag"),
 	PISTOL_LIGHT_MAG("pistol/light_mag"),
 	PISTOL_EXT_MAG("pistol/ext_mag"),

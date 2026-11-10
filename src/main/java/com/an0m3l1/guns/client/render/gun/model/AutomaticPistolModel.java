@@ -31,7 +31,6 @@ import java.util.Map;
 /** Author: An0m3L1 */
 public class AutomaticPistolModel implements IOverrideModel
 {
-	final Minecraft mc = Minecraft.getInstance();
 	private boolean disableAnimations = false;
 	private static final Map<ItemStack, Boolean> PREV_BOLT_LOCKED = new IdentityHashMap<>();
 	private static final Map<ItemStack, Integer> BOLT_LOCK_TIMER = new IdentityHashMap<>();
@@ -79,14 +78,15 @@ public class AutomaticPistolModel implements IOverrideModel
 		boolean isPlayer = entity != null && entity.equals(Minecraft.getInstance().player);
 		boolean isFirstPerson = transformType.firstPerson();
 		boolean correctContext = (transformType.firstPerson() || transformType == ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND || transformType == ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND);
+		boolean isMainHand = isPlayer && stack == entity.getMainHandItem();
 		
-		boolean reloading = isPlayer && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
-		boolean reloadFromEmpty = isPlayer && ReloadHandler.get().isReloadFromEmpty();
+		boolean reloading = isMainHand && ModSyncedDataKeys.RELOADING.getValue((Player) entity);
+		boolean reloadFromEmpty = isMainHand && ReloadHandler.get().isReloadFromEmpty();
 
         /* Lock the bolt forward if:
             1. Gun has run out of ammo
             2. Gun is already loaded, but still playing the reload animation (to properly play animations) */
-		boolean lockBoltForward = ammoIsEmpty || (reloadFromEmpty && reloading && ammoIsFull);
+		boolean lockBolt = ammoIsEmpty || (reloadFromEmpty && reloading && ammoIsFull);
 		
 		Vec3 boltTranslations = Vec3.ZERO;
 		Vec3 magTranslations = Vec3.ZERO;
@@ -149,13 +149,13 @@ public class AutomaticPistolModel implements IOverrideModel
 				Player player = (Player) entity;
 				boolean prevEmpty = PREV_BOLT_LOCKED.getOrDefault(stack, false);
 			
-				/* Lock bolt movement for 1 second after lockBoltForward switches from true to false.
+				/* Lock bolt movement for 1 second after lockBolt switches from true to false.
                 This prevents bolt jitter when transitioning from reload animation to base state */
-				if(prevEmpty && !lockBoltForward)
+				if(prevEmpty && !lockBolt)
 				{
 					BOLT_LOCK_TIMER.put(stack, 20);
 				}
-				PREV_BOLT_LOCKED.put(stack, lockBoltForward);
+				PREV_BOLT_LOCKED.put(stack, lockBolt);
 				
 				int transition = BOLT_LOCK_TIMER.getOrDefault(stack, 0);
 				if(transition > 0)
@@ -165,7 +165,7 @@ public class AutomaticPistolModel implements IOverrideModel
 					BOLT_LOCK_TIMER.put(stack, transition - 1);
 				}
 				// Move bolt 2 pixels forward
-				else if(lockBoltForward)
+				else if(lockBolt)
 				{
 					boltZ = boltZ - 2;
 				}
